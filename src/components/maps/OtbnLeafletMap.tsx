@@ -5,6 +5,7 @@ import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
 import type { Layer, PathOptions } from "leaflet";
 import L from "leaflet";
 import { otbnColor } from "@/lib/otbnColors";
+import { withBasePath } from "@/lib/paths";
 import type {
   OtbnCollection,
   OtbnFeature,
@@ -66,7 +67,7 @@ export function OtbnLeafletMap({
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/data/otbn-zonas.geojson")
+    fetch(withBasePath("/data/otbn-zonas.geojson"))
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json() as Promise<OtbnCollection>;

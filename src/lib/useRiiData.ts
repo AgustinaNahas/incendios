@@ -7,6 +7,7 @@ import {
   parseProvinceYearCsv,
   type ProvinceYearValue,
 } from "./parseRii";
+import { withBasePath } from "./paths";
 
 export type RiiData = {
   hectares: ProvinceYearValue[];
@@ -35,9 +36,9 @@ export function useRiiData(): RiiData {
     async function load() {
       try {
         const [haRes, fireProvRes, fireMonthRes] = await Promise.all([
-          fetch("/data/hectares-by-province.csv"),
-          fetch("/data/fires-by-province.csv"),
-          fetch("/data/fires-by-month.csv"),
+          fetch(withBasePath("/data/hectares-by-province.csv")),
+          fetch(withBasePath("/data/fires-by-province.csv")),
+          fetch(withBasePath("/data/fires-by-month.csv")),
         ]);
 
         if (!haRes.ok || !fireProvRes.ok || !fireMonthRes.ok) {
