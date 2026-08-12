@@ -1,0 +1,53 @@
+{
+  "nativeForestHa": 5500000,
+  "nativeForestNote": "PLACEHOLDER — stock estimado de bosque nativo en la región patagónica. Reemplazar con fuente oficial (UMSEF / MAyDS).",
+  "preventVsSuppress": {
+    "preventCostPerHa": 12000,
+    "suppressCostPerHa": 85000,
+    "note": "PLACEHOLDER — costos unitarios ilustrativos en pesos de 2024."
+  },
+  "actions": [
+    {
+      "id": "cortafuegos",
+      "title": "Cortafuegos y fajas",
+      "description": "Mantener líneas de defensa y reducir continuidad de combustible antes del verano.",
+      "budgetShareIdeal": 0.22
+    },
+    {
+      "id": "combustible",
+      "title": "Manejo de combustible",
+      "description": "Podas, quemas prescritas y limpieza en interfaz urbano-forestal.",
+      "budgetShareIdeal": 0.2
+    },
+    {
+      "id": "educacion",
+      "title": "Educación y alerta temprana",
+      "description": "Trabajo con comunidades, turismo y productores para bajar igniciones.",
+      "budgetShareIdeal": 0.12
+    },
+    {
+      "id": "equipo",
+      "title": "Equipamiento temprano",
+      "description": "Dotar brigadas locales antes del pico estacional, no durante la emergencia.",
+      "budgetShareIdeal": 0.18
+    },
+    {
+      "id": "satelital",
+      "title": "Monitoreo satelital",
+      "description": "Detección temprana y priorización de focos con datos abiertos.",
+      "budgetShareIdeal": 0.15
+    },
+    {
+      "id": "planificacion",
+      "title": "Planificación plurianual",
+      "description": "Presupuesto estable y metas medibles de hectáreas tratadas.",
+      "budgetShareIdeal": 0.13
+    }
+  ],
+  "projection": {
+    "baselineHa": 120000,
+    "withPreventionHa": 45000,
+    "uncertainty": 0.25,
+    "note": "Escenario ilustrativo: no es un modelo causal calibrado."
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "datum": "Presupuesto histórico del SNMF desagregado y comparable",
+    "status": "No conseguido",
+    "impact": "Impide comparar inversión real vs hectáreas quemadas con rigor."
+  },
+  {
+    "datum": "Valuación económica por hectárea quemada (Patagonia)",
+    "status": "No conseguido",
+    "impact": "El 'precio' de cada hectárea queda como hipótesis narrativa."
+  },
+  {
+    "datum": "Tiempo de recuperación ecológica post-incendio",
+    "status": "Parcial / heterogéneo",
+    "impact": "No se puede cuantificar cuánto tarda en 'cerrar' la cicatriz."
+  },
+  {
+    "datum": "% de superficie afectada que era bosque nativo",
+    "status": "No conseguido en serie anual",
+    "impact": "No se distingue nativo / implantado / pastizal en el área quemada."
+  },
+  {
+    "datum": "Dotación real vs necesaria de brigadistas",
+    "status": "Placeholder",
+    "impact": "Los isotypes usan cifras estimadas hasta validar fuentes."
+  },
+  {
+    "datum": "Serie RII 2026",
+    "status": "Parcial (hasta marzo)",
+    "impact": "Los totales 2026 no son comparables con años completos."
+  }
+]

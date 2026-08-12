@@ -1,0 +1,26 @@
+[
+  {
+    "id": "brigadista-1",
+    "quote": "Después del incendio el bosque no vuelve igual. Quedan cicatrices, ceniza y un silencio raro. Volvés a la misma cuadra y ya no reconocés el horizonte.",
+    "name": "Mariana R.",
+    "role": "Brigadista forestal",
+    "province": "Chubut",
+    "year": 2025
+  },
+  {
+    "id": "vecino-1",
+    "quote": "Perdimos el monte que era parte de la casa. El humo entraba por todas partes. Todavía hay vecinos que no saben si van a poder quedarse.",
+    "name": "Héctor L.",
+    "role": "Vecino",
+    "province": "Río Negro",
+    "year": 2024
+  },
+  {
+    "id": "brigadista-2",
+    "quote": "Cada verano llegamos más cansados y con menos margen. Apagar es urgente; prevenir es lo que nadie presupuesta a tiempo.",
+    "name": "Luis P.",
+    "role": "Brigadista",
+    "province": "Neuquén",
+    "year": 2025
+  }
+]

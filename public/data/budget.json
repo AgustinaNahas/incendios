@@ -1,0 +1,29 @@
+{
+  "note": "PLACEHOLDER — reemplazar con serie oficial del SNMF / presupuesto nacional de manejo del fuego. Valores ilustrativos en millones de pesos nominales; cpiIndex relativo a 2017=1.",
+  "currency": "ARS",
+  "unit": "millones",
+  "series": [
+    { "year": 2017, "nominalMillions": 1200, "cpiIndex": 1.0 },
+    { "year": 2018, "nominalMillions": 1450, "cpiIndex": 1.47 },
+    { "year": 2019, "nominalMillions": 2100, "cpiIndex": 2.27 },
+    { "year": 2020, "nominalMillions": 2800, "cpiIndex": 3.09 },
+    { "year": 2021, "nominalMillions": 4200, "cpiIndex": 4.65 },
+    { "year": 2022, "nominalMillions": 7800, "cpiIndex": 8.4 },
+    { "year": 2023, "nominalMillions": 18000, "cpiIndex": 19.5 },
+    { "year": 2024, "nominalMillions": 45000, "cpiIndex": 55.0 },
+    { "year": 2025, "nominalMillions": 62000, "cpiIndex": 78.0 }
+  ],
+  "idealAnnualRealMillions2017": 3500,
+  "breakdown": [
+    { "year": 2025, "category": "Combate", "share": 0.62 },
+    { "year": 2025, "category": "Logística y medios aéreos", "share": 0.18 },
+    { "year": 2025, "category": "Prevención", "share": 0.08 },
+    { "year": 2025, "category": "Capacitación", "share": 0.05 },
+    { "year": 2025, "category": "Otros", "share": 0.07 }
+  ],
+  "brigadistas": {
+    "current": 420,
+    "needed": 1200,
+    "iconRepresents": 50
+  }
+}
