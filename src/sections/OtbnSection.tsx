@@ -6,6 +6,7 @@ import { OtbnMapClient } from "@/components/maps/OtbnMapClient";
 import { OTBN_COLORS, OTBN_ZONA_LABELS, type OtbnZona } from "@/lib/otbnColors";
 import {
   OTBN_ZONA_COPY,
+  OTBN_PROVINCES,
   type OtbnProvinceFilter,
 } from "@/lib/otbnCopy";
 
@@ -27,8 +28,8 @@ export function OtbnSection() {
         </h2>
         <p className="max-w-2xl text-base leading-relaxed opacity-85 md:text-lg">
           El Ordenamiento Territorial de Bosques Nativos (OTBN) es la cartografía
-          de la Ley 26.331: clasifica el bosque en tres categorías. Acá, Chubut y
-          Santa Cruz sobre un mapa de referencia.
+          de la Ley 26.331: clasifica el bosque en tres categorías. Acá, Neuquén,
+          Río Negro, Chubut y Santa Cruz sobre un mapa de referencia.
         </p>
 
         <div className="grid gap-3 md:grid-cols-3">
@@ -70,13 +71,16 @@ export function OtbnSection() {
         </div>
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-          {(
-            [
-              ["all", "Chubut + Santa Cruz"],
-              ["Chubut", "Solo Chubut"],
-              ["Santa Cruz", "Solo Santa Cruz"],
-            ] as const
-          ).map(([id, label]) => (
+          <button
+            type="button"
+            onClick={() => setProvince("all")}
+            className={`underline-offset-4 ${
+              province === "all" ? "underline font-semibold" : "opacity-70"
+            }`}
+          >
+            Las cuatro provincias
+          </button>
+          {OTBN_PROVINCES.map((id) => (
             <button
               key={id}
               type="button"
@@ -85,7 +89,7 @@ export function OtbnSection() {
                 province === id ? "underline font-semibold" : "opacity-70"
               }`}
             >
-              {label}
+              {id}
             </button>
           ))}
           <Link

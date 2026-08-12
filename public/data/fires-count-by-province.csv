@@ -1,0 +1,441 @@
+año,provincia,n_incendios,fuente
+2009,Buenos Aires,2987,series_estadisticas_2009-2016
+2009,Catamarca,61,series_estadisticas_2009-2016
+2009,Chaco,171,series_estadisticas_2009-2016
+2009,Chubut,167,series_estadisticas_2009-2016
+2009,Ciudad Autónoma de Buenos Aires,3,series_estadisticas_2009-2016
+2009,Corrientes,42,series_estadisticas_2009-2016
+2009,Córdoba,229,series_estadisticas_2009-2016
+2009,Entre Ríos,30,series_estadisticas_2009-2016
+2009,Formosa,18,series_estadisticas_2009-2016
+2009,Jujuy,275,series_estadisticas_2009-2016
+2009,La Pampa,12,series_estadisticas_2009-2016
+2009,La Rioja,26,series_estadisticas_2009-2016
+2009,Mendoza,123,series_estadisticas_2009-2016
+2009,Misiones,282,series_estadisticas_2009-2016
+2009,Neuquén,202,series_estadisticas_2009-2016
+2009,Parques Nacionales,31,series_estadisticas_2009-2016
+2009,Río Negro,1726,series_estadisticas_2009-2016
+2009,Salta,892,series_estadisticas_2009-2016
+2009,San Juan,282,series_estadisticas_2009-2016
+2009,San Luis,182,series_estadisticas_2009-2016
+2009,Santa Cruz,17,series_estadisticas_2009-2016
+2009,Santa Fe,778,series_estadisticas_2009-2016
+2009,Santiago del Estero,24,series_estadisticas_2009-2016
+2009,Tierra del Fuego,23,series_estadisticas_2009-2016
+2009,Tucumán,1757,series_estadisticas_2009-2016
+2010,Buenos Aires,1644,series_estadisticas_2009-2016
+2010,Catamarca,42,series_estadisticas_2009-2016
+2010,Chaco,318,series_estadisticas_2009-2016
+2010,Chubut,238,series_estadisticas_2009-2016
+2010,Ciudad Autónoma de Buenos Aires,1,series_estadisticas_2009-2016
+2010,Corrientes,50,series_estadisticas_2009-2016
+2010,Córdoba,192,series_estadisticas_2009-2016
+2010,Entre Ríos,60,series_estadisticas_2009-2016
+2010,Formosa,,series_estadisticas_2009-2016
+2010,Jujuy,218,series_estadisticas_2009-2016
+2010,La Pampa,24,series_estadisticas_2009-2016
+2010,La Rioja,37,series_estadisticas_2009-2016
+2010,Mendoza,63,series_estadisticas_2009-2016
+2010,Misiones,581,series_estadisticas_2009-2016
+2010,Neuquén,125,series_estadisticas_2009-2016
+2010,Parques Nacionales,22,series_estadisticas_2009-2016
+2010,Río Negro,1246,series_estadisticas_2009-2016
+2010,Salta,1062,series_estadisticas_2009-2016
+2010,San Juan,314,series_estadisticas_2009-2016
+2010,San Luis,47,series_estadisticas_2009-2016
+2010,Santa Cruz,15,series_estadisticas_2009-2016
+2010,Santa Fe,1024,series_estadisticas_2009-2016
+2010,Santiago del Estero,67,series_estadisticas_2009-2016
+2010,Tierra del Fuego,136,series_estadisticas_2009-2016
+2010,Tucumán,,series_estadisticas_2009-2016
+2011,Buenos Aires,1174,series_estadisticas_2009-2016
+2011,Catamarca,38,series_estadisticas_2009-2016
+2011,Chaco,529,series_estadisticas_2009-2016
+2011,Chubut,169,series_estadisticas_2009-2016
+2011,Ciudad Autónoma de Buenos Aires,3,series_estadisticas_2009-2016
+2011,Corrientes,18,series_estadisticas_2009-2016
+2011,Córdoba,147,series_estadisticas_2009-2016
+2011,Entre Ríos,38,series_estadisticas_2009-2016
+2011,Formosa,131,series_estadisticas_2009-2016
+2011,Jujuy,212,series_estadisticas_2009-2016
+2011,La Pampa,38,series_estadisticas_2009-2016
+2011,La Rioja,161,series_estadisticas_2009-2016
+2011,Mendoza,123,series_estadisticas_2009-2016
+2011,Misiones,96,series_estadisticas_2009-2016
+2011,Neuquén,157,series_estadisticas_2009-2016
+2011,Parques Nacionales,12,series_estadisticas_2009-2016
+2011,Río Negro,1130,series_estadisticas_2009-2016
+2011,Salta,358,series_estadisticas_2009-2016
+2011,San Juan,401,series_estadisticas_2009-2016
+2011,San Luis,33,series_estadisticas_2009-2016
+2011,Santa Cruz,11,series_estadisticas_2009-2016
+2011,Santa Fe,1658,series_estadisticas_2009-2016
+2011,Santiago del Estero,93,series_estadisticas_2009-2016
+2011,Tierra del Fuego,20,series_estadisticas_2009-2016
+2011,Tucumán,,series_estadisticas_2009-2016
+2012,Buenos Aires,111,series_estadisticas_2009-2016
+2012,Catamarca,84,series_estadisticas_2009-2016
+2012,Chaco,597,series_estadisticas_2009-2016
+2012,Chubut,89,series_estadisticas_2009-2016
+2012,Ciudad Autónoma de Buenos Aires,6,series_estadisticas_2009-2016
+2012,Corrientes,215,series_estadisticas_2009-2016
+2012,Córdoba,135,series_estadisticas_2009-2016
+2012,Entre Ríos,94,series_estadisticas_2009-2016
+2012,Formosa,42,series_estadisticas_2009-2016
+2012,Jujuy,199,series_estadisticas_2009-2016
+2012,La Pampa,25,series_estadisticas_2009-2016
+2012,La Rioja,167,series_estadisticas_2009-2016
+2012,Mendoza,172,series_estadisticas_2009-2016
+2012,Misiones,202,series_estadisticas_2009-2016
+2012,Neuquén,105,series_estadisticas_2009-2016
+2012,Parques Nacionales,8,series_estadisticas_2009-2016
+2012,Río Negro,784,series_estadisticas_2009-2016
+2012,Salta,443,series_estadisticas_2009-2016
+2012,San Juan,307,series_estadisticas_2009-2016
+2012,San Luis,33,series_estadisticas_2009-2016
+2012,Santa Cruz,14,series_estadisticas_2009-2016
+2012,Santa Fe,1613,series_estadisticas_2009-2016
+2012,Santiago del Estero,72,series_estadisticas_2009-2016
+2012,Tierra del Fuego,10,series_estadisticas_2009-2016
+2012,Tucumán,80,series_estadisticas_2009-2016
+2013,Buenos Aires,458,series_estadisticas_2009-2016
+2013,Catamarca,90,series_estadisticas_2009-2016
+2013,Chaco,480,series_estadisticas_2009-2016
+2013,Chubut,106,series_estadisticas_2009-2016
+2013,Ciudad Autónoma de Buenos Aires,6,series_estadisticas_2009-2016
+2013,Corrientes,101,series_estadisticas_2009-2016
+2013,Córdoba,173,series_estadisticas_2009-2016
+2013,Entre Ríos,112,series_estadisticas_2009-2016
+2013,Formosa,326,series_estadisticas_2009-2016
+2013,Jujuy,246,series_estadisticas_2009-2016
+2013,La Pampa,87,series_estadisticas_2009-2016
+2013,La Rioja,248,series_estadisticas_2009-2016
+2013,Mendoza,185,series_estadisticas_2009-2016
+2013,Misiones,98,series_estadisticas_2009-2016
+2013,Neuquén,141,series_estadisticas_2009-2016
+2013,Parques Nacionales,21,series_estadisticas_2009-2016
+2013,Río Negro,1036,series_estadisticas_2009-2016
+2013,Salta,870,series_estadisticas_2009-2016
+2013,San Juan,187,series_estadisticas_2009-2016
+2013,San Luis,36,series_estadisticas_2009-2016
+2013,Santa Cruz,8,series_estadisticas_2009-2016
+2013,Santa Fe,1625,series_estadisticas_2009-2016
+2013,Santiago del Estero,45,series_estadisticas_2009-2016
+2013,Tierra del Fuego,16,series_estadisticas_2009-2016
+2013,Tucumán,4,series_estadisticas_2009-2016
+2014,Buenos Aires,2788,series_estadisticas_2009-2016
+2014,Catamarca,69,series_estadisticas_2009-2016
+2014,Chaco,445,series_estadisticas_2009-2016
+2014,Chubut,76,series_estadisticas_2009-2016
+2014,Ciudad Autónoma de Buenos Aires,2,series_estadisticas_2009-2016
+2014,Corrientes,64,series_estadisticas_2009-2016
+2014,Córdoba,291,series_estadisticas_2009-2016
+2014,Entre Ríos,24,series_estadisticas_2009-2016
+2014,Formosa,63,series_estadisticas_2009-2016
+2014,Jujuy,158,series_estadisticas_2009-2016
+2014,La Pampa,50,series_estadisticas_2009-2016
+2014,La Rioja,167,series_estadisticas_2009-2016
+2014,Mendoza,159,series_estadisticas_2009-2016
+2014,Misiones,102,series_estadisticas_2009-2016
+2014,Neuquén,90,series_estadisticas_2009-2016
+2014,Parques Nacionales,17,series_estadisticas_2009-2016
+2014,Río Negro,904,series_estadisticas_2009-2016
+2014,Salta,236,series_estadisticas_2009-2016
+2014,San Juan,263,series_estadisticas_2009-2016
+2014,San Luis,41,series_estadisticas_2009-2016
+2014,Santa Cruz,3,series_estadisticas_2009-2016
+2014,Santa Fe,856,series_estadisticas_2009-2016
+2014,Santiago del Estero,85,series_estadisticas_2009-2016
+2014,Tierra del Fuego,12,series_estadisticas_2009-2016
+2014,Tucumán,3,series_estadisticas_2009-2016
+2015,Buenos Aires,1794,series_estadisticas_2009-2016
+2015,Catamarca,186,series_estadisticas_2009-2016
+2015,Chaco,222,series_estadisticas_2009-2016
+2015,Chubut,82,series_estadisticas_2009-2016
+2015,Ciudad Autónoma de Buenos Aires,3,series_estadisticas_2009-2016
+2015,Corrientes,22,series_estadisticas_2009-2016
+2015,Córdoba,3,series_estadisticas_2009-2016
+2015,Entre Ríos,42,series_estadisticas_2009-2016
+2015,Formosa,68,series_estadisticas_2009-2016
+2015,Jujuy,173,series_estadisticas_2009-2016
+2015,La Pampa,72,series_estadisticas_2009-2016
+2015,La Rioja,222,series_estadisticas_2009-2016
+2015,Mendoza,164,series_estadisticas_2009-2016
+2015,Misiones,19,series_estadisticas_2009-2016
+2015,Neuquén,49,series_estadisticas_2009-2016
+2015,Parques Nacionales,31,series_estadisticas_2009-2016
+2015,Río Negro,1063,series_estadisticas_2009-2016
+2015,Salta,338,series_estadisticas_2009-2016
+2015,San Juan,240,series_estadisticas_2009-2016
+2015,San Luis,74,series_estadisticas_2009-2016
+2015,Santa Cruz,55,series_estadisticas_2009-2016
+2015,Santa Fe,1047,series_estadisticas_2009-2016
+2015,Santiago del Estero,65,series_estadisticas_2009-2016
+2015,Tierra del Fuego,20,series_estadisticas_2009-2016
+2015,Tucumán,22,series_estadisticas_2009-2016
+2016,Buenos Aires,2802,series_estadisticas_2009-2016
+2016,Catamarca,197,series_estadisticas_2009-2016
+2016,Chaco,253,series_estadisticas_2009-2016
+2016,Chubut,89,series_estadisticas_2009-2016
+2016,Ciudad Autónoma de Buenos Aires,5,series_estadisticas_2009-2016
+2016,Corrientes,12,series_estadisticas_2009-2016
+2016,Córdoba,283,series_estadisticas_2009-2016
+2016,Entre Ríos,23,series_estadisticas_2009-2016
+2016,Formosa,61,series_estadisticas_2009-2016
+2016,Jujuy,195,series_estadisticas_2009-2016
+2016,La Pampa,91,series_estadisticas_2009-2016
+2016,La Rioja,262,series_estadisticas_2009-2016
+2016,Mendoza,176,series_estadisticas_2009-2016
+2016,Misiones,36,series_estadisticas_2009-2016
+2016,Neuquén,76,series_estadisticas_2009-2016
+2016,Parques Nacionales,41,series_estadisticas_2009-2016
+2016,Río Negro,766,series_estadisticas_2009-2016
+2016,Salta,393,series_estadisticas_2009-2016
+2016,San Juan,275,series_estadisticas_2009-2016
+2016,San Luis,122,series_estadisticas_2009-2016
+2016,Santa Cruz,20,series_estadisticas_2009-2016
+2016,Santa Fe,1241,series_estadisticas_2009-2016
+2016,Santiago del Estero,76,series_estadisticas_2009-2016
+2016,Tierra del Fuego,14,series_estadisticas_2009-2016
+2016,Tucumán,10,series_estadisticas_2009-2016
+2017,Buenos Aires,37,rii
+2017,Catamarca,167,rii
+2017,Chaco,18,rii
+2017,Chubut,30,rii
+2017,Ciudad Autónoma de Buenos Aires,0,rii
+2017,Corrientes,8,rii
+2017,Córdoba,56,rii
+2017,Entre Ríos,,rii
+2017,Formosa,10,rii
+2017,Jujuy,51,rii
+2017,La Pampa,89,rii
+2017,La Rioja,40,rii
+2017,Mendoza,185,rii
+2017,Misiones,21,rii
+2017,Neuquén,34,rii
+2017,Río Negro,70,rii
+2017,Salta,13,rii
+2017,San Juan,5,rii
+2017,San Luis,35,rii
+2017,Santa Cruz,4,rii
+2017,Santa Fe,,rii
+2017,Santiago del Estero,11,rii
+2017,Tierra del Fuego,,rii
+2017,Tucumán,11,rii
+2018,Buenos Aires,45,rii
+2018,Catamarca,146,rii
+2018,Chaco,8,rii
+2018,Chubut,25,rii
+2018,Ciudad Autónoma de Buenos Aires,1,rii
+2018,Corrientes,15,rii
+2018,Córdoba,50,rii
+2018,Entre Ríos,22,rii
+2018,Formosa,4,rii
+2018,Jujuy,132,rii
+2018,La Pampa,150,rii
+2018,La Rioja,19,rii
+2018,Mendoza,153,rii
+2018,Misiones,15,rii
+2018,Neuquén,37,rii
+2018,Río Negro,115,rii
+2018,Salta,133,rii
+2018,San Juan,41,rii
+2018,San Luis,54,rii
+2018,Santa Cruz,6,rii
+2018,Santa Fe,7,rii
+2018,Santiago del Estero,3,rii
+2018,Tierra del Fuego,1,rii
+2018,Tucumán,11,rii
+2019,Buenos Aires,39,rii
+2019,Catamarca,318,rii
+2019,Chaco,102,rii
+2019,Chubut,45,rii
+2019,Ciudad Autónoma de Buenos Aires,0,rii
+2019,Corrientes,21,rii
+2019,Córdoba,64,rii
+2019,Entre Ríos,4,rii
+2019,Formosa,11,rii
+2019,Jujuy,238,rii
+2019,La Pampa,91,rii
+2019,La Rioja,150,rii
+2019,Mendoza,91,rii
+2019,Misiones,43,rii
+2019,Neuquén,47,rii
+2019,Río Negro,122,rii
+2019,Salta,9,rii
+2019,San Juan,3,rii
+2019,San Luis,36,rii
+2019,Santa Cruz,10,rii
+2019,Santa Fe,19,rii
+2019,Santiago del Estero,32,rii
+2019,Tierra del Fuego,7,rii
+2019,Tucumán,3,rii
+2020,Buenos Aires,62,rii
+2020,Catamarca,164,rii
+2020,Chaco,215,rii
+2020,Chubut,46,rii
+2020,Ciudad Autónoma de Buenos Aires,1,rii
+2020,Corrientes,58,rii
+2020,Córdoba,96,rii
+2020,Entre Ríos,29,rii
+2020,Formosa,14,rii
+2020,Jujuy,207,rii
+2020,La Pampa,48,rii
+2020,La Rioja,126,rii
+2020,Mendoza,89,rii
+2020,Misiones,71,rii
+2020,Neuquén,61,rii
+2020,Río Negro,79,rii
+2020,Salta,100,rii
+2020,San Juan,1,rii
+2020,San Luis,29,rii
+2020,Santa Cruz,7,rii
+2020,Santa Fe,82,rii
+2020,Santiago del Estero,38,rii
+2020,Tierra del Fuego,2,rii
+2020,Tucumán,118,rii
+2021,Buenos Aires,39,rii
+2021,Catamarca,242,rii
+2021,Chaco,122,rii
+2021,Chubut,40,rii
+2021,Ciudad Autónoma de Buenos Aires,,rii
+2021,Corrientes,14,rii
+2021,Córdoba,71,rii
+2021,Entre Ríos,59,rii
+2021,Formosa,34,rii
+2021,Jujuy,342,rii
+2021,La Pampa,19,rii
+2021,La Rioja,179,rii
+2021,Mendoza,93,rii
+2021,Misiones,45,rii
+2021,Neuquén,42,rii
+2021,Río Negro,98,rii
+2021,Salta,232,rii
+2021,San Juan,,rii
+2021,San Luis,180,rii
+2021,Santa Cruz,9,rii
+2021,Santa Fe,50,rii
+2021,Santiago del Estero,6,rii
+2021,Tierra del Fuego,10,rii
+2021,Tucumán,413,rii
+2022,Buenos Aires,60,rii
+2022,Catamarca,188,rii
+2022,Chaco,110,rii
+2022,Chubut,39,rii
+2022,Ciudad Autónoma de Buenos Aires,,rii
+2022,Corrientes,106,rii
+2022,Córdoba,144,rii
+2022,Entre Ríos,144,rii
+2022,Formosa,18,rii
+2022,Jujuy,378,rii
+2022,La Pampa,66,rii
+2022,La Rioja,68,rii
+2022,Mendoza,153,rii
+2022,Misiones,47,rii
+2022,Neuquén,12,rii
+2022,Río Negro,54,rii
+2022,Salta,222,rii
+2022,San Juan,58,rii
+2022,San Luis,310,rii
+2022,Santa Cruz,4,rii
+2022,Santa Fe,74,rii
+2022,Santiago del Estero,20,rii
+2022,Tierra del Fuego,6,rii
+2022,Tucumán,376,rii
+2023,Buenos Aires,37,rii
+2023,Catamarca,290,rii
+2023,Chaco,6,rii
+2023,Chubut,87,rii
+2023,Ciudad Autónoma de Buenos Aires,1,rii
+2023,Corrientes,89,rii
+2023,Córdoba,140,rii
+2023,Entre Ríos,62,rii
+2023,Formosa,17,rii
+2023,Jujuy,319,rii
+2023,La Pampa,70,rii
+2023,La Rioja,11,rii
+2023,Mendoza,78,rii
+2023,Misiones,12,rii
+2023,Neuquén,27,rii
+2023,Río Negro,281,rii
+2023,Salta,130,rii
+2023,San Juan,22,rii
+2023,San Luis,64,rii
+2023,Santa Cruz,11,rii
+2023,Santa Fe,26,rii
+2023,Santiago del Estero,34,rii
+2023,Tierra del Fuego,12,rii
+2023,Tucumán,384,rii
+2024,Buenos Aires,6,rii
+2024,Catamarca,197,rii
+2024,Chaco,,rii
+2024,Chubut,71,rii
+2024,Ciudad Autónoma de Buenos Aires,,rii
+2024,Corrientes,778,rii
+2024,Córdoba,52,rii
+2024,Entre Ríos,5,rii
+2024,Formosa,10,rii
+2024,Jujuy,465,rii
+2024,La Pampa,47,rii
+2024,La Rioja,5,rii
+2024,Mendoza,40,rii
+2024,Misiones,10,rii
+2024,Neuquén,61,rii
+2024,Río Negro,81,rii
+2024,Salta,298,rii
+2024,San Juan,61,rii
+2024,San Luis,55,rii
+2024,Santa Cruz,6,rii
+2024,Santa Fe,3,rii
+2024,Santiago del Estero,10,rii
+2024,Tierra del Fuego,14,rii
+2024,Tucumán,474,rii
+2025,Buenos Aires,14,rii
+2025,Catamarca,229,rii
+2025,Chaco,1,rii
+2025,Chubut,64,rii
+2025,Ciudad Autónoma de Buenos Aires,,rii
+2025,Corrientes,38,rii
+2025,Córdoba,54,rii
+2025,Entre Ríos,16,rii
+2025,Formosa,4,rii
+2025,Jujuy,335,rii
+2025,La Pampa,85,rii
+2025,La Rioja,8,rii
+2025,Mendoza,78,rii
+2025,Misiones,16,rii
+2025,Neuquén,48,rii
+2025,Río Negro,42,rii
+2025,Salta,173,rii
+2025,San Juan,58,rii
+2025,San Luis,60,rii
+2025,Santa Cruz,13,rii
+2025,Santa Fe,3,rii
+2025,Santiago del Estero,3,rii
+2025,Tierra del Fuego,2,rii
+2025,Tucumán,436,rii
+2026,Buenos Aires,4,rii
+2026,Catamarca,15,rii
+2026,Chaco,,rii
+2026,Chubut,20,rii
+2026,Ciudad Autónoma de Buenos Aires,,rii
+2026,Corrientes,7,rii
+2026,Córdoba,1,rii
+2026,Entre Ríos,9,rii
+2026,Formosa,1,rii
+2026,Jujuy,1,rii
+2026,La Pampa,48,rii
+2026,La Rioja,1,rii
+2026,Mendoza,23,rii
+2026,Misiones,6,rii
+2026,Neuquén,33,rii
+2026,Río Negro,8,rii
+2026,Salta,,rii
+2026,San Juan,2,rii
+2026,San Luis,,rii
+2026,Santa Cruz,2,rii
+2026,Santa Fe,,rii
+2026,Santiago del Estero,,rii
+2026,Tierra del Fuego,,rii
+2026,Tucumán,5,rii

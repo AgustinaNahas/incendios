@@ -1,0 +1,9 @@
+tabla,disponible,hueco,archivo
+ha BN por provincia,"1993–2023 (CSV) + 2024 (anuario, con s/i en varias provincias)","2025–2026; varias provincias s/i en 2024 (BA, CABA, Corrientes, Santa Fe, Sgo. del Estero)",public/data/native-forest-ha-by-province.csv
+n° incendios por provincia,2009–2016 (series) + 2017–mar 2026 (RII),1993–2008; Parques Nacionales solo en series,public/data/fires-count-by-province.csv
+n° incendios EN bosque nativo,No publicado,"Los anuarios dan ha de BN, no conteo de incendios en BN",
+Bosque Andino Patagónico (región),2010–2016 (n + ha); 2019/21/22/24 (n + ha + ha BN),"2009, 2017–2018, 2020, 2023, 2025+; ha BN ausente en series 2010–2016",public/data/andino-patagonico-by-year.csv
+Proxy provincias patagónicas (ha BN),1993–2024 agregado 5 provincias,No equivale a región Andino Patagónico,public/data/patagonia-provinces-ha-by-year.csv
+Detalle año × provincia × BN × causas,2022 y 2024,2019/2021 parseables pero causas a veces en %; faltan 2020/2023,public/data/fires-detail-by-province-year.csv
+Mes × provincia × BN × causas,2024 digitalizado,"2019, 2021, 2022 pendientes de digitalizar; 2017–18/2020/2023 sin anuario en /data",public/data/fires-detail-by-month-province-2024.csv
+Consistencia RII vs Anuario,Ambas series coexisten,2024 RII ~2750 incendios/~306k ha vs Anuario 5175/392k ha — no mezclar sin documentar,

@@ -95,8 +95,8 @@ export function ScrollyApp() {
 
       <footer className="mx-auto max-w-6xl px-4 py-16 text-sm opacity-70 md:px-8">
         <p>
-          Fuentes: RII (cantidad y hectáreas de incendios); OTBN de Chubut y Santa
-          Cruz en{" "}
+          Fuentes: RII (cantidad y hectáreas de incendios); OTBN de Neuquén, Río
+          Negro, Chubut y Santa Cruz en{" "}
           <code className="text-xs">public/data/otbn-zonas.geojson</code>. Series
           de presupuesto, costos y stock de bosque nativo son placeholders
           editables en <code className="text-xs">src/data/</code>.

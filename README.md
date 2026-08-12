@@ -48,5 +48,5 @@ npm run build:otbn   # regenera public/data/otbn-zonas.geojson
 ## Datos
 
 - `public/data/*.csv` — RII hectáreas e incendios (2017–mar 2026)
-- `public/data/otbn-zonas.geojson` — ordenamiento territorial Chubut + Santa Cruz
+- `public/data/otbn-zonas.geojson` — ordenamiento territorial Neuquén, Río Negro, Chubut y Santa Cruz
 - `src/data/budget.json`, `testimonies.json`, `prevention.json`, `data-gaps.json` — placeholders editables

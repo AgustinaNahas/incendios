@@ -1,0 +1,313 @@
+mes,año,provincia,n_incendios,ha_total,ha_bosque_nativo,ha_bosque_cultivado,ha_arbustal,ha_pastizal,ha_sin_determinar,causas_negligencia,causas_intencional,causas_natural,causas_desconocida,fuente
+Enero,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Enero,2024,Catamarca,8,22,0,0,11,11,,1,,,7,anuario_2024
+Enero,2024,Chaco,138,7029,1000,1027,1500,3502,,,,,138,anuario_2024
+Enero,2024,Chubut,19,5127,3079,218,1152,678,,13,6,,,anuario_2024
+Enero,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Enero,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Enero,2024,Córdoba,10,812,200,,205,407,,1,6,,3,anuario_2024
+Enero,2024,Entre Ríos,5,264,32,30,,202,,,,,5,anuario_2024
+Enero,2024,Formosa,140,1011,141,,,870,,19,113,4,4,anuario_2024
+Enero,2024,Jujuy,,,,,,,,,,,,anuario_2024
+Enero,2024,La Pampa,27,19957,12142,,3498,4317,,4,1,13,9,anuario_2024
+Enero,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Enero,2024,Mendoza,13,1654,1,,120,1534,,,1,8,4,anuario_2024
+Enero,2024,Misiones,,,,,,,,,,,,anuario_2024
+Enero,2024,Neuquén,6,64,,,30,30,4,,,3,3,anuario_2024
+Enero,2024,Parques Nacionales,9,7699,6185,,991,211,312,2,2,1,4,anuario_2024
+Enero,2024,Río Negro,50,1634,415,0.02,562,657,1,5,4,,41,anuario_2024
+Enero,2024,Salta,,,,,,,,,,,,anuario_2024
+Enero,2024,San Juan,87,27,,,8,19,,2,85,,,anuario_2024
+Enero,2024,San Luis,6,4808,4274,,,534,,,,,6,anuario_2024
+Enero,2024,Santa Cruz,1,1,,,1,,,1,,,,anuario_2024
+Enero,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Enero,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Enero,2024,Tierra del Fuego,1,0,,,,0,,,,,1,anuario_2024
+Enero,2024,Total,528,50128,27469,1275,8078,12989,317,48,218,29,233,anuario_2024
+Enero,2024,Tucumán,8,17,,,0,17,,,,,8,anuario_2024
+Febrero,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Febrero,2024,Catamarca,7,47,1,0,20,26,,2,1,,4,anuario_2024
+Febrero,2024,Chaco,66,10834,2054,1062,2700,5018,,,,,66,anuario_2024
+Febrero,2024,Chubut,4,31,,,0,31,,4,,,,anuario_2024
+Febrero,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Febrero,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Febrero,2024,Córdoba,4,330,50,,91,189,,,3,,1,anuario_2024
+Febrero,2024,Entre Ríos,2,270,20,,,250,,,,,2,anuario_2024
+Febrero,2024,Formosa,194,972,145,,,827,,59,112,13,10,anuario_2024
+Febrero,2024,Jujuy,5,1,0,0,0.42,1,,5,,,,anuario_2024
+Febrero,2024,La Pampa,9,9920,8118,,1,1801,,,,1,8,anuario_2024
+Febrero,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Febrero,2024,Mendoza,3,76,8,,23,46,,,,2,1,anuario_2024
+Febrero,2024,Misiones,1,1,,,,1,,,,,1,anuario_2024
+Febrero,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Febrero,2024,Parques Nacionales,15,2396,584,,30,1782,0,2,2,8,3,anuario_2024
+Febrero,2024,Río Negro,50,1612,904,0,3,705,0,8,2,2,38,anuario_2024
+Febrero,2024,Salta,,,,,,,,,,,,anuario_2024
+Febrero,2024,San Juan,62,281,250,,20,11,,,62,,,anuario_2024
+Febrero,2024,San Luis,8,421,198,,,223,,,,,8,anuario_2024
+Febrero,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Febrero,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Febrero,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Febrero,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Febrero,2024,Total,438,27196,12332,1062,2888,10913,0,80,182,26,150,anuario_2024
+Febrero,2024,Tucumán,8,3,,,0,2,,,,,8,anuario_2024
+Marzo,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Marzo,2024,Catamarca,5,17,,,1,16,,,1,,4,anuario_2024
+Marzo,2024,Chaco,9,1000,,,300,700,,,,,9,anuario_2024
+Marzo,2024,Chubut,4,0,,,0,0,,4,,,,anuario_2024
+Marzo,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Marzo,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Marzo,2024,Córdoba,10,221,,,,221,,,6,,4,anuario_2024
+Marzo,2024,Entre Ríos,0,50,,,,50,,,,,,anuario_2024
+Marzo,2024,Formosa,107,1315,28,,,1287,,,4,102,1,anuario_2024
+Marzo,2024,Jujuy,1,0,,,,0,,,1,,,anuario_2024
+Marzo,2024,La Pampa,,,,,,,,,,,,anuario_2024
+Marzo,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Marzo,2024,Mendoza,5,246,0,,55,192,,2,1,,2,anuario_2024
+Marzo,2024,Misiones,1,1,,,,1,,,,,1,anuario_2024
+Marzo,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Marzo,2024,Parques Nacionales,7,14517,1,,1,14515,0,2,1,,4,anuario_2024
+Marzo,2024,Río Negro,38,1297,642,0,322,331,3,6,2,,30,anuario_2024
+Marzo,2024,Salta,,,,,,,,,,,,anuario_2024
+Marzo,2024,San Juan,63,30,,,0,30,,5,58,,,anuario_2024
+Marzo,2024,San Luis,8,4316,411,,,3905,,,,,8,anuario_2024
+Marzo,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Marzo,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Marzo,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Marzo,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Marzo,2024,Total,258,23012,1082,0,678,21249,3,19,74,102,63,anuario_2024
+Marzo,2024,Tucumán,,,,,,,,,,,,anuario_2024
+Abril,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Abril,2024,Catamarca,8,1811,2,0,2,1807,,1,1,,6,anuario_2024
+Abril,2024,Chaco,2,152,,,50,102,,,,,2,anuario_2024
+Abril,2024,Chubut,2,0,,0,,0,,2,,,,anuario_2024
+Abril,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Abril,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Abril,2024,Córdoba,13,299,,,,299,,,5,,8,anuario_2024
+Abril,2024,Entre Ríos,,,,,,,,,,,,anuario_2024
+Abril,2024,Formosa,21,139,,,,139,,,21,,,anuario_2024
+Abril,2024,Jujuy,,,,,,,,,,,,anuario_2024
+Abril,2024,La Pampa,,,,,,,,,,,,anuario_2024
+Abril,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Abril,2024,Mendoza,1,3,,,,3,,,1,,,anuario_2024
+Abril,2024,Misiones,,,,,,,,,,,,anuario_2024
+Abril,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Abril,2024,Parques Nacionales,,,,,,,,,,,,anuario_2024
+Abril,2024,Río Negro,25,38,21,0,15,1,2,10,2,,13,anuario_2024
+Abril,2024,Salta,,,,,,,,,,,,anuario_2024
+Abril,2024,San Juan,56,101,20,,,81,,,,56,,anuario_2024
+Abril,2024,San Luis,6,984,541,,,443,,,,,6,anuario_2024
+Abril,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Abril,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Abril,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Abril,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Abril,2024,Total,135,3562,584,0,66,2910,2,13,30,56,36,anuario_2024
+Abril,2024,Tucumán,1,35,,,,35,,,,,1,anuario_2024
+Mayo,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Mayo,2024,Catamarca,3,201,0,,0,201,,1,,,2,anuario_2024
+Mayo,2024,Chaco,5,3320,3,15,100,3202,,,,,5,anuario_2024
+Mayo,2024,Chubut,,,,,,,,,,,,anuario_2024
+Mayo,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Mayo,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Mayo,2024,Córdoba,21,247,,,40,207,,,5,,16,anuario_2024
+Mayo,2024,Entre Ríos,,,,,,,,,,,,anuario_2024
+Mayo,2024,Formosa,21,14,6,,,8,,6,12,3,,anuario_2024
+Mayo,2024,Jujuy,8,6,0,,1,5,,6,,,2,anuario_2024
+Mayo,2024,La Pampa,2,750,129,,621,,,1,,,1,anuario_2024
+Mayo,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Mayo,2024,Mendoza,,,,,,,,,,,,anuario_2024
+Mayo,2024,Misiones,,,,,,,,,,,,anuario_2024
+Mayo,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Mayo,2024,Parques Nacionales,6,277,,,,277,0,,6,,,anuario_2024
+Mayo,2024,Río Negro,8,6,,1,1,3,,5,,,3,anuario_2024
+Mayo,2024,Salta,1,7,,,,7,,,,,1,anuario_2024
+Mayo,2024,San Juan,79,64,,,,64,,2,77,,,anuario_2024
+Mayo,2024,San Luis,5,473,473,,,,,,,,5,anuario_2024
+Mayo,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Mayo,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Mayo,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Mayo,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Mayo,2024,Total,161,5369,612,16,764,3977,0,21,100,3,37,anuario_2024
+Mayo,2024,Tucumán,2,3,,,,3,,,,,2,anuario_2024
+Junio,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Junio,2024,Catamarca,10,158,4,7,17,129,,2,,1,7,anuario_2024
+Junio,2024,Chaco,31,3486,,28,1324,2134,,,,,31,anuario_2024
+Junio,2024,Chubut,,,,,,,,,,,,anuario_2024
+Junio,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Junio,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Junio,2024,Córdoba,61,576,,,34,542,,,21,,40,anuario_2024
+Junio,2024,Entre Ríos,2,873,873,,,,,,,,2,anuario_2024
+Junio,2024,Formosa,104,685,558,,,127,,18,81,,5,anuario_2024
+Junio,2024,Jujuy,28,30,1,1,10,17,,25,,,3,anuario_2024
+Junio,2024,La Pampa,,,,,,,,,,,,anuario_2024
+Junio,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Junio,2024,Mendoza,,,,,,,,,,,,anuario_2024
+Junio,2024,Misiones,,,,,,,,,,,,anuario_2024
+Junio,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Junio,2024,Parques Nacionales,5,0,,,,0,0,,5,,,anuario_2024
+Junio,2024,Río Negro,22,44,0,0,3,3,37,9,,,13,anuario_2024
+Junio,2024,Salta,45,66,,,8,59,,,,,45,anuario_2024
+Junio,2024,San Juan,138,78,,,,78,,,138,,,anuario_2024
+Junio,2024,San Luis,6,746,33,,,713,,,,,6,anuario_2024
+Junio,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Junio,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Junio,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Junio,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Junio,2024,Total,468,6922,1470,37,1418,3961,37,54,245,1,168,anuario_2024
+Junio,2024,Tucumán,16,181,,,21,160,,,,,16,anuario_2024
+Julio,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Julio,2024,Catamarca,19,154,0,1,27,126,,8,1,,10,anuario_2024
+Julio,2024,Chaco,71,11526,50,75,1009,10392,,,,,71,anuario_2024
+Julio,2024,Chubut,1,0,,,0,,,1,,,,anuario_2024
+Julio,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Julio,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Julio,2024,Córdoba,78,9938,1500,,3372,5066,,4,28,,46,anuario_2024
+Julio,2024,Entre Ríos,6,1695,279,,,1416,,,,,6,anuario_2024
+Julio,2024,Formosa,114,636,350,,,286,,,97,,17,anuario_2024
+Julio,2024,Jujuy,53,78,15,,5,58,,49,,,4,anuario_2024
+Julio,2024,La Pampa,3,461,390,1,70,,,,,,3,anuario_2024
+Julio,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Julio,2024,Mendoza,11,5256,11,,428,4818,,3,5,1,2,anuario_2024
+Julio,2024,Misiones,2,4,,,,4,,,,,2,anuario_2024
+Julio,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Julio,2024,Parques Nacionales,5,4874,,,353,907,3614,,3,,2,anuario_2024
+Julio,2024,Río Negro,53,26,2,3,4,16,1,16,2,,35,anuario_2024
+Julio,2024,Salta,111,1289,2,,57,1230,,,,,111,anuario_2024
+Julio,2024,San Juan,,,,,,,,,,,,anuario_2024
+Julio,2024,San Luis,3,577,25,,,552,,,,,3,anuario_2024
+Julio,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Julio,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Julio,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Julio,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Julio,2024,Total,622,36889,2624,80,5373,25197,3615,81,136,1,404,anuario_2024
+Julio,2024,Tucumán,92,374,,,48,326,,,,,92,anuario_2024
+Agosto,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Agosto,2024,Catamarca,40,810,9,33,382,385,,6,,,34,anuario_2024
+Agosto,2024,Chaco,50,6256,11,98,1522,4625,,,,,50,anuario_2024
+Agosto,2024,Chubut,3,1,,,1,0,,3,,,,anuario_2024
+Agosto,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Agosto,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Agosto,2024,Córdoba,113,5239,,,1458,3781,,6,19,,88,anuario_2024
+Agosto,2024,Entre Ríos,20,8165,200,,100,7865,,,,,20,anuario_2024
+Agosto,2024,Formosa,106,1037,351,,,686,,,106,,,anuario_2024
+Agosto,2024,Jujuy,131,282,25,2,53,202,,124,,,7,anuario_2024
+Agosto,2024,La Pampa,7,1760,383,22,1216,138,,1,1,,5,anuario_2024
+Agosto,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Agosto,2024,Mendoza,10,129,7,,26,95,,2,8,,,anuario_2024
+Agosto,2024,Misiones,10,78,,,,78,,,,,10,anuario_2024
+Agosto,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Agosto,2024,Parques Nacionales,12,3915,,,11,3881,23,,7,,5,anuario_2024
+Agosto,2024,Río Negro,74,148,43,25,44,35,1,28,,,46,anuario_2024
+Agosto,2024,Salta,201,6471,44,39,428,5960,,,,,201,anuario_2024
+Agosto,2024,San Juan,,,,,,,,,,,,anuario_2024
+Agosto,2024,San Luis,2,1828,939,,,889,,,,,2,anuario_2024
+Agosto,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Agosto,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Agosto,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Agosto,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Agosto,2024,Total,850,36325,2014,220,5252,28815,24,170,141,,539,anuario_2024
+Agosto,2024,Tucumán,71,207,1,,10,195,,,,,71,anuario_2024
+Septiembre,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Catamarca,49,2369,29,14,963,1364,,6,1,,42,anuario_2024
+Septiembre,2024,Chaco,34,4270,371,37,913,2949,,,,,34,anuario_2024
+Septiembre,2024,Chubut,15,31,,1,1,28,,6,2,,7,anuario_2024
+Septiembre,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Córdoba,174,78298,13000,4481,16115,44702,,4,25,,145,anuario_2024
+Septiembre,2024,Entre Ríos,21,5925,484,250,400,4791,,,,,21,anuario_2024
+Septiembre,2024,Formosa,150,1464,500,,,964,,,150,,,anuario_2024
+Septiembre,2024,Jujuy,147,553,153,16,54,330,,131,,,16,anuario_2024
+Septiembre,2024,La Pampa,23,11379,2431,76,8621,251,,1,9,1,12,anuario_2024
+Septiembre,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Mendoza,21,1161,51,140,200,769,,10,8,,3,anuario_2024
+Septiembre,2024,Misiones,5,50,,,,50,,,,,5,anuario_2024
+Septiembre,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Parques Nacionales,13,1141,60,,501,580,0,1,4,,8,anuario_2024
+Septiembre,2024,Río Negro,95,131,29,14,19,61,8,41,,,54,anuario_2024
+Septiembre,2024,Salta,141,11580,,3,157,11420,,,,,141,anuario_2024
+Septiembre,2024,San Juan,,,,,,,,,,,,anuario_2024
+Septiembre,2024,San Luis,8,44550,44344,,,206,,,,,8,anuario_2024
+Septiembre,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Septiembre,2024,Tierra del Fuego,1,1,1,,,,,1,,,,anuario_2024
+Septiembre,2024,Total,965,163987,61453,5032,27985,69509,8,201,199,1,564,anuario_2024
+Septiembre,2024,Tucumán,68,1085,0,,41,1045,,,,,68,anuario_2024
+Octubre,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Octubre,2024,Catamarca,20,681,0,,150,531,,4,,,16,anuario_2024
+Octubre,2024,Chaco,22,2326,,15,202,2109,,,,,22,anuario_2024
+Octubre,2024,Chubut,16,77,51,1,,26,,12,2,,2,anuario_2024
+Octubre,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Octubre,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Octubre,2024,Córdoba,58,6375,,,2385,3990,,2,17,,39,anuario_2024
+Octubre,2024,Entre Ríos,12,3944,297,15,50,3582,,,,,12,anuario_2024
+Octubre,2024,Formosa,31,52,,,1,51,,5,26,,,anuario_2024
+Octubre,2024,Jujuy,58,240,67,4,38,131,,52,,1,5,anuario_2024
+Octubre,2024,La Pampa,12,945,308,28,126,482,,,7,,5,anuario_2024
+Octubre,2024,La Rioja,1,150,,,,,150,,,,1,anuario_2024
+Octubre,2024,Mendoza,3,23,2,,7,14,,1,2,,,anuario_2024
+Octubre,2024,Misiones,,,,,,,,,,,,anuario_2024
+Octubre,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Octubre,2024,Parques Nacionales,6,1209,420,,180,609,,,2,,4,anuario_2024
+Octubre,2024,Río Negro,45,50,14,8,5,23,0,9,,,36,anuario_2024
+Octubre,2024,Salta,27,2248,,1,95,2152,,,,,27,anuario_2024
+Octubre,2024,San Juan,,,,,,,,,,,,anuario_2024
+Octubre,2024,San Luis,4,517,302,,,215,,,,,4,anuario_2024
+Octubre,2024,Santa Cruz,,,,,,,,,,,,anuario_2024
+Octubre,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Octubre,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Octubre,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Octubre,2024,Total,325,20112,1461,92,3239,15171,150,85,56,1,183,anuario_2024
+Octubre,2024,Tucumán,10,1275,,20,,1255,,,,,10,anuario_2024
+Noviembre,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Catamarca,21,460,6,,73,381,,6,,,15,anuario_2024
+Noviembre,2024,Chaco,15,1980,,,400,1580,,,,,15,anuario_2024
+Noviembre,2024,Chubut,14,170,,,0,170,,3,,,11,anuario_2024
+Noviembre,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Córdoba,21,770,,,15,755,,,9,,12,anuario_2024
+Noviembre,2024,Entre Ríos,5,680,332,,,348,,,,,5,anuario_2024
+Noviembre,2024,Formosa,21,68,,,,68,,,21,,,anuario_2024
+Noviembre,2024,Jujuy,1,106,,,,106,,1,,,,anuario_2024
+Noviembre,2024,La Pampa,4,492,33,1,,458,,,1,2,1,anuario_2024
+Noviembre,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Mendoza,6,1734,326,,200,1208,,,3,3,,anuario_2024
+Noviembre,2024,Misiones,2,51,,,,51,,,,,2,anuario_2024
+Noviembre,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Parques Nacionales,17,4215,,,208,4007,,,14,,3,anuario_2024
+Noviembre,2024,Río Negro,48,267,239,1,8,19,,9,,1,38,anuario_2024
+Noviembre,2024,Salta,1,0,,,,0,,,,,1,anuario_2024
+Noviembre,2024,San Juan,,,,,,,,,,,,anuario_2024
+Noviembre,2024,San Luis,3,620,420,,,200,,,,,3,anuario_2024
+Noviembre,2024,Santa Cruz,1,0,,,,0,,,,,1,anuario_2024
+Noviembre,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Noviembre,2024,Total,181,11689,1356,2,904,9427,,19,48,6,108,anuario_2024
+Noviembre,2024,Tucumán,1,76,,,,76,,,,,1,anuario_2024
+Diciembre,2024,Buenos Aires,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Catamarca,11,103,0,0,32,71,,1,,,10,anuario_2024
+Diciembre,2024,Chaco,73,2099,254,53,532,1260,,,,,73,anuario_2024
+Diciembre,2024,Chubut,11,21,,0,0,21,,7,2,2,,anuario_2024
+Diciembre,2024,Ciudad Autónoma de Buenos Aires,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Corrientes,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Córdoba,19,220,,,,220,,,7,,12,anuario_2024
+Diciembre,2024,Entre Ríos,1,3,3,,,,,,,,1,anuario_2024
+Diciembre,2024,Formosa,19,23,,,,23,,,19,,,anuario_2024
+Diciembre,2024,Jujuy,4,30,,,0,30,,4,,,,anuario_2024
+Diciembre,2024,La Pampa,16,2617,22,2,369,2225,,3,4,3,6,anuario_2024
+Diciembre,2024,La Rioja,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Mendoza,9,1209,38,,65,1107,,2,2,5,,anuario_2024
+Diciembre,2024,Misiones,5,106,,20,,86,,,,,5,anuario_2024
+Diciembre,2024,Neuquén,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Parques Nacionales,9,541,,,,541,0,2,1,2,4,anuario_2024
+Diciembre,2024,Río Negro,63,108,81,3,9,14,2,6,2,7,48,anuario_2024
+Diciembre,2024,Salta,,,,,,,,,,,,anuario_2024
+Diciembre,2024,San Juan,,,,,,,,,,,,anuario_2024
+Diciembre,2024,San Luis,1,5,,,,5,,,,,1,anuario_2024
+Diciembre,2024,Santa Cruz,2,0,0,,0,0,,1,1,,,anuario_2024
+Diciembre,2024,Santa Fe,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Santiago del Estero,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Tierra del Fuego,,,,,,,,,,,,anuario_2024
+Diciembre,2024,Total,243,7085,397,78,1007,5602,2,26,38,19,160,anuario_2024
+Diciembre,2024,Tucumán,,,,,,,,,,,,anuario_2024

@@ -5,6 +5,8 @@ Sources:
   - data/OTBN Santa Cruz/SC_2021_OTBN.shp  (CAT_CONS)
   - data/OTBN Chubut/OTBN Esquel y Norte.kml (OTBN_* layers)
   - data/OTBN Chubut/OTBN Esquel y Sur.kmz   (OTBN_* layers; Esquel skipped as duplicate)
+  - data/neuquen.geojson  (PLG_DESCRIPCION: ROJO/AMARILLO/VERDE → I/II/III)
+  - data/LOTBN_RioNegro_categorias.gpkg  (categoria 1/2/3; 0 = no bosque)
 
 Output: public/data/otbn-zonas.geojson
 """
@@ -37,6 +39,8 @@ ZONA_META: dict[int, tuple[str, str]] = {
 SC_SHP = DATA / "OTBN Santa Cruz" / "SC_2021_OTBN.shp"
 CHUBUT_NORTE = DATA / "OTBN Chubut" / "OTBN Esquel y Norte.kml"
 CHUBUT_SUR = DATA / "OTBN Chubut" / "OTBN Esquel y Sur.kmz"
+NEUQUEN_GEOJSON = DATA / "neuquen.geojson"
+RIO_NEGRO_GPKG = DATA / "LOTBN_RioNegro_categorias.gpkg"
 
 
 def run(cmd: list[str]) -> None:
@@ -334,25 +338,114 @@ def build_chubut(workdir: Path) -> list[dict]:
     return dissolve_gpkg_by_zona(gpkg, "otbn", "geom", "Chubut")
 
 
+def build_neuquen(workdir: Path) -> list[dict]:
+    if not NEUQUEN_GEOJSON.exists():
+        raise FileNotFoundError(NEUQUEN_GEOJSON)
+
+    raw = workdir / "neuquen_raw.gpkg"
+    run(
+        [
+            "ogr2ogr",
+            "-f",
+            "GPKG",
+            str(raw),
+            str(NEUQUEN_GEOJSON),
+            "-nln",
+            "raw",
+            "-nlt",
+            "PROMOTE_TO_MULTI",
+            "--config",
+            "OGR_CT_FORCE_TRADITIONAL_GIS_ORDER",
+            "YES",
+        ]
+    )
+
+    # OTBN por color oficial: rojo=I, amarillo=II, verde=III
+    gpkg_norm = workdir / "neuquen_norm.gpkg"
+    sql = (
+        'SELECT CASE "GEO.CART_04_GIS_POLIGONOS.PLG_DESCRIPCION" '
+        "WHEN 'ROJO' THEN 1 WHEN 'AMARILLO' THEN 2 WHEN 'VERDE' THEN 3 END AS zona, "
+        "geom FROM raw "
+        'WHERE "GEO.CART_04_GIS_POLIGONOS.PLG_DESCRIPCION" IN '
+        "('ROJO','AMARILLO','VERDE')"
+    )
+    run(
+        [
+            "ogr2ogr",
+            "-f",
+            "GPKG",
+            str(gpkg_norm),
+            str(raw),
+            "-nln",
+            "otbn",
+            "-nlt",
+            "PROMOTE_TO_MULTI",
+            "-dialect",
+            "sqlite",
+            "-sql",
+            sql,
+        ]
+    )
+    return dissolve_gpkg_by_zona(gpkg_norm, "otbn", "geom", "Neuquén")
+
+
+def build_rio_negro(workdir: Path) -> list[dict]:
+    if not RIO_NEGRO_GPKG.exists():
+        raise FileNotFoundError(RIO_NEGRO_GPKG)
+
+    # Pseudo-Mercator → WGS84; categoria 0 = sin bosque (excluir)
+    gpkg_norm = workdir / "rio_negro_norm.gpkg"
+    run(
+        [
+            "ogr2ogr",
+            "-f",
+            "GPKG",
+            str(gpkg_norm),
+            str(RIO_NEGRO_GPKG),
+            "-t_srs",
+            "EPSG:4326",
+            "-nln",
+            "otbn",
+            "-nlt",
+            "PROMOTE_TO_MULTI",
+            "-dialect",
+            "sqlite",
+            "-sql",
+            "SELECT CAST(categoria AS INTEGER) AS zona, geom "
+            "FROM LOTBN_RioNegro_categorias WHERE categoria IN (1, 2, 3)",
+            "--config",
+            "OGR_CT_FORCE_TRADITIONAL_GIS_ORDER",
+            "YES",
+        ]
+    )
+    return dissolve_gpkg_by_zona(gpkg_norm, "otbn", "geom", "Río Negro")
+
+
 def main() -> int:
-    for required in (SC_SHP, CHUBUT_NORTE, CHUBUT_SUR):
-        if not required.exists():
-            print(f"ERROR: falta {required}", file=sys.stderr)
+    required = (SC_SHP, CHUBUT_NORTE, CHUBUT_SUR, NEUQUEN_GEOJSON, RIO_NEGRO_GPKG)
+    for path in required:
+        if not path.exists():
+            print(f"ERROR: falta {path}", file=sys.stderr)
             return 1
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     workdir = Path(tempfile.mkdtemp(prefix="otbn-build-"))
     try:
-        print("== Santa Cruz ==")
-        sc_features = build_santa_cruz(workdir)
-        print(f"  features: {len(sc_features)}")
-
-        print("== Chubut ==")
-        ch_features = build_chubut(workdir)
-        print(f"  features: {len(ch_features)}")
+        builders = [
+            ("Neuquén", build_neuquen),
+            ("Río Negro", build_rio_negro),
+            ("Chubut", build_chubut),
+            ("Santa Cruz", build_santa_cruz),
+        ]
+        all_features: list[dict] = []
+        for label, builder in builders:
+            print(f"== {label} ==")
+            feats = builder(workdir)
+            print(f"  features: {len(feats)}")
+            all_features.extend(feats)
 
         features = sorted(
-            sc_features + ch_features,
+            all_features,
             key=lambda f: (f["properties"]["provincia"], f["properties"]["zona"]),
         )
 
@@ -366,7 +459,10 @@ def main() -> int:
             "features": features,
         }
 
-        OUT.write_text(json.dumps(collection, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        OUT.write_text(
+            json.dumps(collection, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
         size_mb = OUT.stat().st_size / (1024 * 1024)
         print(f"Wrote {OUT} ({size_mb:.2f} MiB, {len(features)} features)")
         for f in features:

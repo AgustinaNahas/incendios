@@ -1,8 +1,8 @@
 /** Colores configurables para categorías OTBN (clave = properties.zona del GeoJSON). */
 export const OTBN_COLORS = {
-  1: "#1b4332", // Conservación
+  1: "#9b2226", // Conservación
   2: "#d4a373", // Uso sustentable
-  3: "#9b2226", // Cambio de uso
+  3: "#1b4332", // Cambio de uso
 } as const;
 
 export type OtbnZona = keyof typeof OTBN_COLORS;

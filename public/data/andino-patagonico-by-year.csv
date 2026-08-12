@@ -1,0 +1,12 @@
+año,region,n_incendios,ha_total,ha_bosque_nativo,fuente,nota
+2010,Bosque Andino Patagónico,1712,1939,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2011,Bosque Andino Patagónico,1414,15007,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2012,Bosque Andino Patagónico,932,24164,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2013,Bosque Andino Patagónico,1224,4385,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2014,Bosque Andino Patagónico,966,2418,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2015,Bosque Andino Patagónico,1160,71638,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2016,Bosque Andino Patagónico,861,12729,,series_2010-2016,series 5.9 solo publica cantidad + ha total (sin split BN por región)
+2019,Bosque Andino Patagónico,532,6118.69,237.31,anuario_2019,
+2021,Bosque Andino Patagónico,324,13325.95,1569.09,anuario_2021,
+2022,Bosque Andino Patagónico,641,36016.26,15781.06,anuario_2022,
+2024,Bosque Andino Patagónico,281,14541,9931,anuario_2024,

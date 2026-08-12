@@ -21,7 +21,19 @@ export const OTBN_ZONA_COPY: Record<
   },
 };
 
-export type OtbnProvinceFilter = "all" | "Chubut" | "Santa Cruz";
+export type OtbnProvinceFilter =
+  | "all"
+  | "Neuquén"
+  | "Río Negro"
+  | "Chubut"
+  | "Santa Cruz";
+
+export const OTBN_PROVINCES: Exclude<OtbnProvinceFilter, "all">[] = [
+  "Neuquén",
+  "Río Negro",
+  "Chubut",
+  "Santa Cruz",
+];
 
 export type OtbnProperties = {
   zona: number;

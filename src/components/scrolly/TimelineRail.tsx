@@ -46,9 +46,9 @@ function TreeIcon({
     return (
       <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
         <rect x="4" y="6" width="20" height="24" rx="2" fill="#1a2e24" opacity="0.9" />
-        <path d="M6 18 L12 10 L16 16 L22 12 L22 28 L6 28 Z" fill="#1b4332" />
+        <path d="M6 18 L12 10 L16 16 L22 12 L22 28 L6 28 Z" fill="#9b2226" />
         <path d="M6 22 L14 16 L22 20 L22 28 L6 28 Z" fill="#d4a373" opacity="0.95" />
-        <path d="M14 24 L22 20 L22 28 L14 28 Z" fill="#9b2226" />
+        <path d="M14 24 L22 20 L22 28 L14 28 Z" fill="#1b4332" />
       </svg>
     );
   }

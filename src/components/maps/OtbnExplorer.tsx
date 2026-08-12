@@ -6,6 +6,7 @@ import { OtbnMapClient } from "@/components/maps/OtbnMapClient";
 import { OTBN_COLORS, type OtbnZona } from "@/lib/otbnColors";
 import {
   OTBN_ZONA_COPY,
+  OTBN_PROVINCES,
   type OtbnProvinceFilter,
 } from "@/lib/otbnCopy";
 
@@ -32,8 +33,8 @@ export function OtbnExplorer() {
               Zonas de bosque nativo
             </h1>
             <p className="mt-2 text-sm leading-relaxed opacity-80">
-              Chubut y Santa Cruz. Tocá una categoría para resaltarla sobre el
-              mapa base de OpenStreetMap.
+              Neuquén, Río Negro, Chubut y Santa Cruz. Tocá una categoría para
+              resaltarla sobre el mapa base de OpenStreetMap.
             </p>
           </div>
           <Link
@@ -46,13 +47,18 @@ export function OtbnExplorer() {
 
         <div className="pointer-events-auto flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-wrap gap-2">
-            {(
-              [
-                ["all", "Ambas"],
-                ["Chubut", "Chubut"],
-                ["Santa Cruz", "Santa Cruz"],
-              ] as const
-            ).map(([id, label]) => (
+            <button
+              type="button"
+              onClick={() => setProvince("all")}
+              className={`rounded-sm px-3 py-1.5 text-xs backdrop-blur-md ${
+                province === "all"
+                  ? "bg-white/20 font-semibold"
+                  : "bg-[#0c0b0a]/75 opacity-80 hover:opacity-100"
+              }`}
+            >
+              Todas
+            </button>
+            {OTBN_PROVINCES.map((id) => (
               <button
                 key={id}
                 type="button"
@@ -63,7 +69,7 @@ export function OtbnExplorer() {
                     : "bg-[#0c0b0a]/75 opacity-80 hover:opacity-100"
                 }`}
               >
-                {label}
+                {id}
               </button>
             ))}
           </div>
@@ -125,8 +131,8 @@ export function OtbnExplorer() {
             );
           })}
           <p className="px-1 pt-1 text-[10px] leading-relaxed opacity-55">
-            Santa Cruz publica I y II en esta capa; Chubut también incluye III.
-            Colores en <code className="text-[9px]">otbnColors.ts</code>.
+            Santa Cruz publica I y II; el resto incluye III. Colores en{" "}
+            <code className="text-[9px]">otbnColors.ts</code>.
           </p>
         </div>
       </aside>
