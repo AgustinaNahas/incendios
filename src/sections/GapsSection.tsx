@@ -7,6 +7,7 @@ export function GapsSection() {
   return (
     <StorySection
       id="brechas"
+      className="bg-black text-[#f3efe8]"
       eyebrow="Método · Lo que falta"
       title="Brechas: los datos que no pudimos conseguir"
       lede="Contar lo que no está es parte de la historia. La opacidad también es una forma de prevención insuficiente."

@@ -5,17 +5,31 @@ import { CHAPTERS, type ChapterId } from "@/lib/patagonia";
 type Props = {
   active: ChapterId;
   progress: number;
-  lightText: boolean;
 };
 
 function TreeIcon({
   kind,
   active,
 }: {
-  kind: "burned" | "fire" | "healthy" | "otbn" | "gap";
+  kind: "burned" | "fire" | "healthy" | "otbn" | "gap" | "species";
   active: boolean;
 }) {
   const opacity = active ? 1 : 0.45;
+  if (kind === "species") {
+    return (
+      <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
+        <ellipse cx="14" cy="13" rx="9" ry="11" fill="#2f6b4f" />
+        <rect x="12.5" y="22" width="3" height="11" fill="#5a4030" />
+        <path
+          d="M8 8 C12 4 18 6 20 11"
+          fill="none"
+          stroke="#F46B15"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
   if (kind === "burned") {
     return (
       <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
@@ -46,9 +60,9 @@ function TreeIcon({
     return (
       <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
         <rect x="4" y="6" width="20" height="24" rx="2" fill="#1a2e24" opacity="0.9" />
-        <path d="M6 18 L12 10 L16 16 L22 12 L22 28 L6 28 Z" fill="#9b2226" />
-        <path d="M6 22 L14 16 L22 20 L22 28 L6 28 Z" fill="#d4a373" opacity="0.95" />
-        <path d="M14 24 L22 20 L22 28 L14 28 Z" fill="#1b4332" />
+        <path d="M6 18 L12 10 L16 16 L22 12 L22 28 L6 28 Z" fill="#C45C4A" />
+        <path d="M6 22 L14 16 L22 20 L22 28 L6 28 Z" fill="#E0B25A" opacity="0.95" />
+        <path d="M14 24 L22 20 L22 28 L14 28 Z" fill="#5F8A6A" />
       </svg>
     );
   }
@@ -62,13 +76,11 @@ function TreeIcon({
   );
 }
 
-export function TimelineRail({ active, progress, lightText }: Props) {
+export function TimelineRail({ active, progress }: Props) {
   return (
     <nav
       aria-label="Línea de tiempo narrativa"
-      className={`fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 md:flex lg:right-6 ${
-        lightText ? "text-[#1a2e24]" : "text-[#f3efe8]"
-      }`}
+      className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 text-[#f3efe8] md:flex lg:right-6"
     >
       <div className="relative flex flex-col items-center gap-2">
         <div
@@ -113,19 +125,11 @@ export function TimelineRail({ active, progress, lightText }: Props) {
 
 export function MobileChapterChips({
   active,
-  lightText,
 }: {
   active: ChapterId;
-  lightText: boolean;
 }) {
   return (
-    <div
-      className={`fixed bottom-3 left-1/2 z-40 flex -translate-x-1/2 gap-1 rounded-full px-2 py-1.5 backdrop-blur-md md:hidden ${
-        lightText
-          ? "bg-[#dce8df]/85 text-[#1a2e24]"
-          : "bg-black/45 text-[#f3efe8]"
-      }`}
-    >
+    <div className="fixed bottom-3 left-1/2 z-40 flex -translate-x-1/2 gap-1 rounded-full bg-black/45 px-2 py-1.5 text-[#f3efe8] backdrop-blur-md md:hidden">
       {CHAPTERS.map((c) => (
         <a
           key={c.id}

@@ -27,10 +27,15 @@ export const FIRE_SEASON_MONTHS = [
 ] as const;
 
 export const CHAPTERS = [
-  { id: "despues", label: "El después", short: "Después", tree: "burned" },
-  { id: "fuego", label: "El fuego", short: "Fuego", tree: "fire" },
-  { id: "antes", label: "El antes", short: "Antes", tree: "healthy" },
   { id: "otbn", label: "El territorio", short: "OTBN", tree: "otbn" },
+  { id: "despues", label: "El después", short: "Después", tree: "burned" },
+  { id: "quemado", label: "Hectáreas", short: "Quemado", tree: "fire" },
+  {
+    id: "inflamabilidad",
+    label: "Especies",
+    short: "Especies",
+    tree: "species",
+  },
   { id: "brechas", label: "Brechas", short: "Brechas", tree: "gap" },
 ] as const;
 

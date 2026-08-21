@@ -9,6 +9,7 @@ type Props = {
   lede?: string;
   children: ReactNode;
   graphic?: ReactNode;
+  className?: string;
 };
 
 export function StorySection({
@@ -18,11 +19,12 @@ export function StorySection({
   lede,
   children,
   graphic,
+  className = "",
 }: Props) {
   return (
     <section
       id={id}
-      className="relative scroll-mt-8 px-4 py-20 md:px-8 md:py-28 lg:px-12"
+      className={`relative scroll-mt-8 px-4 py-20 md:px-8 md:py-28 lg:px-12 ${className}`}
     >
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
         <div className="space-y-6">

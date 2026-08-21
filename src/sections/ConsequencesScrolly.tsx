@@ -1,0 +1,60 @@
+"use client";
+
+import Image from "next/image";
+import testimonies from "@/data/testimonies.json";
+
+const CONSEQUENCES_COPY =
+  "El fuego no se apaga cuando las llamas se van. Quedan casas irreconocibles, un horizonte que ya no se reconoce y vecinos que todavía no saben si van a poder quedarse.";
+
+export function ConsequencesScrolly() {
+  return (
+    <section id="despues" className="relative scroll-mt-8">
+      <div className="sticky top-0 h-dvh overflow-hidden bg-[#120303]">
+        <Image
+          src="/images/forest-fire-scrolly.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[center_42%]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/30"
+        />
+      </div>
+
+      <div className="relative z-10">
+        <div className="mx-auto flex max-w-xl flex-col items-center px-5 md:px-8">
+
+          <article className="flex min-h-[85vh] w-full items-center">
+            <div className="w-full px-6 py-7 text-center md:px-10 md:py-9" style={{ background: "#fdf2f0" }}>
+              <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#940F11]/70">
+                Consecuencias
+              </p>
+              <p className="mt-4 font-[family-name:var(--font-display)] text-xl leading-snug text-[#940F11] md:text-2xl">
+                {CONSEQUENCES_COPY}
+              </p>
+            </div>
+          </article>
+
+          {testimonies.map((testimony) => (
+            <article key={testimony.id} className="flex min-h-[85vh] w-full items-center">
+              <blockquote className="w-full bg-black/75 px-6 py-8 text-center text-[#f3efe8] md:px-10 md:py-10">
+                <p className="font-[family-name:var(--font-display)] text-2xl leading-snug md:text-3xl">
+                  “{testimony.quote}”
+                </p>
+                <footer className="mt-5 text-sm text-white/70">
+                  <cite className="not-italic font-medium">{testimony.name}</cite>
+                  {" · "}
+                  {testimony.role}, {testimony.province} ({testimony.year})
+                </footer>
+              </blockquote>
+            </article>
+          ))}
+
+          <div className="h-[28vh]" aria-hidden />
+        </div>
+      </div>
+    </section>
+  );
+}

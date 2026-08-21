@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CHAPTERS, type ChapterId } from "./patagonia";
 
 export function useScrollChapters() {
-  const [activeChapter, setActiveChapter] = useState<ChapterId>("despues");
+  const [activeChapter, setActiveChapter] = useState<ChapterId>("otbn");
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {

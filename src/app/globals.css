@@ -2,7 +2,7 @@
 @import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #0c0b0a;
+  --background: #220303;
   --foreground: #f3efe8;
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
@@ -16,10 +16,20 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #220303;
 }
 
 body {
-  background: var(--background);
+  background-color: #220303;
+  background-image: linear-gradient(
+    to bottom,
+    #220303 0%,
+    #940f11 60%,
+    #f46b15 80%,
+    #ffc800 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: var(--foreground);
 }
 
@@ -39,4 +49,187 @@ body {
 
 ::selection {
   background: rgba(255, 107, 45, 0.35);
+}
+
+.fire-spark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 57.4058px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+  mix-blend-mode: plus-lighter;
+  background: radial-gradient(
+    48.04% 42.76% at 50% 50%,
+    #ffc800 0%,
+    #f46b15 26.44%,
+    rgba(148, 15, 17, 0.2) 49.52%,
+    rgba(34, 3, 3, 0) 75.96%
+  );
+}
+
+.atlas-map .leaflet-container {
+  background: #c9c6c1;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.atlas-map .leaflet-container:focus,
+.atlas-map .leaflet-container:focus-visible,
+.atlas-map .leaflet-interactive:focus,
+.atlas-map .leaflet-interactive:focus-visible,
+.atlas-map path,
+.atlas-map path:focus,
+.atlas-map path:focus-visible,
+.atlas-map svg:focus,
+.atlas-map svg:focus-visible {
+  outline: none;
+}
+
+.atlas-map .leaflet-tooltip.atlas-tooltip {
+  background: #f6f3ee;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  border-radius: 2px;
+  box-shadow: none;
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 6px 8px;
+  overflow: visible;
+}
+
+.atlas-map .leaflet-tooltip.atlas-tooltip::before,
+.atlas-map .leaflet-tooltip.atlas-tooltip::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+  border-style: solid;
+  border-color: transparent;
+  background: transparent;
+}
+
+.atlas-map .leaflet-tooltip-right.atlas-tooltip::before {
+  top: 50%;
+  left: 0;
+  margin-top: -7px;
+  margin-left: -14px;
+  border-width: 7px;
+  border-right-color: #1a1a1a;
+}
+
+.atlas-map .leaflet-tooltip-right.atlas-tooltip::after {
+  top: 50%;
+  left: 0;
+  margin-top: -6px;
+  margin-left: -12px;
+  border-width: 6px;
+  border-right-color: #f6f3ee;
+}
+
+.atlas-map .leaflet-tooltip-left.atlas-tooltip::before {
+  top: 50%;
+  right: 0;
+  margin-top: -7px;
+  margin-right: -14px;
+  border-width: 7px;
+  border-left-color: #1a1a1a;
+}
+
+.atlas-map .leaflet-tooltip-left.atlas-tooltip::after {
+  top: 50%;
+  right: 0;
+  margin-top: -6px;
+  margin-right: -12px;
+  border-width: 6px;
+  border-left-color: #f6f3ee;
+}
+
+.atlas-map .leaflet-tooltip-top.atlas-tooltip::before {
+  bottom: 0;
+  left: 50%;
+  margin-left: -7px;
+  margin-bottom: -14px;
+  border-width: 7px;
+  border-top-color: #1a1a1a;
+}
+
+.atlas-map .leaflet-tooltip-top.atlas-tooltip::after {
+  bottom: 0;
+  left: 50%;
+  margin-left: -6px;
+  margin-bottom: -12px;
+  border-width: 6px;
+  border-top-color: #f6f3ee;
+}
+
+.atlas-map .leaflet-tooltip-bottom.atlas-tooltip::before {
+  top: 0;
+  left: 50%;
+  margin-left: -7px;
+  margin-top: -14px;
+  border-width: 7px;
+  border-bottom-color: #1a1a1a;
+}
+
+.atlas-map .leaflet-tooltip-bottom.atlas-tooltip::after {
+  top: 0;
+  left: 50%;
+  margin-left: -6px;
+  margin-top: -12px;
+  border-width: 6px;
+  border-bottom-color: #f6f3ee;
+}
+
+.atlas-label {
+  pointer-events: none;
+  color: #1a1a1a;
+  text-shadow:
+    0 0 4px #f6f3ee,
+    0 0 8px #f6f3ee,
+    1px 1px 0 #f6f3ee;
+}
+
+.atlas-label span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.atlas-label-prov span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.atlas-label-city span {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.burned-fire-icon {
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
+}
+
+.fire-spark-static {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 57.4058px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  mix-blend-mode: plus-lighter;
+  background: radial-gradient(
+    48.04% 42.76% at 50% 50%,
+    #ffc800 0%,
+    #f46b15 26.44%,
+    rgba(148, 15, 17, 0.2) 49.52%,
+    rgba(34, 3, 3, 0) 75.96%
+  );
 }

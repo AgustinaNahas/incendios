@@ -1,8 +1,17 @@
-/** Colores configurables para categorías OTBN (clave = properties.zona del GeoJSON). */
+/** Colores del atlas esquemático y categorías OTBN. */
+
+export const ATLAS_COLORS = {
+  water: "#C9C6C1",
+  land: "#F6F3EE",
+  neighbor: "#D9D5CE",
+  stroke: "#1A1A1A",
+  coral: "#C45C4A",
+} as const;
+
 export const OTBN_COLORS = {
-  1: "#9b2226", // Conservación
-  2: "#d4a373", // Uso sustentable
-  3: "#1b4332", // Cambio de uso
+  1: "#C45C4A", // Conservación — coral
+  2: "#E0B25A", // Uso sustentable — ámbar
+  3: "#5F8A6A", // Cambio de uso — salvia
 } as const;
 
 export type OtbnZona = keyof typeof OTBN_COLORS;

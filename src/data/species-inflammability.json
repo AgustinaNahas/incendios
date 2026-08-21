@@ -1,0 +1,167 @@
+[
+  {
+    "id": "austrocedrus-chilensis",
+    "commonName": "Ciprés de la cordillera",
+    "scientificName": "Austrocedrus chilensis",
+    "origin": "nativa",
+    "level": "baja",
+    "rank": 1,
+    "image": "/images/species/austrocedrus-chilensis.jpg",
+    "credit": "Wikimedia Commons · CC BY 4.0",
+    "note": "Nativa clave en restauración INTA Esquel; puede vivir 300–500 años."
+  },
+  {
+    "id": "embothrium-coccineum",
+    "commonName": "Notro",
+    "scientificName": "Embothrium coccineum",
+    "origin": "nativa",
+    "level": "baja",
+    "rank": 2,
+    "image": "/images/species/embothrium-coccineum.jpg",
+    "credit": "Wikimedia Commons",
+    "note": "Icono del sotobosque patagónico; inflamabilidad relativa baja en ensayos."
+  },
+  {
+    "id": "aristotelia-chilensis",
+    "commonName": "Maqui",
+    "scientificName": "Aristotelia chilensis",
+    "origin": "nativa",
+    "level": "baja",
+    "rank": 3,
+    "image": "/images/species/aristotelia-chilensis.jpg",
+    "credit": "Wikimedia Commons · CC BY 4.0",
+    "note": "Arbusto nativo de regeneración; menor inflamabilidad relativa."
+  },
+  {
+    "id": "ribes-magellanicum",
+    "commonName": "Parrilla",
+    "scientificName": "Ribes magellanicum",
+    "origin": "nativa",
+    "level": "baja",
+    "rank": 4,
+    "image": "/images/species/ribes-magellanicum.jpg",
+    "credit": "Wikimedia Commons · CC BY-SA 2.5 / GFDL",
+    "note": "También llamada zarzaparrilla o mulul."
+  },
+  {
+    "id": "lomatia-hirsuta",
+    "commonName": "Radal",
+    "scientificName": "Lomatia hirsuta",
+    "origin": "nativa",
+    "level": "moderada",
+    "rank": 5,
+    "image": "/images/species/lomatia-hirsuta.jpg",
+    "credit": "Wikimedia · dominio público (Argentina)",
+    "note": "Una de las especies que INTA Esquel reimplanta para recuperar el bosque."
+  },
+  {
+    "id": "fabiana-imbricata",
+    "commonName": "Pichi",
+    "scientificName": "Fabiana imbricata",
+    "origin": "nativa",
+    "level": "moderada",
+    "rank": 6,
+    "image": "/images/species/fabiana-imbricata.jpg",
+    "credit": "Wikimedia Commons · dominio público",
+    "note": "Arbusto resinoso de estepa y ecotonos."
+  },
+  {
+    "id": "maytenus-boaria",
+    "commonName": "Maitén",
+    "scientificName": "Maytenus boaria",
+    "origin": "nativa",
+    "level": "moderada",
+    "rank": 7,
+    "image": "/images/species/maytenus-boaria.jpg",
+    "credit": "Wikimedia Commons",
+    "note": "Árbol nativo de bordes y zonas más abiertas."
+  },
+  {
+    "id": "nothofagus-dombeyi",
+    "commonName": "Coihue",
+    "scientificName": "Nothofagus dombeyi",
+    "origin": "nativa",
+    "level": "moderada",
+    "rank": 8,
+    "image": "/images/species/nothofagus-dombeyi.jpg",
+    "credit": "Libro del Árbol (Argentina, 1975) · dominio público",
+    "note": "Longevo (300–500 años). Prioridad en la restauración activa post-incendio."
+  },
+  {
+    "id": "nothofagus-pumilio",
+    "commonName": "Lenga",
+    "scientificName": "Nothofagus pumilio",
+    "origin": "nativa",
+    "level": "moderada",
+    "rank": 9,
+    "image": "/images/species/nothofagus-pumilio.jpg",
+    "credit": "Wikimedia Commons · CC BY 4.0",
+    "note": "Dominante del bosque altoandino; sin intervención activa la recuperación puede llevar un siglo."
+  },
+  {
+    "id": "nothofagus-antarctica",
+    "commonName": "Ñire",
+    "scientificName": "Nothofagus antarctica",
+    "origin": "nativa",
+    "level": "moderada",
+    "rank": 10,
+    "image": "/images/species/nothofagus-antarctica.jpg",
+    "credit": "Wikimedia Commons · CC BY-SA 2.5",
+    "note": "Nativo andino-patagónico; parte del paquete de restauración de INTA Esquel."
+  },
+  {
+    "id": "eucalyptus-globulus",
+    "commonName": "Eucalipto",
+    "scientificName": "Eucalyptus globulus",
+    "origin": "exotica",
+    "level": "alta",
+    "rank": 11,
+    "image": "/images/species/eucalyptus-globulus.jpg",
+    "credit": "Wikimedia Commons",
+    "note": "Exótica; aceites volátiles y corteza desprendible favorecen incendios de copa."
+  },
+  {
+    "id": "pinus-radiata",
+    "commonName": "Pino radiata",
+    "scientificName": "Pinus radiata",
+    "origin": "exotica",
+    "level": "alta",
+    "rank": 12,
+    "image": "/images/species/pinus-radiata.jpg",
+    "credit": "Wikimedia Commons · CC BY 4.0",
+    "note": "También llamado pino insigne; forestación exótica de alta inflamabilidad."
+  },
+  {
+    "id": "pinus-contorta",
+    "commonName": "Pino contorta",
+    "scientificName": "Pinus contorta",
+    "origin": "exotica",
+    "level": "alta",
+    "rank": 13,
+    "image": "/images/species/pinus-contorta.jpg",
+    "credit": "USDA / Wikimedia · dominio público",
+    "note": "Foto de var. latifolia; representa al grupo P. contorta en Patagonia."
+  },
+  {
+    "id": "pinus-ponderosa",
+    "commonName": "Pino ponderosa",
+    "scientificName": "Pinus ponderosa",
+    "origin": "exotica",
+    "level": "alta",
+    "rank": 14,
+    "image": "/images/species/pinus-ponderosa.jpg",
+    "credit": "USDA / Wikimedia · dominio público",
+    "note": "Plantación frecuente; resinas y acículas elevan la inflamabilidad."
+  },
+  {
+    "id": "chusquea-culeou",
+    "commonName": "Caña colihue",
+    "scientificName": "Chusquea culeou",
+    "origin": "nativa",
+    "level": "alta",
+    "rank": 15,
+    "image": "/images/species/chusquea-culeou.jpg",
+    "credit": "Wikimedia Commons · CC BY 4.0",
+    "note": "Bambú nativo del sotobosque. La más inflamable del ranking — pero no es una forestación: su riesgo viene en pulsos de floración, no de plantaciones permanentes."
+  }
+]
