@@ -7,6 +7,7 @@ Sources:
   - data/OTBN Chubut/OTBN Esquel y Sur.kmz   (OTBN_* layers; Esquel skipped as duplicate)
   - data/neuquen.geojson  (PLG_DESCRIPCION: ROJO/AMARILLO/VERDE → I/II/III)
   - data/LOTBN_RioNegro_categorias.gpkg  (categoria 1/2/3; 0 = no bosque)
+  - data/OTBN Tierra del Fuego/OTBN_TF_WGS84.shp  (Cat_cons: I/II/III)
 
 Output: public/data/otbn-zonas.geojson
 """
@@ -41,6 +42,7 @@ CHUBUT_NORTE = DATA / "OTBN Chubut" / "OTBN Esquel y Norte.kml"
 CHUBUT_SUR = DATA / "OTBN Chubut" / "OTBN Esquel y Sur.kmz"
 NEUQUEN_GEOJSON = DATA / "neuquen.geojson"
 RIO_NEGRO_GPKG = DATA / "LOTBN_RioNegro_categorias.gpkg"
+TF_SHP = DATA / "OTBN Tierra del Fuego" / "OTBN_TF_WGS84.shp"
 
 
 def run(cmd: list[str]) -> None:
@@ -163,50 +165,65 @@ def dissolve_gpkg_by_zona(
     provincia: str,
 ) -> list[dict]:
     """Dissolve + simplify a GPKG layer that already has a `zona` integer field."""
-    out_geojson = gpkg_path.with_suffix(".dissolved.geojson")
-    sql = (
-        f"SELECT zona, "
-        f"ST_SimplifyPreserveTopology(ST_Union({geom_col}), {SIMPLIFY_DEG}) AS geom "
-        f"FROM {layer_name} GROUP BY zona"
-    )
-    run(
-        [
-            "ogr2ogr",
-            "-f",
-            "GeoJSON",
-            str(out_geojson),
-            str(gpkg_path),
-            "-a_srs",
-            "EPSG:4326",
-            "-dialect",
-            "sqlite",
-            "-sql",
-            sql,
-            "-lco",
-            f"COORDINATE_PRECISION={COORD_PRECISION}",
-            "--config",
-            "OGR_GEOJSON_MAX_OBJ_SIZE",
-            "0",
-            "--config",
-            "OGR_CT_FORCE_TRADITIONAL_GIS_ORDER",
-            "YES",
-        ]
-    )
+    # Distinct zonas first, then dissolve one-by-one (avoids GEOS failures
+    # when invalid rings from one category poison a multi-group ST_Union).
+    ds = ogr.Open(str(gpkg_path))
+    if ds is None:
+        raise RuntimeError(f"No se pudo abrir {gpkg_path}")
+    layer = ds.GetLayerByName(layer_name)
+    if layer is None:
+        layer = ds.GetLayer(0)
+    zonas = sorted({int(f.GetField("zona")) for f in layer if f.GetField("zona") is not None})
+    ds = None
 
     features: list[dict] = []
-    ds = ogr.Open(str(out_geojson))
-    if ds is None:
-        raise RuntimeError(f"No se pudo abrir {out_geojson}")
-    layer = ds.GetLayer(0)
-    for layer_feat in layer:
-        zona = int(layer_feat.GetField("zona"))
-        geom = layer_feat.GetGeometryRef()
-        if geom is None or geom.IsEmpty():
+    for zona in zonas:
+        out_geojson = gpkg_path.with_name(f"{gpkg_path.stem}_z{zona}.geojson")
+        sql = (
+            f"SELECT {zona} AS zona, "
+            f"ST_SimplifyPreserveTopology("
+            f"  ST_Union(ST_CollectionExtract(ST_MakeValid({geom_col}), 3)), "
+            f"  {SIMPLIFY_DEG}"
+            f") AS geom "
+            f"FROM {layer_name} WHERE zona = {zona}"
+        )
+        run(
+            [
+                "ogr2ogr",
+                "-f",
+                "GeoJSON",
+                str(out_geojson),
+                str(gpkg_path),
+                "-a_srs",
+                "EPSG:4326",
+                "-dialect",
+                "sqlite",
+                "-sql",
+                sql,
+                "-lco",
+                f"COORDINATE_PRECISION={COORD_PRECISION}",
+                "--config",
+                "OGR_GEOJSON_MAX_OBJ_SIZE",
+                "0",
+                "--config",
+                "OGR_CT_FORCE_TRADITIONAL_GIS_ORDER",
+                "YES",
+            ]
+        )
+        ds_out = ogr.Open(str(out_geojson))
+        if ds_out is None:
+            print(f"  WARN: sin salida para {provincia} zona {zona}")
             continue
-        built = make_feature(geom.Clone(), zona, provincia)
-        if built is not None:
-            features.append(built)
-    ds = None
+        out_layer = ds_out.GetLayer(0)
+        for layer_feat in out_layer:
+            geom = layer_feat.GetGeometryRef()
+            if geom is None or geom.IsEmpty():
+                continue
+            built = make_feature(geom.Clone(), zona, provincia)
+            if built is not None:
+                features.append(built)
+        ds_out = None
+
     return features
 
 
@@ -421,8 +438,63 @@ def build_rio_negro(workdir: Path) -> list[dict]:
     return dissolve_gpkg_by_zona(gpkg_norm, "otbn", "geom", "Río Negro")
 
 
+def build_tierra_del_fuego(workdir: Path) -> list[dict]:
+    if not TF_SHP.exists():
+        raise FileNotFoundError(TF_SHP)
+
+    raw = workdir / "tf_raw.gpkg"
+    run(
+        [
+            "ogr2ogr",
+            "-f",
+            "GPKG",
+            str(raw),
+            str(TF_SHP),
+            "-nln",
+            "raw",
+            "-nlt",
+            "PROMOTE_TO_MULTI",
+            "--config",
+            "OGR_CT_FORCE_TRADITIONAL_GIS_ORDER",
+            "YES",
+        ]
+    )
+
+    gpkg_norm = workdir / "tf_norm.gpkg"
+    sql = (
+        "SELECT CASE UPPER(TRIM(Cat_cons)) "
+        "WHEN 'I' THEN 1 WHEN 'II' THEN 2 WHEN 'III' THEN 3 END AS zona, "
+        "geom FROM raw WHERE UPPER(TRIM(Cat_cons)) IN ('I','II','III')"
+    )
+    run(
+        [
+            "ogr2ogr",
+            "-f",
+            "GPKG",
+            str(gpkg_norm),
+            str(raw),
+            "-nln",
+            "otbn",
+            "-nlt",
+            "PROMOTE_TO_MULTI",
+            "-dialect",
+            "sqlite",
+            "-sql",
+            sql,
+        ]
+    )
+    return dissolve_gpkg_by_zona(gpkg_norm, "otbn", "geom", "Tierra del Fuego")
+
+
 def main() -> int:
-    required = (SC_SHP, CHUBUT_NORTE, CHUBUT_SUR, NEUQUEN_GEOJSON, RIO_NEGRO_GPKG)
+    required = (
+        SC_SHP,
+        CHUBUT_NORTE,
+        CHUBUT_SUR,
+        NEUQUEN_GEOJSON,
+        RIO_NEGRO_GPKG,
+        TF_SHP,
+    )
     for path in required:
         if not path.exists():
             print(f"ERROR: falta {path}", file=sys.stderr)
@@ -436,6 +508,7 @@ def main() -> int:
             ("Río Negro", build_rio_negro),
             ("Chubut", build_chubut),
             ("Santa Cruz", build_santa_cruz),
+            ("Tierra del Fuego", build_tierra_del_fuego),
         ]
         all_features: list[dict] = []
         for label, builder in builders:

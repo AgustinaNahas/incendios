@@ -26,13 +26,15 @@ export type OtbnProvinceFilter =
   | "Neuquén"
   | "Río Negro"
   | "Chubut"
-  | "Santa Cruz";
+  | "Santa Cruz"
+  | "Tierra del Fuego";
 
 export const OTBN_PROVINCES: Exclude<OtbnProvinceFilter, "all">[] = [
   "Neuquén",
   "Río Negro",
   "Chubut",
   "Santa Cruz",
+  "Tierra del Fuego",
 ];
 
 export type OtbnProperties = {
