@@ -13,9 +13,9 @@ const sans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "Después del fuego · Bosques patagónicos",
+  title: "El Camino del fuego · Bosques Patagónicos",
   description:
-    "Scrollytelling inverso: consecuencias, incendios y prevención en los bosques patagónicos.",
+    "No es un capricho de la naturaleza: sequía extrema, vientos traicioneros y años sin la prevención adecuada.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -24,7 +24,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-[family-name:var(--font-sans)]">
+      <body className="min-h-full overflow-x-clip font-[family-name:var(--font-sans)]">
+        <a href="#otbn" className="skip-link">
+          Saltar al contenido
+        </a>
         {children}
       </body>
     </html>

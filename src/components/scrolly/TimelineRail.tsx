@@ -89,11 +89,11 @@ export function TimelineRail({ active, progress }: Props) {
   return (
     <nav
       aria-label="Línea de tiempo narrativa"
-      className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 text-[#f3efe8] md:flex lg:right-6"
+      className="fixed right-2 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 md:flex lg:right-5"
     >
-      <div className="relative flex flex-col items-center gap-2">
+      <div className="relative flex flex-col items-center gap-2 rounded-md bg-black/55 px-1.5 py-2 text-[#f3efe8] shadow-lg backdrop-blur-sm">
         <div
-          className="absolute top-3 bottom-3 w-px bg-current opacity-25"
+          className="absolute top-3 bottom-3 left-1/2 w-px -translate-x-1/2 bg-current/30"
           aria-hidden
         />
         {CHAPTERS.map((chapter) => {
@@ -103,14 +103,14 @@ export function TimelineRail({ active, progress }: Props) {
               key={chapter.id}
               href={`#${chapter.id}`}
               aria-current={isActive ? "true" : undefined}
-              className={`relative z-10 flex flex-col items-center gap-1 rounded-md px-1 py-1 transition-opacity ${
-                isActive ? "opacity-100" : "opacity-60 hover:opacity-90"
+              className={`relative z-10 flex min-h-11 min-w-11 flex-col items-center justify-center gap-1 rounded-md px-1 py-1 transition-opacity ${
+                isActive ? "opacity-100" : "opacity-80 hover:opacity-100"
               }`}
             >
               <TreeIcon kind={chapter.tree} active={isActive} />
               <span
                 className={`text-[10px] font-medium tracking-wide uppercase ${
-                  isActive ? "opacity-100" : "opacity-70"
+                  isActive ? "text-[#f3efe8]" : "text-[#f3efe8]/90"
                 }`}
               >
                 {chapter.short}
@@ -120,11 +120,12 @@ export function TimelineRail({ active, progress }: Props) {
         })}
       </div>
       <div
-        className="mt-2 h-16 w-1.5 self-center overflow-hidden rounded-full bg-current/20"
+        className="mt-1 h-16 w-1.5 self-center overflow-hidden rounded-full bg-black/40"
         title="Progreso de lectura"
+        aria-hidden
       >
         <div
-          className="w-full rounded-full bg-current transition-[height] duration-150"
+          className="w-full rounded-full bg-[#f3efe8] transition-[height] duration-150"
           style={{ height: `${Math.round(progress * 100)}%` }}
         />
       </div>
@@ -138,19 +139,27 @@ export function MobileChapterChips({
   active: ChapterId;
 }) {
   return (
-    <div className="fixed bottom-3 left-1/2 z-40 flex -translate-x-1/2 gap-1 rounded-full bg-black/45 px-2 py-1.5 text-[#f3efe8] backdrop-blur-md md:hidden">
-      {CHAPTERS.map((c) => (
-        <a
-          key={c.id}
-          href={`#${c.id}`}
-          aria-current={c.id === active ? "true" : undefined}
-          className={`rounded-full px-2.5 py-1 text-[11px] ${
-            c.id === active ? "bg-current/15 font-semibold" : "opacity-70"
-          }`}
-        >
-          {c.short}
-        </a>
-      ))}
-    </div>
+    <nav
+      aria-label="Capítulos"
+      className="fixed bottom-3 left-1/2 z-40 w-[min(100vw-1rem,28rem)] -translate-x-1/2 md:hidden"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
+      <div className="flex gap-0.5 overflow-x-auto overscroll-x-contain rounded-full bg-black/85 px-1.5 py-1 text-[#f3efe8] shadow-lg backdrop-blur-md [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {CHAPTERS.map((c) => (
+          <a
+            key={c.id}
+            href={`#${c.id}`}
+            aria-current={c.id === active ? "true" : undefined}
+            className={`flex min-h-10 shrink-0 items-center rounded-full px-3 py-2 text-[11px] leading-none whitespace-nowrap ${
+              c.id === active
+                ? "bg-[#f3efe8]/20 font-semibold text-[#f3efe8]"
+                : "text-[#f3efe8]/90"
+            }`}
+          >
+            {c.short}
+          </a>
+        ))}
+      </div>
+    </nav>
   );
 }

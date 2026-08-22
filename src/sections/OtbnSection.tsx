@@ -106,13 +106,13 @@ export function OtbnSection() {
   return (
     <section id="otbn" className="relative scroll-mt-8 py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4 md:px-8 lg:px-12">
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase opacity-70">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
           Momento IV · Territorio
         </p>
         <h2 className="mt-3 max-w-3xl font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
           El mapa que decide qué bosque se puede tocar
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed opacity-85 md:text-lg">
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           Del recorte nacional a las cinco provincias, después a la franja de
           Bosques Patagónicos, y de ahí al Ordenamiento Territorial de Bosques
           Nativos (Ley 26.331): tres categorías que dicen dónde se puede tocar
@@ -149,17 +149,17 @@ export function OtbnSection() {
               <div
                 className={`max-w-xl rounded-sm border px-5 py-5 transition-colors md:px-6 md:py-6 ${
                   step === item.id
-                    ? "border-current/30 bg-current/8"
-                    : "border-current/10 bg-current/4 opacity-70"
+                    ? "border-current/35 bg-current/10"
+                    : "border-current/15 bg-current/5"
                 }`}
               >
-                <p className="text-[11px] font-semibold tracking-[0.2em] uppercase opacity-65">
+                <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
                   {item.kicker}
                 </p>
                 <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed opacity-85 md:text-base">
+                <p className="mt-3 text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
                   {item.body}
                 </p>
               </div>
@@ -170,14 +170,14 @@ export function OtbnSection() {
             id="atlas-step-filters"
             className="flex min-h-[70vh] items-center py-12 lg:pr-6"
           >
-            <div className="max-w-xl space-y-5 rounded-sm border border-current/20 bg-current/8 px-5 py-5 md:px-6 md:py-6">
-              <p className="text-[11px] font-semibold tracking-[0.2em] uppercase opacity-65">
+            <div className="max-w-xl space-y-5 rounded-sm border border-current/25 bg-current/10 px-5 py-5 md:px-6 md:py-6">
+              <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
                 Explorar
               </p>
               <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
                 Filtrar por provincia y categoría
               </h3>
-              <p className="text-sm leading-relaxed opacity-85 md:text-base">
+              <p className="text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
                 Santa Cruz publica I y II; el resto incluye III. El mapa sigue
                 bloqueado: cambiá el recorte desde acá o abrilo a pantalla
                 completa.
@@ -189,8 +189,8 @@ export function OtbnSection() {
                   onClick={() => setProvince("all")}
                   className={`rounded-sm px-3 py-1.5 ${
                     province === "all"
-                      ? "bg-current/20 font-semibold"
-                      : "bg-current/8 opacity-80 hover:opacity-100"
+                      ? "bg-current/25 font-semibold"
+                      : "bg-current/10 text-[#f3efe8]/90 hover:bg-current/15"
                   }`}
                 >
                   Las cinco provincias
@@ -202,8 +202,8 @@ export function OtbnSection() {
                     onClick={() => setProvince(id)}
                     className={`rounded-sm px-3 py-1.5 ${
                       province === id
-                        ? "bg-current/20 font-semibold"
-                        : "bg-current/8 opacity-80 hover:opacity-100"
+                        ? "bg-current/25 font-semibold"
+                        : "bg-current/10 text-[#f3efe8]/90 hover:bg-current/15"
                     }`}
                   >
                     {id}

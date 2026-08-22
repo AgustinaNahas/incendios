@@ -170,7 +170,7 @@ export function FireHeader() {
             <h1 className="mt-5 font-[family-name:var(--font-sans)] text-[2.35rem] font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
               El Camino del fuego
             </h1>
-            <p className="mx-auto mt-8 max-w-[38rem] text-sm leading-relaxed text-white/90 md:text-lg">
+            <p className="mx-auto mt-8 max-w-[38rem] text-sm leading-relaxed text-[#f3efe8]/95 md:text-lg">
               No es un capricho de la naturaleza: sequía extrema, vientos
               traicioneros y años sin la prevención adecuada. Las voces de
               brigadistas, bomberos y vecinos relatan las fallas estructurales que

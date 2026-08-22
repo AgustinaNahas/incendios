@@ -16,9 +16,9 @@ const LEVEL_LABEL: Record<Level, string> = {
 };
 
 const LEVEL_COLOR: Record<Level, string> = {
-  alta: "#F46B15",
-  moderada: "#E0B25A",
-  baja: "#6FA88A",
+  alta: "#C2410C",
+  moderada: "#A16207",
+  baja: "#3F7A5C",
 };
 
 function clamp(value: number, min = 0, max = 1) {
@@ -237,25 +237,25 @@ export function InflammabilitySection() {
             style={{ opacity: rankChromeOpacity }}
           >
             <div className="max-w-xl">
-              <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#F46B15]/90">
+              <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#F46B15]">
                 Combustible vivo · Ranking
               </p>
               <h2 className="mt-2 font-[family-name:var(--font-display)] text-3xl leading-tight text-[#f3efe8] md:text-4xl">
                 Inflamabilidad de especies del bosque
               </h2>
-              <p className="mt-2 max-w-md text-sm leading-relaxed text-[#f3efe8]/70 md:text-base">
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-[#f3efe8]/85 md:text-base">
                 De menos a más inflamables. Bajá para recorrer el ranking de
                 costado — termina en el colihue.
               </p>
             </div>
             <div className="hidden shrink-0 text-right sm:block">
-              <p className="text-[11px] tracking-wide uppercase text-[#f3efe8]/50">
+              <p className="text-[11px] tracking-wide uppercase text-[#f3efe8]/80">
                 En foco
               </p>
               <p className="font-[family-name:var(--font-display)] text-lg text-[#f3efe8]">
                 {phase === "rank" ? activeRank.commonName : colihue.commonName}
               </p>
-              <p className="text-xs text-[#f3efe8]/55">
+              <p className="text-xs text-[#f3efe8]/80">
                 {phase === "rank"
                   ? activeRank.scientificName
                   : colihue.scientificName}
@@ -353,10 +353,10 @@ export function InflammabilitySection() {
                         <h3 className="font-[family-name:var(--font-display)] text-xl leading-tight">
                           {sp.commonName}
                         </h3>
-                        <p className="text-sm italic opacity-70">
+                        <p className="text-sm italic text-[#1A1A1A]/80">
                           {sp.scientificName}
                         </p>
-                        <p className="mt-auto pt-2 text-xs leading-relaxed opacity-75">
+                        <p className="mt-auto pt-2 text-xs leading-relaxed text-[#1A1A1A]/85">
                           {sp.note}
                         </p>
                       </div>
@@ -368,7 +368,7 @@ export function InflammabilitySection() {
           </div>
 
           <div
-            className="absolute inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-8 md:px-8"
+            className="absolute inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-20 md:px-8 md:pb-8"
             style={{
               opacity: showStoryPanel ? 1 : 0,
               transform: `translateY(${showStoryPanel ? 0 : 24}px)`,
@@ -383,24 +383,24 @@ export function InflammabilitySection() {
                     <span className="bg-[#2f6b4f] px-2 py-1 text-[10px] font-semibold tracking-wide uppercase text-[#f3efe8]">
                       Nativa
                     </span>
-                    <span className="bg-[#F46B15] px-2 py-1 text-[10px] font-semibold tracking-wide uppercase text-[#1A1A1A]">
+                    <span className="bg-[#C2410C] px-2 py-1 text-[10px] font-semibold tracking-wide uppercase text-[#f3efe8]">
                       Inflamabilidad alta
                     </span>
-                    <span className="text-[11px] tracking-wide text-[#940F11]/60">
+                    <span className="text-[11px] tracking-wide text-[#7a0c0e]">
                       {storyIndex + 1} / {storyCards.length}
                     </span>
                   </div>
-                  <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#940F11]/75">
+                  <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#7a0c0e]">
                     {activeStory.eyebrow}
                   </p>
                   <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-snug text-[#940F11]">
                     {activeStory.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[#5c2a22]/90 md:text-base">
+                  <p className="mt-3 text-sm leading-relaxed text-[#5c2a22] md:text-base">
                     {activeStory.body}
                   </p>
                   {storyIndex === storyCards.length - 1 ? (
-                    <p className="mt-4 text-[11px] leading-relaxed text-[#940F11]/55">
+                    <p className="mt-4 text-[11px] leading-relaxed text-[#7a0c0e]">
                       Fuente:{" "}
                       <a
                         href="https://intainforma.inta.gob.ar/las-especies-nativas-protegen-la-cordillera-argentina/"
@@ -418,7 +418,7 @@ export function InflammabilitySection() {
           </div>
 
           {phase === "rank" ? (
-            <div className="mx-auto flex w-full max-w-6xl shrink-0 items-center gap-3 px-4 pb-5 md:px-8">
+            <div className="mx-auto flex w-full max-w-6xl shrink-0 items-center gap-3 px-4 pb-20 md:px-8 md:pb-5">
               <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
                 <div
                   className="h-px bg-[#F46B15]"
@@ -427,7 +427,7 @@ export function InflammabilitySection() {
                   }}
                 />
               </div>
-              <p className="text-[11px] tracking-wide text-[#f3efe8]/45">
+              <p className="text-[11px] tracking-wide text-[#f3efe8]/80">
                 {activeRankIndex + 1} / {species.length}
               </p>
             </div>
