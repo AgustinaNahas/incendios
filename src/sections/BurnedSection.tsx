@@ -3,14 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BurnedMapClient } from "@/components/maps/BurnedMapClient";
 import { formatBurnedMonth } from "@/lib/burnedMap";
+import {
+  BURNED_TIMELINE_MONTHS,
+  burnedSeasonGradient,
+  seasonColor,
+  isoMonthIntensity,
+} from "@/lib/fireSeasonGradient";
 
-const MONTHS: string[] = [];
-for (let year = 2022; year <= 2026; year += 1) {
-  const last = year === 2026 ? 6 : 12;
-  for (let month = 1; month <= last; month += 1) {
-    MONTHS.push(`${year}-${String(month).padStart(2, "0")}`);
-  }
-}
+const MONTHS = BURNED_TIMELINE_MONTHS;
 
 const YEAR_TICKS = [
   { year: "2022", iso: "2022-01" },
@@ -60,6 +60,8 @@ export function BurnedSection() {
     () => (MONTHS.length > 1 ? (monthIndex / (MONTHS.length - 1)) * 100 : 0),
     [monthIndex],
   );
+  const seasonGradient = useMemo(() => burnedSeasonGradient(MONTHS), []);
+  const thumbColor = useMemo(() => seasonColor(isoMonthIntensity(iso)), [iso]);
 
   return (
     <section
@@ -101,15 +103,31 @@ export function BurnedSection() {
             </div>
 
             <div className="relative mt-1 h-2 rounded-full bg-[#1A1A1A]/15">
+              {/* Gradiente estacional (CONAE 2022–2026): verano bordo, invierno claro */}
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-[#940F11]"
+                className="absolute inset-y-0 left-0 overflow-hidden rounded-full"
                 style={{ width: `${progressPct}%` }}
-              />
+              >
+                <div
+                  className="h-full"
+                  style={{
+                    width:
+                      progressPct > 0
+                        ? `${(100 / progressPct) * 100}%`
+                        : "100%",
+                    backgroundImage: seasonGradient,
+                  }}
+                />
+              </div>
               <div
-                className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#1A1A1A] bg-[#F6F3EE]"
-                style={{ left: `${progressPct}%` }}
+                className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#1A1A1A] shadow-sm"
+                style={{ left: `${progressPct}%`, backgroundColor: thumbColor }}
               />
             </div>
+            <p className="text-[10px] tracking-wide opacity-55">
+              Color de la barra: media histórica de hectáreas por mes calendario
+              (CONAE, Patagonia 2022–2026) · verano más intenso, invierno más claro
+            </p>
             <div className="relative h-4 text-[11px] tracking-wide uppercase opacity-70">
               {YEAR_TICKS.map((tick) => {
                 const idx = MONTHS.indexOf(tick.iso);

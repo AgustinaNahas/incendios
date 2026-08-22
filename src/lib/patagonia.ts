@@ -37,6 +37,7 @@ export const CHAPTERS = [
     tree: "species",
   },
   { id: "brechas", label: "Brechas", short: "Brechas", tree: "gap" },
+  { id: "fuentes", label: "Fuentes", short: "Fuentes", tree: "sources" },
 ] as const;
 
 export type ChapterId = (typeof CHAPTERS)[number]["id"];

@@ -1,0 +1,62 @@
+[
+  {
+    "info": "OTBN – Neuquén",
+    "source": "Dirección Provincial de Catastro de Neuquén – servicio Base / MapServer, capa Bosques Nativos (ID 32). El servicio permite devolver geometrías en GeoJSON.",
+    "url": "https://dpcatastro.neuquen.gov.ar/server/rest/services/Base/MapServer",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "OTBN – Río Negro",
+    "source": "A partir de los mapas de Vida Silvestre, exportamos en QGIS el raster LOTBN_RioNegro_5m.tif y después lo convertimos a formato geojson para poder visualizarlo en el mapa.",
+    "url": "https://leydebosques.vidasilvestre.org.ar/rio-negro#general",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "OTBN – Chubut",
+    "source": "Archivos vectoriales OTBN Esquel y Norte.kmz y un DBF asociado. Los unificamos/procesamos para visualizar la información.",
+    "url":  "https://www.google.com/maps/d/u/1/viewer?mid=1TJ99RyDPbdZ4mzexZ5ZpurTAEzKLJJw&ll=-42.85038970183437%2C-71.09040037676102&z=10",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "OTBN – Santa Cruz",
+    "source": "Cartografía oficial del Consejo Agrario Provincial, vinculada al OTBN provincial.",
+    "url": "https://cap.santacruz.gob.ar/",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "OTBN – Tierra del Fuego",
+    "source": "Gobierno de Tierra del Fuego – archivos geoespaciales descargables.",
+    "url": "https://prodyambiente.tierradelfuego.gob.ar/informacion-geoespacial-archivos-descargables/",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "Ecorregiones de Argentina",
+    "source": "Administración de Parques Nacionales – Bosques Patagónicos. Referencia para la denominación oficial de la ecorregión.",
+    "url": "https://www.argentina.gob.ar/parquesnacionales/ecorregiones/bosques-patagonicos",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "Áreas quemadas históricas",
+    "source": "CONAE – Consultas Interactivas de Incendios. Fuente identificada para información espacial de incendios/áreas quemadas en formatos GIS.",
+    "url": "https://catalogos5.conae.gov.ar/catalogofocos",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "16 especies + inflamabilidad",
+    "source": "Bertolin et al., “Flammability features of native and non-native woody species from the southernmost ecosystems: a review”, Fire Ecology, 2024.",
+    "url": "https://link.springer.com/article/10.1186/s42408-024-00250-6",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "Inflamabilidad / carga de combustible – Patagonia",
+    "source": "Ghermandi et al., estudio sobre peligro de incendio e inflamabilidad en áreas de interfaz urbano-bosque de Patagonia.",
+    "url": "https://ri.conicet.gov.ar/handle/11336/66067",
+    "accessed": "22/08/2026"
+  },
+  {
+    "info": "Nothofagus / inflamabilidad post-incendio",
+    "source": "Landesmann et al. – severidad de incendios y retroalimentación positiva de la inflamabilidad en bosques patagónicos (N. pumilio, N. dombeyi y Austrocedrus chilensis).",
+    "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/jvs.12936",
+    "accessed": "22/08/2026"
+  }
+]

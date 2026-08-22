@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, type CSSProperties } from "react";
 import { FireSparks } from "@/components/scrolly/FireSparks";
+import { withBasePath } from "@/lib/paths";
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -88,7 +89,7 @@ export function FireHeader() {
           }}
         >
           <Image
-            src="/images/hero-fire.jpg"
+            src={withBasePath("/images/hero-fire.jpg")}
             alt=""
             fill
             sizes="100vw"

@@ -9,6 +9,7 @@ import { ConsequencesScrolly } from "@/sections/ConsequencesScrolly";
 import { BurnedSection } from "@/sections/BurnedSection";
 import { GapsSection } from "@/sections/GapsSection";
 import { InflammabilitySection } from "@/sections/InflammabilitySection";
+import { MethodsSection } from "@/sections/MethodsSection";
 import { useScrollChapters } from "@/lib/useScrollChapters";
 import { FireHeader } from "@/components/scrolly/FireHeader";
 
@@ -26,15 +27,15 @@ export function ScrollyApp() {
       <BurnedSection />
       <InflammabilitySection />
       <GapsSection />
+      <MethodsSection />
 
-      <footer className="mx-auto max-w-6xl px-4 py-16 text-sm opacity-70 md:px-8">
+      <footer className="mx-auto max-w-6xl px-4 py-12 text-sm opacity-60 md:px-8">
         <p>
-          Fuentes: RII (cantidad y hectáreas de incendios); OTBN de Neuquén, Río
-          Negro, Chubut, Santa Cruz y Tierra del Fuego en{" "}
-          <code className="text-xs">public/data/otbn-zonas.geojson</code>. Fotos
-          de especies: Wikimedia Commons (ver créditos en cada ficha). Series de
-          presupuesto, costos y stock de bosque nativo son placeholders editables
-          en <code className="text-xs">src/data/</code>.
+          Detalle completo de fuentes en{" "}
+          <a href="#fuentes" className="underline underline-offset-2">
+            De dónde sale cada dato
+          </a>
+          . Fotos de especies: Wikimedia Commons (créditos en cada ficha).
         </p>
       </footer>
     </div>

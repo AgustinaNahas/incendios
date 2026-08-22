@@ -11,10 +11,19 @@ function TreeIcon({
   kind,
   active,
 }: {
-  kind: "burned" | "fire" | "healthy" | "otbn" | "gap" | "species";
+  kind: "burned" | "fire" | "healthy" | "otbn" | "gap" | "species" | "sources";
   active: boolean;
 }) {
   const opacity = active ? 1 : 0.45;
+  if (kind === "sources") {
+    return (
+      <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
+        <rect x="6" y="6" width="16" height="22" rx="1.5" fill="#f3efe8" opacity="0.9" />
+        <path d="M9 12 H19 M9 16 H17 M9 20 H18" stroke="#1A1A1A" strokeWidth="1.4" />
+        <rect x="8" y="24" width="5" height="2" fill="#E0B25A" />
+      </svg>
+    );
+  }
   if (kind === "species") {
     return (
       <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>

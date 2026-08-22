@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import testimonies from "@/data/testimonies.json";
+import { withBasePath } from "@/lib/paths";
 
 const CONSEQUENCES_COPY =
   "El fuego no se apaga cuando las llamas se van. Quedan casas irreconocibles, un horizonte que ya no se reconoce y vecinos que todavía no saben si van a poder quedarse.";
@@ -11,7 +12,7 @@ export function ConsequencesScrolly() {
     <section id="despues" className="relative scroll-mt-8">
       <div className="sticky top-0 h-dvh overflow-hidden bg-[#120303]">
         <Image
-          src="/images/forest-fire-scrolly.jpg"
+          src={withBasePath("/images/forest-fire-scrolly.jpg")}
           alt=""
           fill
           sizes="100vw"
