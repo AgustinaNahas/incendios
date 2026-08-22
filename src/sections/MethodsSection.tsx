@@ -19,14 +19,15 @@ function SourceLink({ row }: { row: SourceRow }) {
         href={row.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="break-all text-[#E8C56A] underline decoration-[#E8C56A]/40 underline-offset-2 hover:decoration-[#E8C56A]"
+        className="break-all text-[#F0D078] underline decoration-[#F0D078]/45 underline-offset-2 hover:decoration-[#F0D078]"
       >
+        <span className="sr-only">Abrir en nueva pestaña: </span>
         {row.url.replace(/^https?:\/\//, "")}
       </a>
     );
   }
   return (
-    <span className="text-sm leading-relaxed text-[#f3efe8]/75">
+    <span className="text-sm leading-relaxed text-[#f3efe8]/80">
       {row.urlNote ?? "URL no disponible"}
     </span>
   );
@@ -38,7 +39,7 @@ export function MethodsSection() {
   return (
     <section
       id="fuentes"
-      className="relative scroll-mt-8 bg-[#0c0c0c] px-4 py-20 text-[#f3efe8] md:px-8 md:py-28 lg:px-12"
+      className="relative scroll-mt-8 bg-[#0c0c0c] px-4 pt-20 pb-28 text-[#f3efe8] md:px-8 md:pt-28 md:pb-24 lg:px-12"
     >
       <div className="mx-auto max-w-6xl space-y-10">
         <div className="max-w-3xl space-y-5">
@@ -112,6 +113,14 @@ export function MethodsSection() {
             </tbody>
           </table>
         </div>
+
+        <footer className="border-t border-[#f3efe8]/20 pt-8 pb-8 text-sm leading-relaxed text-[#f3efe8]/90 md:pb-0">
+          <p>
+            Fotos de especies: Wikimedia Commons (créditos en cada ficha). Esta
+            pieza es un scrollytelling en construcción: las fuentes de arriba
+            documentan de dónde sale cada capa y dato.
+          </p>
+        </footer>
       </div>
     </section>
   );

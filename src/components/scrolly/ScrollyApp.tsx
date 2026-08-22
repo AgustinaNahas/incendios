@@ -28,19 +28,6 @@ export function ScrollyApp() {
       <InflammabilitySection />
       <GapsSection />
       <MethodsSection />
-
-      <footer className="mx-auto max-w-6xl px-4 pt-12 pb-24 text-sm text-[#f3efe8]/80 md:px-8 md:pb-12">
-        <p>
-          Detalle completo de fuentes en{" "}
-          <a
-            href="#fuentes"
-            className="font-medium text-[#f3efe8] underline underline-offset-2"
-          >
-            De dónde sale cada dato
-          </a>
-          . Fotos de especies: Wikimedia Commons (créditos en cada ficha).
-        </p>
-      </footer>
     </div>
   );
 }

@@ -16,21 +16,22 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #220303;
+  background-color: #160808;
   overflow-x: clip;
 }
 
 body {
-  background-color: #220303;
+  /* Fondo estable y oscuro: el amarillo/naranja del gradiente viejo
+     quedaba detrás del footer y de OTBN y rompía el contraste. */
+  background-color: #160808;
   background-image: linear-gradient(
-    to bottom,
+    180deg,
     #220303 0%,
-    #940f11 60%,
-    #f46b15 80%,
-    #ffc800 100%
+    #1a0808 45%,
+    #140606 100%
   );
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-attachment: fixed;
   color: var(--foreground);
   overflow-x: clip;
 }

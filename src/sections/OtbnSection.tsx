@@ -104,7 +104,7 @@ export function OtbnSection() {
   const showFilters = filtersActive;
 
   return (
-    <section id="otbn" className="relative scroll-mt-8 py-16 md:py-24">
+    <section id="otbn" className="relative scroll-mt-8 bg-[#160808] py-16 text-[#f3efe8] md:py-24">
       <div className="mx-auto max-w-6xl px-4 md:px-8 lg:px-12">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
           Momento IV · Territorio
