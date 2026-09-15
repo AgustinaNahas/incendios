@@ -9,7 +9,7 @@ const AtlasMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full w-full items-center justify-center bg-[#C9C6C1] text-sm text-[#1A1A1A]/70">
+      <div className="flex h-full w-full items-center justify-center bg-[#2B2B2B] text-sm text-[#f3efe8]/70">
         Cargando mapa…
       </div>
     ),

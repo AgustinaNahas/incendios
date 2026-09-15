@@ -1,119 +1,226 @@
-import { OTBN_ZONA_COPY } from "@/lib/otbnCopy";
+import { formatHa } from "@/lib/format";
+import { OTBN_COLORS, OTBN_ZONA_LABELS, type OtbnZona } from "@/lib/otbnColors";
+import {
+  OTBN_PROVINCE_COPY,
+  OTBN_PROVINCE_SLUG,
+  OTBN_PROVINCES,
+  type OtbnProvinceFilter,
+} from "@/lib/otbnCopy";
+import {
+  ECOREGION_HA,
+  OTBN_TOTAL_HA,
+  otbnHaFor,
+  otbnShareOfEcoregion,
+  otbnZonasPresent,
+} from "@/lib/otbnStats";
 
-export type AtlasStepId =
-  | "argentina"
-  | "provincias"
-  | "ecoregion"
-  | "otbn-1"
-  | "otbn-2"
-  | "otbn-3";
+export type AtlasFitTarget = "argentina" | "patagonia" | "province";
 
-export type AtlasFitTarget = "argentina" | "ecoregion" | "provincias";
+export type AtlasOtbnPaint = "off" | "forest" | "zones";
+
+export type AtlasBarConfig =
+  | {
+      variant: "solid";
+      total: number;
+      label: string;
+      segments?: { zona: OtbnZona; value: number }[];
+    }
+  | {
+      variant: "share";
+      total: number;
+      value: number;
+      percentLabel: string;
+      caption: string;
+    }
+  | {
+      variant: "stacked";
+      total: number;
+      segments: { zona: OtbnZona; value: number }[];
+      caption: string;
+    };
 
 export type AtlasStep = {
-  id: AtlasStepId;
+  id: string;
   kicker: string;
   title: string;
   body: string;
+  showCategoryLegend: boolean;
   fit: AtlasFitTarget;
-  showEcoregion: boolean;
-  showEcoregionOutline: boolean;
-  showBosqueFill: boolean;
-  showProvinces: boolean;
-  showProvinceHatch: boolean;
-  showCities: boolean;
-  otbnMax: number;
+  province: OtbnProvinceFilter;
+  showProvinceFill: boolean;
+  showBosque: boolean;
+  otbnPaint: AtlasOtbnPaint;
+  showLabels: boolean;
+  bar: AtlasBarConfig;
 };
 
+function stackedBar(province: OtbnProvinceFilter): AtlasBarConfig {
+  const ha = otbnHaFor(province);
+  const zonas = otbnZonasPresent(province);
+  return {
+    variant: "stacked",
+    total: ha.total,
+    segments: zonas.map((zona) => ({ zona, value: ha[zona] })),
+    caption: `${formatHa(ha.total)} ha.`,
+  };
+}
+
+const ecoregionStep: AtlasStep = {
+  id: "ecoregion",
+  kicker: "Ecorregión",
+  title: "Ecorregión Andino Patagónica",
+  body: "Se extiende a lo largo de 5 provincias argentinas: Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Está cubierta principalmente por bosques, pero también hay estepa, mallines, lagos y glaciares.",
+  showCategoryLegend: false,
+  fit: "argentina",
+  province: "all",
+  showProvinceFill: true,
+  showBosque: false,
+  otbnPaint: "off",
+  showLabels: true,
+  bar: {
+    variant: "solid",
+    total: ECOREGION_HA,
+    label: `${formatHa(ECOREGION_HA)} ha.`,
+  },
+};
+
+const bosquesStep: AtlasStep = {
+  id: "bosques",
+  kicker: "Bosque nativo",
+  title: "Bosques andinos patagónicos",
+  body: "Gran parte de esa región son bosques nativos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas como la lenga, el ñire, el coihue o el alerce.",
+  showCategoryLegend: false,
+  fit: "patagonia",
+  province: "all",
+  showProvinceFill: false,
+  showBosque: true,
+  otbnPaint: "off",
+  showLabels: true,
+  bar: {
+    variant: "share",
+    total: ECOREGION_HA,
+    value: OTBN_TOTAL_HA.total,
+    percentLabel: `${Math.round(otbnShareOfEcoregion() * 100)}%`,
+    caption: `${formatHa(OTBN_TOTAL_HA.total)} ha. de ${formatHa(ECOREGION_HA)} ha.`,
+  },
+};
+
+const categoriasStep: AtlasStep = {
+  id: "categorias",
+  kicker: "Ley 26.331",
+  title: "Categorías de conservación",
+  body: "Para proteger los bosques nativos, la Ley Nacional 26.331 los clasifica en tres categorías.",
+  showCategoryLegend: true,
+  fit: "patagonia",
+  province: "all",
+  showProvinceFill: false,
+  showBosque: false,
+  otbnPaint: "zones",
+  showLabels: true,
+  bar: stackedBar("all"),
+};
+
+function provinceSteps(
+  province: Exclude<OtbnProvinceFilter, "all">,
+): AtlasStep[] {
+  const slug = OTBN_PROVINCE_SLUG[province];
+  const copy = OTBN_PROVINCE_COPY[province];
+  const ha = otbnHaFor(province);
+  const zonas = otbnZonasPresent(province);
+  return [
+    {
+      id: `${slug}-total`,
+      kicker: province,
+      title: copy.title,
+      body: copy.body,
+      showCategoryLegend: false,
+      fit: "province",
+      province,
+      showProvinceFill: false,
+      showBosque: false,
+      otbnPaint: "forest",
+      showLabels: true,
+      bar: {
+        variant: "solid",
+        total: ha.total,
+        label: `${formatHa(ha.total)} ha.`,
+        segments: zonas.map((zona) => ({ zona, value: ha[zona] })),
+      },
+    },
+    {
+      id: `${slug}-categorias`,
+      kicker: province,
+      title: copy.title,
+      body: copy.body,
+      showCategoryLegend: false,
+      fit: "province",
+      province,
+      showProvinceFill: false,
+      showBosque: false,
+      otbnPaint: "zones",
+      showLabels: true,
+      bar: stackedBar(province),
+    },
+  ];
+}
+
 export const ATLAS_STEPS: AtlasStep[] = [
-  {
-    id: "argentina",
-    kicker: "El recorte",
-    title: "Patagonia, en el mapa",
-    body: "El relato no cubre todo el país: se concentra en el sur andino-patagónico, donde el bosque nativo, el viento y la frontera con Chile definen el riesgo de incendio.",
-    fit: "argentina",
-    showEcoregion: false,
-    showEcoregionOutline: false,
-    showBosqueFill: false,
-    showProvinces: false,
-    showProvinceHatch: false,
-    showCities: false,
-    otbnMax: 0,
-  },
-  {
-    id: "provincias",
-    kicker: "Cinco provincias",
-    title: "Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego",
-    body: "Primero el recorte político: cinco provincias del sur. El bosque no llena el mapa —corre por el oeste— pero acá se decide el ordenamiento que después se pinta sobre esa franja.",
-    fit: "provincias",
-    showEcoregion: false,
-    showEcoregionOutline: false,
-    showBosqueFill: false,
-    showProvinces: true,
-    showProvinceHatch: true,
-    showCities: false,
-    otbnMax: 0,
-  },
-  {
-    id: "ecoregion",
-    kicker: "Ecorregión",
-    title: "Bosques Patagónicos",
-    body: "Una franja estrecha sobre la cordillera: lenga, ñire, ciprés y coihue. Es el recorte ecológico de esta nota —no la estepa, no el monte— y el territorio que la Ley de Bosques tiene que ordenar.",
-    fit: "ecoregion",
-    showEcoregion: true,
-    showEcoregionOutline: true,
-    showBosqueFill: false,
-    showProvinces: true,
-    showProvinceHatch: false,
-    showCities: true,
-    otbnMax: 0,
-  },
-  {
-    id: "otbn-1",
-    kicker: `Categoría ${OTBN_ZONA_COPY[1].code}`,
-    title: OTBN_ZONA_COPY[1].title,
-    body: OTBN_ZONA_COPY[1].body,
-    fit: "ecoregion",
-    showEcoregion: false,
-    showEcoregionOutline: true,
-    showBosqueFill: false,
-    showProvinces: true,
-    showProvinceHatch: false,
-    showCities: true,
-    otbnMax: 1,
-  },
-  {
-    id: "otbn-2",
-    kicker: `Categoría ${OTBN_ZONA_COPY[2].code}`,
-    title: OTBN_ZONA_COPY[2].title,
-    body: OTBN_ZONA_COPY[2].body,
-    fit: "ecoregion",
-    showEcoregion: false,
-    showEcoregionOutline: true,
-    showBosqueFill: false,
-    showProvinces: true,
-    showProvinceHatch: false,
-    showCities: true,
-    otbnMax: 2,
-  },
-  {
-    id: "otbn-3",
-    kicker: `Categoría ${OTBN_ZONA_COPY[3].code}`,
-    title: OTBN_ZONA_COPY[3].title,
-    body: OTBN_ZONA_COPY[3].body,
-    fit: "ecoregion",
-    showEcoregion: false,
-    showEcoregionOutline: true,
-    showBosqueFill: false,
-    showProvinces: true,
-    showProvinceHatch: false,
-    showCities: true,
-    otbnMax: 3,
-  },
+  ecoregionStep,
+  bosquesStep,
+  categoriasStep,
+  ...OTBN_PROVINCES.flatMap(provinceSteps),
 ];
 
-export function atlasStepById(id: AtlasStepId): AtlasStep {
+export type AtlasPanel = {
+  id: string;
+  label: string;
+  steps: AtlasStep[];
+};
+
+export const ATLAS_PANELS: AtlasPanel[] = [
+  { id: "ecoregion", label: ecoregionStep.title, steps: [ecoregionStep] },
+  { id: "bosques", label: bosquesStep.title, steps: [bosquesStep] },
+  { id: "categorias", label: categoriasStep.title, steps: [categoriasStep] },
+  ...OTBN_PROVINCES.map((province) => {
+    const steps = provinceSteps(province);
+    return {
+      id: OTBN_PROVINCE_SLUG[province],
+      label: province,
+      steps,
+    };
+  }),
+];
+
+export type AtlasStepId = (typeof ATLAS_STEPS)[number]["id"];
+
+export function atlasStepById(id: string): AtlasStep {
   const step = ATLAS_STEPS.find((item) => item.id === id);
   if (!step) return ATLAS_STEPS[0];
   return step;
 }
+
+export const OTBN_CATEGORY_BULLETS: {
+  zona: OtbnZona;
+  color: string;
+  code: string;
+  text: string;
+}[] = [
+  {
+    zona: 1,
+    color: OTBN_COLORS[1],
+    code: "I",
+    text: "Áreas que deben permanecer intactas.",
+  },
+  {
+    zona: 2,
+    color: OTBN_COLORS[2],
+    code: "II",
+    text: "Áreas que pueden aprovecharse de forma sostenible.",
+  },
+  {
+    zona: 3,
+    color: OTBN_COLORS[3],
+    code: "III",
+    text: "Áreas que pueden transformarse, pero solo con evaluación de impacto ambiental y bajo condiciones estrictas.",
+  },
+];

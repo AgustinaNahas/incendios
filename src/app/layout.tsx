@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { Noto_Serif_KR, Noto_Serif_Tamil } from "next/font/google";
 import "./globals.css";
 
-const display = Fraunces({
+const display = Noto_Serif_KR({
   variable: "--font-display",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
 });
 
-const sans = Source_Sans_3({
+const sans = Noto_Serif_Tamil({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,8 +28,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <body className="min-h-full overflow-x-clip font-[family-name:var(--font-sans)]">
-        <a href="#otbn" className="skip-link">
+      <body className={`${sans.className} min-h-full overflow-x-clip`}>
+        <a href="#intro" className="skip-link">
           Saltar al contenido
         </a>
         {children}

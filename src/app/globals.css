@@ -2,38 +2,38 @@
 @import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #220303;
+  --background: #2b2b2b;
   --foreground: #f3efe8;
-  --font-display: var(--font-display);
-  --font-sans: var(--font-sans);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #160808;
+  background-color: #2b2b2b;
   overflow-x: clip;
 }
 
 body {
-  /* Fondo estable y oscuro: el amarillo/naranja del gradiente viejo
-     quedaba detrás del footer y de OTBN y rompía el contraste. */
-  background-color: #160808;
-  background-image: linear-gradient(
-    180deg,
-    #220303 0%,
-    #1a0808 45%,
-    #140606 100%
-  );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: #2b2b2b;
+  background-image: none;
   color: var(--foreground);
   overflow-x: clip;
+  font-family: var(--font-sans), "Noto Serif Tamil", serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), "Noto Serif KR", serif;
 }
 
 :focus-visible {
@@ -83,6 +83,24 @@ body {
   background: rgba(255, 107, 45, 0.35);
 }
 
+@keyframes header-smoke {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(6%, -16%);
+  }
+}
+
+.header-smoke-puff {
+  animation: header-smoke 8s ease-in-out infinite alternate;
+  transform-origin: 60% 80%;
+}
+
+.header-smoke-puff-delay {
+  animation-delay: 1.8s;
+}
+
 .fire-spark {
   position: absolute;
   top: 0;
@@ -101,6 +119,46 @@ body {
     rgba(148, 15, 17, 0.2) 49.52%,
     rgba(34, 3, 3, 0) 75.96%
   );
+}
+
+.otbn-mapbox,
+.otbn-mapbox .mapboxgl-map,
+.otbn-mapbox .mapboxgl-canvas,
+.otbn-mapbox .mapboxgl-canvas-container {
+  background: #2b2b2b;
+}
+
+/* pointer-events-none en el wrapper no alcanza a los canvas de Mapbox. */
+.otbn-mapbox.pointer-events-none,
+.otbn-mapbox.pointer-events-none * {
+  pointer-events: none !important;
+}
+
+.otbn-mapbox .mapboxgl-ctrl-attrib {
+  background: transparent;
+  color: rgba(243, 239, 232, 0.42);
+  font-size: 10px;
+}
+
+.otbn-mapbox .mapboxgl-ctrl-attrib a {
+  color: rgba(243, 239, 232, 0.55);
+}
+
+.otbn-mapbox .mapboxgl-ctrl-logo {
+  opacity: 0.4;
+}
+
+.otbn-mapbox .mapboxgl-ctrl-group {
+  background: #2b2b2b;
+  border: 1px solid rgba(243, 239, 232, 0.18);
+}
+
+.otbn-mapbox .mapboxgl-ctrl-group button + button {
+  border-top-color: rgba(243, 239, 232, 0.12);
+}
+
+.otbn-mapbox .mapboxgl-ctrl button {
+  filter: invert(1);
 }
 
 .atlas-map .leaflet-container {

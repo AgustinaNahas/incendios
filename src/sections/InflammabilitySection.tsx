@@ -190,7 +190,7 @@ export function InflammabilitySection() {
       className="relative scroll-mt-8"
       style={{ height: "600vh" }}
     >
-      <div className="sticky top-0 h-dvh overflow-hidden bg-[#1a0806]">
+      <div className="sticky top-0 h-dvh overflow-hidden bg-[#2B2B2B]">
         <div
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
@@ -226,7 +226,7 @@ export function InflammabilitySection() {
           <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#F46B15]">
             Zoom · Chusquea culeou
           </p>
-          <h2 className="mx-auto mt-2 max-w-xl font-[family-name:var(--font-display)] text-3xl leading-tight text-[#f3efe8] md:text-4xl">
+          <h2 className="mx-auto mt-2 max-w-[800px] font-[family-name:var(--font-display)] text-3xl leading-tight text-[#f3efe8] md:text-4xl">
             Nativa, inflamable — y no es un pino
           </h2>
         </div>
@@ -236,7 +236,7 @@ export function InflammabilitySection() {
             className="mx-auto flex w-full max-w-6xl shrink-0 items-end justify-between gap-4 px-4 pt-8 pb-4 md:px-8"
             style={{ opacity: rankChromeOpacity }}
           >
-            <div className="max-w-xl">
+            <div className="max-w-[800px]">
               <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#F46B15]">
                 Combustible vivo · Ranking
               </p>

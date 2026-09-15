@@ -131,22 +131,16 @@ export function FireSparks({ intensityRef }: Props) {
       height = box.height;
     };
 
-    const seed = () => {
-      measure();
-      for (let i = 0; i < BASE_ACTIVE; i += 1) {
-        resetSpark(sparks[i], width, height, intensityRef.current, false);
-        sparks[i].life = Math.random() * sparks[i].maxLife * 0.7;
-        paint(sparks[i]);
-      }
-    };
-
-    seed();
+    measure();
 
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const intensity = intensityRef.current;
-      const target = Math.round(BASE_ACTIVE + intensity * MAX_EXTRA);
+      const target =
+        intensity < 0.08
+          ? 0
+          : Math.round(BASE_ACTIVE + intensity * MAX_EXTRA);
 
       let activeCount = 0;
       for (const spark of sparks) {
@@ -193,7 +187,7 @@ export function FireSparks({ intensityRef }: Props) {
     <div
       ref={layerRef}
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-[9] overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-[18] overflow-hidden"
     />
   );
 }

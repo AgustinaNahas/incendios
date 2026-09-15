@@ -16,7 +16,7 @@ export function OtbnExplorer() {
   const [panelOpen, setPanelOpen] = useState(true);
 
   return (
-    <div className="relative h-svh w-full overflow-hidden bg-[#C9C6C1] text-[#1A1A1A]">
+    <div className="relative h-svh w-full overflow-hidden bg-[#2B2B2B] text-[#f3efe8]">
       <OtbnMapClient
         explorer
         interactive
@@ -27,7 +27,7 @@ export function OtbnExplorer() {
 
       <div className="pointer-events-none absolute inset-0 z-[1000] flex flex-col justify-between p-3 md:p-5">
         <header className="pointer-events-auto flex items-start justify-between gap-3">
-          <div className="max-w-xl rounded-sm border border-[#1A1A1A]/15 bg-[#F6F3EE]/92 px-4 py-3 backdrop-blur-md md:px-5 md:py-4">
+          <div className="max-w-xl border border-[#f3efe8]/15 bg-[#2B2B2B]/78 px-4 py-3 backdrop-blur-md md:px-5 md:py-4">
             <p className="text-[10px] font-semibold tracking-[0.2em] uppercase opacity-65">
               OTBN · Ley 26.331
             </p>
@@ -35,13 +35,13 @@ export function OtbnExplorer() {
               Zonas de bosque nativo
             </h1>
             <p className="mt-2 text-sm leading-relaxed opacity-80">
-              Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Tocá una
-              categoría para resaltarla sobre el atlas.
+              Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Pasá el
+              cursor por una categoría para resaltarla.
             </p>
           </div>
           <Link
             href="/#otbn"
-            className="rounded-sm border border-[#1A1A1A]/20 bg-[#F6F3EE]/92 px-3 py-2 text-xs font-semibold backdrop-blur-md hover:bg-white"
+            className="border border-[#f3efe8]/20 bg-[#2B2B2B]/78 px-3 py-2 text-xs font-semibold backdrop-blur-md hover:bg-[#1a0a0a]"
           >
             ← Volver al relato
           </Link>
@@ -52,10 +52,10 @@ export function OtbnExplorer() {
             <button
               type="button"
               onClick={() => setProvince("all")}
-              className={`rounded-sm px-3 py-1.5 text-xs backdrop-blur-md ${
+              className={`px-3 py-1.5 text-xs backdrop-blur-md ${
                 province === "all"
-                  ? "bg-[#1A1A1A] font-semibold text-[#F6F3EE]"
-                  : "bg-[#F6F3EE]/90 opacity-80 hover:opacity-100"
+                  ? "bg-[#f3efe8] font-semibold text-[#2B2B2B]"
+                  : "bg-[#2B2B2B]/70 opacity-80 hover:opacity-100"
               }`}
             >
               Todas
@@ -65,10 +65,10 @@ export function OtbnExplorer() {
                 key={id}
                 type="button"
                 onClick={() => setProvince(id)}
-                className={`rounded-sm px-3 py-1.5 text-xs backdrop-blur-md ${
+                className={`px-3 py-1.5 text-xs backdrop-blur-md ${
                   province === id
-                    ? "bg-[#1A1A1A] font-semibold text-[#F6F3EE]"
-                    : "bg-[#F6F3EE]/90 opacity-80 hover:opacity-100"
+                    ? "bg-[#f3efe8] font-semibold text-[#2B2B2B]"
+                    : "bg-[#2B2B2B]/70 opacity-80 hover:opacity-100"
                 }`}
               >
                 {id}
@@ -79,7 +79,7 @@ export function OtbnExplorer() {
           <button
             type="button"
             onClick={() => setPanelOpen((v) => !v)}
-            className="self-start rounded-sm border border-[#1A1A1A]/20 bg-[#F6F3EE]/90 px-3 py-1.5 text-xs backdrop-blur-md md:hidden"
+            className="self-start border border-[#f3efe8]/20 bg-[#2B2B2B]/80 px-3 py-1.5 text-xs backdrop-blur-md md:hidden"
           >
             {panelOpen ? "Ocultar categorías" : "Ver categorías"}
           </button>
@@ -93,7 +93,7 @@ export function OtbnExplorer() {
             : "pointer-events-none opacity-0 md:pointer-events-auto md:opacity-100"
         }`}
       >
-        <div className="max-h-[70vh] space-y-2 overflow-y-auto rounded-sm border border-[#1A1A1A]/15 bg-[#F6F3EE]/94 p-3 backdrop-blur-md md:p-4">
+        <div className="max-h-[70vh] space-y-2 overflow-y-auto border border-[#f3efe8]/15 bg-[#2B2B2B]/86 p-3 backdrop-blur-md md:p-4">
           <p className="px-1 text-[10px] font-semibold tracking-[0.18em] uppercase opacity-60">
             Las tres categorías
           </p>
@@ -107,10 +107,12 @@ export function OtbnExplorer() {
                 onClick={() =>
                   setHighlightZona((prev) => (prev === zona ? null : zona))
                 }
-                className={`w-full rounded-sm border px-3 py-3 text-left transition-colors ${
+                onMouseEnter={() => setHighlightZona(zona)}
+                onMouseLeave={() => setHighlightZona(null)}
+                className={`w-full border px-3 py-3 text-left transition-colors ${
                   active
-                    ? "border-[#1A1A1A]/40 bg-[#1A1A1A]/8"
-                    : "border-[#1A1A1A]/10 bg-white/40 hover:bg-white/70"
+                    ? "border-[#f3efe8]/40 bg-[#f3efe8]/8"
+                    : "border-[#f3efe8]/10 bg-[#f3efe8]/4 hover:bg-[#f3efe8]/8"
                 }`}
               >
                 <div className="flex items-center gap-2">

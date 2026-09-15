@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_MAPBOX_TOKEN:
+      process.env.NEXT_PUBLIC_MAPBOX_TOKEN ??
+      "pk.eyJ1IjoiaGF2YiIsImEiOiJpSHhUWGVBIn0.IY5RvkA4-jqVtNxcsYioug",
   },
 };
 

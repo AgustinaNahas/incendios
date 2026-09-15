@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "build:otbn": "python3 scripts/build-otbn-geojson.py",
+    "build:burned": "python3 scripts/build-burned-geojson.py",
     "preview:static": "npx --yes serve out"
   },
   "dependencies": {
     "d3": "^7.9.0",
     "framer-motion": "^13.0.0",
     "leaflet": "^1.9.4",
+    "mapbox-gl": "^3.30.0",
     "next": "16.3.0",
     "papaparse": "^5.5.4",
     "react": "19.2.8",
@@ -32,5 +34,8 @@
     "eslint-config-next": "16.3.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3"
   }
 }

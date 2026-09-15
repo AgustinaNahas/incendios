@@ -1,4 +1,4 @@
-/** Colores del atlas esquemático y categorías OTBN. */
+/** Colores del atlas OTBN sobre Mapbox Dark. */
 
 export const ATLAS_COLORS = {
   water: "#C9C6C1",
@@ -6,6 +6,9 @@ export const ATLAS_COLORS = {
   neighbor: "#D9D5CE",
   stroke: "#1A1A1A",
   coral: "#C45C4A",
+  forest: "#E6E2C4",
+  barTrack: "#6F7358",
+  provinceFill: "#9A9A92",
 } as const;
 
 export const OTBN_COLORS = {

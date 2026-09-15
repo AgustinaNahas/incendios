@@ -1,40 +1,50 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { OtbnMapClient } from "@/components/maps/OtbnMapClient";
-import { OTBN_COLORS, OTBN_ZONA_LABELS, type OtbnZona } from "@/lib/otbnColors";
-import { ATLAS_STEPS, type AtlasStepId } from "@/lib/atlasSteps";
+import { AtlasShareBar } from "@/components/charts/AtlasShareBar";
 import {
-  OTBN_PROVINCES,
-  type OtbnProvinceFilter,
-} from "@/lib/otbnCopy";
+  ATLAS_PANELS,
+  OTBN_CATEGORY_BULLETS,
+  type AtlasPanel,
+  type AtlasStepId,
+} from "@/lib/atlasSteps";
+
+const PROVINCE_SECOND_AT = 0.55;
+
+function panelForStep(step: AtlasStepId): AtlasPanel {
+  return (
+    ATLAS_PANELS.find((panel) => panel.steps.some((item) => item.id === step)) ??
+    ATLAS_PANELS[0]
+  );
+}
 
 function AtlasDots({
-  active,
+  activePanel,
   onSelect,
 }: {
-  active: AtlasStepId;
-  onSelect: (id: AtlasStepId) => void;
+  activePanel: string;
+  onSelect: (id: string) => void;
 }) {
   return (
     <div
-      className="flex shrink-0 items-center justify-center gap-2.5 py-2.5"
+      className="flex shrink-0 flex-wrap items-center justify-center gap-1.5 py-2"
       role="tablist"
       aria-label="Pasos del mapa"
     >
-      {ATLAS_STEPS.map((step, index) => {
-        const selected = step.id === active;
+      {ATLAS_PANELS.map((panel, index) => {
+        const selected = panel.id === activePanel;
         return (
           <button
-            key={step.id}
+            key={panel.id}
             type="button"
             role="tab"
             aria-selected={selected}
-            aria-label={`${index + 1}. ${step.title}`}
-            onClick={() => onSelect(step.id)}
-            className={`h-2.5 w-2.5 rounded-full border border-current/70 transition-colors ${
-              selected ? "bg-current" : "bg-transparent hover:bg-current/40"
+            aria-label={`${index + 1}. ${panel.label}`}
+            onClick={() => onSelect(panel.id)}
+            className={`h-2 w-2 rounded-full border border-[#f3efe8]/50 transition-colors ${
+              selected ? "bg-[#f3efe8]" : "bg-transparent hover:bg-[#f3efe8]/40"
             }`}
           />
         );
@@ -44,37 +54,45 @@ function AtlasDots({
 }
 
 export function OtbnSection() {
-  const [step, setStep] = useState<AtlasStepId>("argentina");
-  const [filtersActive, setFiltersActive] = useState(false);
-  const [province, setProvince] = useState<OtbnProvinceFilter>("all");
+  const [step, setStep] = useState<AtlasStepId>("ecoregion");
   const [highlightZona, setHighlightZona] = useState<number | null>(null);
   const panelRefs = useRef<Record<string, HTMLElement | null>>({});
+  const ignoreScrollRef = useRef(false);
+  const onHighlightZona = useCallback((zona: number | null) => {
+    setHighlightZona(zona);
+  }, []);
 
   useEffect(() => {
-    const ids = [...ATLAS_STEPS.map((s) => s.id), "filters"] as const;
+    setHighlightZona(null);
+  }, [step]);
 
+  useEffect(() => {
     const syncFromScroll = () => {
+      if (ignoreScrollRef.current) return;
       const mid = window.innerHeight * 0.42;
-      let bestId: (typeof ids)[number] = "argentina";
+      let best = ATLAS_PANELS[0];
       let bestDist = Infinity;
-      for (const id of ids) {
-        const el = document.getElementById(`atlas-step-${id}`);
+      for (const panel of ATLAS_PANELS) {
+        const el = document.getElementById(`atlas-panel-${panel.id}`);
         if (!el) continue;
         const rect = el.getBoundingClientRect();
+        if (rect.top <= mid && rect.bottom >= mid) {
+          const t = (mid - rect.top) / Math.max(rect.height, 1);
+          const next =
+            panel.steps.length > 1 && t >= PROVINCE_SECOND_AT
+              ? panel.steps[1].id
+              : panel.steps[0].id;
+          setStep(next);
+          return;
+        }
         const center = rect.top + rect.height / 2;
         const dist = Math.abs(center - mid);
         if (dist < bestDist) {
           bestDist = dist;
-          bestId = id;
+          best = panel;
         }
       }
-      if (bestId === "filters") {
-        setStep("otbn-3");
-        setFiltersActive(true);
-        return;
-      }
-      setStep(bestId);
-      setFiltersActive(bestId === "otbn-3");
+      setStep(best.steps[0].id);
     };
 
     let raf = 0;
@@ -93,162 +111,180 @@ export function OtbnSection() {
     };
   }, []);
 
-  const scrollToStep = (id: AtlasStepId) => {
-    setStep(id);
-    setFiltersActive(id === "otbn-3");
+  const scrollToPanel = (panelId: string) => {
+    const panel = ATLAS_PANELS.find((item) => item.id === panelId);
+    if (panel) setStep(panel.steps[0].id);
+    ignoreScrollRef.current = true;
     const el =
-      panelRefs.current[id] ?? document.getElementById(`atlas-step-${id}`);
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      panelRefs.current[panelId] ??
+      document.getElementById(`atlas-panel-${panelId}`);
+    el?.scrollIntoView({
+      behavior: "smooth",
+      block: panel && panel.steps.length > 1 ? "start" : "center",
+    });
+    window.setTimeout(() => {
+      ignoreScrollRef.current = false;
+    }, 900);
   };
 
-  const showFilters = filtersActive;
+  const activePanel = panelForStep(step);
+  const active =
+    activePanel.steps.find((item) => item.id === step) ?? activePanel.steps[0];
+  const barInteractive = active.bar.variant === "stacked";
 
   return (
-    <section id="otbn" className="relative scroll-mt-8 bg-[#160808] py-16 text-[#f3efe8] md:py-24">
-      <div className="mx-auto max-w-6xl px-4 md:px-8 lg:px-12">
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
-          Momento IV · Territorio
-        </p>
-        <h2 className="mt-3 max-w-3xl font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
-          El mapa que decide qué bosque se puede tocar
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          Del recorte nacional a las cinco provincias, después a la franja de
-          Bosques Patagónicos, y de ahí al Ordenamiento Territorial de Bosques
-          Nativos (Ley 26.331): tres categorías que dicen dónde se puede tocar
-          el bosque.
-        </p>
-      </div>
-
-      <div className="relative mx-auto mt-10 max-w-6xl px-4 md:px-8">
-        <div className="sticky top-0 z-20 flex h-[42vh] w-full flex-col lg:top-16 lg:ml-auto lg:h-[calc(100dvh-5rem)] lg:w-[calc(50%-1rem)]">
-          <div className="relative min-h-0 flex-1 overflow-hidden border-t border-current/15 bg-[#C9C6C1] lg:border lg:border-b-0">
+    <section
+      id="otbn"
+      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+    >
+      <div className="relative">
+        <div className="sticky top-0 z-10 h-svh w-full">
+          <div className="relative h-full overflow-hidden bg-[#2B2B2B]">
             <OtbnMapClient
               step={step}
-              provinceFilter={showFilters ? province : "all"}
-              highlightZona={showFilters ? highlightZona : null}
+              highlightZona={barInteractive ? highlightZona : null}
               interactive={false}
               className="h-full w-full"
             />
-          </div>
-          <div className="border-b border-current/15 bg-[#C9C6C1] text-[#1A1A1A] lg:border lg:border-t-0">
-            <AtlasDots active={step} onSelect={scrollToStep} />
+            <div className="pointer-events-auto absolute inset-x-0 bottom-3 z-20">
+              <AtlasDots activePanel={activePanel.id} onSelect={scrollToPanel} />
+            </div>
           </div>
         </div>
 
-        <div className="-mt-[42vh] pt-[42vh] lg:-mt-[calc(100dvh-5rem)] lg:w-[calc(50%-1rem)] lg:pt-0">
-          {ATLAS_STEPS.map((item) => (
-            <article
-              key={item.id}
-              id={`atlas-step-${item.id}`}
-              ref={(node) => {
-                panelRefs.current[item.id] = node;
-              }}
-              className="flex min-h-[80vh] items-center py-12 lg:pr-6"
-            >
-              <div
-                className={`max-w-xl rounded-sm border px-5 py-5 transition-colors md:px-6 md:py-6 ${
-                  step === item.id
-                    ? "border-current/35 bg-current/10"
-                    : "border-current/15 bg-current/5"
-                }`}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-[19svh] bg-gradient-to-b from-[#2B2B2B] from-10% via-[#2B2B2B]/75 via-55% to-transparent"
+        />
+
+        <div className="pointer-events-none relative z-30 -mt-[100svh] lg:w-1/2">
+          <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6">
+            <h2 className="max-w-[800px] font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
+              El territorio del fuego
+            </h2>
+          </div>
+
+          {ATLAS_PANELS.map((panel) => {
+            const multi = panel.steps.length > 1;
+            const displayed =
+              panel.steps.find((item) => item.id === step) ?? panel.steps[0];
+            const isActive = panel.steps.some((item) => item.id === step);
+            return (
+              <article
+                key={panel.id}
+                id={`atlas-panel-${panel.id}`}
+                ref={(node) => {
+                  panelRefs.current[panel.id] = node;
+                }}
+                className={
+                  multi
+                    ? "relative min-h-[240vh] px-4 md:px-8 lg:px-12"
+                    : "flex min-h-[80vh] items-center px-4 py-12 md:px-8 lg:px-12 lg:pr-6"
+                }
               >
-                <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
-                  {item.kicker}
-                </p>
-                <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
-                  {item.body}
-                </p>
-              </div>
-            </article>
-          ))}
-
-          <article
-            id="atlas-step-filters"
-            className="flex min-h-[70vh] items-center py-12 lg:pr-6"
-          >
-            <div className="max-w-xl space-y-5 rounded-sm border border-current/25 bg-current/10 px-5 py-5 md:px-6 md:py-6">
-              <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/80">
-                Explorar
-              </p>
-              <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
-                Filtrar por provincia y categoría
-              </h3>
-              <p className="text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
-                Santa Cruz publica I y II; el resto incluye III. El mapa sigue
-                bloqueado: cambiá el recorte desde acá o abrilo a pantalla
-                completa.
-              </p>
-
-              <div className="flex flex-wrap gap-2 text-xs">
-                <button
-                  type="button"
-                  onClick={() => setProvince("all")}
-                  className={`rounded-sm px-3 py-1.5 ${
-                    province === "all"
-                      ? "bg-current/25 font-semibold"
-                      : "bg-current/10 text-[#f3efe8]/90 hover:bg-current/15"
-                  }`}
+                <div
+                  className={
+                    multi
+                      ? "sticky top-0 flex h-svh items-center py-12 lg:pr-6"
+                      : "w-full"
+                  }
                 >
-                  Las cinco provincias
-                </button>
-                {OTBN_PROVINCES.map((id) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setProvince(id)}
-                    className={`rounded-sm px-3 py-1.5 ${
-                      province === id
-                        ? "bg-current/25 font-semibold"
-                        : "bg-current/10 text-[#f3efe8]/90 hover:bg-current/15"
-                    }`}
-                  >
-                    {id}
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid gap-2">
-                {([1, 2, 3] as const).map((zona) => {
-                  const active = highlightZona === zona;
-                  return (
-                    <button
-                      key={zona}
-                      type="button"
-                      onClick={() =>
-                        setHighlightZona((prev) => (prev === zona ? null : zona))
-                      }
-                      className={`flex items-center gap-3 rounded-sm border px-3 py-2.5 text-left ${
-                        active
-                          ? "border-current/35 bg-current/12"
-                          : "border-current/12 bg-current/5 hover:bg-current/8"
+                  <div className="pointer-events-auto w-full max-w-[800px] space-y-4">
+                    <div
+                      className={`border px-5 py-5 transition-colors md:px-6 md:py-6 ${
+                        isActive
+                          ? "border-[#f3efe8]/25 bg-[#4a4a4a]/55"
+                          : "border-[#f3efe8]/12 bg-[#3a3a3a]/40"
                       }`}
                     >
-                      <span
-                        className="h-3 w-3 shrink-0 rounded-[2px]"
-                        style={{ background: OTBN_COLORS[zona] }}
-                        aria-hidden
-                      />
-                      <span className="text-sm">
-                        {zona === 1 ? "I" : zona === 2 ? "II" : "III"} ·{" "}
-                        {OTBN_ZONA_LABELS[zona as OtbnZona]}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+                      {multi ? (
+                        <>
+                          <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
+                            {displayed.kicker}
+                          </h3>
+                          <div
+                            className="mt-2 flex h-0.5 w-14 gap-0.5"
+                            aria-hidden
+                          >
+                            {panel.steps.map((item) => (
+                              <span
+                                key={item.id}
+                                className={`h-full flex-1 ${
+                                  item.id === displayed.id
+                                    ? "bg-[#f3efe8]"
+                                    : "bg-[#f3efe8]/25"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                          <p className="mt-2 font-[family-name:var(--font-display)] text-lg leading-snug text-[#f3efe8]/90 md:text-xl">
+                            {displayed.title}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/70">
+                            {displayed.kicker}
+                          </p>
+                          <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
+                            {displayed.title}
+                          </h3>
+                        </>
+                      )}
+                      <p className="mt-3 text-sm leading-relaxed text-[#f3efe8]/88 md:text-base">
+                        {displayed.body}
+                      </p>
+                      {displayed.showCategoryLegend ? (
+                        <ul className="mt-4 space-y-1.5 text-sm leading-relaxed text-[#f3efe8]/85">
+                          {OTBN_CATEGORY_BULLETS.map((bullet) => {
+                            const dimmed =
+                              isActive &&
+                              highlightZona != null &&
+                              highlightZona !== bullet.zona;
+                            return (
+                              <li
+                                key={bullet.zona}
+                                className="transition-opacity"
+                                style={{ opacity: dimmed ? 0.28 : 1 }}
+                              >
+                                <span
+                                  className="font-semibold"
+                                  style={{ color: bullet.color }}
+                                >
+                                  Categoría {bullet.code}:
+                                </span>{" "}
+                                {bullet.text}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : null}
+                    </div>
 
-              <Link
-                href="/otbn"
-                className="inline-block text-sm font-semibold underline-offset-4 hover:underline"
-              >
-                Ver mapa a pantalla completa →
-              </Link>
-            </div>
-          </article>
+                    <AtlasShareBar
+                      bar={displayed.bar}
+                      active={isActive}
+                      highlightZona={isActive ? highlightZona : null}
+                      onHighlightZona={
+                        isActive && displayed.bar.variant === "stacked"
+                          ? onHighlightZona
+                          : undefined
+                      }
+                    />
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+
+          <p className="pointer-events-auto px-4 pb-10 text-sm text-[#f3efe8]/70 md:px-8 lg:px-12 lg:pr-6">
+            <Link
+              href="/otbn"
+              className="font-semibold underline-offset-4 hover:underline"
+            >
+              Ver mapa a pantalla completa →
+            </Link>
+          </p>
         </div>
       </div>
     </section>
