@@ -39,3 +39,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Raw GIS / source dumps (keep local; do not push)
+/provincia/
+/provincia.zip
+/CONAE_AQD_*.zip
+/ecoregiones_argentina.json
+/Desktop*.png
+public/data/cant_poblacion_radio_indec.geojson
+public/data/hectareas_quemadas/
+public/data/informe_region_forestal_bosque_andino_patagonico_segunda_revision/
+public/data/informe_region_forestal_bosque_andino_patagonico_segunda_revision.rar
+
+# Shapefile sidecars from raw CONAE / IGN downloads
+*.shp
+*.shx
+*.dbf
+*.cpg
+*.prj
+*.cst

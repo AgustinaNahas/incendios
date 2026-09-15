@@ -56,6 +56,7 @@ function AtlasDots({
 export function OtbnSection() {
   const [step, setStep] = useState<AtlasStepId>("ecoregion");
   const [highlightZona, setHighlightZona] = useState<number | null>(null);
+  const [categoryReveal, setCategoryReveal] = useState(0);
   const panelRefs = useRef<Record<string, HTMLElement | null>>({});
   const ignoreScrollRef = useRef(false);
   const onHighlightZona = useCallback((zona: number | null) => {
@@ -189,9 +190,9 @@ export function OtbnSection() {
                       : "w-full"
                   }
                 >
-                  <div className="pointer-events-auto w-full max-w-[800px] space-y-4">
+                  <div className="pointer-events-auto w-full space-y-4">
                     <div
-                      className={`border px-5 py-5 transition-colors md:px-6 md:py-6 ${
+                      className={`max-w-[800px] border px-5 py-5 transition-colors md:px-6 md:py-6 ${
                         isActive
                           ? "border-[#f3efe8]/25 bg-[#4a4a4a]/55"
                           : "border-[#f3efe8]/12 bg-[#3a3a3a]/40"
@@ -202,22 +203,7 @@ export function OtbnSection() {
                           <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
                             {displayed.kicker}
                           </h3>
-                          <div
-                            className="mt-2 flex h-0.5 w-14 gap-0.5"
-                            aria-hidden
-                          >
-                            {panel.steps.map((item) => (
-                              <span
-                                key={item.id}
-                                className={`h-full flex-1 ${
-                                  item.id === displayed.id
-                                    ? "bg-[#f3efe8]"
-                                    : "bg-[#f3efe8]/25"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <p className="mt-2 font-[family-name:var(--font-display)] text-lg leading-snug text-[#f3efe8]/90 md:text-xl">
+                          <p className="mt-2 font-[family-name:var(--font-display)] text-lg leading-snug font-black text-[#f3efe8]/90 md:text-xl">
                             {displayed.title}
                           </p>
                         </>
@@ -235,8 +221,9 @@ export function OtbnSection() {
                         {displayed.body}
                       </p>
                       {displayed.showCategoryLegend ? (
-                        <ul className="mt-4 space-y-1.5 text-sm leading-relaxed text-[#f3efe8]/85">
-                          {OTBN_CATEGORY_BULLETS.map((bullet) => {
+                        <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#f3efe8]/85">
+                          {OTBN_CATEGORY_BULLETS.map((bullet, index) => {
+                            const visible = categoryReveal > index;
                             const dimmed =
                               isActive &&
                               highlightZona != null &&
@@ -244,14 +231,16 @@ export function OtbnSection() {
                             return (
                               <li
                                 key={bullet.zona}
-                                className="transition-opacity"
-                                style={{ opacity: dimmed ? 0.28 : 1 }}
+                                className="transition-opacity duration-500"
+                                style={{
+                                  opacity: visible ? (dimmed ? 0.28 : 1) : 0,
+                                }}
                               >
                                 <span
-                                  className="font-semibold"
-                                  style={{ color: bullet.color }}
+                                  className="mr-1.5 inline-block px-1.5 py-0.5 font-semibold text-white"
+                                  style={{ background: bullet.color }}
                                 >
-                                  Categoría {bullet.code}:
+                                  Categoría {bullet.code}
                                 </span>{" "}
                                 {bullet.text}
                               </li>
@@ -268,6 +257,12 @@ export function OtbnSection() {
                       onHighlightZona={
                         isActive && displayed.bar.variant === "stacked"
                           ? onHighlightZona
+                          : undefined
+                      }
+                      onSegmentReveal={
+                        isActive && displayed.showCategoryLegend
+                          ? (index) =>
+                              setCategoryReveal((n) => Math.max(n, index + 1))
                           : undefined
                       }
                     />

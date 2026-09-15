@@ -11,11 +11,12 @@ type Props = {
   active?: boolean;
   highlightZona?: number | null;
   onHighlightZona?: (zona: number | null) => void;
+  onSegmentReveal?: (index: number) => void;
 };
 
 const VIEW_W = 640;
-const VIEW_H = 44;
-const DURATION = 900;
+const VIEW_H = 80;
+export const ATLAS_BAR_DURATION = 900;
 
 type Seg = {
   id: string;
@@ -92,10 +93,13 @@ export function AtlasShareBar({
   active = true,
   highlightZona = null,
   onHighlightZona,
+  onSegmentReveal,
 }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const hoverRef = useRef(onHighlightZona);
   hoverRef.current = onHighlightZona;
+  const revealRef = useRef(onSegmentReveal);
+  revealRef.current = onSegmentReveal;
   const seenRef = useRef(false);
 
   useLayoutEffect(() => {
@@ -108,6 +112,10 @@ export function AtlasShareBar({
     const firstPaint = !seenRef.current;
     if (active) seenRef.current = true;
 
+    const revealAll = () => {
+      segs.forEach((_, i) => revealRef.current?.(i));
+    };
+
     const selection = root
       .selectAll<SVGRectElement, Seg>("rect.atlas-bar-seg")
       .data(segs, (d) => d.id);
@@ -115,7 +123,7 @@ export function AtlasShareBar({
     selection
       .exit()
       .transition()
-      .duration(animate ? DURATION : 0)
+      .duration(animate ? ATLAS_BAR_DURATION : 0)
       .attr("width", 0)
       .remove();
 
@@ -148,31 +156,43 @@ export function AtlasShareBar({
       })
       .on("blur", () => hoverRef.current?.(null));
 
+    const timers: number[] = [];
     merged.interrupt();
     if (animate && firstPaint) {
+      segs.forEach((_, i) => {
+        timers.push(
+          window.setTimeout(() => revealRef.current?.(i), i * ATLAS_BAR_DURATION),
+        );
+      });
       merged
         .attr("x", (d) => d.x)
         .attr("fill", (d) => d.color)
         .attr("width", 0)
         .transition()
-        .delay((_, i) => i * DURATION)
-        .duration(DURATION)
+        .delay((_, i) => i * ATLAS_BAR_DURATION)
+        .duration(ATLAS_BAR_DURATION)
         .ease(d3.easeCubicOut)
         .attr("width", (d) => Math.max(0, d.width));
     } else if (animate) {
       merged
         .transition()
-        .duration(DURATION)
+        .duration(ATLAS_BAR_DURATION)
         .ease(d3.easeCubicInOut)
         .attr("x", (d) => d.x)
         .attr("width", (d) => Math.max(0, d.width))
         .attr("fill", (d) => d.color);
+      revealAll();
     } else {
       merged
         .attr("x", (d) => d.x)
         .attr("width", (d) => Math.max(0, d.width))
         .attr("fill", (d) => d.color);
+      if (active) revealAll();
     }
+
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+    };
   }, [bar, active]);
 
   useLayoutEffect(() => {
@@ -194,14 +214,16 @@ export function AtlasShareBar({
         : bar.caption;
   const caption = bar.variant === "share" ? bar.caption : null;
   const showLegend = bar.variant === "stacked";
+  const legendSegs = showLegend ? segmentsFromBar(bar) : [];
 
   return (
     <div className="w-full">
-      <div className="relative">
+      <div className="relative w-full">
         <svg
           ref={svgRef}
           viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-          className="block h-11 w-full overflow-visible"
+          preserveAspectRatio="none"
+          className="block h-[80px] w-full overflow-visible"
           role="img"
           aria-label={
             bar.variant === "solid"
@@ -213,7 +235,7 @@ export function AtlasShareBar({
         />
         {overlayText ? (
           <p
-            className="pointer-events-none absolute inset-0 flex items-center px-3 font-[family-name:var(--font-display)] text-lg font-bold tracking-wide text-[#f3efe8] md:text-xl"
+            className="pointer-events-none absolute inset-0 flex items-center px-4 font-[family-name:var(--font-display)] text-[52px] leading-none font-black tracking-wide text-[#f3efe8]"
             aria-hidden
           >
             {overlayText}
@@ -224,29 +246,35 @@ export function AtlasShareBar({
         <p className="mt-2 text-sm font-bold text-[#f3efe8]/85">{caption}</p>
       ) : null}
       {showLegend ? (
-        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#f3efe8]/80">
-          {(bar.variant === "stacked" ? bar.segments : []).map((item) => {
+        <div className="relative mt-3 min-h-6 text-xs text-[#f3efe8]/80">
+          {legendSegs.map((item) => {
+            if (item.zona == null) return null;
             const dimmed =
               highlightZona != null && highlightZona !== item.zona;
+            const code =
+              item.zona === 1 ? "I" : item.zona === 2 ? "II" : "III";
             return (
-              <li
-                key={item.zona}
-                className="inline-flex items-center gap-1.5 transition-opacity"
-                style={{ opacity: dimmed ? 0.28 : 1 }}
+              <div
+                key={item.id}
+                className="absolute top-0 inline-flex items-center gap-1.5 whitespace-nowrap transition-opacity"
+                style={{
+                  left: `${(item.x / VIEW_W) * 100}%`,
+                  opacity: dimmed ? 0.28 : 1,
+                }}
               >
                 <span
-                  className="h-2 w-2 rounded-[1px]"
-                  style={{ background: OTBN_COLORS[item.zona] }}
+                  className="h-2.5 w-2.5 shrink-0 rounded-[1px]"
+                  style={{ background: OTBN_COLORS[item.zona as OtbnZona] }}
                   aria-hidden
                 />
-                Categoría {item.zona === 1 ? "I" : item.zona === 2 ? "II" : "III"}
+                Categoría {code}
                 <span className="sr-only">
                   {OTBN_ZONA_LABELS[item.zona as OtbnZona]}
                 </span>
-              </li>
+              </div>
             );
           })}
-        </ul>
+        </div>
       ) : null}
     </div>
   );

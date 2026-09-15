@@ -67,7 +67,6 @@ function stackedBar(province: OtbnProvinceFilter): AtlasBarConfig {
 
 const ecoregionStep: AtlasStep = {
   id: "ecoregion",
-  kicker: "Ecorregión",
   title: "Ecorregión Andino Patagónica",
   body: "Se extiende a lo largo de 5 provincias argentinas: Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Está cubierta principalmente por bosques, pero también hay estepa, mallines, lagos y glaciares.",
   showCategoryLegend: false,
@@ -86,7 +85,6 @@ const ecoregionStep: AtlasStep = {
 
 const bosquesStep: AtlasStep = {
   id: "bosques",
-  kicker: "Bosque nativo",
   title: "Bosques andinos patagónicos",
   body: "Gran parte de esa región son bosques nativos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas como la lenga, el ñire, el coihue o el alerce.",
   showCategoryLegend: false,
@@ -107,7 +105,6 @@ const bosquesStep: AtlasStep = {
 
 const categoriasStep: AtlasStep = {
   id: "categorias",
-  kicker: "Ley 26.331",
   title: "Categorías de conservación",
   body: "Para proteger los bosques nativos, la Ley Nacional 26.331 los clasifica en tres categorías.",
   showCategoryLegend: true,
