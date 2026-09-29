@@ -9,8 +9,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
+  --font-sans: var(--font-noto-sans);
+  --font-display: var(--font-noto-kr);
 }
 
 html {
@@ -24,7 +24,7 @@ body {
   background-image: none;
   color: var(--foreground);
   overflow-x: clip;
-  font-family: var(--font-sans), "Noto Serif Tamil", serif;
+  font-family: var(--font-sans), sans-serif;
 }
 
 h1,
@@ -33,7 +33,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-display), "Noto Serif KR", serif;
+  font-family: var(--font-display), serif;
   font-weight: 900;
 }
 

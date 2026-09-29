@@ -11,13 +11,18 @@ import {
   type AtlasStepId,
 } from "@/lib/atlasSteps";
 
-const PROVINCE_SECOND_AT = 0.55;
-
 function panelForStep(step: AtlasStepId): AtlasPanel {
   return (
     ATLAS_PANELS.find((panel) => panel.steps.some((item) => item.id === step)) ??
     ATLAS_PANELS[0]
   );
+}
+
+/** Índice de subpaso según el progreso 0–1 dentro del panel. */
+function stepIndexFromProgress(progress: number, stepCount: number): number {
+  if (stepCount <= 1) return 0;
+  const clamped = Math.min(Math.max(progress, 0), 0.999);
+  return Math.min(stepCount - 1, Math.floor(clamped * stepCount));
 }
 
 function AtlasDots({
@@ -54,7 +59,7 @@ function AtlasDots({
 }
 
 export function OtbnSection() {
-  const [step, setStep] = useState<AtlasStepId>("ecoregion");
+  const [step, setStep] = useState<AtlasStepId>("bosques");
   const [highlightZona, setHighlightZona] = useState<number | null>(null);
   const [categoryReveal, setCategoryReveal] = useState(0);
   const panelRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -65,6 +70,7 @@ export function OtbnSection() {
 
   useEffect(() => {
     setHighlightZona(null);
+    setCategoryReveal(0);
   }, [step]);
 
   useEffect(() => {
@@ -79,11 +85,8 @@ export function OtbnSection() {
         const rect = el.getBoundingClientRect();
         if (rect.top <= mid && rect.bottom >= mid) {
           const t = (mid - rect.top) / Math.max(rect.height, 1);
-          const next =
-            panel.steps.length > 1 && t >= PROVINCE_SECOND_AT
-              ? panel.steps[1].id
-              : panel.steps[0].id;
-          setStep(next);
+          const idx = stepIndexFromProgress(t, panel.steps.length);
+          setStep(panel.steps[idx].id);
           return;
         }
         const center = rect.top + rect.height / 2;
@@ -121,7 +124,9 @@ export function OtbnSection() {
       document.getElementById(`atlas-panel-${panelId}`);
     el?.scrollIntoView({
       behavior: "smooth",
-      block: panel && panel.steps.length > 1 ? "start" : "center",
+      block: panel && (panel.steps.length > 1 || panel.steps[0]?.fit === "province")
+        ? "start"
+        : "center",
     });
     window.setTimeout(() => {
       ignoreScrollRef.current = false;
@@ -138,6 +143,11 @@ export function OtbnSection() {
       id="otbn"
       className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
     >
+          <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6 ">
+            <h2 className="max-w-[800px] font-[family-name:var(--font-display)] pb-4 px-6 mx-auto w-full text-3xl leading-tight md:text-5xl">
+              El territorio del fuego
+            </h2>
+          </div>
       <div className="relative">
         <div className="sticky top-0 z-10 h-svh w-full">
           <div className="relative h-full overflow-hidden bg-[#2B2B2B]">
@@ -159,17 +169,20 @@ export function OtbnSection() {
         />
 
         <div className="pointer-events-none relative z-30 -mt-[100svh] lg:w-1/2">
-          <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6">
-            <h2 className="max-w-[800px] font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
-              El territorio del fuego
-            </h2>
-          </div>
+
 
           {ATLAS_PANELS.map((panel) => {
             const multi = panel.steps.length > 1;
+            // Un solo paso también necesita sticky + altura para que el mapa haga zoom.
+            const stickyPanel = multi || panel.steps[0]?.fit === "province";
             const displayed =
               panel.steps.find((item) => item.id === step) ?? panel.steps[0];
             const isActive = panel.steps.some((item) => item.id === step);
+            const panelMinH = multi
+              ? `${panel.steps.length * 120}vh`
+              : stickyPanel
+                ? "140vh"
+                : undefined;
             return (
               <article
                 key={panel.id}
@@ -178,14 +191,15 @@ export function OtbnSection() {
                   panelRefs.current[panel.id] = node;
                 }}
                 className={
-                  multi
-                    ? "relative min-h-[240vh] px-4 md:px-8 lg:px-12"
+                  stickyPanel
+                    ? "relative px-4 md:px-8 lg:px-12"
                     : "flex min-h-[80vh] items-center px-4 py-12 md:px-8 lg:px-12 lg:pr-6"
                 }
+                style={panelMinH ? { minHeight: panelMinH } : undefined}
               >
                 <div
                   className={
-                    multi
+                    stickyPanel
                       ? "sticky top-0 flex h-svh items-center py-12 lg:pr-6"
                       : "w-full"
                   }
@@ -198,28 +212,28 @@ export function OtbnSection() {
                           : "border-[#f3efe8]/12 bg-[#3a3a3a]/40"
                       }`}
                     >
-                      {multi ? (
-                        <>
-                          <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
-                            {displayed.kicker}
-                          </h3>
-                          <p className="mt-2 font-[family-name:var(--font-display)] text-lg leading-snug font-black text-[#f3efe8]/90 md:text-xl">
-                            {displayed.title}
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#f3efe8]/70">
-                            {displayed.kicker}
-                          </p>
-                          <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
-                            {displayed.title}
-                          </h3>
-                        </>
-                      )}
-                      <p className="mt-3 text-sm leading-relaxed text-[#f3efe8]/88 md:text-base">
+                      <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
+                        {displayed.title}
+                      </h3>
+                      {displayed.kicker ? (
+                        <p className="mt-2 font-[family-name:var(--font-display)] text-lg font-black leading-snug text-[#f3efe8]/90 md:text-xl">
+                          {displayed.kicker}
+                        </p>
+                      ) : null}
+                      <p className="mt-3 text-md leading-relaxed text-[#f3efe8]">
                         {displayed.body}
                       </p>
+                      
+                      {displayed.shareLabel ? (
+                        <>
+                        <p className="mt-4 text-4xl font-[family-name:var(--font-display)] font-black text-[#f3efe8]">
+                          {displayed.shareLabel}
+                        </p>
+                          <p className="text-md text-[#f3efe8]">
+                           del total de bosques nativos
+                           </p>
+                          </>
+                      ) : null}
                       {displayed.showCategoryLegend ? (
                         <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#f3efe8]/85">
                           {OTBN_CATEGORY_BULLETS.map((bullet, index) => {
@@ -249,8 +263,14 @@ export function OtbnSection() {
                         </ul>
                       ) : null}
                     </div>
+                    {displayed.hectaresLabel ? (
+                        <p className="mt-3 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide">
+                          {displayed.hectaresLabel} <span className="font-sans text-sm font-normal">divididas en</span>
+                        </p>
+                      ) : null}
 
                     <AtlasShareBar
+                      key={displayed.id}
                       bar={displayed.bar}
                       active={isActive}
                       highlightZona={isActive ? highlightZona : null}

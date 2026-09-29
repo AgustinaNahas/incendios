@@ -685,7 +685,7 @@ export function AtlasMap({
         /* el mapa ya se desmontó */
       }
     };
-  }, [province, fit, offsetLeft]);
+  }, [province, fit, offsetLeft, step]);
 
   if (error) {
     return (

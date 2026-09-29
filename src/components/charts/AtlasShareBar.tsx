@@ -100,7 +100,6 @@ export function AtlasShareBar({
   hoverRef.current = onHighlightZona;
   const revealRef = useRef(onSegmentReveal);
   revealRef.current = onSegmentReveal;
-  const seenRef = useRef(false);
 
   useLayoutEffect(() => {
     const svg = svgRef.current;
@@ -109,8 +108,6 @@ export function AtlasShareBar({
     const segs = segmentsFromBar(bar);
     const root = d3.select(svg);
     const animate = active && !reduce;
-    const firstPaint = !seenRef.current;
-    if (active) seenRef.current = true;
 
     const revealAll = () => {
       segs.forEach((_, i) => revealRef.current?.(i));
@@ -120,12 +117,7 @@ export function AtlasShareBar({
       .selectAll<SVGRectElement, Seg>("rect.atlas-bar-seg")
       .data(segs, (d) => d.id);
 
-    selection
-      .exit()
-      .transition()
-      .duration(animate ? ATLAS_BAR_DURATION : 0)
-      .attr("width", 0)
-      .remove();
+    selection.exit().remove();
 
     const enter = selection
       .enter()
@@ -134,7 +126,7 @@ export function AtlasShareBar({
       .attr("y", 0)
       .attr("height", VIEW_H)
       .attr("x", (d) => d.x)
-      .attr("width", firstPaint || !animate ? (d) => Math.max(0, d.width) : 0)
+      .attr("width", 0)
       .attr("fill", (d) => d.color);
 
     const merged = enter.merge(selection);
@@ -158,7 +150,7 @@ export function AtlasShareBar({
 
     const timers: number[] = [];
     merged.interrupt();
-    if (animate && firstPaint) {
+    if (animate) {
       segs.forEach((_, i) => {
         timers.push(
           window.setTimeout(() => revealRef.current?.(i), i * ATLAS_BAR_DURATION),
@@ -173,15 +165,6 @@ export function AtlasShareBar({
         .duration(ATLAS_BAR_DURATION)
         .ease(d3.easeCubicOut)
         .attr("width", (d) => Math.max(0, d.width));
-    } else if (animate) {
-      merged
-        .transition()
-        .duration(ATLAS_BAR_DURATION)
-        .ease(d3.easeCubicInOut)
-        .attr("x", (d) => d.x)
-        .attr("width", (d) => Math.max(0, d.width))
-        .attr("fill", (d) => d.color);
-      revealAll();
     } else {
       merged
         .attr("x", (d) => d.x)

@@ -5,16 +5,16 @@ export const ATLAS_COLORS = {
   land: "#F6F3EE",
   neighbor: "#D9D5CE",
   stroke: "#1A1A1A",
-  coral: "#C45C4A",
-  forest: "#E6E2C4",
+  coral: "#C7281C",
+  forest: "#AEB091",
   barTrack: "#6F7358",
   provinceFill: "#9A9A92",
 } as const;
 
 export const OTBN_COLORS = {
-  1: "#C45C4A", // Conservación — coral
-  2: "#E0B25A", // Uso sustentable — ámbar
-  3: "#5F8A6A", // Cambio de uso — salvia
+  1: "#C7281C", // Conservación — coral
+  2: "#F1B100", // Uso sustentable — ámbar
+  3: "#63A358", // Cambio de uso — salvia
 } as const;
 
 export type OtbnZona = keyof typeof OTBN_COLORS;

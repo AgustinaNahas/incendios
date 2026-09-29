@@ -1,7 +1,7 @@
 {
-  "note": "PLACEHOLDER — reemplazar con serie oficial del SNMF / presupuesto nacional de manejo del fuego. Valores ilustrativos en millones de pesos nominales; cpiIndex relativo a 2017=1.",
+  "note": "PLACEHOLDER — serie ilustrativa del presupuesto de manejo del fuego (millones de pesos constantes 2017). Reemplazar con datos oficiales SNMF / presupuesto nacional.",
   "currency": "ARS",
-  "unit": "millones",
+  "unit": "millones constantes 2017",
   "series": [
     { "year": 2017, "nominalMillions": 1200, "cpiIndex": 1.0 },
     { "year": 2018, "nominalMillions": 1450, "cpiIndex": 1.47 },
@@ -12,6 +12,17 @@
     { "year": 2023, "nominalMillions": 18000, "cpiIndex": 19.5 },
     { "year": 2024, "nominalMillions": 45000, "cpiIndex": 55.0 },
     { "year": 2025, "nominalMillions": 62000, "cpiIndex": 78.0 }
+  ],
+  "execution": [
+    { "year": 2017, "budgeted": 1200, "executed": 480 },
+    { "year": 2018, "budgeted": 986, "executed": 444 },
+    { "year": 2019, "budgeted": 925, "executed": 463 },
+    { "year": 2020, "budgeted": 906, "executed": 544 },
+    { "year": 2021, "budgeted": 903, "executed": 587 },
+    { "year": 2022, "budgeted": 929, "executed": 650 },
+    { "year": 2023, "budgeted": 923, "executed": 693 },
+    { "year": 2024, "budgeted": 818, "executed": 654 },
+    { "year": 2025, "budgeted": 795, "executed": 676 }
   ],
   "idealAnnualRealMillions2017": 3500,
   "breakdown": [

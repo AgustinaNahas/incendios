@@ -41,9 +41,11 @@ export type AtlasBarConfig =
 
 export type AtlasStep = {
   id: string;
-  kicker: string;
   title: string;
+  kicker?: string;
   body: string;
+  hectaresLabel?: string;
+  shareLabel?: string;
   showCategoryLegend: boolean;
   fit: AtlasFitTarget;
   province: OtbnProvinceFilter;
@@ -61,34 +63,14 @@ function stackedBar(province: OtbnProvinceFilter): AtlasBarConfig {
     variant: "stacked",
     total: ha.total,
     segments: zonas.map((zona) => ({ zona, value: ha[zona] })),
-    caption: `${formatHa(ha.total)} ha.`,
+    caption: ``,
   };
 }
 
-const ecoregionStep: AtlasStep = {
-  id: "ecoregion",
-  kicker: "Ecorregión",
-  title: "Ecorregión Andino Patagónica",
-  body: "Se extiende a lo largo de 5 provincias argentinas: Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Está cubierta principalmente por bosques, pero también hay estepa, mallines, lagos y glaciares.",
-  showCategoryLegend: false,
-  fit: "argentina",
-  province: "all",
-  showProvinceFill: true,
-  showBosque: false,
-  otbnPaint: "off",
-  showLabels: true,
-  bar: {
-    variant: "solid",
-    total: ECOREGION_HA,
-    label: `${formatHa(ECOREGION_HA)} ha.`,
-  },
-};
-
 const bosquesStep: AtlasStep = {
   id: "bosques",
-  kicker: "Bosque nativo",
-  title: "Bosques andinos patagónicos",
-  body: "Gran parte de esa región son bosques nativos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas como la lenga, el ñire, el coihue o el alerce.",
+  title: "Ecoregión Andino Patagónica",
+  body: "Se extiende a lo largo de 5 provincias argentinas. Ell 32% de este territorio corresponde a los Bosques nativos patagónicos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas.",
   showCategoryLegend: false,
   fit: "patagonia",
   province: "all",
@@ -107,7 +89,6 @@ const bosquesStep: AtlasStep = {
 
 const categoriasStep: AtlasStep = {
   id: "categorias",
-  kicker: "Ley 26.331",
   title: "Categorías de conservación",
   body: "Para proteger los bosques nativos, la Ley Nacional 26.331 los clasifica en tres categorías.",
   showCategoryLegend: true,
@@ -126,32 +107,15 @@ function provinceSteps(
   const slug = OTBN_PROVINCE_SLUG[province];
   const copy = OTBN_PROVINCE_COPY[province];
   const ha = otbnHaFor(province);
-  const zonas = otbnZonasPresent(province);
+  const sharePct = Math.round((ha.total / OTBN_TOTAL_HA.total) * 100);
   return [
     {
-      id: `${slug}-total`,
-      kicker: province,
+      id: slug,
       title: copy.title,
+      kicker: copy.kicker,
       body: copy.body,
-      showCategoryLegend: false,
-      fit: "province",
-      province,
-      showProvinceFill: false,
-      showBosque: false,
-      otbnPaint: "forest",
-      showLabels: true,
-      bar: {
-        variant: "solid",
-        total: ha.total,
-        label: `${formatHa(ha.total)} ha.`,
-        segments: zonas.map((zona) => ({ zona, value: ha[zona] })),
-      },
-    },
-    {
-      id: `${slug}-categorias`,
-      kicker: province,
-      title: copy.title,
-      body: copy.body,
+      hectaresLabel: `${formatHa(ha.total)} ha.`,
+      shareLabel: `${sharePct}%`,
       showCategoryLegend: false,
       fit: "province",
       province,
@@ -165,7 +129,6 @@ function provinceSteps(
 }
 
 export const ATLAS_STEPS: AtlasStep[] = [
-  ecoregionStep,
   bosquesStep,
   categoriasStep,
   ...OTBN_PROVINCES.flatMap(provinceSteps),
@@ -178,9 +141,11 @@ export type AtlasPanel = {
 };
 
 export const ATLAS_PANELS: AtlasPanel[] = [
-  { id: "ecoregion", label: ecoregionStep.title, steps: [ecoregionStep] },
-  { id: "bosques", label: bosquesStep.title, steps: [bosquesStep] },
-  { id: "categorias", label: categoriasStep.title, steps: [categoriasStep] },
+  {
+    id: "territorio",
+    label: bosquesStep.title,
+    steps: [bosquesStep, categoriasStep],
+  },
   ...OTBN_PROVINCES.map((province) => {
     const steps = provinceSteps(province);
     return {

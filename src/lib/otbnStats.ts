@@ -11,23 +11,26 @@ export type OtbnHaBreakdown = {
   total: number;
 };
 
-/** Superficie OTBN (polígonos de otbn-zonas.geojson), en hectáreas. */
+/**
+ * Superficie OTBN por categoría de conservación declarada (ha).
+ * Fuente: tabla “Categoría de conservación declarada” (Rojo I / Amarillo II / Verde III).
+ */
 export const OTBN_HA: Record<
   Exclude<OtbnProvinceFilter, "all">,
   OtbnHaBreakdown
 > = {
-  Neuquén: { 1: 189_975, 2: 347_652, 3: 3_583, total: 541_210 },
-  "Río Negro": { 1: 429_192, 2: 249_043, 3: 48_949, total: 727_184 },
-  Chubut: { 1: 380_629, 2: 510_038, 3: 19_518, total: 910_185 },
-  "Santa Cruz": { 1: 276_916, 2: 69_770, 3: 0, total: 346_686 },
-  "Tierra del Fuego": { 1: 309_002, 2: 397_159, 3: 19_980, total: 726_141 },
+  Neuquén: { 1: 192_686, 2: 347_672, 3: 3_559, total: 543_917 },
+  "Río Negro": { 1: 181_900, 2: 252_700, 3: 44_300, total: 478_900 },
+  Chubut: { 1: 419_351, 2: 613_324, 3: 19_496, total: 1_052_171 },
+  "Santa Cruz": { 1: 277_960, 2: 70_629, 3: 0, total: 348_589 },
+  "Tierra del Fuego": { 1: 368_424, 2: 407_686, 3: 17_799, total: 793_909 },
 };
 
 export const OTBN_TOTAL_HA: OtbnHaBreakdown = {
-  1: 1_585_714,
-  2: 1_573_662,
-  3: 92_030,
-  total: 3_251_406,
+  1: 1_440_321,
+  2: 1_692_011,
+  3: 85_154,
+  total: 3_217_486,
 };
 
 export function otbnHaFor(
