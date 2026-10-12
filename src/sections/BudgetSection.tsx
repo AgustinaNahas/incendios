@@ -108,7 +108,7 @@ export function BudgetSection() {
     >
       <div className="mx-auto max-w-[800px] px-5 pt-20 pb-10 md:px-8 md:pt-28">
 
-        <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
+        <h2 className="type-h3 mt-3">
         El rol del Estado
         </h2>
         <p className="mt-4 font-sans text-xl leading-snug font-bold md:text-2xl">
@@ -186,7 +186,7 @@ Local, de cada una de las provincias y APN; regional, establecido por las Region
         <p className="mt-4 font-sans text-xl leading-snug font-bold md:text-2xl">
           Alerta temprana
         </p>
-          <p>
+        <p>
           En lo que respecta a la planificación para la protección de incendios, la Ley 26.815 establece, como un nivel de alcance, al Sistema Nacional de Alerta Temprana y Evaluación de Peligro de Incendios (SATyEPI), el cual a través de un sistema de grados de peligros de incendios, tiene como fin anticipar condiciones de severidad de las temporadas de fuego, y advertir al personal de combate sobre situaciones críticas.
           </p>
         </div>

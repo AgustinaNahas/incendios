@@ -136,7 +136,7 @@ export function OtbnSection() {
   const activePanel = panelForStep(step);
   const active =
     activePanel.steps.find((item) => item.id === step) ?? activePanel.steps[0];
-  const barInteractive = active.bar.variant === "stacked";
+  const barInteractive = active.charts.some((chart) => chart.bar.variant === "stacked");
 
   return (
     <section
@@ -144,7 +144,7 @@ export function OtbnSection() {
       className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
     >
           <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6 ">
-            <h2 className="max-w-[800px] font-[family-name:var(--font-display)] pb-4 px-6 mx-auto w-full text-3xl leading-tight md:text-5xl">
+            <h2 className="type-h3 mx-auto w-full max-w-[800px] px-6 pb-4">
               El territorio del fuego
             </h2>
           </div>
@@ -208,34 +208,68 @@ export function OtbnSection() {
                     <div
                       className={`max-w-[800px] border px-5 py-5 transition-colors md:px-6 md:py-6 ${
                         isActive
-                          ? "border-[#f3efe8]/25 bg-[#4a4a4a]/55"
-                          : "border-[#f3efe8]/12 bg-[#3a3a3a]/40"
+                          ? "border-[#f3efe8]/75 bg-[#141414]"
+                          : "border-[#f3efe8]/20 bg-[#141414]/80"
                       }`}
                     >
-                      <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-tight md:text-3xl">
+                      <h3 className="font-sans text-2xl leading-tight font-bold text-white md:text-3xl">
                         {displayed.title}
                       </h3>
                       {displayed.kicker ? (
-                        <p className="mt-2 font-[family-name:var(--font-display)] text-lg font-black leading-snug text-[#f3efe8]/90 md:text-xl">
+                        <p className="mt-2 font-sans text-lg leading-snug font-bold text-white/90 md:text-xl">
                           {displayed.kicker}
                         </p>
                       ) : null}
-                      <p className="mt-3 text-md leading-relaxed text-[#f3efe8]">
-                        {displayed.body}
-                      </p>
-                      
-                      {displayed.shareLabel ? (
-                        <>
-                        <p className="mt-4 text-4xl font-[family-name:var(--font-display)] font-black text-[#f3efe8]">
-                          {displayed.shareLabel}
+                      {displayed.body ? (
+                        <p className="mt-3 text-md leading-relaxed text-white">
+                          {displayed.body}
                         </p>
-                          <p className="text-md text-[#f3efe8]">
-                           del total de bosques nativos
-                           </p>
-                          </>
+                      ) : null}
+                      {displayed.charts.length > 0 ? (
+                        <div className={displayed.body ? "mt-5 space-y-4" : "mt-6 space-y-4"}>
+                          {displayed.charts.map((chart, index) => (
+                            <div
+                              key={chart.id}
+                              className={
+                                index > 0
+                                  ? "border-t border-[#f3efe8]/35 pt-4"
+                                  : undefined
+                              }
+                            >
+                              {chart.label ? (
+                                <p className="mb-2 text-lg leading-none text-white">
+                                  <span>{chart.label}</span>
+                                  {chart.hectaresLabel ? (
+                                    <span className="ml-3">{chart.hectaresLabel}</span>
+                                  ) : null}
+                                </p>
+                              ) : null}
+                              <AtlasShareBar
+                                bar={chart.bar}
+                                active={isActive}
+                                highlightZona={isActive ? highlightZona : null}
+                                onHighlightZona={
+                                  isActive && chart.bar.variant === "stacked"
+                                    ? onHighlightZona
+                                    : undefined
+                                }
+                                onSegmentReveal={
+                                  isActive &&
+                                  displayed.showCategoryLegend &&
+                                  chart.bar.variant === "stacked"
+                                    ? (segmentIndex) =>
+                                        setCategoryReveal((n) =>
+                                          Math.max(n, segmentIndex + 1),
+                                        )
+                                    : undefined
+                                }
+                              />
+                            </div>
+                          ))}
+                        </div>
                       ) : null}
                       {displayed.showCategoryLegend ? (
-                        <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#f3efe8]/85">
+                        <ul className="mt-4 space-y-2 text-sm leading-relaxed text-white/85">
                           {OTBN_CATEGORY_BULLETS.map((bullet, index) => {
                             const visible = categoryReveal > index;
                             const dimmed =
@@ -263,29 +297,6 @@ export function OtbnSection() {
                         </ul>
                       ) : null}
                     </div>
-                    {displayed.hectaresLabel ? (
-                        <p className="mt-3 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide">
-                          {displayed.hectaresLabel} <span className="font-sans text-sm font-normal">divididas en</span>
-                        </p>
-                      ) : null}
-
-                    <AtlasShareBar
-                      key={displayed.id}
-                      bar={displayed.bar}
-                      active={isActive}
-                      highlightZona={isActive ? highlightZona : null}
-                      onHighlightZona={
-                        isActive && displayed.bar.variant === "stacked"
-                          ? onHighlightZona
-                          : undefined
-                      }
-                      onSegmentReveal={
-                        isActive && displayed.showCategoryLegend
-                          ? (index) =>
-                              setCategoryReveal((n) => Math.max(n, index + 1))
-                          : undefined
-                      }
-                    />
                   </div>
                 </div>
               </article>

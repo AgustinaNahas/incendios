@@ -123,10 +123,10 @@ export function FireContextSection() {
       className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
     >
       <div className="mx-auto max-w-[800px] px-5 py-20 md:px-8 md:py-28">
-        <h2 className="font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
+        <h2 className="type-h3">
           El contexto del fuego
         </h2>
-        <p className="mt-6 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-6 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           Pero ¿cuál es el contexto que hace que un bosque sea más probable de
           incendiarse y más difícil de proteger antes de que exista el foco
           inicial? Podemos separarlo en{" "}
@@ -140,7 +140,7 @@ export function FireContextSection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Causas directas
         </h3>
-        <p className="mt-3 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-3 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           Las causas directas pueden ser de dos tipos: naturales o de origen
           antrópico, es decir generadas por el hombre, ya sea por negligencia, a
           propósito o error.
@@ -206,7 +206,7 @@ export function FireContextSection() {
                         >
                           {item.title}
                         </p>
-                        <p className="mt-1 text-sm leading-relaxed text-[#f3efe8]/85 md:text-base">
+                        <p className="mt-1 font-sans text-sm leading-relaxed text-[#f3efe8]/85 md:text-base">
                           {item.body}
                         </p>
                       </div>

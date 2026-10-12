@@ -4,7 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ATLAS_COLORS, OTBN_COLORS } from "@/lib/otbnColors";
-import { atlasStepById, type AtlasFitTarget, type AtlasOtbnPaint, type AtlasStepId } from "@/lib/atlasSteps";
+import {
+  atlasStepById,
+  type AtlasFitTarget,
+  type AtlasOtbnPaint,
+  type AtlasScope,
+  type AtlasStepId,
+} from "@/lib/atlasSteps";
 import {
   MAPBOX_STYLE,
   MAPBOX_TOKEN,
@@ -48,6 +54,7 @@ const PATHS = {
 
 const SRC = {
   land: "atlas-land",
+  ecoregion: "atlas-ecoregion",
   provincias: "atlas-provincias",
   bosque: "atlas-bosque",
   otbn: "atlas-otbn",
@@ -58,6 +65,7 @@ const LYR = {
   land: "atlas-land-fill",
   landLine: "atlas-land-line",
   patagoniaFill: "atlas-patagonia-fill",
+  ecoregion: "atlas-ecoregion-fill",
   provinciasFill: "atlas-provincias-fill",
   provinciasLine: "atlas-provincias-line",
   bosque: "atlas-bosque-fill",
@@ -196,11 +204,14 @@ function setLayerVisibility(map: mapboxgl.Map, id: string, visible: boolean) {
   map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
 }
 
-function otbnFilter(
-  province: OtbnProvinceFilter,
-): mapboxgl.FilterSpecification {
-  if (province === "all") return ["has", "zona"];
-  return ["==", ["get", "provincia"], province];
+function otbnFilter(scope: AtlasScope): mapboxgl.FilterSpecification {
+  if (scope === "all") return ["has", "zona"];
+  return ["in", ["get", "provincia"], ["literal", [...scope]]];
+}
+
+function labelFilter(scope: AtlasScope): mapboxgl.FilterSpecification {
+  if (scope === "all") return ["has", "nam"];
+  return ["in", ["get", "nam"], ["literal", [...scope]]];
 }
 
 function otbnFillColor(paint: AtlasOtbnPaint): mapboxgl.ExpressionSpecification | string {
@@ -220,7 +231,9 @@ function otbnFillColor(paint: AtlasOtbnPaint): mapboxgl.ExpressionSpecification 
 
 function otbnFillOpacity(
   highlightZona: number | null,
+  paint: AtlasOtbnPaint,
 ): number | mapboxgl.ExpressionSpecification {
+  if (paint === "forest") return 1;
   if (highlightZona == null) return 0.82;
   return ["case", ["==", ["get", "zona"], highlightZona], 0.92, 0.07];
 }
@@ -235,6 +248,7 @@ function otbnLineOpacity(
 function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
   const before = firstSymbolLayerId(map);
   map.addSource(SRC.land, { type: "geojson", data: data.land });
+  map.addSource(SRC.ecoregion, { type: "geojson", data: data.ecoregion });
   map.addSource(SRC.provincias, { type: "geojson", data: data.provincias });
   map.addSource(SRC.bosque, { type: "geojson", data: data.bosque });
   map.addSource(SRC.otbn, { type: "geojson", data: data.otbn });
@@ -285,6 +299,20 @@ function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
   );
   map.addLayer(
     {
+      id: LYR.ecoregion,
+      type: "fill",
+      source: SRC.ecoregion,
+      layout: { visibility: "none" },
+      paint: {
+        "fill-color": ATLAS_COLORS.ecoregion,
+        "fill-opacity": 0,
+        "fill-opacity-transition": { duration: 500 },
+      },
+    },
+    before,
+  );
+  map.addLayer(
+    {
       id: LYR.provinciasFill,
       type: "fill",
       source: SRC.provincias,
@@ -301,9 +329,10 @@ function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
       id: LYR.bosque,
       type: "fill",
       source: SRC.bosque,
+      layout: { visibility: "none" },
       paint: {
         "fill-color": ATLAS_COLORS.forest,
-        "fill-opacity": 0.82,
+        "fill-opacity": 0,
         "fill-opacity-transition": { duration: 500 },
       },
     },
@@ -394,26 +423,50 @@ function applyPaint(
     paint: AtlasOtbnPaint;
     showBosque: boolean;
     showProvinceFill: boolean;
+    showEcoregion: boolean;
     showLabels: boolean;
-    province: OtbnProvinceFilter;
+    provinces: AtlasScope;
     highlightZona: number | null;
+    /** Bosques listos en color uniforme, todavía sin revelar. */
+    suppressForest?: boolean;
   },
 ) {
   setLayerVisibility(map, LYR.provinciasFill, opts.showProvinceFill);
+  setLayerVisibility(map, LYR.ecoregion, opts.showEcoregion);
+  if (map.getLayer(LYR.ecoregion)) {
+    map.setPaintProperty(LYR.ecoregion, "fill-opacity", opts.showEcoregion ? 1 : 0);
+  }
   setLayerVisibility(map, LYR.bosque, opts.showBosque);
   if (map.getLayer(LYR.bosque)) {
     map.setPaintProperty(LYR.bosque, "fill-opacity", opts.showBosque ? 0.82 : 0);
   }
   const showOtbn = opts.paint !== "off";
+  const showOtbnLine = showOtbn && opts.paint !== "forest" && !opts.suppressForest;
   setLayerVisibility(map, LYR.otbn, showOtbn);
-  setLayerVisibility(map, LYR.otbnLine, showOtbn);
+  setLayerVisibility(map, LYR.otbnLine, showOtbnLine);
   setLayerVisibility(map, LYR.labels, opts.showLabels);
+  if (map.getLayer(LYR.labels)) {
+    map.setFilter(LYR.labels, labelFilter(opts.provinces));
+  }
 
   if (!showOtbn || !map.getLayer(LYR.otbn)) return;
-  map.setFilter(LYR.otbn, otbnFilter(opts.province));
-  map.setFilter(LYR.otbnLine, otbnFilter(opts.province));
+  map.setFilter(LYR.otbn, otbnFilter(opts.provinces));
+  map.setFilter(LYR.otbnLine, otbnFilter(opts.provinces));
   map.setPaintProperty(LYR.otbn, "fill-color", otbnFillColor(opts.paint));
-  map.setPaintProperty(LYR.otbn, "fill-opacity", otbnFillOpacity(opts.highlightZona));
+  if (opts.suppressForest) {
+    map.setPaintProperty(LYR.otbn, "fill-opacity-transition", { duration: 0 });
+    map.setPaintProperty(LYR.otbn, "fill-opacity", 0);
+    map.setPaintProperty(LYR.otbn, "fill-opacity-transition", { duration: 650 });
+  } else {
+    map.setPaintProperty(LYR.otbn, "fill-opacity-transition", {
+      duration: opts.paint === "forest" ? 650 : 420,
+    });
+    map.setPaintProperty(
+      LYR.otbn,
+      "fill-opacity",
+      otbnFillOpacity(opts.highlightZona, opts.paint),
+    );
+  }
   map.setPaintProperty(LYR.otbnLine, "line-color", otbnFillColor(opts.paint));
   map.setPaintProperty(
     LYR.otbnLine,
@@ -449,7 +502,7 @@ function applyCamera(
   map: mapboxgl.Map,
   data: AtlasData,
   opts: {
-    province: OtbnProvinceFilter;
+    provinces: AtlasScope;
     fit: AtlasFitTarget;
     offsetLeft: boolean;
     animate?: boolean;
@@ -457,17 +510,18 @@ function applyCamera(
 ) {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let bounds: mapboxgl.LngLatBounds | null = null;
-  if (opts.fit === "province" && opts.province !== "all") {
-    const otbnFeatures = data.otbn.features.filter(
-      (feature) => feature.properties.provincia === opts.province,
+  if (opts.fit === "province" && opts.provinces !== "all") {
+    const names = new Set<string>(opts.provinces);
+    const otbnFeatures = data.otbn.features.filter((feature) =>
+      names.has(feature.properties.provincia),
     );
     bounds = collectionBounds({
       type: "FeatureCollection",
       features: otbnFeatures,
     });
     if (!bounds) {
-      const features = data.provincias.features.filter(
-        (feature) => feature.properties.nam === opts.province,
+      const features = data.provincias.features.filter((feature) =>
+        names.has(feature.properties.nam),
       );
       bounds = collectionBounds({ type: "FeatureCollection", features });
     }
@@ -506,20 +560,28 @@ export function AtlasMap({
   const paint: AtlasOtbnPaint = explorer ? "zones" : config.otbnPaint;
   const showBosque = explorer ? false : config.showBosque;
   const showProvinceFill = explorer ? false : config.showProvinceFill;
+  const showEcoregion = explorer ? false : config.showEcoregion;
   const showLabels = explorer ? true : config.showLabels;
-  const province = explorer ? provinceFilter : config.province;
+  const provinces: AtlasScope = explorer
+    ? provinceFilter === "all"
+      ? "all"
+      : [provinceFilter]
+    : config.provinces;
+  const scopeKey = provinces === "all" ? "all" : provinces.join("|");
   const fit = explorer
     ? provinceFilter === "all"
       ? "patagonia"
       : "province"
     : config.fit;
   const offsetLeft = !explorer;
+  const revealTimer = useRef(0);
   const viewRef = useRef({
     paint,
     showBosque,
     showProvinceFill,
+    showEcoregion,
     showLabels,
-    province,
+    provinces,
     highlightZona,
     fit,
     offsetLeft,
@@ -528,11 +590,30 @@ export function AtlasMap({
     paint,
     showBosque,
     showProvinceFill,
+    showEcoregion,
     showLabels,
-    province,
+    provinces,
     highlightZona,
     fit,
     offsetLeft,
+  };
+
+  const syncPaint = (map: mapboxgl.Map) => {
+    window.clearTimeout(revealTimer.current);
+    if (!map.getLayer(LYR.otbn)) return;
+    const view = viewRef.current;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce && view.paint === "forest" && view.showEcoregion) {
+      applyPaint(map, { ...view, suppressForest: true });
+      revealTimer.current = window.setTimeout(() => {
+        const live = mapRef.current;
+        const latest = viewRef.current;
+        if (!live?.getLayer(LYR.otbn) || latest.paint !== "forest") return;
+        applyPaint(live, latest);
+      }, 520);
+      return;
+    }
+    applyPaint(map, view);
   };
 
   useEffect(() => {
@@ -600,7 +681,7 @@ export function AtlasMap({
       applyPlanarProjection(map);
       blendBasemap(map);
       addOverlayLayers(map, data);
-      applyPaint(map, viewRef.current);
+      syncPaint(map);
       applyCamera(map, data, viewRef.current);
     };
     const onStyleLoad = () => {
@@ -638,6 +719,7 @@ export function AtlasMap({
 
     return () => {
       window.clearTimeout(t);
+      window.clearTimeout(revealTimer.current);
       observer.disconnect();
       map.off("load", onLoad);
       map.off("style.load", onStyleLoad);
@@ -651,15 +733,11 @@ export function AtlasMap({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !map.getStyle() || !map.getLayer(LYR.otbn)) return;
-    applyPaint(map, {
-      paint,
-      showBosque,
-      showProvinceFill,
-      showLabels,
-      province,
-      highlightZona,
-    });
-  }, [paint, showBosque, showProvinceFill, showLabels, province, highlightZona]);
+    syncPaint(map);
+    return () => window.clearTimeout(revealTimer.current);
+    // syncPaint lee viewRef, que ya tiene el frame actual.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paint, showBosque, showProvinceFill, showEcoregion, showLabels, scopeKey, highlightZona]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -668,7 +746,7 @@ export function AtlasMap({
     let cancelled = false;
     const run = () => {
       if (cancelled || !map.getStyle() || !map.getSource(SRC.provincias)) return;
-      applyCamera(map, data, { province, fit, offsetLeft });
+      applyCamera(map, data, { provinces, fit, offsetLeft });
     };
     if (map.isStyleLoaded() && map.getSource(SRC.provincias)) {
       run();
@@ -685,7 +763,7 @@ export function AtlasMap({
         /* el mapa ya se desmontó */
       }
     };
-  }, [province, fit, offsetLeft, step]);
+  }, [scopeKey, fit, offsetLeft, step]);
 
   if (error) {
     return (

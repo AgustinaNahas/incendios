@@ -7,6 +7,7 @@ export const ATLAS_COLORS = {
   stroke: "#1A1A1A",
   coral: "#C7281C",
   forest: "#AEB091",
+  ecoregion: "#6F7358",
   barTrack: "#6F7358",
   provinceFill: "#9A9A92",
 } as const;

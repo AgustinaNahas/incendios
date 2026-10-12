@@ -1,9 +1,7 @@
 import { formatHa } from "@/lib/format";
-import { OTBN_COLORS, OTBN_ZONA_LABELS, type OtbnZona } from "@/lib/otbnColors";
+import { OTBN_COLORS, type OtbnZona } from "@/lib/otbnColors";
 import {
-  OTBN_PROVINCE_COPY,
   OTBN_PROVINCE_SLUG,
-  OTBN_PROVINCES,
   type OtbnProvinceFilter,
 } from "@/lib/otbnCopy";
 import {
@@ -17,6 +15,11 @@ import {
 export type AtlasFitTarget = "argentina" | "patagonia" | "province";
 
 export type AtlasOtbnPaint = "off" | "forest" | "zones";
+
+export type AtlasProvince = Exclude<OtbnProvinceFilter, "all">;
+
+/** `"all"` pinta las cinco provincias; un array recorta el mapa a ese grupo. */
+export type AtlasScope = "all" | AtlasProvince[];
 
 export type AtlasBarConfig =
   | {
@@ -39,21 +42,27 @@ export type AtlasBarConfig =
       caption: string;
     };
 
+export type AtlasChart = {
+  id: string;
+  label?: string;
+  hectaresLabel?: string;
+  bar: AtlasBarConfig;
+};
+
 export type AtlasStep = {
   id: string;
   title: string;
   kicker?: string;
   body: string;
-  hectaresLabel?: string;
-  shareLabel?: string;
   showCategoryLegend: boolean;
   fit: AtlasFitTarget;
-  province: OtbnProvinceFilter;
+  provinces: AtlasScope;
   showProvinceFill: boolean;
   showBosque: boolean;
+  showEcoregion: boolean;
   otbnPaint: AtlasOtbnPaint;
   showLabels: boolean;
-  bar: AtlasBarConfig;
+  charts: AtlasChart[];
 };
 
 function stackedBar(province: OtbnProvinceFilter): AtlasBarConfig {
@@ -63,75 +72,107 @@ function stackedBar(province: OtbnProvinceFilter): AtlasBarConfig {
     variant: "stacked",
     total: ha.total,
     segments: zonas.map((zona) => ({ zona, value: ha[zona] })),
-    caption: ``,
+    caption: "",
+  };
+}
+
+function provinceChart(province: AtlasProvince): AtlasChart {
+  const ha = otbnHaFor(province);
+  return {
+    id: OTBN_PROVINCE_SLUG[province],
+    label: province,
+    hectaresLabel: `${formatHa(ha.total)} ha.`,
+    bar: stackedBar(province),
   };
 }
 
 const bosquesStep: AtlasStep = {
   id: "bosques",
-  title: "Ecoregión Andino Patagónica",
-  body: "Se extiende a lo largo de 5 provincias argentinas. Ell 32% de este territorio corresponde a los Bosques nativos patagónicos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas.",
+  title: "Ecorregión Andino Patagónica",
+  body: "Se extiende a lo largo de 5 provincias argentinas. El 32% de este territorio corresponde a los Bosques nativos patagónicos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas.",
   showCategoryLegend: false,
   fit: "patagonia",
-  province: "all",
+  provinces: "all",
   showProvinceFill: false,
-  showBosque: true,
-  otbnPaint: "off",
+  showBosque: false,
+  showEcoregion: true,
+  otbnPaint: "forest",
   showLabels: true,
-  bar: {
-    variant: "share",
-    total: ECOREGION_HA,
-    value: OTBN_TOTAL_HA.total,
-    percentLabel: `${Math.round(otbnShareOfEcoregion() * 100)}%`,
-    caption: `${formatHa(OTBN_TOTAL_HA.total)} ha. de ${formatHa(ECOREGION_HA)} ha.`,
-  },
+  charts: [
+    {
+      id: "ecoregion-share",
+      bar: {
+        variant: "share",
+        total: ECOREGION_HA,
+        value: OTBN_TOTAL_HA.total,
+        percentLabel: `${Math.round(otbnShareOfEcoregion() * 100)}%`,
+        caption: `${formatHa(OTBN_TOTAL_HA.total)} ha. de ${formatHa(ECOREGION_HA)} ha.`,
+      },
+    },
+  ],
 };
 
 const categoriasStep: AtlasStep = {
   id: "categorias",
-  title: "Categorías de conservación",
+  title: "Bosques nativos y su conservación",
   body: "Para proteger los bosques nativos, la Ley Nacional 26.331 los clasifica en tres categorías.",
   showCategoryLegend: true,
   fit: "patagonia",
-  province: "all",
+  provinces: "all",
   showProvinceFill: false,
   showBosque: false,
+  showEcoregion: false,
   otbnPaint: "zones",
   showLabels: true,
-  bar: stackedBar("all"),
+  charts: [
+    {
+      id: "categorias-share",
+      bar: stackedBar("all"),
+    },
+  ],
 };
 
-function provinceSteps(
-  province: Exclude<OtbnProvinceFilter, "all">,
-): AtlasStep[] {
-  const slug = OTBN_PROVINCE_SLUG[province];
-  const copy = OTBN_PROVINCE_COPY[province];
-  const ha = otbnHaFor(province);
-  const sharePct = Math.round((ha.total / OTBN_TOTAL_HA.total) * 100);
-  return [
-    {
-      id: slug,
-      title: copy.title,
-      kicker: copy.kicker,
-      body: copy.body,
-      hectaresLabel: `${formatHa(ha.total)} ha.`,
-      shareLabel: `${sharePct}%`,
-      showCategoryLegend: false,
-      fit: "province",
-      province,
-      showProvinceFill: false,
-      showBosque: false,
-      otbnPaint: "zones",
-      showLabels: true,
-      bar: stackedBar(province),
-    },
-  ];
+function regionStep(
+  id: string,
+  title: string,
+  provinces: AtlasProvince[],
+): AtlasStep {
+  return {
+    id,
+    title,
+    body: "",
+    showCategoryLegend: false,
+    fit: "province",
+    provinces,
+    showProvinceFill: false,
+    showBosque: false,
+    showEcoregion: false,
+    otbnPaint: "zones",
+    showLabels: true,
+    charts: provinces.map(provinceChart),
+  };
 }
+
+const norPatagoniaStep = regionStep("nor-patagonia", "Nor-patagonia", [
+  "Neuquén",
+  "Río Negro",
+]);
+
+const patagoniaCentroStep = regionStep("patagonia-centro", "Patagonia centro", [
+  "Chubut",
+]);
+
+const patagoniaSurStep = regionStep("patagonia-sur", "Patagonia sur", [
+  "Santa Cruz",
+  "Tierra del Fuego",
+]);
 
 export const ATLAS_STEPS: AtlasStep[] = [
   bosquesStep,
   categoriasStep,
-  ...OTBN_PROVINCES.flatMap(provinceSteps),
+  norPatagoniaStep,
+  patagoniaCentroStep,
+  patagoniaSurStep,
 ];
 
 export type AtlasPanel = {
@@ -146,14 +187,21 @@ export const ATLAS_PANELS: AtlasPanel[] = [
     label: bosquesStep.title,
     steps: [bosquesStep, categoriasStep],
   },
-  ...OTBN_PROVINCES.map((province) => {
-    const steps = provinceSteps(province);
-    return {
-      id: OTBN_PROVINCE_SLUG[province],
-      label: province,
-      steps,
-    };
-  }),
+  {
+    id: norPatagoniaStep.id,
+    label: norPatagoniaStep.title,
+    steps: [norPatagoniaStep],
+  },
+  {
+    id: patagoniaCentroStep.id,
+    label: patagoniaCentroStep.title,
+    steps: [patagoniaCentroStep],
+  },
+  {
+    id: patagoniaSurStep.id,
+    label: patagoniaSurStep.title,
+    steps: [patagoniaSurStep],
+  },
 ];
 
 export type AtlasStepId = (typeof ATLAS_STEPS)[number]["id"];

@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import * as d3 from "d3";
-import { ATLAS_COLORS, OTBN_COLORS, OTBN_ZONA_LABELS } from "@/lib/otbnColors";
+import { ATLAS_COLORS, OTBN_COLORS } from "@/lib/otbnColors";
 import type { AtlasBarConfig } from "@/lib/atlasSteps";
 import type { OtbnZona } from "@/lib/otbnColors";
 
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const VIEW_W = 640;
-const VIEW_H = 80;
+const VIEW_H = 36;
 export const ATLAS_BAR_DURATION = 900;
 
 type Seg = {
@@ -189,76 +189,111 @@ export function AtlasShareBar({
       });
   }, [highlightZona, bar]);
 
-  const overlayText =
-    bar.variant === "solid"
-      ? bar.label
-      : bar.variant === "share"
-        ? bar.percentLabel
-        : bar.caption;
   const caption = bar.variant === "share" ? bar.caption : null;
-  const showLegend = bar.variant === "stacked";
-  const legendSegs = showLegend ? segmentsFromBar(bar) : [];
+  const percents = percentLabels(bar);
 
   return (
     <div className="w-full">
-      <div className="relative w-full">
-        <svg
-          ref={svgRef}
-          viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-          preserveAspectRatio="none"
-          className="block h-[80px] w-full overflow-visible"
-          role="img"
-          aria-label={
-            bar.variant === "solid"
-              ? bar.label
-              : bar.variant === "share"
-                ? bar.caption
-                : bar.caption
-          }
-        />
-        {overlayText ? (
-          <p
-            className="pointer-events-none absolute inset-0 flex items-center px-4 font-[family-name:var(--font-display)] text-[52px] leading-none font-black tracking-wide text-[#f3efe8]"
-            aria-hidden
-          >
-            {overlayText}
-          </p>
-        ) : null}
-      </div>
-      {caption ? (
-        <p className="mt-2 text-sm font-bold text-[#f3efe8]/85">{caption}</p>
-      ) : null}
-      {showLegend ? (
-        <div className="relative mt-3 min-h-6 text-xs text-[#f3efe8]/80">
-          {legendSegs.map((item) => {
-            if (item.zona == null) return null;
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="none"
+        className="block h-9 max-h-9 w-full"
+        role="img"
+        aria-label={barAriaLabel(bar, percents)}
+      />
+      {percents.length > 0 ? (
+        <div className="relative mt-2 h-6 text-base text-white">
+          {percents.map((item) => {
             const dimmed =
-              highlightZona != null && highlightZona !== item.zona;
-            const code =
-              item.zona === 1 ? "I" : item.zona === 2 ? "II" : "III";
+              highlightZona != null && item.zona != null && highlightZona !== item.zona;
             return (
-              <div
+              <span
                 key={item.id}
-                className="absolute top-0 inline-flex items-center gap-1.5 whitespace-nowrap transition-opacity"
+                className="absolute top-0 whitespace-nowrap transition-opacity"
                 style={{
-                  left: `${(item.x / VIEW_W) * 100}%`,
+                  ...percentStyle(item),
                   opacity: dimmed ? 0.28 : 1,
                 }}
               >
-                <span
-                  className="h-2.5 w-2.5 shrink-0 rounded-[1px]"
-                  style={{ background: OTBN_COLORS[item.zona as OtbnZona] }}
-                  aria-hidden
-                />
-                Categoría {code}
-                <span className="sr-only">
-                  {OTBN_ZONA_LABELS[item.zona as OtbnZona]}
-                </span>
-              </div>
+                {item.text}
+              </span>
             );
           })}
         </div>
       ) : null}
+      {caption ? <p className="mt-1 text-sm text-white">{caption}</p> : null}
     </div>
   );
+}
+
+type PercentLabel = {
+  id: string;
+  text: string;
+  zona: number | null;
+  start: number;
+  end: number;
+};
+
+/** Reparte 100 puntos enteros según la parte fraccional, para que cierren en 100. */
+function roundedPercents(values: number[], total: number): number[] {
+  if (total <= 0) return values.map(() => 0);
+  const raw = values.map((value) => (value / total) * 100);
+  const floors = raw.map((value) => Math.floor(value));
+  let leftover = 100 - floors.reduce((sum, value) => sum + value, 0);
+  const order = raw
+    .map((value, index) => ({ index, frac: value - floors[index] }))
+    .sort((a, b) => b.frac - a.frac);
+  const out = [...floors];
+  for (let i = 0; i < leftover; i += 1) {
+    const slot = order[i];
+    if (!slot) break;
+    out[slot.index] += 1;
+  }
+  return out;
+}
+
+function percentLabels(bar: AtlasBarConfig): PercentLabel[] {
+  if (bar.variant === "share") {
+    const end = Math.max(0, Math.min(1, bar.total ? bar.value / bar.total : 0));
+    return [{ id: "share", text: bar.percentLabel, zona: null, start: 0, end }];
+  }
+  if (bar.variant === "solid") {
+    return [{ id: "solid", text: bar.label, zona: null, start: 0, end: 1 }];
+  }
+  const total = bar.total || 1;
+  const pcts = roundedPercents(
+    bar.segments.map((item) => item.value),
+    total,
+  );
+  let cursor = 0;
+  return bar.segments.map((item, index) => {
+    const width = item.value / total;
+    const label: PercentLabel = {
+      id: `z-${item.zona}`,
+      text: `${pcts[index]}%`,
+      zona: item.zona,
+      start: cursor,
+      end: cursor + width,
+    };
+    cursor += width;
+    return label;
+  });
+}
+
+function percentStyle(item: PercentLabel): { left?: string; right?: string; transform?: string } {
+  const width = item.end - item.start;
+  const last = item.end > 0.9;
+  if (width < 0.12 && last) return { right: "0" };
+  if (width < 0.12) return { left: `${item.start * 100}%` };
+  return {
+    left: `${((item.start + item.end) / 2) * 100}%`,
+    transform: "translateX(-50%)",
+  };
+}
+
+function barAriaLabel(bar: AtlasBarConfig, percents: PercentLabel[]): string {
+  if (bar.variant === "share") return `${bar.percentLabel}. ${bar.caption}`;
+  if (bar.variant === "solid") return bar.label;
+  return percents.map((item) => item.text).join(", ");
 }
