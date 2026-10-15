@@ -206,10 +206,10 @@ export function OtbnSection() {
                 >
                   <div className="pointer-events-auto w-full space-y-4">
                     <div
-                      className={`max-w-[800px] border px-5 py-5 transition-colors md:px-6 md:py-6 ${
+                      className={`max-w-[450px]  px-5 py-5 transition-colors md:px-6 md:py-6 ${
                         isActive
-                          ? "border-[#f3efe8]/75 bg-[#141414]"
-                          : "border-[#f3efe8]/20 bg-[#141414]/80"
+                          ? "bg-[#141414]"
+                          : "bg-[#141414]/80"
                       }`}
                     >
                       <h3 className="font-sans text-2xl leading-tight font-bold text-white md:text-3xl">

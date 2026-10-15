@@ -15,7 +15,7 @@ type Props = {
 };
 
 const VIEW_W = 640;
-const VIEW_H = 36;
+const VIEW_H = 18;
 export const ATLAS_BAR_DURATION = 900;
 
 type Seg = {
@@ -198,7 +198,7 @@ export function AtlasShareBar({
         ref={svgRef}
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         preserveAspectRatio="none"
-        className="block h-9 max-h-9 w-full"
+        className="block h-[18px] max-h-[18px] w-full"
         role="img"
         aria-label={barAriaLabel(bar, percents)}
       />

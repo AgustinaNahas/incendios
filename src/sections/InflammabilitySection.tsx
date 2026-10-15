@@ -53,16 +53,19 @@ function kindLabel(kind: Kind, origin: Origin) {
 
 export function InflammabilitySection() {
   const pinRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [trackX, setTrackX] = useState(0);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const pin = pinRef.current;
+    const viewport = viewportRef.current;
     const track = trackRef.current;
-    if (!pin || !track) return;
+    if (!pin || !viewport || !track) return;
 
-    const shiftOf = () => Math.max(0, track.scrollWidth - window.innerWidth);
+    const shiftOf = () =>
+      Math.max(0, track.scrollWidth - viewport.clientWidth);
 
     const measure = () => {
       pin.style.height = `${window.innerHeight + shiftOf()}px`;
@@ -90,6 +93,7 @@ export function InflammabilitySection() {
 
     const ro = new ResizeObserver(onResize);
     ro.observe(track);
+    ro.observe(viewport);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
@@ -176,123 +180,128 @@ export function InflammabilitySection() {
       </div>
 
       <div ref={pinRef} className="relative" style={{ height: "100vh" }}>
-        <div className="sticky top-0 h-dvh overflow-hidden">
-          <figure className="pointer-events-none absolute inset-x-0 top-0 z-20 bg-[#2B2B2B]/92 px-5 pt-4 pb-3 backdrop-blur-sm md:px-8 md:pt-5 md:pb-4">
-            <div className="mx-auto w-full max-w-[800px]">
-              <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
-                Nivel de vulnerabilidad: alto · medio · bajo
-              </figcaption>
-              <div className="flex items-center gap-3 md:gap-4">
-                <span className="shrink-0 text-base font-medium md:text-lg">
-                  Alto
-                </span>
-                <div
-                  className="flex h-4 flex-1 gap-1 md:h-5"
-                  role="img"
-                  aria-label="Escala de vulnerabilidad: alto, medio y bajo"
-                >
-                  {LEVEL_ORDER.map((level) => {
-                    const active =
-                      species[
-                        Math.min(
-                          species.length - 1,
-                          Math.max(
-                            0,
-                            Math.round(progress * (species.length - 1)),
-                          ),
-                        )
-                      ]?.level === level;
-                    return (
-                      <div
-                        key={level}
-                        className="h-full flex-1 transition-opacity duration-300"
-                        style={{
-                          background: LEVELS[level].color,
-                          opacity: active ? 1 : 0.35,
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-                <span className="shrink-0 text-base font-medium md:text-lg">
-                  Bajo
-                </span>
-              </div>
-            </div>
-          </figure>
-
+        <div className="sticky top-0 flex h-dvh items-center justify-center">
           <div
-            ref={trackRef}
-            className="absolute top-0 left-0 flex h-full w-max items-center gap-5 px-5 pt-24 pb-14 md:gap-6 md:px-8 md:pt-28 md:pb-16"
-            style={{
-              transform: `translate3d(${trackX}px, 0, 0)`,
-              willChange: "transform",
-            }}
+            ref={viewportRef}
+            className="relative mx-auto h-full w-full max-w-[1200px] overflow-hidden"
           >
-            {species.map((sp) => {
-              const level = sp.level as Level;
-              const tone = LEVELS[level];
-              const origin = sp.origin as Origin;
-              const kind = sp.kind as Kind;
-
-              return (
-                <article
-                  key={sp.id}
-                  className="flex h-[min(620px,calc(100dvh-9.5rem))] w-[min(82vw,320px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
-                >
+            <figure className="pointer-events-none absolute inset-x-0 top-0 z-20 bg-[#2B2B2B]/92 px-5 pt-4 pb-3 backdrop-blur-sm md:px-8 md:pt-5 md:pb-4">
+              <div className="mx-auto w-full max-w-[800px]">
+                <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
+                  Nivel de vulnerabilidad: alto · medio · bajo
+                </figcaption>
+                <div className="mx-auto flex w-[70%] items-center gap-3 md:gap-4">
+                  <span className="shrink-0 text-base font-medium md:text-lg">
+                    Alto
+                  </span>
                   <div
-                    className="shrink-0 px-3 py-2.5 text-center text-xs font-bold tracking-[0.22em] uppercase"
-                    style={{ background: tone.color, color: tone.ink }}
+                    className="flex h-[10px] flex-1 gap-1 md:h-[14px]"
+                    role="img"
+                    aria-label="Escala de vulnerabilidad: alto, medio y bajo"
                   >
-                    {tone.label}
+                    {LEVEL_ORDER.map((level) => {
+                      const active =
+                        species[
+                          Math.min(
+                            species.length - 1,
+                            Math.max(
+                              0,
+                              Math.round(progress * (species.length - 1)),
+                            ),
+                          )
+                        ]?.level === level;
+                      return (
+                        <div
+                          key={level}
+                          className="h-full flex-1 transition-opacity duration-300"
+                          style={{
+                            background: LEVELS[level].color,
+                            opacity: active ? 1 : 0.35,
+                          }}
+                        />
+                      );
+                    })}
                   </div>
+                  <span className="shrink-0 text-base font-medium md:text-lg">
+                    Bajo
+                  </span>
+                </div>
+              </div>
+            </figure>
 
-                  <div className="relative min-h-0 flex-1">
-                    <Image
-                      src={withBasePath(sp.image)}
-                      alt={`${sp.commonName} (${sp.scientificName})`}
-                      fill
-                      sizes="320px"
-                      className="object-contain object-center p-2"
-                    />
-                  </div>
+            <div
+              ref={trackRef}
+              className="absolute top-0 left-0 flex h-full w-max items-center gap-4 px-5 pt-20 pb-12 md:gap-5 md:px-8 md:pt-24 md:pb-14"
+              style={{
+                transform: `translate3d(${trackX}px, 0, 0)`,
+                willChange: "transform",
+              }}
+            >
+              {species.map((sp) => {
+                const level = sp.level as Level;
+                const tone = LEVELS[level];
+                const origin = sp.origin as Origin;
+                const kind = sp.kind as Kind;
 
-                  <div className="shrink-0 px-4 pt-3 pb-4">
-                    <p
-                      className="text-[11px] font-bold tracking-[0.16em] uppercase"
-                      style={{ color: tone.color }}
+                return (
+                  <article
+                    key={sp.id}
+                    className="flex h-[min(460px,calc(100dvh-12rem))] w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
+                  >
+                    <div
+                      className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
+                      style={{ background: tone.color, color: tone.ink }}
                     >
-                      {kindLabel(kind, origin)}
-                    </p>
-                    <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl leading-none font-black tracking-wide uppercase">
-                      {sp.commonName}
-                    </h3>
-                    <p className="mt-1.5 text-sm italic text-[#f3efe8]/70">
-                      {sp.scientificName}
-                    </p>
-                    <p className="mt-3 text-sm leading-relaxed text-[#f3efe8]/85">
-                      {sp.note}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+                      {tone.label}
+                    </div>
 
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 px-5 pb-5 md:px-8">
-            <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
-              <div
-                className="h-px bg-[#f3efe8]/80"
-                style={{ width: `${progress * 100}%` }}
-              />
+                    <div className="relative h-[160px] w-full shrink-0 my-6">
+                      <Image
+                        src={withBasePath(sp.image)}
+                        alt={`${sp.commonName} (${sp.scientificName})`}
+                        fill
+                        sizes="280px"
+                        className="object-contain object-bottom p-2"
+                      />
+                    </div>
+
+                    <div className="min-h-0 flex-1 overflow-hidden px-3 pt-2 pb-3">
+                      <p
+                        className="text-[10px] font-bold tracking-[0.16em] uppercase"
+                        style={{ color: tone.color }}
+                      >
+                        {kindLabel(kind, origin)}
+                      </p>
+                      <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide uppercase">
+                        {sp.commonName}
+                      </h3>
+                      <p className="mt-1 text-xs italic text-[#f3efe8]/70">
+                        {sp.scientificName}
+                      </p>
+                      <p className="mt-2 text-xs leading-relaxed text-[#f3efe8]/85 md:text-sm">
+                        {sp.note}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
-            <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
-              {Math.min(
-                species.length,
-                Math.max(1, Math.round(progress * (species.length - 1)) + 1),
-              )}{" "}
-              / {species.length}
-            </p>
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 px-5 pb-5 md:px-8">
+              <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
+                <div
+                  className="h-px bg-[#f3efe8]/80"
+                  style={{ width: `${progress * 100}%` }}
+                />
+              </div>
+              <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
+                {Math.min(
+                  species.length,
+                  Math.max(1, Math.round(progress * (species.length - 1)) + 1),
+                )}{" "}
+                / {species.length}
+              </p>
+            </div>
           </div>
         </div>
       </div>
