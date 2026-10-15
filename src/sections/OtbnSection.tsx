@@ -269,7 +269,7 @@ export function OtbnSection() {
                         </div>
                       ) : null}
                       {displayed.showCategoryLegend ? (
-                        <ul className="mt-4 space-y-2 text-sm leading-relaxed text-white/85">
+                        <ul className="mt-4 space-y-4 text-sm leading-relaxed text-white/85">
                           {OTBN_CATEGORY_BULLETS.map((bullet, index) => {
                             const visible = categoryReveal > index;
                             const dimmed =
@@ -279,18 +279,21 @@ export function OtbnSection() {
                             return (
                               <li
                                 key={bullet.zona}
-                                className="transition-opacity duration-500"
+                                className="transition-opacity duration-500 flex flex-row"
                                 style={{
                                   opacity: visible ? (dimmed ? 0.28 : 1) : 0,
                                 }}
                               >
-                                <span
-                                  className="mr-1.5 inline-block px-1.5 py-0.5 font-semibold text-white"
+                                <div
+                                  className="min-h-5 w-1 mr-2 font-semibold text-white flex-shrink-0"
                                   style={{ background: bullet.color }}
                                 >
-                                  Categoría {bullet.code}
-                                </span>{" "}
+                               </div>
+                               <div className="text-white flex-grow">
+                               Categoría {bullet.code} <br/>
+                                
                                 {bullet.text}
+                                </div>
                               </li>
                             );
                           })}
