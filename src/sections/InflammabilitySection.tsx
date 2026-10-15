@@ -3,16 +3,18 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import species from "@/data/species-inflammability.json";
+import { OTBN_COLORS } from "@/lib/otbnColors";
 import { withBasePath } from "@/lib/paths";
 
 type Level = "bajo" | "medio" | "alto";
 type Origin = "nativa" | "exotica";
 type Kind = "arbol" | "planta";
 
+/** Misma paleta que las categorías OTBN del mapa (I / II / III). */
 const LEVELS: Record<Level, { label: string; color: string; ink: string }> = {
-  bajo: { label: "Bajo", color: "#44780C", ink: "#f3efe8" },
-  medio: { label: "Medio", color: "#C0A010", ink: "#1A1A1A" },
-  alto: { label: "Alto", color: "#E83828", ink: "#f3efe8" },
+  alto: { label: "Alto", color: OTBN_COLORS[1], ink: "#f3efe8" },
+  medio: { label: "Medio", color: OTBN_COLORS[2], ink: "#1A1A1A" },
+  bajo: { label: "Bajo", color: OTBN_COLORS[3], ink: "#f3efe8" },
 };
 
 const LEVEL_ORDER: Level[] = ["alto", "medio", "bajo"];
@@ -171,40 +173,57 @@ export function InflammabilitySection() {
             vulnerables y cuáles ofrecen mayor resistencia?
           </p>
         </div>
-
-        <figure className="mt-12">
-          <figcaption className="mb-4 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
-            Nivel de vulnerabilidad: alto · medio · bajo
-          </figcaption>
-          <div className="flex items-center gap-3 md:gap-4">
-            <span className="shrink-0 text-base font-medium md:text-lg">
-              Alto
-            </span>
-            <div
-              className="flex h-4 flex-1 gap-1 md:h-5"
-              role="img"
-              aria-label="Escala de vulnerabilidad: alto, medio y bajo"
-            >
-              {LEVEL_ORDER.map((level) => (
-                <div
-                  key={level}
-                  className="h-full flex-1"
-                  style={{ background: LEVELS[level].color }}
-                />
-              ))}
-            </div>
-            <span className="shrink-0 text-base font-medium md:text-lg">
-              Bajo
-            </span>
-          </div>
-        </figure>
       </div>
 
       <div ref={pinRef} className="relative" style={{ height: "100vh" }}>
         <div className="sticky top-0 h-dvh overflow-hidden">
+          <figure className="pointer-events-none absolute inset-x-0 top-0 z-20 bg-[#2B2B2B]/92 px-5 pt-4 pb-3 backdrop-blur-sm md:px-8 md:pt-5 md:pb-4">
+            <div className="mx-auto w-full max-w-[800px]">
+              <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
+                Nivel de vulnerabilidad: alto · medio · bajo
+              </figcaption>
+              <div className="flex items-center gap-3 md:gap-4">
+                <span className="shrink-0 text-base font-medium md:text-lg">
+                  Alto
+                </span>
+                <div
+                  className="flex h-4 flex-1 gap-1 md:h-5"
+                  role="img"
+                  aria-label="Escala de vulnerabilidad: alto, medio y bajo"
+                >
+                  {LEVEL_ORDER.map((level) => {
+                    const active =
+                      species[
+                        Math.min(
+                          species.length - 1,
+                          Math.max(
+                            0,
+                            Math.round(progress * (species.length - 1)),
+                          ),
+                        )
+                      ]?.level === level;
+                    return (
+                      <div
+                        key={level}
+                        className="h-full flex-1 transition-opacity duration-300"
+                        style={{
+                          background: LEVELS[level].color,
+                          opacity: active ? 1 : 0.35,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <span className="shrink-0 text-base font-medium md:text-lg">
+                  Bajo
+                </span>
+              </div>
+            </div>
+          </figure>
+
           <div
             ref={trackRef}
-            className="absolute top-0 left-0 flex h-full w-max items-center gap-5 px-5 md:gap-6 md:px-8"
+            className="absolute top-0 left-0 flex h-full w-max items-center gap-5 px-5 pt-24 pb-14 md:gap-6 md:px-8 md:pt-28 md:pb-16"
             style={{
               transform: `translate3d(${trackX}px, 0, 0)`,
               willChange: "transform",
@@ -219,8 +238,7 @@ export function InflammabilitySection() {
               return (
                 <article
                   key={sp.id}
-                  className="flex h-[min(680px,calc(100dvh-4.5rem))] w-[min(82vw,320px)] shrink-0 flex-col overflow-hidden border-[3px] bg-[#121212]"
-                  style={{ borderColor: tone.color }}
+                  className="flex h-[min(620px,calc(100dvh-9.5rem))] w-[min(82vw,320px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
                 >
                   <div
                     className="shrink-0 px-3 py-2.5 text-center text-xs font-bold tracking-[0.22em] uppercase"

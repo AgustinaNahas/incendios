@@ -76,13 +76,13 @@ export function FightersSection() {
         <h3 className="mt-12 font-sans text-xl font-bold md:text-2xl">
           Los distintos cuerpos de combate
         </h3>
-        <ul className="mt-6 space-y-5">
+        <ul className="mt-6 space-y-8">
           {BODIES.map((item) => (
-            <li key={item.title}>
+            <li key={item.title} className="list-disc ml-6 pl-2">
               <p className="font-sans text-base font-bold md:text-lg">
                 {item.title}
               </p>
-              <p className="mt-1 text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
+              <p className="text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
                 {item.body}
               </p>
             </li>
