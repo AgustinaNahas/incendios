@@ -12,32 +12,12 @@
   {
     "id": "pinus-contorta",
     "commonName": "Pino murrayana",
-    "scientificName": "Pinus contorta",
+    "scientificName": "Pinus contorta var. murrayana",
     "origin": "exotica",
     "kind": "arbol",
     "level": "alto",
     "image": "/images/species/pino-murrayana.webp",
-    "note": "Acículas y resina prenden con facilidad. El calor abre sus conos y libera semillas sobre el suelo recién quemado."
-  },
-  {
-    "id": "pseudotsuga-menziesii",
-    "commonName": "Pino oregón",
-    "scientificName": "Pseudotsuga menziesii",
-    "origin": "exotica",
-    "kind": "arbol",
-    "level": "alto",
-    "image": "/images/species/pino-oregon.webp",
-    "note": "En plantaciones densas el combustible se conecta de copa a copa. Las ramas bajas facilitan que el fuego pase de la superficie a la altura."
-  },
-  {
-    "id": "pinus-ponderosa",
-    "commonName": "Pino ponderosa",
-    "scientificName": "Pinus ponderosa",
-    "origin": "exotica",
-    "kind": "arbol",
-    "level": "alto",
-    "image": "/images/species/pino-ponderosa.webp",
-    "note": "Resinas y acículas secas elevan la intensidad del incendio. En forestaciones continuas el fuego avanza más rápido que en el bosque nativo."
+    "note": "Corteza fina y copa compacta; si muere, no rebrota y vuelve únicamente a partir de semillas."
   },
   {
     "id": "austrocedrus-chilensis",
@@ -45,9 +25,9 @@
     "scientificName": "Austrocedrus chilensis",
     "origin": "nativa",
     "kind": "arbol",
-    "level": "medio",
+    "level": "alto",
     "image": "/images/species/cipres.webp",
-    "note": "La corteza fina ofrece poca protección: el fuego de superficie suele matar al árbol adulto y la regeneración posterior es lenta."
+    "note": "Sensible al fuego intenso; si los adultos mueren, la recuperación del bosque es lenta y depende principalmente de nuevas plantas."
   },
   {
     "id": "nothofagus-pumilio",
@@ -55,9 +35,9 @@
     "scientificName": "Nothofagus pumilio",
     "origin": "nativa",
     "kind": "arbol",
-    "level": "medio",
+    "level": "alto",
     "image": "/images/species/lenga.webp",
-    "note": "En el bosque alto el fuego la alcanza con facilidad. No rebrota desde la base y, sin manejo, la recuperación puede llevar décadas."
+    "note": "Resiste poco los incendios fuertes y casi no rebrota; si muere el bosque adulto, debe formarse una nueva generación desde semillas."
   },
   {
     "id": "nothofagus-antarctica",
@@ -67,7 +47,37 @@
     "kind": "arbol",
     "level": "medio",
     "image": "/images/species/nire.webp",
-    "note": "Crece en matas bajas, donde el fuego corre entre las ramas. Puede rebrotar, pero un incendio intenso deja el paisaje abierto por años."
+    "note": "Es el árbol nativo con mayor resiliencia y adaptación al fuego de la región. Posee estructuras subterráneas que le permiten rebrotar rápidamente."
+  },
+  {
+    "id": "pseudotsuga-menziesii",
+    "commonName": "Pino oregón",
+    "scientificName": "Pseudotsuga menziesii",
+    "origin": "exotica",
+    "kind": "arbol",
+    "level": "medio",
+    "image": "/images/species/pino-oregon.webp",
+    "note": "Es la especie exótica con mayor potencial invasor; desplaza a las especies nativas alterando la luminosidad y homogeneizando el ambiente. Los adultos pueden sobrevivir gracias a su corteza gruesa; si mueren, la regeneración se da por semillas."
+  },
+  {
+    "id": "fitzroya-cupressoides",
+    "commonName": "Alerce",
+    "scientificName": "Fitzroya cupressoides",
+    "origin": "nativa",
+    "kind": "arbol",
+    "level": "medio",
+    "image": "/images/species/alerce.webp",
+    "note": "Puede vivir más de 2.000 años y formar bosques milenarios; aunque algunos ejemplares sobrevivan, reconstruir un bosque antiguo después del fuego puede llevar siglos."
+  },
+  {
+    "id": "pinus-ponderosa",
+    "commonName": "Pino ponderosa",
+    "scientificName": "Pinus ponderosa",
+    "origin": "exotica",
+    "kind": "arbol",
+    "level": "bajo",
+    "image": "/images/species/pino-ponderosa.webp",
+    "note": "Su corteza gruesa y copa elevada permiten que muchos adultos sobrevivan; luego puede regenerarse bien si quedan árboles semilleros."
   },
   {
     "id": "araucaria-araucana",
@@ -77,16 +87,6 @@
     "kind": "arbol",
     "level": "bajo",
     "image": "/images/species/araucaria.webp",
-    "note": "Resiste mejor el fuego superficial por su corteza gruesa y corchosa, que actúa como escudo térmico. Sus ramas altas dificultan que el fuego suba a la copa."
-  },
-  {
-    "id": "fitzroya-cupressoides",
-    "commonName": "Alerce",
-    "scientificName": "Fitzroya cupressoides",
-    "origin": "nativa",
-    "kind": "arbol",
-    "level": "bajo",
-    "image": "/images/species/alerce.webp",
-    "note": "La corteza gruesa y fibrosa amortigua el fuego de superficie. Si el incendio llega a la copa, el bosque de alerce tarda siglos en recomponerse."
+    "note": "Los adultos soportan mejor incendios moderados y pueden recuperarse tanto por semillas como por nuevos brotes."
   }
 ]

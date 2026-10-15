@@ -1,8 +1,8 @@
 import type { OtbnZona } from "@/lib/otbnColors";
 import type { OtbnProvinceFilter } from "@/lib/otbnCopy";
 
-/** Superficie de la ecorregión Bosques Patagónicos (atlas-ecoregion-bosques). */
-export const ECOREGION_HA = 6_459_673;
+/** Superficie de la ecorregión Andino Patagónica (guión / OTBN). */
+export const ECOREGION_HA = 6_452_891;
 
 export type OtbnHaBreakdown = {
   1: number;

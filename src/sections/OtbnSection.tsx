@@ -145,7 +145,7 @@ export function OtbnSection() {
     >
           <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6 ">
             <h2 className="type-h3 mx-auto w-full max-w-[800px] px-6 pb-4">
-              El territorio del fuego
+              El mapa del riesgo
             </h2>
           </div>
       <div className="relative">

@@ -17,6 +17,27 @@ const LEVELS: Record<Level, { label: string; color: string; ink: string }> = {
 
 const LEVEL_ORDER: Level[] = ["alto", "medio", "bajo"];
 
+const CRITICAL_CONDITIONS = [
+  {
+    title: "Temperatura (>30 °C)",
+    body: "Favorece el calentamiento y secado de hojas, ramas y pastizales.",
+  },
+  {
+    title: "Humedad relativa (<30%)",
+    body: "El aire seco hace que la vegetación pierda humedad y se encienda con mayor facilidad.",
+  },
+  {
+    title: "Viento (>30 km/h)",
+    body: "Acelera el avance del fuego y puede transportar brasas que generan nuevos focos.",
+  },
+] as const;
+
+const CLIMATE_BULLETS = [
+  "Clima más seco y cálido: en gran parte de la región las precipitaciones disminuyeron más del 20% y la temperatura media anual aumentó entre 0,2 y 0,7 °C.",
+  "Más olas de calor: aumentan su frecuencia, duración y cantidad de días, especialmente en la cordillera de Neuquén y Río Negro.",
+  "Vientos extremos: aunque los promedios cambian poco, en febrero se registran aumentos de más del 10–15% en los vientos máximos de amplias zonas cordilleranas.",
+] as const;
+
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
@@ -86,23 +107,74 @@ export function InflammabilitySection() {
     >
       <div className="mx-auto max-w-[800px] px-5 pt-20 pb-12 md:px-8 md:pt-28">
         <h2 className="type-h3">Factores de propagación</h2>
-        <p className="mt-4 font-sans text-xl leading-snug font-bold md:text-2xl">
-          La vegetación también define cómo avanza el fuego
+
+        <h3 className="mt-10 font-sans text-xl font-bold md:text-2xl">
+          Cambios climáticos
+        </h3>
+        <p className="mt-4 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+          El cambio climático inducido por la actividad humana está modificando
+          las condiciones de fondo en la Patagonia: temperaturas más altas,
+          menos precipitaciones en amplias zonas y mayor frecuencia de eventos
+          extremos. Ese contexto favorece períodos más prolongados de sequedad y
+          aumenta la disponibilidad de vegetación capaz de arder.
         </p>
-        <div className="mt-8 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <ul className="mt-6 list-disc space-y-3 pl-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+          {CLIMATE_BULLETS.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
+          Las tres condiciones críticas
+        </h3>
+        <p className="mt-4 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+          Sobre ese contexto general pueden darse combinaciones meteorológicas
+          especialmente peligrosas. La llamada regla del 30/30/30 es un
+          indicador empírico utilizado en el combate de incendios forestales:
+          señala condiciones favorables a una propagación rápida cuando
+          coinciden más de 30 °C de temperatura, menos del 30% de humedad
+          relativa y vientos o rachas superiores a 30 km/h.
+        </p>
+        <ul className="mt-6 space-y-4">
+          {CRITICAL_CONDITIONS.map((item) => (
+            <li key={item.title}>
+              <p className="font-sans text-base font-bold md:text-lg">
+                {item.title}
+              </p>
+              <p className="mt-1 text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
+                {item.body}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
+          La vegetación nativa y exótica
+        </h3>
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
+            En el bosque andino patagónico conviven especies nativas con
+            plantaciones y ejemplares exóticos introducidos, y esa mezcla
+            modifica la forma en que el fuego puede avanzar. Los árboles nativos
+            no responden todos igual: algunos toleran mejor incendios de baja
+            intensidad, otros son muy sensibles y dependen de semillas para
+            recuperarse. Las coníferas exóticas, en cambio, suelen aportar
+            abundante follaje fino, resinas y una estructura de copa que puede
+            aumentar la continuidad del combustible cuando forman masas densas.
+            Por eso, el riesgo no depende solo de si un árbol es nativo o
+            exótico, sino también de su especie, edad, estado de humedad,
+            disposición en el bosque y de cuánto material vegetal se acumula
+            alrededor.
+          </p>
+          <p>
+            Ante condiciones comparables, ¿qué árboles tienden a ser más
+            vulnerables y cuáles ofrecen mayor resistencia?
           </p>
         </div>
 
         <figure className="mt-12">
           <figcaption className="mb-4 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
-            Nivel de vulnerabilidad frente al fuego
+            Nivel de vulnerabilidad: alto · medio · bajo
           </figcaption>
           <div className="flex items-center gap-3 md:gap-4">
             <span className="shrink-0 text-base font-medium md:text-lg">

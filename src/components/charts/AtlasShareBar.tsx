@@ -202,6 +202,11 @@ export function AtlasShareBar({
         role="img"
         aria-label={barAriaLabel(bar, percents)}
       />
+      <div className="mt-1 flex justify-between text-[11px] text-white/55">
+        <span>0%</span>
+        <span>Participación de la superficie</span>
+        <span>100%</span>
+      </div>
       {percents.length > 0 ? (
         <div className="relative mt-2 h-6 text-base text-white">
           {percents.map((item) => {

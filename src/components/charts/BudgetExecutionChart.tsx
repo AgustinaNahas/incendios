@@ -13,11 +13,12 @@ export type BudgetExecPoint = {
 type Props = {
   data: BudgetExecPoint[];
   active?: boolean;
+  title?: string;
 };
 
 const VIEW_W = 720;
-const VIEW_H = 360;
-const MARGIN = { top: 16, right: 24, bottom: 40, left: 52 };
+const VIEW_H = 400;
+const MARGIN = { top: 28, right: 16, bottom: 64, left: 64 };
 const INNER_W = VIEW_W - MARGIN.left - MARGIN.right;
 const INNER_H = VIEW_H - MARGIN.top - MARGIN.bottom;
 const DURATION = 900;
@@ -33,7 +34,11 @@ type BarDatum = BudgetExecPoint & {
   yEmpty: number;
 };
 
-export function BudgetExecutionChart({ data, active = true }: Props) {
+export function BudgetExecutionChart({
+  data,
+  active = true,
+  title = "Ejecución presupuestaria del manejo del fuego",
+}: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const wasActiveRef = useRef(false);
 
@@ -157,7 +162,6 @@ export function BudgetExecutionChart({ data, active = true }: Props) {
       return;
     }
 
-    // 1) Crece lo ejecutado desde abajo.
     merged.each(function (d) {
       const exec = d3.select(this).select<SVGRectElement>("rect.exec");
       const fromZero = activating || enterNodes.has(this);
@@ -170,7 +174,6 @@ export function BudgetExecutionChart({ data, active = true }: Props) {
         .attr("height", d.execH);
     });
 
-    // 2) Lo punteado aparece después, creciendo desde el tope de lo ejecutado.
     merged.each(function (d) {
       const empty = d3.select(this).select<SVGRectElement>("rect.empty");
       const fromZero = activating || enterNodes.has(this);
@@ -195,11 +198,14 @@ export function BudgetExecutionChart({ data, active = true }: Props) {
     });
   }, [data, active, x, y]);
 
-  const axisTicks = [0, y.domain()[1] ?? yMax];
+  const yTicks = y.ticks(4);
 
   return (
     <div className="w-full">
-      <div className="mb-4 flex flex-wrap items-center gap-5 text-sm text-[#f3efe8]/85">
+      <h3 className="font-sans text-lg font-bold text-[#f3efe8] md:text-xl">
+        {title}
+      </h3>
+      <div className="mt-3 mb-4 flex flex-wrap items-center gap-5 text-sm text-[#f3efe8]/85">
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-3 w-3" style={{ background: FILL }} />
           Ejecutado
@@ -220,8 +226,27 @@ export function BudgetExecutionChart({ data, active = true }: Props) {
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         className="h-auto w-full"
         role="img"
-        aria-label="Presupuesto ejecutado versus presupuesto total por año"
+        aria-label={`${title}. Eje X: año. Eje Y: millones de pesos a precios de 2026.`}
       >
+        <text
+          x={MARGIN.left + INNER_W / 2}
+          y={VIEW_H - 10}
+          textAnchor="middle"
+          fill="#f3efe8"
+          fillOpacity={0.75}
+          fontSize={13}
+        >
+          Año
+        </text>
+        <text
+          transform={`translate(16, ${MARGIN.top + INNER_H / 2}) rotate(-90)`}
+          textAnchor="middle"
+          fill="#f3efe8"
+          fillOpacity={0.75}
+          fontSize={13}
+        >
+          Millones de pesos (precios 2026)
+        </text>
         <g
           className="axes"
           transform={`translate(${MARGIN.left},${MARGIN.top})`}
@@ -242,19 +267,28 @@ export function BudgetExecutionChart({ data, active = true }: Props) {
             stroke="#f3efe8"
             strokeOpacity={0.35}
           />
-          {axisTicks.map((t) => (
-            <text
-              key={t}
-              x={-8}
-              y={y(t)}
-              textAnchor="end"
-              dominantBaseline="middle"
-              fill="#f3efe8"
-              fillOpacity={0.65}
-              fontSize={12}
-            >
-              {t === 0 ? "0" : formatCompact(t)}
-            </text>
+          {yTicks.map((t) => (
+            <g key={t}>
+              <line
+                x1={0}
+                x2={INNER_W}
+                y1={y(t)}
+                y2={y(t)}
+                stroke="#f3efe8"
+                strokeOpacity={0.08}
+              />
+              <text
+                x={-8}
+                y={y(t)}
+                textAnchor="end"
+                dominantBaseline="middle"
+                fill="#f3efe8"
+                fillOpacity={0.65}
+                fontSize={12}
+              >
+                {t === 0 ? "0" : formatCompact(t)}
+              </text>
+            </g>
           ))}
           {data.map((d) => (
             <text
@@ -276,7 +310,7 @@ export function BudgetExecutionChart({ data, active = true }: Props) {
         />
       </svg>
       <p className="mt-2 text-[11px] text-[#f3efe8]/55">
-        Millones de pesos constantes (2017). Datos ilustrativos.
+        Valores en millones de pesos constantes a precios de 2026.
       </p>
     </div>
   );

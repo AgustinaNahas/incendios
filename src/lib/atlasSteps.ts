@@ -89,7 +89,7 @@ function provinceChart(province: AtlasProvince): AtlasChart {
 const bosquesStep: AtlasStep = {
   id: "bosques",
   title: "Ecorregión Andino Patagónica",
-  body: "Se extiende a lo largo de 5 provincias argentinas. El 32% de este territorio corresponde a los Bosques nativos patagónicos. La masa forestal original se caracteriza por árboles y plantas leñosas autóctonas.",
+  body: "Se extiende a lo largo de 5 provincias argentinas: Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Su extensión total es de 6.452.891 hectáreas. Bosques, estepa, mallines, lagos y glaciares forman un territorio continuo a lo largo de la cordillera.",
   showCategoryLegend: false,
   fit: "patagonia",
   provinces: "all",
@@ -114,8 +114,8 @@ const bosquesStep: AtlasStep = {
 
 const categoriasStep: AtlasStep = {
   id: "categorias",
-  title: "Bosques nativos y su conservación",
-  body: "Para proteger los bosques nativos, la Ley Nacional 26.331 los clasifica en tres categorías.",
+  title: "Los bosques nativos y cómo se protegen",
+  body: "Sobre esta ecorregión se distribuyen millones de hectáreas de bosque nativo. La Ley 26.331 los ordena en tres categorías según su valor de conservación:",
   showCategoryLegend: true,
   fit: "patagonia",
   provinces: "all",
@@ -153,16 +153,16 @@ function regionStep(
   };
 }
 
-const norPatagoniaStep = regionStep("nor-patagonia", "Nor-patagonia", [
+const norPatagoniaStep = regionStep("nor-patagonia", "Norte", [
   "Neuquén",
   "Río Negro",
 ]);
 
-const patagoniaCentroStep = regionStep("patagonia-centro", "Patagonia centro", [
+const patagoniaCentroStep = regionStep("patagonia-centro", "Centro", [
   "Chubut",
 ]);
 
-const patagoniaSurStep = regionStep("patagonia-sur", "Patagonia sur", [
+const patagoniaSurStep = regionStep("patagonia-sur", "Sur", [
   "Santa Cruz",
   "Tierra del Fuego",
 ]);

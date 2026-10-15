@@ -28,9 +28,11 @@ export function StorySection({
     >
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
         <div className="space-y-6">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-current/80">
-            {eyebrow}
-          </p>
+          {eyebrow ? (
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-current/80">
+              {eyebrow}
+            </p>
+          ) : null}
           <h2 className="font-[family-name:var(--font-display)] text-3xl leading-tight md:text-5xl">
             {title}
           </h2>

@@ -7,17 +7,17 @@ export const OTBN_ZONA_COPY: Record<
   1: {
     code: "I",
     title: "Conservación",
-    body: "Sectores de alto valor de conservación. No se permite el aprovechamiento forestal ni el cambio de uso del suelo: el bosque queda como infraestructura ecológica.",
+    body: "Áreas que deben permanecer intactas.",
   },
   2: {
     code: "II",
     title: "Uso sustentable",
-    body: "Bosques donde sí hay usos productivos y recreativos, pero bajo planes de manejo. Es el territorio donde la prevención de incendios y el manejo de combustible pesan más.",
+    body: "Áreas que pueden aprovecharse de forma sostenible.",
   },
   3: {
     code: "III",
     title: "Cambio de uso",
-    body: "Áreas donde, con evaluación de impacto ambiental, se puede autorizar desmonte parcial. En Patagonia es la franja más sensible a la expansión urbana y productiva.",
+    body: "Áreas que pueden transformarse, pero solo con evaluación de impacto ambiental y bajo condiciones estrictas.",
   },
 };
 

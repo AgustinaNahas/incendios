@@ -39,8 +39,7 @@ export function BudgetSection() {
   const panelRefs = useRef<Record<string, HTMLElement | null>>({});
   const chartWrapRef = useRef<HTMLDivElement | null>(null);
 
-  const activeStep =
-    STEPS.find((step) => step.id === stepId) ?? STEPS[0];
+  const activeStep = STEPS.find((step) => step.id === stepId) ?? STEPS[0];
 
   const chartData = useMemo(
     () => ALL_POINTS.filter((d) => d.year <= activeStep.yearsThrough),
@@ -106,47 +105,32 @@ export function BudgetSection() {
       id="presupuesto"
       className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-20 pb-10 md:px-8 md:pt-28">
-
-        <h2 className="type-h3 mt-3">
-        El rol del Estado
-        </h2>
-        <p className="mt-4 font-sans text-xl leading-snug font-bold md:text-2xl">
-        Presupuesto y gestión
+      <div className="mx-auto max-w-[800px] px-5 pt-20 pb-6 md:px-8 md:pt-28">
+        <p className="text-sm leading-relaxed text-[#f3efe8]/80 md:text-base">
+          Expresado en valores reales, ajustado por inflación promedio
+          interanual, a precios de 2026.
         </p>
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          <p>
-          En el marco del Sistema Federal de Manejo del Fuego las jurisdicciones planifican sus distintas actividades de prevención. A partir de dicha planificación, el Servicio Nacional de Manejo del Fuego participó de manera interdisciplinaria en las distintas actividades. Pueden ser charlas en instituciones educativas, conversatorios abiertos a la comunidad, participación en eventos de concientización, entre otros.
-
-          </p>
-          <p>
-          En la regional Patagonia, desde 2016 a 2026 se realizaron más de 100 jornadas en escuelas urbanas y rurales teniendo un impacto en más de 10.000 estudiantes de la comunidad educativa de las provincias de Chubut, Río Negro y Neuquén. 
-
-
-          </p>
-          <p>
-          Introducimos los presupuestos, un factor clave dentro de la investigación que se vincula con la gestión política de los recursos asignados por Nación y provincia. En este apartado se utilizarán testimonios que se cruzarán con datos y gráficos. Gran parte de la causa de los incendios está en la desatención a la prevención, la cual requiere dinero y acciones. Existe una mirada reactiva y no preventiva que se demuestra en los datos. En el relato se buscará hacer énfasis en el contraste entre la demanda operativa ante el combate de megaincendios y la realidad presupuestaria de la prevención.
-          </p>
-        </div>
       </div>
 
       <div className="relative">
-        <div className="sticky top-0 z-10 flex h-svh w-full flex-col justify-center px-4 py-10 md:px-8">
-          <div
-            ref={chartWrapRef}
-            className="mx-auto w-full max-w-[900px] flex-1 flex flex-col justify-center"
-          >
-            <BudgetExecutionChart data={chartData} active={chartActive} />
-          </div>
+        <div className="sticky top-0 z-10 flex h-svh w-full flex-col justify-center">
+          <div className="mx-auto w-full max-w-[800px] px-5 md:px-8">
+            <div
+              ref={chartWrapRef}
+              className="flex w-full flex-1 flex-col justify-center"
+            >
+              <BudgetExecutionChart data={chartData} active={chartActive} />
+            </div>
 
-          <div className="pointer-events-none mx-auto mt-4 w-full max-w-[800px]">
-            <div className="border border-[#f3efe8]/25 bg-[#4a4a4a]/55 px-5 py-4 md:px-6 md:py-5">
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#f3efe8]/65">
-                {activeStep.id}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
-                {activeStep.body}
-              </p>
+            <div className="pointer-events-none mt-4 w-full">
+              <div className="border border-[#f3efe8]/25 bg-[#4a4a4a]/55 px-5 py-4 md:px-6 md:py-5">
+                <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#f3efe8]/65">
+                  {activeStep.id}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
+                  {activeStep.body}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -169,27 +153,11 @@ export function BudgetSection() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[800px] px-5 pt-20 pb-10 md:px-8 md:pt-28">
-
-        <p className="mt-4 font-sans text-xl leading-snug font-bold md:text-2xl">
-          Manejo del fuego
+      <div className="mx-auto max-w-[800px] px-5 pt-6 pb-16 md:px-8 md:pb-24">
+        <p className="text-xs leading-relaxed text-[#f3efe8]/65 md:text-sm">
+          Fuente: Monitor Presupuestario de la Asociación Civil por la Igualdad
+          y la Justicia (ACIJ) con base en Presupuesto Abierto.
         </p>
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          <p>
-          La Ley 26.815 de Manejo del Fuego establece presupuestos mínimos de protección ambiental en materia de incendios forestales y rurales en el ámbito del territorio nacional. Esta norma aplica a las acciones y operaciones de prevención, presupresión y combate de incendios forestales y rurales, en bosques nativos e implantados, áreas naturales protegidas y zonas agrícolas, entre otras áreas donde las estructuras edilicias se entremezclan con la vegetación fuera del ambiente estrictamente urbano o estructural. 
-          </p>
-          <p>
-          La protección contra los incendios se planifica a través de la instrumentación de Planes de Manejo del Fuego según los siguientes niveles de alcance:
-Local, de cada una de las provincias y APN; regional, establecido por las Regiones conforme las dispone la ley; nacional, establecido por el Servicio Nacional de Manejo del Fuego e integra los planes regionales.
-          </p>
-
-        <p className="mt-4 font-sans text-xl leading-snug font-bold md:text-2xl">
-          Alerta temprana
-        </p>
-        <p>
-          En lo que respecta a la planificación para la protección de incendios, la Ley 26.815 establece, como un nivel de alcance, al Sistema Nacional de Alerta Temprana y Evaluación de Peligro de Incendios (SATyEPI), el cual a través de un sistema de grados de peligros de incendios, tiene como fin anticipar condiciones de severidad de las temporadas de fuego, y advertir al personal de combate sobre situaciones críticas.
-          </p>
-        </div>
       </div>
     </section>
   );

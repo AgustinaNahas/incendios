@@ -17,9 +17,9 @@ const sans = Noto_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "El Camino del fuego · Bosques Patagónicos",
+  title: "Bosques Patagónicos · Incendios sin prevención ni presupuesto claro",
   description:
-    "No es un capricho de la naturaleza: sequía extrema, vientos traicioneros y años sin la prevención adecuada.",
+    "Incendios sin prevención ni presupuesto claro y la emergencia como único plan. Más de 45 mil hectáreas ardieron en la Patagonia argentina en los primeros meses de 2026.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

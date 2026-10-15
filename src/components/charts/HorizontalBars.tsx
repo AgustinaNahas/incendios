@@ -12,8 +12,8 @@ type Props = {
 
 export function HorizontalBars({ data, title }: Props) {
   const width = 420;
-  const height = Math.max(180, data.length * 36 + 40);
-  const margin = { top: 28, right: 56, bottom: 12, left: 100 };
+  const height = Math.max(200, data.length * 36 + 56);
+  const margin = { top: 28, right: 56, bottom: 36, left: 100 };
 
   const x = useMemo(
     () =>
@@ -44,10 +44,27 @@ export function HorizontalBars({ data, title }: Props) {
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full max-w-[800px]"
         role="img"
         aria-label={title ?? "Barras de hectáreas por provincia"}
       >
+        <text
+          x={margin.left + (width - margin.left - margin.right) / 2}
+          y={height - 6}
+          textAnchor="middle"
+          className="fill-current text-[11px]"
+          opacity={0.7}
+        >
+          Hectáreas
+        </text>
+        <text
+          transform={`translate(14, ${margin.top + (height - margin.top - margin.bottom) / 2}) rotate(-90)`}
+          textAnchor="middle"
+          className="fill-current text-[11px]"
+          opacity={0.7}
+        >
+          Provincia
+        </text>
         {data.map((d) => {
           const barW = x(d.value);
           const barY = y(d.province) ?? 0;

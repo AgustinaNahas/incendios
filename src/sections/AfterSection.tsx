@@ -44,9 +44,9 @@ export function AfterSection({
   return (
     <StorySection
       id="despues"
-      eyebrow="Momento I · La cicatriz"
-      title="El después: las consecuencias del fuego"
-      lede="Brigadistas con la piel curtida, vecinos que perdieron su entorno y un récord de hectáreas quemadas: el costo tangible de una década de prevención insuficiente."
+      eyebrow=""
+      title="Después del fuego"
+      lede="Cuando el último foco se apaga y la atención pública se desplaza, comienza una etapa mucho más larga: la recuperación."
       graphic={
         graphic === "bars" ? (
           <HorizontalBars
@@ -78,9 +78,13 @@ export function AfterSection({
 
       <div className="space-y-4">
         <p className="text-sm leading-relaxed opacity-85">
-          Cada hectárea de bosque quemado tiene un precio: el resultado de una
-          década sin inversión real en prevención. La valuación económica
-          precisa sigue siendo una brecha (ver sección final).
+          Antes quedan los llamados “guardias de ceniza”: durante días, los
+          bomberos recorren los sectores quemados en busca de troncos calientes,
+          brasas enterradas y focos capaces de reactivarse con un cambio de
+          viento. El incendio también deja marcas que permanecen mucho después
+          de las llamas: pérdida de vegetación, degradación de suelos, afectación
+          de cultivos y animales, y procesos de recuperación que pueden
+          extenderse durante años.
         </p>
 
         <div className="flex flex-wrap gap-2">

@@ -27,17 +27,17 @@ export const FIRE_SEASON_MONTHS = [
 ] as const;
 
 export const CHAPTERS = [
-  { id: "otbn", label: "El territorio", short: "OTBN", tree: "otbn" },
-  { id: "despues", label: "El después", short: "Después", tree: "burned" },
-  { id: "quemado", label: "Hectáreas", short: "Quemado", tree: "fire" },
+  { id: "otbn", label: "El mapa del riesgo", short: "Mapa", tree: "otbn" },
+  { id: "presupuesto", label: "Presupuesto", short: "Presupuesto", tree: "fire" },
+  { id: "combatientes", label: "Quiénes combaten", short: "Combate", tree: "otbn" },
+  { id: "contexto", label: "El contexto del fuego", short: "Contexto", tree: "species" },
   {
     id: "inflamabilidad",
-    label: "Especies",
-    short: "Especies",
+    label: "Factores de propagación",
+    short: "Propagación",
     tree: "species",
   },
-  { id: "brechas", label: "Brechas", short: "Brechas", tree: "gap" },
-  { id: "fuentes", label: "Fuentes", short: "Fuentes", tree: "sources" },
+  { id: "despues", label: "Después del fuego", short: "Después", tree: "burned" },
 ] as const;
 
 export type ChapterId = (typeof CHAPTERS)[number]["id"];
