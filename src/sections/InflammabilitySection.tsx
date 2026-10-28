@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import species from "@/data/species-inflammability.json";
+import { Quote } from "@/components/Quote";
 import { OTBN_COLORS } from "@/lib/otbnColors";
 import { withBasePath } from "@/lib/paths";
 
@@ -130,6 +131,13 @@ export function InflammabilitySection() {
           ))}
         </ul>
 
+        <Quote
+          className="mt-10"
+          quote="“La desesperación de brigadistas, de bomberos, llorando porque venían trabajando con algo que estaban a punto de contener. Empezó a soplar con tanta fuerza. La pavesa que vuela y está quemando inicia un incendio más grande. Intentás frenarlo pero de repente te pasó por arriba”"
+          name="Rubén Oliva"
+          role="jefe de la Federación de Bomberos Voluntarios en Chubut"
+        />
+
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Las tres condiciones críticas
         </h3>
@@ -153,6 +161,13 @@ export function InflammabilitySection() {
             </li>
           ))}
         </ul>
+
+        <Quote
+          className="mt-10"
+          quote="“Tuvimos la temporada invernal que no llovió nada. Esto se suma a un estrés hídrico importante de varios años”"
+          name="Abel Nievas"
+          role="secretario de Bosques de Chubut"
+        />
 
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           La vegetación nativa y exótica
@@ -180,15 +195,15 @@ export function InflammabilitySection() {
       </div>
 
       <div ref={pinRef} className="relative" style={{ height: "100vh" }}>
-        <div className="sticky top-0 flex h-dvh items-center justify-center">
+        <div className="sticky top-0 flex h-dvh flex-col">
           <div
             ref={viewportRef}
-            className="relative mx-auto h-full w-full max-w-[1200px] overflow-hidden"
+            className="relative mx-auto flex h-full w-full max-w-[1200px] flex-col overflow-hidden"
           >
-            <figure className="pointer-events-none absolute inset-x-0 top-0 z-20 bg-[#2B2B2B]/92 px-5 pt-4 pb-3 backdrop-blur-sm md:px-8 md:pt-5 md:pb-4">
+            <figure className="shrink-0 px-5 pt-5 pb-4 md:px-8 md:pt-6 md:pb-5">
               <div className="mx-auto w-full max-w-[800px]">
                 <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
-                  Nivel de vulnerabilidad: alto · medio · bajo
+                  Nivel de vulnerabilidad frente al fuego
                 </figcaption>
                 <div className="mx-auto flex w-[70%] items-center gap-3 md:gap-4">
                   <span className="shrink-0 text-base font-medium md:text-lg">
@@ -197,30 +212,15 @@ export function InflammabilitySection() {
                   <div
                     className="flex h-[10px] flex-1 gap-1 md:h-[14px]"
                     role="img"
-                    aria-label="Escala de vulnerabilidad: alto, medio y bajo"
+                    aria-label="Escala de vulnerabilidad frente al fuego"
                   >
-                    {LEVEL_ORDER.map((level) => {
-                      const active =
-                        species[
-                          Math.min(
-                            species.length - 1,
-                            Math.max(
-                              0,
-                              Math.round(progress * (species.length - 1)),
-                            ),
-                          )
-                        ]?.level === level;
-                      return (
-                        <div
-                          key={level}
-                          className="h-full flex-1 transition-opacity duration-300"
-                          style={{
-                            background: LEVELS[level].color,
-                            opacity: active ? 1 : 0.35,
-                          }}
-                        />
-                      );
-                    })}
+                    {LEVEL_ORDER.map((level) => (
+                      <div
+                        key={level}
+                        className="h-full flex-1"
+                        style={{ background: LEVELS[level].color }}
+                      />
+                    ))}
                   </div>
                   <span className="shrink-0 text-base font-medium md:text-lg">
                     Bajo
@@ -229,78 +229,77 @@ export function InflammabilitySection() {
               </div>
             </figure>
 
-            <div
-              ref={trackRef}
-              className="absolute top-0 left-0 flex h-full w-max items-center gap-4 px-5 pt-20 pb-12 md:gap-5 md:px-8 md:pt-24 md:pb-14"
-              style={{
-                transform: `translate3d(${trackX}px, 0, 0)`,
-                willChange: "transform",
-              }}
-            >
-              {species.map((sp) => {
-                const level = sp.level as Level;
-                const tone = LEVELS[level];
-                const origin = sp.origin as Origin;
-                const kind = sp.kind as Kind;
+            <div className="relative min-h-0 flex-1">
+              <div
+                ref={trackRef}
+                className="absolute top-0 left-0 flex h-full w-max items-start gap-4 px-5 pt-2 pb-14 md:gap-5 md:px-8 md:pt-3 md:pb-16"
+                style={{
+                  transform: `translate3d(${trackX}px, 0, 0)`,
+                  willChange: "transform",
+                }}
+              >
+                {species.map((sp) => {
+                  const level = sp.level as Level;
+                  const tone = LEVELS[level];
+                  const origin = sp.origin as Origin;
+                  const kind = sp.kind as Kind;
 
-                return (
-                  <article
-                    key={sp.id}
-                    className="flex h-[min(460px,calc(100dvh-12rem))] w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
-                  >
-                    <div
-                      className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
-                      style={{ background: tone.color, color: tone.ink }}
+                  return (
+                    <article
+                      key={sp.id}
+                      className="flex h-[min(560px,calc(100dvh-11rem))] w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
                     >
-                      {tone.label}
-                    </div>
-
-                    <div className="relative h-[160px] w-full shrink-0 my-6">
-                      <Image
-                        src={withBasePath(sp.image)}
-                        alt={`${sp.commonName} (${sp.scientificName})`}
-                        fill
-                        sizes="280px"
-                        className="object-contain object-bottom p-2"
-                      />
-                    </div>
-
-                    <div className="min-h-0 flex-1 overflow-hidden px-3 pt-2 pb-3">
-                      <p
-                        className="text-[10px] font-bold tracking-[0.16em] uppercase"
-                        style={{ color: tone.color }}
+                      <div
+                        className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
+                        style={{ background: tone.color, color: tone.ink }}
                       >
-                        {kindLabel(kind, origin)}
-                      </p>
-                      <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide uppercase">
-                        {sp.commonName}
-                      </h3>
-                      <p className="mt-1 text-xs italic text-[#f3efe8]/70">
-                        {sp.scientificName}
-                      </p>
-                      <p className="mt-2 text-xs leading-relaxed text-[#f3efe8]/85 md:text-sm">
-                        {sp.note}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                        {tone.label}
+                      </div>
 
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 px-5 pb-5 md:px-8">
-              <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
-                <div
-                  className="h-px bg-[#f3efe8]/80"
-                  style={{ width: `${progress * 100}%` }}
-                />
+                      <div className="relative h-[280px] w-full shrink-0">
+                        <Image
+                          src={withBasePath(sp.image)}
+                          alt={`${sp.commonName} (${sp.scientificName})`}
+                          fill
+                          sizes="280px"
+                          className="object-contain object-bottom p-2"
+                        />
+                      </div>
+
+                      <div className="min-h-0 flex-1 overflow-hidden px-[25px] pt-0 pb-[25px]">
+                        <p className="text-[10px] font-normal tracking-[0.16em] text-[#f3efe8] uppercase">
+                          {kindLabel(kind, origin)}
+                        </p>
+                        <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide uppercase">
+                          {sp.commonName}
+                        </h3>
+                        <p className="mt-1 text-xs italic text-[#f3efe8]/70">
+                          {sp.scientificName}
+                        </p>
+                        <p className="mt-2 text-xs leading-[1.3] text-[#f3efe8]/85 md:text-sm">
+                          {sp.note}
+                        </p>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
-              <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
-                {Math.min(
-                  species.length,
-                  Math.max(1, Math.round(progress * (species.length - 1)) + 1),
-                )}{" "}
-                / {species.length}
-              </p>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 px-5 pb-5 md:px-8">
+                <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
+                  <div
+                    className="h-px bg-[#f3efe8]/80"
+                    style={{ width: `${progress * 100}%` }}
+                  />
+                </div>
+                <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
+                  {Math.min(
+                    species.length,
+                    Math.max(1, Math.round(progress * (species.length - 1)) + 1),
+                  )}{" "}
+                  / {species.length}
+                </p>
+              </div>
             </div>
           </div>
         </div>

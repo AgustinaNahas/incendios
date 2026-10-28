@@ -1,27 +1,23 @@
-"use client";
-
-import { useState } from "react";
+import { Quote } from "@/components/Quote";
 
 type CauseItem = {
   title: string;
   body: string;
 };
 
-type CauseAccordion = {
+type CauseBlock = {
   id: string;
   percent: string;
   title: string;
-  tags: string[];
   items: CauseItem[];
   theme: "natural" | "human";
 };
 
-const CAUSES: CauseAccordion[] = [
+const CAUSES: CauseBlock[] = [
   {
     id: "naturales",
     percent: "5%",
     title: "Causas naturales",
-    tags: ["Rayos", "Actividad volcánica"],
     theme: "natural",
     items: [
       {
@@ -38,13 +34,6 @@ const CAUSES: CauseAccordion[] = [
     id: "humanas",
     percent: "95%",
     title: "Causas de origen humano",
-    tags: [
-      "Negligencia",
-      "Fogón mal apagado",
-      "Conflictos",
-      "Manejo de pasturas",
-      "Infraestructura",
-    ],
     theme: "human",
     items: [
       {
@@ -72,42 +61,17 @@ const THEME = {
     border: "border-[#5a7a5a]",
     bg: "bg-[#2f3e2f]/80",
     accent: "text-[#8fbc8f]",
-    chevron: "text-[#8fbc8f]",
     itemTitle: "text-[#8fbc8f]",
   },
   human: {
     border: "border-[#8a4a4a]",
     bg: "bg-[#4a2b2b]/80",
     accent: "text-[#f3efe8]",
-    chevron: "text-[#e07a7a]",
     itemTitle: "text-[#e07a7a]",
   },
 } as const;
 
-function Chevron({ open, className }: { open: boolean; className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      aria-hidden
-      className={`h-5 w-5 shrink-0 transition-transform duration-300 ${
-        open ? "rotate-180" : ""
-      } ${className ?? ""}`}
-    >
-      <path
-        d="M5 7.5 10 12.5 15 7.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function FireContextSection() {
-  const [openId, setOpenId] = useState<string | null>(null);
-
   return (
     <section
       id="contexto"
@@ -125,6 +89,9 @@ export function FireContextSection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Causas directas
         </h3>
+        <h4 className="mt-6 font-sans text-base font-bold md:text-lg">
+          Causas naturales
+        </h4>
         <p className="mt-3 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           Entre las causas naturales, los rayos pueden iniciar incendios que
           permanecen latentes durante días y luego se expanden bajo condiciones
@@ -133,24 +100,22 @@ export function FireContextSection() {
           es una causa poco frecuente de incendios forestales de gran escala en
           la región.
         </p>
-        <p className="mt-4 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <h4 className="mt-8 font-sans text-base font-bold md:text-lg">
+          Causas de origen humano
+        </h4>
+        <p className="mt-3 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           La mayoría de los incendios tiene origen antrópico. Según el Servicio
           Nacional de Manejo del Fuego, cerca del 95% está vinculado a acciones
           humanas, ya sea por negligencia, fallas de infraestructura o hechos
           intencionales.
         </p>
 
-        <blockquote className="mt-10 bg-[#D9D9D970] p-8 text-center text-xl leading-tight md:p-12 md:text-2xl">
-          <span className="italic">
-            “Puede estar dado por un fuego mal apagado o por una pelea entre
-            vecinos; es muy común que se ajusticien prendiéndose fuego. Los
-            motivos también pueden darse por un grupo de turistas andando por
-            una zona donde no se debe, dejando un cigarrillo prendido”
-          </span>
-          <p className="mt-8 text-[16px]">
-            <strong>Hernán Andrade</strong>, exvecino de Las Golondrinas, Chubut
-          </p>
-        </blockquote>
+        <Quote
+          className="mt-10"
+          quote="“Puede estar dado por un fuego mal apagado o por una pelea entre vecinos; es muy común que se ajusticien prendiéndose fuego. Los motivos también pueden darse por un grupo de turistas andando por una zona donde no se debe, dejando un cigarrillo prendido”"
+          name="Hernán Andrade"
+          role="exvecino de Las Golondrinas, Chubut"
+        />
 
         <p className="mt-10 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           También existen quemas intencionales vinculadas al manejo de pasturas
@@ -161,25 +126,13 @@ export function FireContextSection() {
 
         <div className="mt-10 space-y-4">
           {CAUSES.map((cause) => {
-            const open = openId === cause.id;
             const theme = THEME[cause.theme];
             return (
               <div
                 key={cause.id}
                 className={`overflow-hidden border ${theme.border} ${theme.bg}`}
               >
-                <button
-                  type="button"
-                  aria-expanded={open}
-                  aria-controls={`cause-panel-${cause.id}`}
-                  id={`cause-trigger-${cause.id}`}
-                  onClick={() =>
-                    setOpenId((current) =>
-                      current === cause.id ? null : cause.id,
-                    )
-                  }
-                  className="flex w-full items-stretch gap-4 px-4 py-4 text-left md:gap-5 md:px-5 md:py-5"
-                >
+                <div className="flex items-stretch gap-4 px-4 py-4 md:gap-5 md:px-5 md:py-5">
                   <span
                     className={`flex shrink-0 items-center font-[family-name:var(--font-display)] text-3xl leading-none font-black md:text-4xl ${theme.accent}`}
                   >
@@ -189,28 +142,12 @@ export function FireContextSection() {
                     className="w-px shrink-0 self-stretch bg-current opacity-35"
                     aria-hidden
                   />
-                  <span className="min-w-0 flex-1">
-                    <span className="block font-sans text-base font-semibold md:text-lg">
-                      {cause.title}
-                    </span>
-                    {!open ? (
-                      <span className="mt-1 block text-sm leading-snug text-[#f3efe8]/75">
-                        {cause.tags.join(" | ")}
-                      </span>
-                    ) : null}
+                  <span className="min-w-0 flex-1 font-sans text-base font-semibold md:text-lg">
+                    {cause.title}
                   </span>
-                  <span className={`flex items-center ${theme.chevron}`}>
-                    <Chevron open={open} />
-                  </span>
-                </button>
+                </div>
 
-                <div
-                  id={`cause-panel-${cause.id}`}
-                  role="region"
-                  aria-labelledby={`cause-trigger-${cause.id}`}
-                  hidden={!open}
-                  className="border-t border-current/20 px-4 pb-5 md:px-5 md:pb-6"
-                >
+                <div className="space-y-4 border-t border-current/20 px-4 pb-5 md:px-5 md:pb-6">
                   <div className="space-y-4 pt-4">
                     {cause.items.map((item) => (
                       <div key={item.title}>
@@ -252,17 +189,12 @@ export function FireContextSection() {
           </p>
         </div>
 
-        <blockquote className="mt-10 bg-[#D9D9D970] p-8 text-center text-xl leading-tight md:p-12 md:text-2xl">
-          <span className="italic">
-            “El problema principal para mí está relacionado con la gestión
-            territorial. En los últimos 25 años acá, la Comarca creció de
-            manera exponencial”
-          </span>
-          <p className="mt-8 text-[16px]">
-            <strong>Hernán Andrade</strong>, ex vecino de Las Golondrinas,
-            Comarca Andina — Chubut
-          </p>
-        </blockquote>
+        <Quote
+          className="mt-10"
+          quote="“El problema principal para mí está relacionado con la gestión territorial. En los últimos 25 años acá, la Comarca creció de manera exponencial”"
+          name="Hernán Andrade"
+          role="ex vecino de Las Golondrinas, Comarca Andina — Chubut"
+        />
 
         <div className="mt-10 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           <p>

@@ -30,6 +30,16 @@
     "note": "Sensible al fuego intenso; si los adultos mueren, la recuperación del bosque es lenta y depende principalmente de nuevas plantas."
   },
   {
+    "id": "nothofagus-dombeyi",
+    "commonName": "Coihue",
+    "scientificName": "Nothofagus dombeyi",
+    "origin": "nativa",
+    "kind": "arbol",
+    "level": "alto",
+    "image": "/images/species/nothofagus-dombeyi.jpg",
+    "note": "Su copa densa y la corteza fina lo vuelven vulnerable; si muere, la recuperación depende de árboles sobrevivientes cercanos."
+  },
+  {
     "id": "nothofagus-pumilio",
     "commonName": "Lenga",
     "scientificName": "Nothofagus pumilio",
@@ -57,7 +67,7 @@
     "kind": "arbol",
     "level": "medio",
     "image": "/images/species/pino-oregon.webp",
-    "note": "Es la especie exótica con mayor potencial invasor; desplaza a las especies nativas alterando la luminosidad y homogeneizando el ambiente."
+    "note": "Es la especie exótica con mayor potencial invasor; desplaza a las especies nativas alterando la luminosidad y homogeneizando el ambiente. Los adultos pueden sobrevivir gracias a su corteza gruesa; si mueren, la regeneración se da por semillas."
   },
   {
     "id": "fitzroya-cupressoides",

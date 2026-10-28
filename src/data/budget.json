@@ -1,40 +1,19 @@
 {
-  "note": "PLACEHOLDER — serie ilustrativa del presupuesto de manejo del fuego (millones de pesos constantes 2017). Reemplazar con datos oficiales SNMF / presupuesto nacional.",
+  "note": "Valores reales a precios de 2026. Vigente = total (incluye sin ejecutar). Devengado = ejecutado.",
   "currency": "ARS",
-  "unit": "millones constantes 2017",
-  "series": [
-    { "year": 2017, "nominalMillions": 1200, "cpiIndex": 1.0 },
-    { "year": 2018, "nominalMillions": 1450, "cpiIndex": 1.47 },
-    { "year": 2019, "nominalMillions": 2100, "cpiIndex": 2.27 },
-    { "year": 2020, "nominalMillions": 2800, "cpiIndex": 3.09 },
-    { "year": 2021, "nominalMillions": 4200, "cpiIndex": 4.65 },
-    { "year": 2022, "nominalMillions": 7800, "cpiIndex": 8.4 },
-    { "year": 2023, "nominalMillions": 18000, "cpiIndex": 19.5 },
-    { "year": 2024, "nominalMillions": 45000, "cpiIndex": 55.0 },
-    { "year": 2025, "nominalMillions": 62000, "cpiIndex": 78.0 }
-  ],
+  "unit": "millones constantes 2026",
   "execution": [
-    { "year": 2017, "budgeted": 1200, "executed": 480 },
-    { "year": 2018, "budgeted": 986, "executed": 444 },
-    { "year": 2019, "budgeted": 925, "executed": 463 },
-    { "year": 2020, "budgeted": 906, "executed": 544 },
-    { "year": 2021, "budgeted": 903, "executed": 587 },
-    { "year": 2022, "budgeted": 929, "executed": 650 },
-    { "year": 2023, "budgeted": 923, "executed": 693 },
-    { "year": 2024, "budgeted": 818, "executed": 654 },
-    { "year": 2025, "budgeted": 795, "executed": 676 }
+    { "year": 2016, "budgeted": 58918.74, "executed": 40441.94 },
+    { "year": 2017, "budgeted": 38152.4, "executed": 32755.89 },
+    { "year": 2018, "budgeted": 24518.86, "executed": 19283.93 },
+    { "year": 2019, "budgeted": 12477.02, "executed": 9945.27 },
+    { "year": 2020, "budgeted": 23568.63, "executed": 15514.11 },
+    { "year": 2021, "budgeted": 65192.42, "executed": 60007.51 },
+    { "year": 2022, "budgeted": 199717.19, "executed": 199249.15 },
+    { "year": 2023, "budgeted": 72731.94, "executed": 72718.42 },
+    { "year": 2024, "budgeted": 62683.81, "executed": 13796.85 },
+    { "year": 2025, "budgeted": 21381.13, "executed": 21353.8 },
+    { "year": 2026, "budgeted": 47437.86, "executed": 33337.22 }
   ],
-  "idealAnnualRealMillions2017": 3500,
-  "breakdown": [
-    { "year": 2025, "category": "Combate", "share": 0.62 },
-    { "year": 2025, "category": "Logística y medios aéreos", "share": 0.18 },
-    { "year": 2025, "category": "Prevención", "share": 0.08 },
-    { "year": 2025, "category": "Capacitación", "share": 0.05 },
-    { "year": 2025, "category": "Otros", "share": 0.07 }
-  ],
-  "brigadistas": {
-    "current": 420,
-    "needed": 1200,
-    "iconRepresents": 50
-  }
+  "source": "Fundación Ambiente y Recursos Naturales. En base a datos del Presupuesto Abierto, INDEC y de Ley de Presupuesto 2026."
 }

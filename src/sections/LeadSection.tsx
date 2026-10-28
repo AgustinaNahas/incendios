@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Quote } from "@/components/Quote";
 import { withBasePath } from "@/lib/paths";
 
 const BAJADA =
@@ -11,26 +12,31 @@ export function LeadSection() {
       className="relative z-10 -mt-[20svh] text-[#f3efe8]"
     >
       <div className="mx-auto max-w-[800px] px-5 pb-6 pt-[16svh] text-center md:px-8">
-        <h1 className="type-h1 mt-3">Bosques Patagónicos</h1>
-        <p className="mt-16 font-sans text-[32px] lg:text-[40px] leading-[1.27] font-bold text-[#f3efe8]">
-          {BAJADA}
-        </p>
         <Image
           src={withBasePath("/header/foco-bootcamp.png")}
           alt="FOCO Bootcamp"
           width={200}
           height={250}
-          className="mx-auto my-12 h-auto"
+          className="mx-auto mb-12 h-auto"
           priority
         />
-        <p className="mt-3 text-[11px] text-[#f3efe8]/65 md:text-xs">
-          Argentina, 2026
+        <h1 className="type-h1 mt-3 uppercase text-[#f1621a]">
+          Bosques Patagónicos
+        </h1>
+        <p className="mt-[35px] font-display text-[35px] leading-[1.27] font-semibold text-[#f3efe8]">
+          {BAJADA}
+        </p>
+        <p className="mt-[22px] font-sans text-[16px] font-bold text-[#f3efe8]">
+          Equipo de FOCO Bootcamp
         </p>
       </div>
 
       <div className="bg-[#2B2B2B]">
         <div className="mx-auto max-w-[800px] px-5 pb-24 md:px-8 md:pb-32">
-          <div className="mt-12 space-y-12 text-xl leading-relaxed text-[#f3efe8] md:text-xl">
+          <p className="mt-12 mb-6 text-left text-[16px] font-bold leading-relaxed text-[#f3efe8]">
+            Argentina, 17 de noviembre de 2026
+          </p>
+          <div className="space-y-12 text-xl leading-relaxed text-[#f3efe8] md:text-xl">
             <p>
               Durante los primeros meses de 2026, más de 45 mil hectáreas
               ardieron en la Patagonia argentina. No fue un hecho aislado ni
@@ -44,18 +50,11 @@ export function LeadSection() {
               desafíos pendientes.
             </p>
 
-            <blockquote className="bg-[#D9D9D970] p-12 text-center text-2xl leading-tight">
-              <span className="italic">
-                “A la noche, el bosque parecía un árbol de Navidad. Miraras
-                hacia donde miraras, en los cerros había foquitos, casi en los
-                cuatro puntos cardinales. Era tétrico ver luces naranjas por
-                todos lados.”
-              </span>
-              <p className="mt-12 text-[16px]">
-                <strong>Rubén Oliva</strong>, jefe de la Federación de Bomberos
-                Voluntarios en Chubut
-              </p>
-            </blockquote>
+            <Quote
+              quote="“A la noche, el bosque parecía un árbol de Navidad. Miraras hacia donde miraras, en los cerros había foquitos, casi en los cuatro puntos cardinales. Era tétrico ver luces naranjas por todos lados.”"
+              name="Rubén Oliva"
+              role="Jefe de la Federación de Bomberos Voluntarios en Chubut"
+            />
 
             <p>
               En los relatos de quienes estuvieron allí, el fuego dejó de ser
@@ -74,17 +73,11 @@ export function LeadSection() {
               recuperar el control.
             </p>
 
-            <blockquote className="bg-[#D9D9D970] p-12 text-center text-2xl leading-tight">
-              <span className="italic">
-                “Nos convencemos de que podemos resolver cualquier situación y,
-                cuando te encontrás con este tipo de emergencia, el ego se va
-                por el piso porque nada de lo que hagas es suficiente”
-              </span>
-              <p className="mt-12 text-[16px]">
-                <strong>Daniel Díaz</strong>, jefe de Bomberos de Epuyén, una de
-                las localidades más afectadas por el megaincendio
-              </p>
-            </blockquote>
+            <Quote
+              quote="“Nos convencemos de que podemos resolver cualquier situación y, cuando te encontrás con este tipo de emergencia, el ego se va por el piso porque nada de lo que hagas es suficiente”"
+              name="Daniel Díaz"
+              role="Jefe de Bomberos de Epuyén, una de las localidades más afectadas por el megaincendio"
+            />
           </div>
         </div>
       </div>
