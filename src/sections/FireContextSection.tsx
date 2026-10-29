@@ -13,48 +13,6 @@ type CauseBlock = {
   theme: "natural" | "human";
 };
 
-const CAUSES: CauseBlock[] = [
-  {
-    id: "naturales",
-    percent: "5%",
-    title: "Causas naturales",
-    theme: "natural",
-    items: [
-      {
-        title: "Rayos",
-        body: "Pueden dejar focos latentes durante días hasta que viento o sequedad los expanden.",
-      },
-      {
-        title: "Actividad volcánica",
-        body: "Puede encender vegetación cercana, aunque es poco frecuente a gran escala en la región.",
-      },
-    ],
-  },
-  {
-    id: "humanas",
-    percent: "95%",
-    title: "Causas de origen humano",
-    theme: "human",
-    items: [
-      {
-        title: "Negligencia",
-        body: "Fogones mal apagados, cigarrillos o turismo en zonas no habilitadas.",
-      },
-      {
-        title: "Hechos intencionales",
-        body: "Conflictos entre vecinos o quemas que se usan como represalia.",
-      },
-      {
-        title: "Manejo de pasturas",
-        body: "Quemas autorizadas que, sin control, pueden escapar y causar daños de gran magnitud.",
-      },
-      {
-        title: "Infraestructura",
-        body: "Fallas vinculadas a la energía eléctrica y otras instalaciones.",
-      },
-    ],
-  },
-];
 
 const THEME = {
   natural: {
@@ -123,50 +81,6 @@ export function FireContextSection() {
           realizarse bajo condiciones controladas y con personal especializado,
           porque si el fuego se escapa puede generar daños de gran magnitud.
         </p>
-
-        <div className="mt-10 space-y-4">
-          {CAUSES.map((cause) => {
-            const theme = THEME[cause.theme];
-            return (
-              <div
-                key={cause.id}
-                className={`overflow-hidden border ${theme.border} ${theme.bg}`}
-              >
-                <div className="flex items-stretch gap-4 px-4 py-4 md:gap-5 md:px-5 md:py-5">
-                  <span
-                    className={`flex shrink-0 items-center font-[family-name:var(--font-display)] text-3xl leading-none font-black md:text-4xl ${theme.accent}`}
-                  >
-                    {cause.percent}
-                  </span>
-                  <span
-                    className="w-px shrink-0 self-stretch bg-current opacity-35"
-                    aria-hidden
-                  />
-                  <span className="min-w-0 flex-1 font-sans text-base font-semibold md:text-lg">
-                    {cause.title}
-                  </span>
-                </div>
-
-                <div className="space-y-4 border-t border-current/20 px-4 pb-5 md:px-5 md:pb-6">
-                  <div className="space-y-4 pt-4">
-                    {cause.items.map((item) => (
-                      <div key={item.title}>
-                        <p
-                          className={`font-sans text-sm font-bold md:text-base ${theme.itemTitle}`}
-                        >
-                          {item.title}
-                        </p>
-                        <p className="mt-1 font-sans text-sm leading-relaxed text-[#f3efe8]/85 md:text-base">
-                          {item.body}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
 
         <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
           Condiciones estructurales

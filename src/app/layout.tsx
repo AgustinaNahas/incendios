@@ -16,10 +16,27 @@ const sans = Noto_Sans({
   display: "swap",
 });
 
+const TITLE =
+  "Bosques Patagónicos · Incendios sin prevención ni presupuesto claro";
+const DESCRIPTION =
+  "Incendios sin prevención ni presupuesto claro y la emergencia como único plan. Más de 45 mil hectáreas ardieron en la Patagonia argentina en los primeros meses de 2026.";
+
 export const metadata: Metadata = {
-  title: "Bosques Patagónicos · Incendios sin prevención ni presupuesto claro",
-  description:
-    "Incendios sin prevención ni presupuesto claro y la emergencia como único plan. Más de 45 mil hectáreas ardieron en la Patagonia argentina en los primeros meses de 2026.",
+  metadataBase: new URL("https://agustinanahas.github.io/incendios"),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "https://agustinanahas.github.io/incendios/",
+    type: "article",
+    locale: "es_AR",
+  },
+  twitter: {
+    card: "summary",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

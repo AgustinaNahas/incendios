@@ -181,35 +181,33 @@ export function FireHeader() {
           className="pointer-events-none absolute inset-0 z-20 shadow-[inset_0_0_120px_40px_rgba(8,3,2,0.22)]"
         />
 
-        {/* Cards ~66% a la derecha; suben al ritmo de cada imagen. */}
-        <div className="pointer-events-none absolute top-0 right-[25vh] bottom-0 z-[21] w-[min(34%,420px)] pr-5 pl-3 md:pr-10 md:pl-4">
-          <div className="relative flex h-full items-center">
+        {/* Cards centradas en el viewport; suben al ritmo de cada imagen. */}
+        <div className="pointer-events-none absolute inset-0 z-[21] flex items-center justify-center px-5">
+          <div
+            ref={cardSlotRef}
+            className="relative h-[min(42vh,320px)] w-[min(34%,420px)] overflow-hidden"
+          >
             <div
-              ref={cardSlotRef}
-              className="relative h-[min(42vh,320px)] w-full overflow-hidden"
+              ref={cardsTrackRef}
+              className="absolute inset-x-0 top-0 will-change-transform"
             >
-              <div
-                ref={cardsTrackRef}
-                className="absolute inset-x-0 top-0 will-change-transform"
-              >
-                {STEP_CARDS.map((text, i) => (
-                  <article
-                    key={text ?? `empty-${i}`}
-                    ref={(el) => {
-                      cardRefs.current[i] = el;
-                    }}
-                    className="flex h-[min(42vh,320px)] w-full items-center will-change-[opacity]"
-                    style={{ opacity: 0 }}
-                    aria-hidden={!text}
-                  >
-                    {text ? (
-                      <p className="w-full bg-black/60 px-4 py-5 font-sans text-sm leading-relaxed text-[#f3efe8] md:px-5 md:py-6 md:text-base">
-                        {text}
-                      </p>
-                    ) : null}
-                  </article>
-                ))}
-              </div>
+              {STEP_CARDS.map((text, i) => (
+                <article
+                  key={text ?? `empty-${i}`}
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
+                  className="flex h-[min(42vh,320px)] w-full items-center will-change-[opacity]"
+                  style={{ opacity: 0 }}
+                  aria-hidden={!text}
+                >
+                  {text ? (
+                    <p className="w-full bg-black/60 px-4 py-5 font-sans text-base leading-relaxed text-[#f3efe8] md:px-5 md:py-6 md:text-lg">
+                      {text}
+                    </p>
+                  ) : null}
+                </article>
+              ))}
             </div>
           </div>
         </div>

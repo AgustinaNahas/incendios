@@ -90,7 +90,7 @@ export function FightersSection() {
         </h3>
         <ul className="mt-6 space-y-8">
           {BODIES.map((item) => (
-            <li key={item.title} className="ml-6 list-disc pl-2">
+            <li key={item.title} className="ml-3 list-disc pl-2">
               <p className="font-sans text-base font-bold md:text-lg">
                 {item.title}
               </p>

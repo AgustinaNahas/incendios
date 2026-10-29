@@ -17,7 +17,7 @@
   font-family: var(--font-display), serif;
   font-weight: 900;
   font-size: clamp(56px, 9vw, 110px);
-  line-height: 0.95;
+  line-height: 1.25;
   letter-spacing: -0.02em;
 }
 
@@ -26,6 +26,7 @@
   font-weight: 900;
   font-size: clamp(32px, 4vw, 48px);
   line-height: 1.05;
+  color: #f1621a;
 }
 
 html {

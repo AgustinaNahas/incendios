@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Quote } from "@/components/Quote";
+import { ShareButtons } from "@/components/ShareButtons";
 import { withBasePath } from "@/lib/paths";
 
 const BAJADA =
@@ -11,7 +12,7 @@ export function LeadSection() {
       id="intro"
       className="relative z-10 -mt-[20svh] text-[#f3efe8]"
     >
-      <div className="mx-auto max-w-[800px] px-5 pb-6 pt-[16svh] text-center md:px-8">
+      <div className="mx-auto max-w-[1000px] px-5 pb-6 pt-[16svh] text-center md:px-8">
         <Image
           src={withBasePath("/header/foco-bootcamp.png")}
           alt="FOCO Bootcamp"
@@ -23,12 +24,13 @@ export function LeadSection() {
         <h1 className="type-h1 mt-3 uppercase text-[#f1621a]">
           Bosques Patagónicos
         </h1>
-        <p className="mt-[35px] font-display text-[35px] leading-[1.27] font-semibold text-[#f3efe8]">
+        <p className="mt-[35px] max-w-[800px] mx-auto font-display text-[35px] leading-[1.27] font-semibold text-[#f3efe8]">
           {BAJADA}
         </p>
         <p className="mt-[22px] font-sans text-[16px] font-bold text-[#f3efe8]">
-          Equipo de FOCO Bootcamp
+          Equipo de FOCO Bootcamp/FTA-FOPEA
         </p>
+        <ShareButtons />
       </div>
 
       <div className="bg-[#2B2B2B]">
@@ -73,11 +75,9 @@ export function LeadSection() {
               recuperar el control.
             </p>
 
-            <Quote
-              quote="“Nos convencemos de que podemos resolver cualquier situación y, cuando te encontrás con este tipo de emergencia, el ego se va por el piso porque nada de lo que hagas es suficiente”"
-              name="Daniel Díaz"
-              role="Jefe de Bomberos de Epuyén, una de las localidades más afectadas por el megaincendio"
-            />
+            <p>
+            “Nos convencemos de que podemos resolver cualquier situación y, cuando te encontrás con este tipo de emergencia, el ego se va por el piso porque nada de lo que hagas es suficiente”. Daniel Díaz, Jefe de Bomberos de Epuyén, una de las localidades más afectadas por el megaincendio
+            </p>
           </div>
         </div>
       </div>
