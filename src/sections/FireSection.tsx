@@ -3,11 +3,8 @@
 import { useMemo, useState } from "react";
 import { StorySection } from "@/components/scrolly/StorySection";
 import { DualAxisLines } from "@/components/charts/DualAxisLines";
-import { IsotypeBrigadistas } from "@/components/charts/IsotypeBrigadistas";
 import { IntensityScatter } from "@/components/charts/IntensityScatter";
 import { SlopeChart } from "@/components/charts/SlopeChart";
-import { StackedShareBars } from "@/components/charts/StackedShareBars";
-import { seriesReal } from "@/lib/inflationAdjust";
 import { sumByYear, type ProvinceYearValue } from "@/lib/parseRii";
 import budget from "@/data/budget.json";
 
@@ -16,7 +13,7 @@ type Props = {
   firesProvincePatagonia: ProvinceYearValue[];
 };
 
-type Graphic = "dual" | "scatter" | "slope" | "budget" | "isotype";
+type Graphic = "dual" | "scatter" | "slope";
 
 export function FireSection({
   hectaresPatagonia,
@@ -26,13 +23,10 @@ export function FireSection({
 
   const dual = useMemo(() => {
     const ha = sumByYear(hectaresPatagonia);
-    const real = seriesReal(
-      budget.series.map((s) => ({
-        year: s.year,
-        nominal: s.nominalMillions,
-        cpiIndex: s.cpiIndex,
-      })),
-    );
+    const real = budget.execution.map((point) => ({
+      year: point.year,
+      real: point.executed,
+    }));
     return ha
       .filter((h) => h.year <= 2025)
       .map((h) => {
@@ -64,7 +58,7 @@ export function FireSection({
           <DualAxisLines
             data={dual}
             title="Presupuesto real vs hectáreas"
-            annotation="El presupuesto está ajustado por inflación (placeholder). La línea punteada no reemplaza la serie oficial del SNMF."
+            annotation="Presupuesto ejecutado en millones de pesos constantes de 2026 (FARN)."
           />
         );
       case "scatter":
@@ -81,25 +75,6 @@ export function FireSection({
             title="Quién escala, quién baja"
           />
         );
-      case "budget":
-        return (
-          <StackedShareBars
-            data={budget.breakdown.map((b) => ({
-              category: b.category,
-              share: b.share,
-            }))}
-            title="¿A dónde va el presupuesto?"
-          />
-        );
-      case "isotype":
-        return (
-          <IsotypeBrigadistas
-            current={budget.brigadistas.current}
-            needed={budget.brigadistas.needed}
-            iconRepresents={budget.brigadistas.iconRepresents}
-            title="Héroes sin presupuesto"
-          />
-        );
     }
   })();
 
@@ -112,19 +87,15 @@ export function FireSection({
       graphic={graphicNode}
     >
       <p className="text-sm leading-relaxed opacity-85">
-        La falta de fondos y de planificación anticipan un verano negro. Sin una
-        serie oficial comparable del Servicio Nacional del Manejo del Fuego, el
-        gráfico de presupuesto usa valores ilustrativos ajustados por inflación —
-        útiles para la forma del argumento, no como cifra cerrada.
+        La falta de fondos y de planificación anticipan un verano negro. El
+        gráfico de presupuesto usa el ejecutado del SNMF en millones de pesos
+        constantes de 2026.
       </p>
 
       <div className="rounded-sm border border-current/20 bg-current/5 p-4 text-sm">
         <p className="font-medium">Nota editorial</p>
         <p className="mt-1 opacity-80">
-          Ideal estimado (placeholder):{" "}
-          {budget.idealAnnualRealMillions2017.toLocaleString("es-AR")} millones
-          de pesos de 2017/año. La serie nominal crece, pero en términos reales
-          suele quedar lejos de la necesidad de prevención.
+          {budget.note} {budget.source}
         </p>
       </div>
 
@@ -132,10 +103,8 @@ export function FireSection({
         {(
           [
             ["dual", "Presupuesto vs ha"],
-            ["isotype", "Brigadistas"],
             ["scatter", "Intensidad"],
             ["slope", "Ranking provincias"],
-            ["budget", "Composición del gasto"],
           ] as const
         ).map(([id, label]) => (
           <button
