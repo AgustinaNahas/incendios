@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import species from "@/data/species-inflammability.json";
+import { SummerClimateCharts } from "@/components/charts/SummerClimateCharts";
 import { Quote } from "@/components/Quote";
 import { OTBN_COLORS } from "@/lib/otbnColors";
 import { withBasePath } from "@/lib/paths";
@@ -54,10 +55,12 @@ function kindLabel(kind: Kind, origin: Origin) {
 
 export function InflammabilitySection() {
   const pinRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [trackX, setTrackX] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
   useEffect(() => {
     const pin = pinRef.current;
@@ -69,14 +72,19 @@ export function InflammabilitySection() {
       Math.max(0, track.scrollWidth - viewport.clientWidth);
 
     const measure = () => {
-      pin.style.height = `${window.innerHeight + shiftOf()}px`;
+      const shift = shiftOf();
+      const stickyH = stickyRef.current?.offsetHeight ?? 0;
+      pin.style.height = `${stickyH + shift}px`;
+      pin.style.marginBottom = "0px";
     };
 
     const update = () => {
       const shift = shiftOf();
       const scrolled = clamp(-pin.getBoundingClientRect().top, 0, shift);
+      const raw = shift > 0 ? scrolled / shift : 1;
       setTrackX(-scrolled);
-      setProgress(shift > 0 ? scrolled / shift : 1);
+      setHasOverflow(shift > 0);
+      setProgress(raw);
     };
 
     measure();
@@ -130,6 +138,10 @@ export function InflammabilitySection() {
             <li key={item}>{item}</li>
           ))}
         </ul>
+        <p className="mt-8 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+          Esa tendencia se puede seguir verano por verano desde 1991.
+        </p>
+        <SummerClimateCharts />
 
         <Quote
           className="mt-10"
@@ -194,13 +206,16 @@ export function InflammabilitySection() {
         </div>
       </div>
 
-      <div ref={pinRef} className="relative" style={{ height: "100vh" }}>
-        <div className="sticky top-0 flex h-dvh flex-col">
+      <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
+        <div
+          ref={stickyRef}
+          className="sticky top-0 z-20 flex flex-col bg-[#2B2B2B]"
+        >
           <div
             ref={viewportRef}
             className="relative mx-auto flex h-full w-full max-w-[1200px] flex-col overflow-hidden"
           >
-            <figure className="shrink-0 px-5 pt-5 pb-4 md:px-8 md:pt-6 md:pb-5">
+            <figure className="mb-3 shrink-0 px-5 pt-4 pb-2 md:px-8 md:pt-5">
               <div className="mx-auto w-full max-w-[800px]">
                 <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
                   Nivel de vulnerabilidad frente al fuego
@@ -229,10 +244,10 @@ export function InflammabilitySection() {
               </div>
             </figure>
 
-            <div className="relative min-h-0 flex-1">
+            <div className="relative h-[min(520px,calc(100svh-22rem))]">
               <div
                 ref={trackRef}
-                className="absolute top-0 left-0 flex h-full w-max items-start gap-4 px-5 pt-2 pb-14 md:gap-5 md:px-8 md:pt-3 md:pb-16"
+                className="absolute inset-0 flex w-max items-stretch gap-4 px-5 md:gap-5 md:px-8"
                 style={{
                   transform: `translate3d(${trackX}px, 0, 0)`,
                   willChange: "transform",
@@ -247,7 +262,7 @@ export function InflammabilitySection() {
                   return (
                     <article
                       key={sp.id}
-                      className="flex h-[min(560px,calc(100dvh-11rem))] w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
+                      className="flex h-full w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
                     >
                       <div
                         className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
@@ -256,13 +271,13 @@ export function InflammabilitySection() {
                         {tone.label}
                       </div>
 
-                      <div className="relative h-[280px] w-full shrink-0">
+                      <div className="relative h-[min(230px,26vh)] w-full shrink-0">
                         <Image
                           src={withBasePath(sp.image)}
                           alt={`${sp.commonName} (${sp.scientificName})`}
                           fill
                           sizes="280px"
-                          className="object-contain object-bottom p-2"
+                          className="object-contain object-bottom px-2 py-3"
                         />
                       </div>
 
@@ -284,22 +299,53 @@ export function InflammabilitySection() {
                   );
                 })}
               </div>
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#2B2B2B] from-0% via-[#2B2B2B]/80 via-[40%] to-transparent md:w-28"
+                style={{ opacity: hasOverflow ? clamp(progress / 0.05) : 0 }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#2B2B2B] from-0% via-[#2B2B2B]/80 via-[40%] to-transparent md:w-28"
+                style={{ opacity: hasOverflow ? clamp((1 - progress) / 0.05) : 0 }}
+              />
+            </div>
 
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 px-5 pb-5 md:px-8">
-                <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
-                  <div
-                    className="h-px bg-[#f3efe8]/80"
-                    style={{ width: `${progress * 100}%` }}
-                  />
-                </div>
-                <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
-                  {Math.min(
-                    species.length,
-                    Math.max(1, Math.round(progress * (species.length - 1)) + 1),
-                  )}{" "}
-                  / {species.length}
-                </p>
+            <div className="mt-3 flex shrink-0 items-center gap-3 px-5 pt-2 pb-3 md:px-8">
+              <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
+                <div
+                  className="h-px bg-[#f3efe8]/80"
+                  style={{ width: `${progress * 100}%` }}
+                />
               </div>
+              <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
+                {Math.min(
+                  species.length,
+                  Math.max(1, Math.round(progress * (species.length - 1)) + 1),
+                )}{" "}
+                / {species.length}
+              </p>
+            </div>
+          </div>
+          <div className="mx-auto w-full max-w-[800px] px-5 pt-6 pb-2 md:px-8">
+            <h2 className="type-h3">
+              Después del fuego
+            </h2>
+            <div className="mt-6 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+              <p>
+                Cuando el último foco se apaga y la atención pública se desplaza,
+                comienza una etapa mucho más larga: la recuperación. Antes, sin
+                embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
+                brigadistas recorren los sectores quemados en busca de troncos
+                calientes, brasas enterradas y focos capaces de reactivarse con un
+                cambio de viento.
+              </p>
+              <p>
+                El incendio también deja marcas que permanecen mucho después de las
+                llamas: pérdida de vegetación, degradación de suelos, afectación de
+                cultivos y animales, contaminación por cenizas y procesos de
+                recuperación que pueden extenderse durante años.
+              </p>
             </div>
           </div>
         </div>

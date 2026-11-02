@@ -11,7 +11,6 @@ type Props = {
   active?: boolean;
   highlightZona?: number | null;
   onHighlightZona?: (zona: number | null) => void;
-  onSegmentReveal?: (index: number) => void;
 };
 
 const VIEW_W = 640;
@@ -93,13 +92,10 @@ export function AtlasShareBar({
   active = true,
   highlightZona = null,
   onHighlightZona,
-  onSegmentReveal,
 }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const hoverRef = useRef(onHighlightZona);
   hoverRef.current = onHighlightZona;
-  const revealRef = useRef(onSegmentReveal);
-  revealRef.current = onSegmentReveal;
 
   useLayoutEffect(() => {
     const svg = svgRef.current;
@@ -108,10 +104,6 @@ export function AtlasShareBar({
     const segs = segmentsFromBar(bar);
     const root = d3.select(svg);
     const animate = active && !reduce;
-
-    const revealAll = () => {
-      segs.forEach((_, i) => revealRef.current?.(i));
-    };
 
     const selection = root
       .selectAll<SVGRectElement, Seg>("rect.atlas-bar-seg")
@@ -148,14 +140,8 @@ export function AtlasShareBar({
       })
       .on("blur", () => hoverRef.current?.(null));
 
-    const timers: number[] = [];
     merged.interrupt();
     if (animate) {
-      segs.forEach((_, i) => {
-        timers.push(
-          window.setTimeout(() => revealRef.current?.(i), i * ATLAS_BAR_DURATION),
-        );
-      });
       merged
         .attr("x", (d) => d.x)
         .attr("fill", (d) => d.color)
@@ -170,12 +156,7 @@ export function AtlasShareBar({
         .attr("x", (d) => d.x)
         .attr("width", (d) => Math.max(0, d.width))
         .attr("fill", (d) => d.color);
-      if (active) revealAll();
     }
-
-    return () => {
-      timers.forEach((id) => window.clearTimeout(id));
-    };
   }, [bar, active]);
 
   useLayoutEffect(() => {
@@ -202,13 +183,8 @@ export function AtlasShareBar({
         role="img"
         aria-label={barAriaLabel(bar, percents)}
       />
-      <div className="mt-1 flex justify-between text-[11px] text-white/55">
-        <span>0%</span>
-        <span>Participación de la superficie</span>
-        <span>100%</span>
-      </div>
       {percents.length > 0 ? (
-        <div className="relative mt-2 h-6 text-base text-white">
+        <div className="relative mt-1 h-4 text-[11px] text-white/55">
           {percents.map((item) => {
             const dimmed =
               highlightZona != null && item.zona != null && highlightZona !== item.zona;

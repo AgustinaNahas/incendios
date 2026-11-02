@@ -10,7 +10,11 @@ type AnatomyStep = {
   title: string;
   body: string;
   items: string[];
+  /** Punto de la ilustración (0–1) y escala del encuadre. */
+  focus: { x: number; y: number; scale: number };
 };
+
+const FIGURE_ASPECT = 2090 / 5242;
 
 const STEPS: AnatomyStep[] = [
   {
@@ -22,6 +26,7 @@ const STEPS: AnatomyStep[] = [
       "Chaquetas ignífugas (Inforest)",
       "Pantalones ignífugos (Inforest/ZB)",
     ],
+    focus: { x: 0.5, y: 0.5, scale: 1 },
   },
   {
     id: "botas",
@@ -29,6 +34,7 @@ const STEPS: AnatomyStep[] = [
     title: "Calzado",
     body: "Botas específicas para terreno irregular, calor residual y largas jornadas de combate.",
     items: ["Calzado para incendios forestales (El Resero)"],
+    focus: { x: 0.48, y: 0.9, scale: 2.25 },
   },
   {
     id: "guantes",
@@ -36,6 +42,7 @@ const STEPS: AnatomyStep[] = [
     title: "Guantes",
     body: "Protegen las manos al abrir líneas de defensa, manejar herramientas y retirar material caliente.",
     items: ["Guantes para trabajo forestal (Inforest)"],
+    focus: { x: 0.5, y: 0.47, scale: 1.72 },
   },
   {
     id: "casco",
@@ -46,6 +53,7 @@ const STEPS: AnatomyStep[] = [
       "Casco rojo con antiparras (KPN SAFETY Modelo TYTAN MAX; también MSA Modelo V-Gard)",
       "Anteojos de seguridad (Libus — Modelo Fall Dual)",
     ],
+    focus: { x: 0.5, y: 0.095, scale: 2.9 },
   },
   {
     id: "accesorios",
@@ -59,8 +67,15 @@ const STEPS: AnatomyStep[] = [
       "Botiquín de primeros auxilios (manta térmica, tijera, pinza, máscara pocket, férula y kit con 9 elementos)",
       "Handys VHF (Motorola Modelo DEP 250)",
     ],
+    focus: { x: 0.51, y: 0.34, scale: 2.15 },
   },
 ];
+
+function focusTransform(focus: AnatomyStep["focus"]) {
+  const tx = -(focus.x - 0.5) * focus.scale * 100;
+  const ty = -(focus.y - 0.5) * focus.scale * 100;
+  return `translate(-50%, -50%) translate(${tx}%, ${ty}%) scale(${focus.scale})`;
+}
 
 export function BrigadistaAnatomy() {
   const [stepId, setStepId] = useState(STEPS[0].id);
@@ -110,8 +125,43 @@ export function BrigadistaAnatomy() {
   return (
     <div className="relative mt-10">
       <div className="sticky top-0 z-10 h-svh overflow-hidden bg-[#2B2B2B]">
-        <div className="mx-auto flex h-full w-full max-w-[1100px] items-center gap-6 px-5 md:gap-10 md:px-8">
-          <div className="relative z-10 hidden w-[min(42%,380px)] shrink-0 md:block">
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="absolute top-1/2 left-1/2 h-svh will-change-transform transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:left-[calc(50%+10rem)]"
+            style={{
+              width: `calc(100svh * ${FIGURE_ASPECT})`,
+              transform: focusTransform(activeStep.focus),
+            }}
+          >
+            {STEPS.map((step, index) => {
+              const active = step.id === activeStep.id;
+              return (
+                <div
+                  key={step.id}
+                  className="absolute inset-0 transition-opacity duration-700 ease-out motion-reduce:transition-none"
+                  style={{
+                    opacity: active ? 1 : 0,
+                    zIndex: active ? STEPS.length + 1 : index + 1,
+                  }}
+                  aria-hidden={!active}
+                >
+                  <Image
+                    src={withBasePath(step.image)}
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                    priority={index === 0}
+                    loading={index === 0 ? undefined : "eager"}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="relative z-10 mx-auto flex h-full w-full max-w-[1100px] items-center px-5 md:px-8">
+          <div className="relative hidden w-[min(42%,380px)] shrink-0 md:block">
             {STEPS.map((step, index) => {
               const active = step.id === activeStep.id;
               return (
@@ -156,32 +206,6 @@ export function BrigadistaAnatomy() {
                 ))}
               </ul>
             </div>
-          </div>
-
-          <div className="relative mx-auto h-[min(88svh,760px)] w-full max-w-[420px] flex-1 md:mx-0">
-            {STEPS.map((step, index) => {
-              const active = step.id === activeStep.id;
-              return (
-                <div
-                  key={step.id}
-                  className="absolute inset-0 transition-opacity duration-700 ease-out"
-                  style={{
-                    opacity: active ? 1 : 0,
-                    zIndex: active ? STEPS.length + 1 : index + 1,
-                  }}
-                  aria-hidden={!active}
-                >
-                  <Image
-                    src={withBasePath(step.image)}
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 90vw, 420px"
-                    className="object-contain object-center"
-                    priority={index === 0}
-                  />
-                </div>
-              );
-            })}
           </div>
         </div>
 

@@ -19,6 +19,7 @@ const AtlasMap = dynamic(
 type Props = {
   step?: AtlasStepId;
   highlightZona?: number | null;
+  onHighlightZona?: (zona: number | null) => void;
   provinceFilter?: OtbnProvinceFilter;
   className?: string;
   interactive?: boolean;

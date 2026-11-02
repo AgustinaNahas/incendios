@@ -35,22 +35,14 @@ export function FireContextSection() {
       id="contexto"
       className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
     >
-      <div className="mx-auto max-w-[800px] px-5 py-20 md:px-8 md:py-28">
-        <h2 className="type-h3">El contexto del fuego</h2>
-        <p className="mt-6 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          ¿Qué condiciones hacen que un bosque sea más vulnerable al fuego
-          incluso antes de que aparezca la primera llama? El riesgo puede
-          ordenarse en tres niveles: causas directas, factores de propagación y
-          condiciones estructurales.
-        </p>
-
-        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
+      <div className="mx-auto max-w-[800px] px-5 pt-8 pb-20 md:px-8 md:pt-12 md:pb-28">
+        <h3 className="font-sans text-xl font-bold md:text-2xl">
           Causas directas
         </h3>
-        <h4 className="mt-6 font-sans text-base font-bold md:text-lg">
+        <h4 className="mt-4 font-sans text-base font-bold md:text-lg">
           Causas naturales
         </h4>
-        <p className="mt-3 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-1 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           Entre las causas naturales, los rayos pueden iniciar incendios que
           permanecen latentes durante días y luego se expanden bajo condiciones
           favorables, como ocurrió en diciembre de 2025 en el lago Menéndez. La
@@ -61,7 +53,7 @@ export function FireContextSection() {
         <h4 className="mt-8 font-sans text-base font-bold md:text-lg">
           Causas de origen humano
         </h4>
-        <p className="mt-3 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-1 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           La mayoría de los incendios tiene origen antrópico. Según el Servicio
           Nacional de Manejo del Fuego, cerca del 95% está vinculado a acciones
           humanas, ya sea por negligencia, fallas de infraestructura o hechos

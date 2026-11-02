@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { OtbnMapClient } from "@/components/maps/OtbnMapClient";
 import { AtlasShareBar } from "@/components/charts/AtlasShareBar";
 import {
@@ -61,16 +60,14 @@ function AtlasDots({
 export function OtbnSection() {
   const [step, setStep] = useState<AtlasStepId>("bosques");
   const [highlightZona, setHighlightZona] = useState<number | null>(null);
-  const [categoryReveal, setCategoryReveal] = useState(0);
   const panelRefs = useRef<Record<string, HTMLElement | null>>({});
   const ignoreScrollRef = useRef(false);
   const onHighlightZona = useCallback((zona: number | null) => {
-    setHighlightZona(zona);
+    setHighlightZona((current) => (current === zona ? current : zona));
   }, []);
 
   useEffect(() => {
     setHighlightZona(null);
-    setCategoryReveal(0);
   }, [step]);
 
   useEffect(() => {
@@ -154,6 +151,7 @@ export function OtbnSection() {
             <OtbnMapClient
               step={step}
               highlightZona={barInteractive ? highlightZona : null}
+              onHighlightZona={onHighlightZona}
               interactive={false}
               className="h-full w-full"
             />
@@ -168,7 +166,7 @@ export function OtbnSection() {
           className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-[19svh] bg-gradient-to-b from-[#2B2B2B] from-10% via-[#2B2B2B]/75 via-55% to-transparent"
         />
 
-        <div className="pointer-events-none relative z-30 -mt-[100svh] lg:w-1/2">
+        <div className="pointer-events-none relative z-30 -mt-[100svh]">
 
 
           {ATLAS_PANELS.map((panel) => {
@@ -192,25 +190,30 @@ export function OtbnSection() {
                 }}
                 className={
                   stickyPanel
-                    ? "relative px-4 md:px-8 lg:px-12"
-                    : "flex min-h-[80vh] items-center px-4 py-12 md:px-8 lg:px-12 lg:pr-6"
+                    ? "relative"
+                    : "flex min-h-[80vh] items-center py-12"
                 }
                 style={panelMinH ? { minHeight: panelMinH } : undefined}
               >
                 <div
                   className={
                     stickyPanel
-                      ? "sticky top-0 flex h-svh items-center py-12 lg:pr-6"
+                      ? "sticky top-0 flex h-svh items-center"
                       : "w-full"
                   }
                 >
-                  <div className="pointer-events-auto w-full space-y-4">
+                  <div className="w-full">
                     <div
-                      className={`max-w-[450px]  px-5 py-5 transition-colors md:px-6 md:py-6 ${
+                      className={`pointer-events-auto px-5 py-5 transition-colors md:px-6 md:py-6 ${
                         isActive
                           ? "bg-[#141414]"
                           : "bg-[#141414]/80"
                       }`}
+                      style={{
+                        width: "min(450px, calc(100vw - 2rem))",
+                        marginLeft:
+                          "max(1rem, calc(33vw - min(225px, calc(50vw - 1rem))))",
+                      }}
                     >
                       <h3 className="font-sans text-2xl leading-tight font-bold text-white md:text-3xl">
                         {displayed.title}
@@ -237,10 +240,10 @@ export function OtbnSection() {
                               }
                             >
                               {chart.label ? (
-                                <p className="mb-2 text-lg leading-none text-white">
-                                  <span>{chart.label}</span>
+                                <p className="mb-4 text-lg leading-none text-white">
+                                  <span className="font-bold">{chart.label}:</span>
                                   {chart.hectaresLabel ? (
-                                    <span className="ml-3">{chart.hectaresLabel}</span>
+                                    <span> {chart.hectaresLabel}</span>
                                   ) : null}
                                 </p>
                               ) : null}
@@ -253,16 +256,6 @@ export function OtbnSection() {
                                     ? onHighlightZona
                                     : undefined
                                 }
-                                onSegmentReveal={
-                                  isActive &&
-                                  displayed.showCategoryLegend &&
-                                  chart.bar.variant === "stacked"
-                                    ? (segmentIndex) =>
-                                        setCategoryReveal((n) =>
-                                          Math.max(n, segmentIndex + 1),
-                                        )
-                                    : undefined
-                                }
                               />
                             </div>
                           ))}
@@ -270,8 +263,7 @@ export function OtbnSection() {
                       ) : null}
                       {displayed.showCategoryLegend ? (
                         <ul className="mt-4 space-y-4 text-sm leading-relaxed text-white/85">
-                          {OTBN_CATEGORY_BULLETS.map((bullet, index) => {
-                            const visible = categoryReveal > index;
+                          {OTBN_CATEGORY_BULLETS.map((bullet) => {
                             const dimmed =
                               isActive &&
                               highlightZona != null &&
@@ -279,17 +271,25 @@ export function OtbnSection() {
                             return (
                               <li
                                 key={bullet.zona}
-                                className="transition-opacity duration-500 flex flex-row"
-                                style={{
-                                  opacity: visible ? (dimmed ? 0.28 : 1) : 0,
-                                }}
+                                className={`flex flex-row transition-opacity duration-300 ${
+                                  isActive ? "cursor-pointer" : ""
+                                }`}
+                                style={{ opacity: dimmed ? 0.28 : 1 }}
+                                onMouseEnter={
+                                  isActive
+                                    ? () => onHighlightZona(bullet.zona)
+                                    : undefined
+                                }
+                                onMouseLeave={
+                                  isActive ? () => onHighlightZona(null) : undefined
+                                }
                               >
                                 <div
-                                  className="min-h-5 w-1 mr-2 font-semibold text-white flex-shrink-0"
+                                  className="mr-2 min-h-5 w-1 flex-shrink-0 font-semibold text-white"
                                   style={{ background: bullet.color }}
                                 >
                                </div>
-                               <div className="text-white flex-grow">
+                               <div className="flex-grow text-white">
                                Categoría {bullet.code} <br/>
                                 
                                 {bullet.text}
@@ -305,15 +305,6 @@ export function OtbnSection() {
               </article>
             );
           })}
-
-          <p className="pointer-events-auto px-4 pb-10 text-sm text-[#f3efe8]/70 md:px-8 lg:px-12 lg:pr-6">
-            <Link
-              href="/otbn"
-              className="font-semibold underline-offset-4 hover:underline"
-            >
-              Ver mapa a pantalla completa →
-            </Link>
-          </p>
         </div>
       </div>
     </section>

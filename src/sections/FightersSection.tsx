@@ -1,5 +1,6 @@
 import { Quote } from "@/components/Quote";
 import { BrigadistaAnatomy } from "@/components/scrolly/BrigadistaAnatomy";
+import { FireStates } from "@/components/scrolly/FireStates";
 
 const BODIES = [
   {
@@ -46,29 +47,6 @@ const TOOLS = [
   "Motobombas con sistema de mochila, depósito y línea de combustible",
 ] as const;
 
-const FIRE_STATES = [
-  {
-    title: "Fuera de control",
-    body: "El fuego se propaga libremente. Fuegos que aún no han sido atacados, o que no han podido ser contenidos.",
-  },
-  {
-    title: "Detenido o contenido",
-    body: "Por cualquier circunstancia natural, ambiental, o a raíz de los trabajos de combate, la propagación se ha detenido en uno o más sectores del incendio.",
-  },
-  {
-    title: "Circunscripto",
-    body: "Los trabajos de contención abarcan todo el perímetro pero no están definitivamente terminados.",
-  },
-  {
-    title: "Controlado",
-    body: "La línea de control ha quedado establecida definitivamente, anclada y asegurada. El incendio puede mostrar actividad y humo en su interior, pero los trabajos se han completado en todo el perímetro.",
-  },
-  {
-    title: "Extinguido",
-    body: "El incendio no muestra signos de actividad en ninguna de sus partes.",
-  },
-] as const;
-
 export function FightersSection() {
   return (
     <section
@@ -90,7 +68,7 @@ export function FightersSection() {
         </h3>
         <ul className="mt-6 space-y-8">
           {BODIES.map((item) => (
-            <li key={item.title} className="ml-3 list-disc pl-2">
+            <li key={item.title} className="ml-6 list-disc pl-1 ">
               <p className="font-sans text-base font-bold md:text-lg">
                 {item.title}
               </p>
@@ -119,39 +97,7 @@ export function FightersSection() {
       <BrigadistaAnatomy />
 
       <div className="mx-auto max-w-[800px] px-5 pb-20 md:px-8 md:pb-28">
-        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
-          Herramientas manuales
-        </h3>
-        <p className="mt-4 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          Para abrir líneas de defensa, cortar vegetación y apagar focos
-          pequeños se emplean:
-        </p>
-        <ul className="mt-5 list-disc space-y-2 pl-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          {TOOLS.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-
-        <div className="mt-14 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          <p>
-            Para los cuerpos de bomberos voluntarios, el combate tiene además un
-            costo personal. Muchos de sus integrantes son cuentapropistas:
-            comerciantes, albañiles, plomeros o electricistas. Cada jornada
-            destinada al incendio es también una jornada en la que dejan de
-            trabajar y de generar ingresos. En las ciudades más grandes, algunos
-            cuarteles cuentan con personal rentado para funciones específicas,
-            pero buena parte de la estructura sigue sostenida por voluntarios
-            que interrumpen su vida cotidiana para responder a la emergencia.
-          </p>
-          <p>
-            No todos los que llegan a la primera línea del fuego forman parte de
-            estructuras oficiales. En zonas rurales, de interfase o de difícil
-            acceso, las brigadas comunitarias pueden convertirse en una primera
-            respuesta clave gracias a su conocimiento directo del territorio,
-            aunque no siempre cuentan con el mismo reconocimiento institucional
-            que los cuerpos oficiales.
-          </p>
-        </div>
+        
 
         <Quote
           className="mt-10"
@@ -160,30 +106,7 @@ export function FightersSection() {
           role="jefa de la Brigada Forestal de Mallín Ahogado, una organización comunitaria de Río Negro"
         />
 
-        <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
-          Estados del incendio
-        </h3>
-        <ol className="mt-6 space-y-5">
-          {FIRE_STATES.map((state, index) => (
-            <li key={state.title} className="flex gap-4">
-              <span className="shrink-0 font-sans text-base font-bold text-[#f1621a] md:text-lg">
-                {index + 1}.
-              </span>
-              <div>
-                <p className="font-sans text-base font-bold md:text-lg">
-                  {state.title}
-                </p>
-                <p className="mt-1 text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
-                  {state.body}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-6 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          Algunos incendios grandes, aunque sean dados por controlados, pueden
-          no declararse extinguidos durante mucho tiempo.
-        </p>
+        <FireStates />
       </div>
     </section>
   );

@@ -112,7 +112,7 @@ export function BudgetSection() {
         <h3 className="mt-12 font-sans text-xl font-bold md:text-2xl">
           Paraguas normativo
         </h3>
-        <div className="mt-6 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           <p>
             <strong className="font-bold text-[#f3efe8]">
               Ley de Manejo del Fuego (Ley 26.815):
@@ -140,7 +140,7 @@ export function BudgetSection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Sistema Federal de Manejo del Fuego
         </h3>
-        <div className="mt-6 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           <p>
             La Ley 26.815 creó el Sistema Federal de Manejo del Fuego (SFMF),
             integrado por el Servicio Nacional de Manejo del Fuego, la
@@ -163,7 +163,7 @@ export function BudgetSection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Presupuesto nacional
         </h3>
-        <div className="mt-6 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           <p>
             Durante sus dos primeros años de gestión, el gobierno de Javier
             Milei no tuvo una Ley de Presupuesto aprobada por el Congreso. En
@@ -266,7 +266,7 @@ export function BudgetSection() {
         <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
           Prevención
         </h3>
-        <div className="mt-6 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
           <p>
             La Ley Nacional de Manejo del Fuego obliga a planificar la
             protección contra incendios mediante Planes de Manejo del Fuego a
@@ -337,12 +337,9 @@ export function BudgetSection() {
           </p>
         </div>
 
-        <Quote
-          className="mt-10"
-          quote="“El enfoque reactivo sobre los incendios puede identificarse también en la publicidad de estos eventos, en la sensacionalidad de un avión hidrante lanzando 10.000 litros con precisión por sobre el barrido rutinario de material seco. Vende, ‘garpa’ hacer propaganda durante una catástrofe, cuando está toda la atención puesta ahí y aparecer con millones de dólares para combatir incendios. Lamentablemente no tendría el mismo impacto social o quizás eso creen quienes toman decisiones el trabajar en prevención”"
-          name="Daniel Díaz"
-          role="jefe de Bomberos de Epuyén"
-        />
+        <p className="mt-10 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+          “El enfoque reactivo sobre los incendios puede identificarse también en la publicidad de estos eventos, en la sensacionalidad de un avión hidrante lanzando 10.000 litros con precisión por sobre el barrido rutinario de material seco. Vende, ‘garpa’ hacer propaganda durante una catástrofe, cuando está toda la atención puesta ahí y aparecer con millones de dólares para combatir incendios. Lamentablemente no tendría el mismo impacto social o quizás eso creen quienes toman decisiones el trabajar en prevención”. Daniel Díaz, jefe de Bomberos de Epuyén.
+        </p>
       </div>
     </section>
   );

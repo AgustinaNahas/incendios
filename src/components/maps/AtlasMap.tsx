@@ -39,6 +39,7 @@ type Props = {
   step?: AtlasStepId;
   provinceFilter?: OtbnProvinceFilter;
   highlightZona?: number | null;
+  onHighlightZona?: (zona: number | null) => void;
   className?: string;
   interactive?: boolean;
   explorer?: boolean;
@@ -243,6 +244,12 @@ function otbnLineOpacity(
 ): number | mapboxgl.ExpressionSpecification {
   if (highlightZona == null) return 0.85;
   return ["case", ["==", ["get", "zona"], highlightZona], 0.95, 0.12];
+}
+
+function readZona(value: unknown): number | null {
+  const zona = typeof value === "number" ? value : Number(value);
+  if (zona !== 1 && zona !== 2 && zona !== 3) return null;
+  return zona;
 }
 
 function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
@@ -547,6 +554,7 @@ export function AtlasMap({
   step = "categorias",
   provinceFilter = "all",
   highlightZona = null,
+  onHighlightZona,
   className = "",
   interactive = false,
   explorer = false,
@@ -575,6 +583,8 @@ export function AtlasMap({
     : config.fit;
   const offsetLeft = !explorer;
   const revealTimer = useRef(0);
+  const hoverCbRef = useRef(onHighlightZona);
+  hoverCbRef.current = onHighlightZona;
   const viewRef = useRef({
     paint,
     showBosque,
@@ -676,11 +686,38 @@ export function AtlasMap({
       map.touchZoomRotate.disable();
     }
 
+    let lastPoint: mapboxgl.PointLike | null = null;
+    const onZoneHover = (event: mapboxgl.MapLayerMouseEvent) => {
+      if (!hoverCbRef.current || viewRef.current.paint !== "zones") return;
+      lastPoint = event.point;
+      const zona = readZona(event.features?.[0]?.properties?.zona);
+      if (zona == null) return;
+      hoverCbRef.current(zona);
+      map.getCanvas().style.cursor = "pointer";
+    };
+    const onZoneLeave = () => {
+      if (
+        lastPoint &&
+        map.getLayer(LYR.otbn) &&
+        viewRef.current.paint === "zones"
+      ) {
+        const still = map.queryRenderedFeatures(lastPoint, { layers: [LYR.otbn] });
+        if (readZona(still[0]?.properties?.zona) != null) return;
+      }
+      lastPoint = null;
+      map.getCanvas().style.cursor = "";
+      if (viewRef.current.paint !== "zones") return;
+      hoverCbRef.current?.(null);
+    };
+
     const onLoad = () => {
       map.scrollZoom.disable();
       applyPlanarProjection(map);
       blendBasemap(map);
       addOverlayLayers(map, data);
+      map.on("mousemove", LYR.otbn, onZoneHover);
+      map.on("mouseenter", LYR.otbn, onZoneHover);
+      map.on("mouseleave", LYR.otbn, onZoneLeave);
       syncPaint(map);
       applyCamera(map, data, viewRef.current);
     };
@@ -723,6 +760,9 @@ export function AtlasMap({
       observer.disconnect();
       map.off("load", onLoad);
       map.off("style.load", onStyleLoad);
+      map.off("mousemove", LYR.otbn, onZoneHover);
+      map.off("mouseenter", LYR.otbn, onZoneHover);
+      map.off("mouseleave", LYR.otbn, onZoneLeave);
       map.remove();
       mapRef.current = null;
     };
@@ -778,7 +818,7 @@ export function AtlasMap({
   return (
     <div
       className={`otbn-mapbox relative isolate h-full w-full ${
-        interactive ? "" : "pointer-events-none"
+        interactive || onHighlightZona ? "" : "pointer-events-none"
       } ${className}`}
     >
       {!ready ? (

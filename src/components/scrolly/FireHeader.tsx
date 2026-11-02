@@ -4,24 +4,18 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import { withBasePath } from "@/lib/paths";
 
 const STEPS = [
-  "/header/steps-1.png",
-  "/header/steps-2.png",
-  "/header/steps-3.png",
-  "/header/steps-4.png",
-  "/header/steps-5.png",
+  "/header/steps-1.jpg",
+  "/header/steps-2.jpg",
+  "/header/steps-3.jpg",
+  "/header/steps-4.jpg",
 ] as const;
 
-/**
- * Un slot por imagen. Pasos 1 y 5 van vacíos (sin card);
- * solo 2–4 muestran texto. Placeholders hasta el guión definitivo.
- */
-const STEP_CARDS: (string | null)[] = [
+const STEP_CARDS = [
   "El fuego empieza en silencio, generalmente por negligencia humana.",
   "Los fuertes vientos patagónicos pueden expandirlo en horas.",
   "Las alertas temprano muchas veces fallan o llegan tarde.",
   "Entonces son ellos los que le ponen el cuerpo al fuego.",
-  "Abren cortafuegos, recorren terrenos difíciles y combaten durante horas.",
-];
+] as const;
 
 /** Último tramo del scroll: fundido al lead (después del último paso). */
 const FADE_START = 0.9;
@@ -90,21 +84,26 @@ export function FireHeader() {
 
       const slotH = cardSlotRef.current?.offsetHeight ?? 0;
       if (cardsTrackRef.current && slotH > 0) {
-        cardsTrackRef.current.style.transform = `translate3d(0, ${-stepProgress * slotH}px, 0)`;
+        // La última card no se queda en el borde inferior: en su tramo
+        // sube hasta el centro, por encima del título que entra después.
+        const lastCard = cardRefs.current[span];
+        const lastText = lastCard?.querySelector("p");
+        let lift = 0;
+        if (lastCard && lastText) {
+          const cardTop = lastCard.getBoundingClientRect().top;
+          const textRect = lastText.getBoundingClientRect();
+          const textCenter = textRect.top + textRect.height / 2 - cardTop;
+          lift = textCenter - slotH / 2;
+        }
+        const intoLast = clamp(stepProgress - (span - 1));
+        const y = -stepProgress * slotH - intoLast * lift;
+        cardsTrackRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
       }
 
       cardRefs.current.forEach((el, i) => {
         if (!el) return;
-        if (!STEP_CARDS[i]) {
-          el.style.opacity = "0";
-          return;
-        }
-        const distance = Math.abs(stepProgress - i);
-        const active = smoothstep(1 - Math.min(distance, 1));
-        let opacity = 0.22 + active * 0.78;
-        // La primera card espera el delay de intro.
-        if (i === 0) opacity *= introRef.current;
-        el.style.opacity = String(opacity);
+        // La primera card espera el delay de intro; el resto viaja a opacidad plena.
+        el.style.opacity = i === 0 ? String(introRef.current) : "1";
       });
 
       if (fadeRef.current) {
@@ -149,7 +148,7 @@ export function FireHeader() {
   }, []);
 
   return (
-    <header ref={sectionRef} className="relative h-[480vh] text-[#f3efe8]">
+    <header ref={sectionRef} className="relative h-[400vh] text-[#f3efe8]">
       <div className="sticky top-0 isolate h-dvh overflow-hidden bg-[#2B2B2B] -mb-2">
         {STEPS.map((src, i) => (
           <div
@@ -170,7 +169,7 @@ export function FireHeader() {
             <img
               src={withBasePath(src)}
               alt=""
-              className="h-full w-full object-cover object-[center_42%]"
+              className="h-full w-full object-cover object-center"
               draggable={false}
             />
           </div>
@@ -181,31 +180,25 @@ export function FireHeader() {
           className="pointer-events-none absolute inset-0 z-20 shadow-[inset_0_0_120px_40px_rgba(8,3,2,0.22)]"
         />
 
-        {/* Cards centradas en el viewport; suben al ritmo de cada imagen. */}
-        <div className="pointer-events-none absolute inset-0 z-[21] flex items-center justify-center px-5">
-          <div
-            ref={cardSlotRef}
-            className="relative h-[min(42vh,320px)] w-[min(34%,420px)] overflow-hidden"
-          >
+        {/* Cada card entra por el borde inferior y sale por el superior. */}
+        <div className="pointer-events-none absolute inset-0 z-[21] overflow-hidden">
+          <div ref={cardSlotRef} className="relative h-full w-full">
             <div
               ref={cardsTrackRef}
               className="absolute inset-x-0 top-0 will-change-transform"
             >
               {STEP_CARDS.map((text, i) => (
                 <article
-                  key={text ?? `empty-${i}`}
+                  key={text}
                   ref={(el) => {
                     cardRefs.current[i] = el;
                   }}
-                  className="flex h-[min(42vh,320px)] w-full items-center will-change-[opacity]"
-                  style={{ opacity: 0 }}
-                  aria-hidden={!text}
+                  className="flex h-dvh w-full items-end justify-center px-5 pb-8 will-change-[opacity] md:pb-12"
+                  style={{ opacity: i === 0 ? 0 : 1 }}
                 >
-                  {text ? (
-                    <p className="w-full bg-black/60 px-4 py-5 font-sans text-base leading-relaxed text-[#f3efe8] md:px-5 md:py-6 md:text-lg">
-                      {text}
-                    </p>
-                  ) : null}
+                  <p className="w-[min(90vw,480px)] bg-black/90 px-5 py-5 font-display text-lg leading-snug text-[#f3efe8] md:px-6 md:py-6 md:text-xl">
+                    {text}
+                  </p>
                 </article>
               ))}
             </div>
