@@ -11,10 +11,10 @@ const STEPS = [
 ] as const;
 
 const STEP_CARDS = [
-  "El fuego empieza en silencio, generalmente por negligencia humana.",
-  "Los fuertes vientos patagónicos pueden expandirlo en horas.",
-  "Las alertas temprano muchas veces fallan o llegan tarde.",
-  "Entonces son ellos los que le ponen el cuerpo al fuego.",
+  "El fuego empieza en silencio, casi siempre por negligencia humana, en medio de semanas sin lluvia.",
+  "La sequía, el calor, la vegetación seca y el viento contribuyen a expandirlo en pocas horas.",
+  "Las alertas tempranas fallan o llegan tarde, mientras el bosque nativo se pierde y los vecinos sufren las consecuencias.",
+  "Entonces son los brigadistas los que abren cortafuegos y combaten en terrenos difíciles, donde nadie más llega.",
 ] as const;
 
 /** Último tramo del scroll: fundido al lead (después del último paso). */
