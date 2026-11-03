@@ -10,7 +10,7 @@ export function LeadSection() {
   return (
     <section
       id="intro"
-      className="relative z-10 -mt-[20svh] text-[#f3efe8]"
+      className="relative z-10 -mt-[20svh] text-foreground"
     >
       <div className="mx-auto max-w-[1000px] px-5 pb-6 pt-[16svh] text-center md:px-8">
         <Image
@@ -21,24 +21,24 @@ export function LeadSection() {
           className="mx-auto mb-12 h-auto"
           priority
         />
-        <h1 className="type-h1 mt-3 uppercase text-[#f1621a]">
+        <h1 className="type-h1 uppercase text-accent">
           Bosques Patagónicos
         </h1>
-        <p className="mt-[35px] max-w-[800px] mx-auto font-display text-[35px] leading-[1.27] font-semibold text-[#f3efe8]">
+        <p className="mt-[12px] max-w-[800px] mx-auto font-display text-[33px] leading-[1.27] font-semibold text-foreground">
           {BAJADA}
         </p>
-        <p className="mt-[22px] font-sans text-[16px] font-bold text-[#f3efe8]">
+        <p className="mt-[48px] font-sans text-[16px] text-foreground">
           Equipo de FOCO Bootcamp/FTA-FOPEA
         </p>
         <ShareButtons />
       </div>
 
-      <div className="bg-[#2B2B2B]">
-        <div className="mx-auto max-w-[800px] px-5 pb-24 md:px-8 md:pb-32">
-          <p className="mt-12 mb-6 text-left text-[16px] font-bold leading-relaxed text-[#f3efe8]">
+      <div className="bg-background">
+        <div className="mx-auto max-w-[800px] px-5 pb-12 md:px-8 md:pb-10">
+          <p className="mt-12 mb-6 text-left text-[16px] font-bold leading-relaxed text-foreground">
             Argentina, 17 de noviembre de 2026
           </p>
-          <div className="space-y-12 text-xl leading-relaxed text-[#f3efe8] md:text-xl">
+          <div className="space-y-12 text-xl leading-relaxed text-foreground md:text-xl">
             <p>
               Durante los primeros meses de 2026, más de 45 mil hectáreas
               ardieron en la Patagonia argentina. No fue un hecho aislado ni

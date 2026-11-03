@@ -4,12 +4,12 @@ export function ConclusionsSection() {
   return (
     <section
       id="conclusiones"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 py-20 md:px-8 md:py-28">
         <h2 className="type-h3">Conclusiones sobre el camino del fuego</h2>
 
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-8 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Especialistas en ecología del fuego, bomberos, brigadistas y
             pobladores coinciden en un punto: el fuego es, en buena medida,
@@ -30,7 +30,7 @@ export function ConclusionsSection() {
           role="jefa de la Brigada Forestal de Mallín Ahogado"
         />
 
-        <div className="mt-10 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-10 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Conocer las causas, reconocer las condiciones que favorecen al fuego
             y aprender de sus consecuencias no evita por sí solo la próxima

@@ -77,7 +77,7 @@ export function isoMonthIntensity(iso: string): number {
 export function burnedSeasonGradient(
   months: string[] = BURNED_TIMELINE_MONTHS,
 ): string {
-  if (months.length === 0) return "#940F11";
+  if (months.length === 0) return "var(--danger)";
   if (months.length === 1) {
     return seasonColor(isoMonthIntensity(months[0]));
   }

@@ -226,7 +226,7 @@ function otbnFillColor(paint: AtlasOtbnPaint): mapboxgl.ExpressionSpecification 
     OTBN_COLORS[2],
     3,
     OTBN_COLORS[3],
-    "#888888",
+    ATLAS_COLORS.fallback,
   ];
 }
 
@@ -285,7 +285,7 @@ function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
         ["!", ["in", ["get", "nam"], ["literal", LAND_SKIP]]],
       ],
       paint: {
-        "line-color": "#cfcbc3",
+        "line-color": ATLAS_COLORS.line,
         "line-width": 1.15,
         "line-opacity": 0.7,
       },
@@ -378,7 +378,7 @@ function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
       type: "line",
       source: SRC.provincias,
       paint: {
-        "line-color": "#cfcbc3",
+        "line-color": ATLAS_COLORS.line,
         "line-width": 1.15,
         "line-opacity": 0.7,
       },
@@ -399,7 +399,7 @@ function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
         "text-allow-overlap": true,
       },
       paint: {
-        "text-color": "#d8d4cc",
+        "text-color": ATLAS_COLORS.label,
         "text-halo-color": MAP_ARGENTINA_COLOR,
         "text-halo-width": 1.1,
       },
@@ -416,7 +416,7 @@ function addOverlayLayers(map: mapboxgl.Map, data: AtlasData) {
         "text-allow-overlap": true,
       },
       paint: {
-        "text-color": "#d8d4cc",
+        "text-color": ATLAS_COLORS.label,
         "text-halo-color": MAP_ARGENTINA_COLOR,
         "text-halo-width": 1.1,
       },
@@ -808,7 +808,7 @@ export function AtlasMap({
   if (error) {
     return (
       <div
-        className={`flex items-center justify-center bg-[#2B2B2B] text-[#f3efe8] ${className}`}
+        className={`flex items-center justify-center bg-background text-foreground ${className}`}
       >
         <p className="text-sm opacity-80">No se pudo cargar el mapa ({error}).</p>
       </div>
@@ -822,7 +822,7 @@ export function AtlasMap({
       } ${className}`}
     >
       {!ready ? (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#2B2B2B] text-sm text-[#f3efe8]/70">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background text-sm text-foreground/70">
           Cargando mapa…
         </div>
       ) : null}

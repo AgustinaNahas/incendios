@@ -4,11 +4,81 @@
 :root {
   --background: #2b2b2b;
   --foreground: #f3efe8;
+  --accent: #ffb252;
+  --accent-soft: color-mix(in srgb, var(--accent) 22%, transparent);
+  --rule: color-mix(in srgb, var(--foreground) 55%, transparent);
+  --raised: #383838;
+  --muted: #4a4a4a;
+  --panel: #121212;
+  --panel-soft: #141414;
+  --panel-muted: #161616;
+  --ink: #1a1a1a;
+  --void: #0c0c0c;
+  --tooltip: #111111;
+  --ember: #f46b15;
+  --danger: #940f11;
+  --paper: #f6f3ee;
+  --gold: #f0d078;
+  --trend: #f0c674;
+  --accent-deep: #1c120e;
+  --spark: #ffc800;
+  --heat: #ff6b2d;
+  --heat-mid: #ff9f43;
+  --heat-soft: #ff8a4c;
+  --sage: #3d6b55;
+  --sage-bright: #7dcea0;
+  --slate: #85929e;
+  --forest: #2f3e2f;
+  --forest-ink: #8fbc8f;
+  --forest-line: #5a7a5a;
+  --risk: #4a2b2b;
+  --risk-ink: #e07a7a;
+  --risk-line: #8a4a4a;
+  --atlas-water: #c9c6c1;
+  --gap: #0a0a0a;
+  --ember-void: #120303;
+  --blush: #fdf2f0;
+  --danger-ink: #7a0c0e;
+  --stain: #1a0a0a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-raised: var(--raised);
+  --color-muted: var(--muted);
+  --color-panel: var(--panel);
+  --color-panel-soft: var(--panel-soft);
+  --color-panel-muted: var(--panel-muted);
+  --color-ink: var(--ink);
+  --color-void: var(--void);
+  --color-tooltip: var(--tooltip);
+  --color-ember: var(--ember);
+  --color-danger: var(--danger);
+  --color-paper: var(--paper);
+  --color-gold: var(--gold);
+  --color-trend: var(--trend);
+  --color-accent-deep: var(--accent-deep);
+  --color-spark: var(--spark);
+  --color-heat: var(--heat);
+  --color-heat-mid: var(--heat-mid);
+  --color-heat-soft: var(--heat-soft);
+  --color-sage: var(--sage);
+  --color-sage-bright: var(--sage-bright);
+  --color-slate: var(--slate);
+  --color-forest: var(--forest);
+  --color-forest-ink: var(--forest-ink);
+  --color-forest-line: var(--forest-line);
+  --color-risk: var(--risk);
+  --color-risk-ink: var(--risk-ink);
+  --color-risk-line: var(--risk-line);
+  --color-atlas-water: var(--atlas-water);
+  --color-gap: var(--gap);
+  --color-ember-void: var(--ember-void);
+  --color-blush: var(--blush);
+  --color-danger-ink: var(--danger-ink);
+  --color-stain: var(--stain);
   --font-sans: var(--font-noto-sans);
   --font-display: var(--font-noto-kr);
 }
@@ -16,7 +86,7 @@
 .type-h1 {
   font-family: var(--font-display), serif;
   font-weight: 900;
-  font-size: clamp(56px, 9vw, 110px);
+  font-size: clamp(56px, 6vw, 110px);
   line-height: 1.25;
   letter-spacing: -0.02em;
 }
@@ -26,17 +96,17 @@
   font-weight: 900;
   font-size: clamp(32px, 4vw, 48px);
   line-height: 1.05;
-  color: #f1621a;
+  color: var(--accent);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #2b2b2b;
+  background-color: var(--background);
   overflow-x: clip;
 }
 
 body {
-  background-color: #2b2b2b;
+  background-color: var(--background);
   background-image: none;
   color: var(--foreground);
   overflow-x: clip;
@@ -57,11 +127,11 @@ h6 {
 }
 
 li::marker {
-  color: #f1621a;
+  color: var(--accent);
 }
 
 :focus-visible {
-  outline: 2px solid #f46b15;
+  outline: 2px solid var(--ember);
   outline-offset: 3px;
 }
 
@@ -72,8 +142,8 @@ li::marker {
   z-index: 100;
   transform: translateY(-160%);
   border-radius: 2px;
-  background: #f3efe8;
-  color: #1a1a1a;
+  background: var(--foreground);
+  color: var(--ink);
   padding: 0.65rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
@@ -86,7 +156,7 @@ li::marker {
 }
 
 .skip-link:focus-visible {
-  outline-color: #940f11;
+  outline-color: var(--danger);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -104,7 +174,7 @@ li::marker {
 }
 
 ::selection {
-  background: rgba(255, 107, 45, 0.35);
+  background: color-mix(in srgb, var(--heat) 35%, transparent);
 }
 
 @keyframes header-smoke {
@@ -138,10 +208,10 @@ li::marker {
   mix-blend-mode: plus-lighter;
   background: radial-gradient(
     48.04% 42.76% at 50% 50%,
-    #ffc800 0%,
-    #f46b15 26.44%,
-    rgba(148, 15, 17, 0.2) 49.52%,
-    rgba(34, 3, 3, 0) 75.96%
+    var(--spark) 0%,
+    var(--ember) 26.44%,
+    color-mix(in srgb, var(--danger) 20%, transparent) 49.52%,
+    transparent 75.96%
   );
 }
 
@@ -149,7 +219,7 @@ li::marker {
 .otbn-mapbox .mapboxgl-map,
 .otbn-mapbox .mapboxgl-canvas,
 .otbn-mapbox .mapboxgl-canvas-container {
-  background: #2b2b2b;
+  background: var(--background);
 }
 
 /* pointer-events-none en el wrapper no alcanza a los canvas de Mapbox. */
@@ -160,12 +230,12 @@ li::marker {
 
 .otbn-mapbox .mapboxgl-ctrl-attrib {
   background: transparent;
-  color: rgba(243, 239, 232, 0.42);
+  color: color-mix(in srgb, var(--foreground) 42%, transparent);
   font-size: 10px;
 }
 
 .otbn-mapbox .mapboxgl-ctrl-attrib a {
-  color: rgba(243, 239, 232, 0.55);
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
 }
 
 .otbn-mapbox .mapboxgl-ctrl-logo {
@@ -173,12 +243,12 @@ li::marker {
 }
 
 .otbn-mapbox .mapboxgl-ctrl-group {
-  background: #2b2b2b;
-  border: 1px solid rgba(243, 239, 232, 0.18);
+  background: var(--background);
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
 }
 
 .otbn-mapbox .mapboxgl-ctrl-group button + button {
-  border-top-color: rgba(243, 239, 232, 0.12);
+  border-top-color: color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 
 .otbn-mapbox .mapboxgl-ctrl button {
@@ -186,7 +256,7 @@ li::marker {
 }
 
 .atlas-map .leaflet-container {
-  background: #c9c6c1;
+  background: var(--atlas-water);
   font-family: inherit;
   -webkit-tap-highlight-color: transparent;
 }
@@ -204,9 +274,9 @@ li::marker {
 }
 
 .atlas-map .leaflet-tooltip.atlas-tooltip {
-  background: #f6f3ee;
-  color: #1a1a1a;
-  border: 1px solid #1a1a1a;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink);
   border-radius: 2px;
   box-shadow: none;
   font-size: 12px;
@@ -231,7 +301,7 @@ li::marker {
   margin-top: -7px;
   margin-left: -14px;
   border-width: 7px;
-  border-right-color: #1a1a1a;
+  border-right-color: var(--ink);
 }
 
 .atlas-map .leaflet-tooltip-right.atlas-tooltip::after {
@@ -240,7 +310,7 @@ li::marker {
   margin-top: -6px;
   margin-left: -12px;
   border-width: 6px;
-  border-right-color: #f6f3ee;
+  border-right-color: var(--paper);
 }
 
 .atlas-map .leaflet-tooltip-left.atlas-tooltip::before {
@@ -249,7 +319,7 @@ li::marker {
   margin-top: -7px;
   margin-right: -14px;
   border-width: 7px;
-  border-left-color: #1a1a1a;
+  border-left-color: var(--ink);
 }
 
 .atlas-map .leaflet-tooltip-left.atlas-tooltip::after {
@@ -258,7 +328,7 @@ li::marker {
   margin-top: -6px;
   margin-right: -12px;
   border-width: 6px;
-  border-left-color: #f6f3ee;
+  border-left-color: var(--paper);
 }
 
 .atlas-map .leaflet-tooltip-top.atlas-tooltip::before {
@@ -267,7 +337,7 @@ li::marker {
   margin-left: -7px;
   margin-bottom: -14px;
   border-width: 7px;
-  border-top-color: #1a1a1a;
+  border-top-color: var(--ink);
 }
 
 .atlas-map .leaflet-tooltip-top.atlas-tooltip::after {
@@ -276,7 +346,7 @@ li::marker {
   margin-left: -6px;
   margin-bottom: -12px;
   border-width: 6px;
-  border-top-color: #f6f3ee;
+  border-top-color: var(--paper);
 }
 
 .atlas-map .leaflet-tooltip-bottom.atlas-tooltip::before {
@@ -285,7 +355,7 @@ li::marker {
   margin-left: -7px;
   margin-top: -14px;
   border-width: 7px;
-  border-bottom-color: #1a1a1a;
+  border-bottom-color: var(--ink);
 }
 
 .atlas-map .leaflet-tooltip-bottom.atlas-tooltip::after {
@@ -294,16 +364,16 @@ li::marker {
   margin-left: -6px;
   margin-top: -12px;
   border-width: 6px;
-  border-bottom-color: #f6f3ee;
+  border-bottom-color: var(--paper);
 }
 
 .atlas-label {
   pointer-events: none;
-  color: #1a1a1a;
+  color: var(--ink);
   text-shadow:
-    0 0 4px #f6f3ee,
-    0 0 8px #f6f3ee,
-    1px 1px 0 #f6f3ee;
+    0 0 4px var(--paper),
+    0 0 8px var(--paper),
+    1px 1px 0 var(--paper);
 }
 
 .atlas-label span {
@@ -341,9 +411,9 @@ li::marker {
   mix-blend-mode: plus-lighter;
   background: radial-gradient(
     48.04% 42.76% at 50% 50%,
-    #ffc800 0%,
-    #f46b15 26.44%,
-    rgba(148, 15, 17, 0.2) 49.52%,
-    rgba(34, 3, 3, 0) 75.96%
+    var(--spark) 0%,
+    var(--ember) 26.44%,
+    color-mix(in srgb, var(--danger) 20%, transparent) 49.52%,
+    transparent 75.96%
   );
 }

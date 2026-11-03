@@ -23,10 +23,11 @@ export function FireSection({
 
   const dual = useMemo(() => {
     const ha = sumByYear(hectaresPatagonia);
-    const real = budget.execution.map((point) => ({
-      year: point.year,
-      real: point.executed,
-    }));
+    const real = budget.execution.flatMap((point) =>
+      point.executed == null
+        ? []
+        : [{ year: point.year, real: point.executed * 1000 }],
+    );
     return ha
       .filter((h) => h.year <= 2025)
       .map((h) => {
@@ -58,7 +59,7 @@ export function FireSection({
           <DualAxisLines
             data={dual}
             title="Presupuesto real vs hectáreas"
-            annotation="Presupuesto ejecutado en millones de pesos constantes de 2026 (FARN)."
+            annotation="Presupuesto ejecutado en millones de pesos constantes de 2026."
           />
         );
       case "scatter":

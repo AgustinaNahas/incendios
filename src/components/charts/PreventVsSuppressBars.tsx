@@ -32,7 +32,7 @@ export function PreventVsSuppressBars({
           </div>
           <div className="h-3 rounded-sm bg-current/10">
             <div
-              className="h-3 rounded-sm bg-[#3d6b55]"
+              className="h-3 rounded-sm bg-sage"
               style={{ width: `${(prevent / max) * 100}%` }}
             />
           </div>
@@ -46,7 +46,7 @@ export function PreventVsSuppressBars({
           </div>
           <div className="h-3 rounded-sm bg-current/10">
             <div
-              className="h-3 rounded-sm bg-[#ff6b2d]"
+              className="h-3 rounded-sm bg-heat"
               style={{ width: `${(suppress / max) * 100}%` }}
             />
           </div>

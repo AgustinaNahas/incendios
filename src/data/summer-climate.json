@@ -1,5 +1,5 @@
 {
-  "source": "Elaboración propia a partir de datos diarios del Servicio Meteorológico Nacional. Cada fila es un verano.",
+  "source": "Servicio Meteorológico Nacional.",
   "summers": [
     { "year": 1991, "hotDays": 2, "precipMm": 21.4, "windDays": 89 },
     { "year": 1992, "hotDays": 3, "precipMm": 87.7, "windDays": 88 },

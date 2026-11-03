@@ -76,7 +76,7 @@ export function BeforeSection({ firesMonth }: Props) {
                   </p>
                   <div className="h-3 rounded-sm bg-current/10">
                     <div
-                      className="h-3 rounded-sm bg-[#3d6b55]"
+                      className="h-3 rounded-sm bg-sage"
                       style={{
                         width: `${action.budgetShareIdeal * 100}%`,
                       }}

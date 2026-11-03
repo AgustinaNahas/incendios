@@ -12,9 +12,9 @@ import * as d3 from "d3";
 import climate from "@/data/summer-climate.json";
 import { formatHa } from "@/lib/format";
 
-const INK = "#f3efe8";
-const ACCENT = "#f1621a";
-const TREND = "#f0c674";
+const INK = "var(--foreground)";
+const ACCENT = "var(--accent)";
+const TREND = "var(--trend)";
 const VIEW_W = 720;
 
 type Summer = {
@@ -133,10 +133,10 @@ function hitHandlers(
 function ChartTitle({ title, dek }: { title: string; dek: string }) {
   return (
     <>
-      <h3 className="font-sans text-lg font-bold text-[#f3efe8] md:text-xl">
+      <h3 className="font-sans text-lg font-bold text-foreground md:text-xl">
         {title}
       </h3>
-      <p className="mt-2 text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
+      <p className="mt-2 text-base leading-relaxed text-foreground/85 md:text-lg">
         {dek}
       </p>
     </>
@@ -149,7 +149,7 @@ function Legend({
   items: { swatch: ReactNode; label: string }[];
 }) {
   return (
-    <div className="mt-3 mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[#f3efe8]/85">
+    <div className="mt-3 mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-foreground/85">
       {items.map((item) => (
         <span key={item.label} className="inline-flex items-center gap-2">
           {item.swatch}
@@ -162,11 +162,11 @@ function Legend({
 
 function Readout({ kicker, body }: { kicker: string; body: string }) {
   return (
-    <div className="mt-3 border border-[#f3efe8]/25 bg-[#4a4a4a]/55 px-5 py-4 md:px-6 md:py-5">
-      <p className="text-[11px] font-semibold tracking-[0.18em] text-[#f3efe8]/65 uppercase">
+    <div className="mt-3 border border-foreground/25 bg-muted/55 px-5 py-4 md:px-6 md:py-5">
+      <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/65 uppercase">
         {kicker}
       </p>
-      <p className="mt-2 text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
+      <p className="mt-2 text-sm leading-relaxed text-foreground/90 md:text-base">
         {body}
       </p>
     </div>
@@ -195,13 +195,13 @@ function ChartTooltip({
   return (
     <div
       role="tooltip"
-      className="pointer-events-none absolute z-10 w-max max-w-[240px] border border-[#f3efe8]/20 bg-[#111] px-3 py-2.5"
+      className="pointer-events-none absolute z-10 w-max max-w-[240px] border border-foreground/20 bg-tooltip px-3 py-2.5"
       style={{ left: `${left}%`, top: `${top}%`, transform }}
     >
-      <p className="text-[11px] font-semibold tracking-[0.16em] text-[#f1621a] uppercase">
+      <p className="text-[11px] font-semibold tracking-[0.16em] text-accent uppercase">
         {kicker}
       </p>
-      <p className="mt-1 text-sm leading-snug text-[#f3efe8]">{body}</p>
+      <p className="mt-1 text-sm leading-snug text-foreground">{body}</p>
     </div>
   );
 }
@@ -384,17 +384,11 @@ function HotDaysChart() {
   return (
     <figure>
       <ChartTitle
-        title="Días con más de 30 °C"
-        dek="Cantidad de días del verano en los que la temperatura superó los 30 °C."
+        title="Temperaturas en verano"
+        dek="Cantidad de días con temperatura superior a 30 °C."
       />
       <Legend
         items={[
-          {
-            label: "Días del verano",
-            swatch: (
-              <span className="inline-block h-3 w-3" style={{ background: ACCENT }} />
-            ),
-          },
           {
             label: "Tendencia",
             swatch: (
@@ -494,10 +488,6 @@ function HotDaysChart() {
         />
       ) : null}
       </div>
-      <Readout
-        kicker="Tendencia"
-        body={`En ${FIRST_YEAR} hubo ${SUMMERS[0]?.hotDays ?? 0} días por encima de 30 °C. El máximo es ${HOT_PEAK?.year}, con ${HOT_PEAK?.hotDays}. La línea punteada sigue la suba de la serie.`}
-      />
     </figure>
   );
 }
@@ -566,18 +556,14 @@ function SummerRainChart() {
   return (
     <figure>
       <ChartTitle
-        title="Lluvia acumulada"
-        dek="Milímetros de precipitación sumados en cada verano. Cada gota representa 10 mm."
+        title="Precipitaciones"
+        dek="Precipitación acumulada en los meses de verano en milímetros."
       />
       <Legend
         items={[
           {
             label: "10 mm",
             swatch: <DropSwatch fill={INK} />,
-          },
-          {
-            label: "Verano reciente por debajo del promedio 1991–2010",
-            swatch: <DropSwatch fill={ACCENT} />,
           },
         ]}
       />
@@ -619,7 +605,7 @@ function SummerRainChart() {
             fontSize={12}
             fontWeight={700}
           >
-            poca lluvia
+            tendencia decreciente
           </text>
           <line
             x1={0}
@@ -721,10 +707,6 @@ function SummerRainChart() {
         />
       ) : null}
       </div>
-      <Readout
-        kicker="Últimos veranos"
-        body={`Desde ${RECENT_FROM}, ${RECENT_DRY.length} de ${RECENT_SUMMERS.length} veranos quedaron por debajo del promedio de 1991–2010 (${formatHa(EARLY_RAIN_AVG, 1)} mm). Las gotas naranjas marcan esos años. 2022, con ${formatHa(99.1, 1)} mm, fue la excepción.`}
-      />
     </figure>
   );
 }
@@ -778,8 +760,8 @@ function WindDaysChart() {
   return (
     <figure>
       <ChartTitle
-        title="Días con viento medio mayor a 30 km/h"
-        dek="Cantidad de días del verano en los que el viento medio superó los 30 km/h."
+        title="Ráfagas de viento en verano"
+        dek="Cantidad de días del verano con ráfagas de viento superiores a 30 km/h."
       />
       <Legend
         items={[
@@ -912,11 +894,7 @@ function WindDaysChart() {
         />
       ) : null}
       </div>
-      <Readout
-        kicker={`${FIRST_YEAR}–2022`}
-        body="Hasta 2022, el viento medio superó los 30 km/h casi todos los días del verano."
-      />
-      <div className="mt-3 border border-[#f1621a] bg-[#383838] px-5 py-4 text-sm leading-relaxed text-[#f3efe8]/90 md:px-6 md:py-5 md:text-base">
+      <div className="mt-3 text-sm leading-relaxed text-foreground/90  md:text-base">
         Los últimos cuatro veranos —2023, 2024, 2025 y 2026— caen de golpe a
         menos de la mitad de los días. Las cuentas nos dieron rarísimas y
         creemos que puede haber un error. Los dejamos a la vista, con la curva
@@ -931,12 +909,21 @@ export function SummerClimateCharts() {
     <div className="mt-12">
       <div className="space-y-16">
         <HotDaysChart />
-        <SummerRainChart />
-        <WindDaysChart />
-      </div>
-      <p className="mt-8 text-xs leading-relaxed text-[#f3efe8]/65 md:text-sm">
+        <p className="-mt-4 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Fuente: {climate.source}
       </p>
+
+        <SummerRainChart />
+        <p className="-mt-4 text-xs leading-relaxed text-foreground/65 md:text-sm">
+        Fuente: {climate.source}
+      </p>
+
+        <WindDaysChart />
+        <p className="-mt-4 text-xs leading-relaxed text-foreground/65 md:text-sm">
+        Fuente: {climate.source}
+      </p>
+
+      </div>
     </div>
   );
 }

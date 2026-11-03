@@ -16,16 +16,16 @@ type CauseBlock = {
 
 const THEME = {
   natural: {
-    border: "border-[#5a7a5a]",
-    bg: "bg-[#2f3e2f]/80",
-    accent: "text-[#8fbc8f]",
-    itemTitle: "text-[#8fbc8f]",
+    border: "border-forest-line",
+    bg: "bg-forest/80",
+    accent: "text-forest-ink",
+    itemTitle: "text-forest-ink",
   },
   human: {
-    border: "border-[#8a4a4a]",
-    bg: "bg-[#4a2b2b]/80",
-    accent: "text-[#f3efe8]",
-    itemTitle: "text-[#e07a7a]",
+    border: "border-risk-line",
+    bg: "bg-risk/80",
+    accent: "text-foreground",
+    itemTitle: "text-risk-ink",
   },
 } as const;
 
@@ -33,16 +33,16 @@ export function FireContextSection() {
   return (
     <section
       id="contexto"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-8 pb-20 md:px-8 md:pt-12 md:pb-28">
+      <div className="mx-auto max-w-[800px] px-5 pb-20 md:px-8 md:pt-6 md:pb-28">
         <h3 className="font-sans text-xl font-bold md:text-2xl">
           Causas directas
         </h3>
         <h4 className="mt-4 font-sans text-base font-bold md:text-lg">
           Causas naturales
         </h4>
-        <p className="mt-1 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-1 font-sans text-base leading-relaxed text-foreground/90 md:text-lg">
           Entre las causas naturales, los rayos pueden iniciar incendios que
           permanecen latentes durante días y luego se expanden bajo condiciones
           favorables, como ocurrió en diciembre de 2025 en el lago Menéndez. La
@@ -53,21 +53,18 @@ export function FireContextSection() {
         <h4 className="mt-8 font-sans text-base font-bold md:text-lg">
           Causas de origen humano
         </h4>
-        <p className="mt-1 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-1 font-sans text-base leading-relaxed text-foreground/90 md:text-lg">
           La mayoría de los incendios tiene origen antrópico. Según el Servicio
           Nacional de Manejo del Fuego, cerca del 95% está vinculado a acciones
           humanas, ya sea por negligencia, fallas de infraestructura o hechos
           intencionales.
         </p>
 
-        <Quote
-          className="mt-10"
-          quote="“Puede estar dado por un fuego mal apagado o por una pelea entre vecinos; es muy común que se ajusticien prendiéndose fuego. Los motivos también pueden darse por un grupo de turistas andando por una zona donde no se debe, dejando un cigarrillo prendido”"
-          name="Hernán Andrade"
-          role="exvecino de Las Golondrinas, Chubut"
-        />
+        <p className="mt-10 font-sans text-base leading-relaxed text-foreground/90 md:text-lg">
+        “Puede estar dado por un fuego mal apagado o por una pelea entre vecinos; es muy común que se ajusticien prendiéndose fuego. Los motivos también pueden darse por un grupo de turistas andando por una zona donde no se debe, dejando un cigarrillo prendido”. Hernán Andrade, exvecino de Las Golondrinas, Chubut.
+        </p>
 
-        <p className="mt-10 font-sans text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-10 font-sans text-base leading-relaxed text-foreground/90 md:text-lg">
           También existen quemas intencionales vinculadas al manejo de pasturas
           o de determinados ambientes. Cuando están autorizadas, deben
           realizarse bajo condiciones controladas y con personal especializado,
@@ -77,7 +74,7 @@ export function FireContextSection() {
         <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
           Condiciones estructurales
         </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             El riesgo no depende sólo de cómo empieza un incendio ni de las
             condiciones climáticas que lo alimentan. También influye cómo se
@@ -102,7 +99,7 @@ export function FireContextSection() {
           role="ex vecino de Las Golondrinas, Comarca Andina — Chubut"
         />
 
-        <div className="mt-10 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-10 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Respecto a datos censales oficiales, el Indec registró en el
             departamento de Cushamen, donde se encuentra la localidad de Las

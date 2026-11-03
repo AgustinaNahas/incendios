@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { withBasePath } from "@/lib/paths";
 
 const FIRE_STATES = [
@@ -34,18 +34,74 @@ const FIRE_STATES = [
 
 /** Recorrido sticky por estado, en vh. El bloque no ocupa toda la pantalla. */
 const STEP_RUNWAY_VH = 42;
+const GAP = 14;
+const BORDER = 2;
+const EASE =
+  "duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-0";
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
+/** Ancho de una tarjeta cerrada: la activa ocupa dos de estos espacios. */
+function collapsedWidth(viewport: number) {
+  const peek = viewport < 640 ? 0.22 : 0.46;
+  let collapsed = (viewport - GAP * 2) / (2 + peek * 2);
+  const minText = Math.min(210, Math.max(132, viewport * 0.34));
+  if (collapsed < minText) {
+    collapsed = Math.min(minText, (viewport - GAP) * 0.46);
+  }
+  return Math.max(112, collapsed);
+}
+
+function trackShift(index: number, collapsed: number, viewport: number) {
+  const closed = collapsed + BORDER;
+  const open = collapsed * 2 + BORDER;
+  const left = index * (closed + GAP);
+  return viewport / 2 - (left + open / 2);
+}
+
 export function FireStates() {
   const rootRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const mountedRef = useRef(false);
   const indexRef = useRef(0);
   const [index, setIndex] = useState(0);
   const [live, setLive] = useState("");
+  const [ready, setReady] = useState(false);
+  const [frame, setFrame] = useState({ width: 0, collapsed: 180 });
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const measure = () => {
+      const width = viewport.clientWidth;
+      if (width <= 0) return;
+      const collapsed = collapsedWidth(width);
+      setFrame((prev) => {
+        if (
+          Math.abs(prev.width - width) < 0.5 &&
+          Math.abs(prev.collapsed - collapsed) < 0.5
+        ) {
+          return prev;
+        }
+        return { width, collapsed };
+      });
+      setReady(true);
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(viewport);
+    // El primer frame queda ya medido y abierto, sin animar la entrada.
+    const id = requestAnimationFrame(() => setReady(true));
+    return () => {
+      cancelAnimationFrame(id);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -64,10 +120,10 @@ export function FireStates() {
     const update = () => {
       const runway = Math.max(1, root.offsetHeight - sticky.offsetHeight);
       const raw = clamp(-root.getBoundingClientRect().top / runway);
-      const next = Math.min(
-        FIRE_STATES.length - 1,
-        Math.floor(raw * FIRE_STATES.length - 1e-6),
-      );
+      const next =
+        raw >= 1
+          ? FIRE_STATES.length - 1
+          : Math.max(0, Math.floor(raw * FIRE_STATES.length));
       if (indexRef.current === next) return;
       indexRef.current = next;
       setIndex(next);
@@ -111,109 +167,126 @@ export function FireStates() {
     window.scrollTo({ top: rootDoc + progress * runway, behavior: "smooth" });
   };
 
+  const collapsed = frame.collapsed;
+  const shift =
+    frame.width > 0 ? trackShift(index, collapsed, frame.width) : 0;
+
   return (
     <div ref={rootRef} className="relative mt-10">
-      <div ref={stickyRef} className="sticky top-[8vh] z-20 bg-[#2B2B2B] pb-2">
+      <div ref={stickyRef} className="sticky top-[8vh] z-20 bg-background pb-2">
         <h3 className="font-sans text-xl font-bold md:text-2xl">
-          Estados del incendio
+          Estados de un incendio
         </h3>
 
-        <div className="mt-6 flex items-stretch gap-1.5 sm:gap-2.5">
+        <div className="relative left-1/2 mt-6 w-screen -translate-x-1/2">
+          <div className="relative mx-auto max-w-[960px]">
+            <div ref={viewportRef} className="overflow-hidden py-6">
+              <div
+                className={`flex items-stretch ${ready ? `transition-transform ${EASE}` : ""}`}
+                style={{
+                  gap: GAP,
+                  transform: `translate3d(${shift}px, 0, 0)`,
+                }}
+              >
+                {FIRE_STATES.map((state, i) => {
+                  const on = i === index;
+                  const reached = i <= index;
+                  const pad = String(i + 1).padStart(2, "0");
+                  return (
+                    <button
+                      key={state.title}
+                      type="button"
+                      aria-label={state.title}
+                      aria-current={on ? "step" : undefined}
+                      onClick={() => goTo(i)}
+                      className={`grid h-[19rem] shrink-0 cursor-pointer overflow-hidden border text-left sm:h-80 ${
+                        ready ? `transition-[width,grid-template-columns,border-color,background-color,opacity,box-shadow] ${EASE}` : ""
+                      } ${
+                        on
+                          ? "z-10 border-accent bg-accent-deep shadow-[0_0_36px_rgba(241,98,26,0.32)]"
+                          : reached
+                            ? "border-accent/30 bg-panel-muted opacity-90"
+                            : "border-foreground/15 bg-panel-muted opacity-70"
+                      }`}
+                      style={{
+                        width: (on ? collapsed * 2 : collapsed) + BORDER,
+                        gridTemplateColumns: on
+                          ? `${collapsed}px ${collapsed}px`
+                          : `${collapsed}px 0px`,
+                      }}
+                    >
+                      <div className="relative min-w-0">
+                        <Image
+                          src={withBasePath(state.image)}
+                          alt=""
+                          fill
+                          sizes={`${Math.round(collapsed)}px`}
+                          className="object-contain p-2 sm:p-3"
+                        />
+                        <span
+                          aria-hidden
+                          className={`pointer-events-none absolute top-2.5 left-2.5 font-sans text-[11px] font-bold tracking-[0.14em] text-accent transition-opacity duration-300 ${
+                            on ? "opacity-0" : "opacity-100"
+                          }`}
+                        >
+                          {pad}
+                        </span>
+                      </div>
+                      <div
+                        className={`h-full min-w-0 overflow-x-hidden overflow-y-auto overscroll-contain ${
+                          on ? "border-l border-foreground/15" : ""
+                        }`}
+                      >
+                        <div
+                          className="flex min-h-full flex-col justify-center px-3.5 py-4 sm:px-5"
+                          style={{ width: collapsed }}
+                        >
+                          <p className="text-[11px] font-semibold tracking-[0.18em] text-accent uppercase">
+                            {pad} / {String(FIRE_STATES.length).padStart(2, "0")}
+                          </p>
+                          <h4 className="mt-2 font-sans text-base font-bold leading-tight sm:text-lg md:text-xl">
+                            {state.title}
+                          </h4>
+                          <p className="mt-2 text-[13px] leading-snug text-foreground/85 sm:text-sm md:text-[15px] md:leading-relaxed">
+                            {state.body}
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
+            />
+          </div>
+        </div>
+
+        <div
+          className="mt-3 flex items-center justify-center gap-1.5"
+          role="tablist"
+          aria-label="Estados de un incendio"
+        >
           {FIRE_STATES.map((state, i) => {
-            const on = i === index;
-            const reached = i <= index;
+            const selected = i === index;
             return (
               <button
                 key={state.title}
                 type="button"
-                aria-label={state.title}
-                aria-current={on ? "step" : undefined}
+                role="tab"
+                aria-selected={selected}
+                aria-label={`${i + 1}. ${state.title}`}
                 onClick={() => goTo(i)}
-                className={`flex min-w-0 flex-1 cursor-pointer flex-col border text-left transition-all duration-500 ${
-                  on
-                    ? "border-[#f1621a] bg-[#1c120e] shadow-[0_0_28px_rgba(241,98,26,0.4)]"
-                    : reached
-                      ? "border-[#f1621a]/30 bg-[#161616]"
-                      : "border-[#f3efe8]/12 bg-[#161616] opacity-45"
+                className={`h-2 w-2 rounded-full border border-accent transition-colors ${
+                  selected ? "bg-accent" : "bg-transparent hover:bg-accent/40"
                 }`}
-              >
-                <span
-                  className={`px-1.5 pt-1.5 font-sans text-[10px] font-bold tracking-wide sm:px-2 sm:text-[11px] ${
-                    on ? "text-[#f1621a]" : "text-[#f3efe8]/70"
-                  }`}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="relative aspect-square w-full">
-                  <Image
-                    src={withBasePath(state.image)}
-                    alt=""
-                    fill
-                    sizes="(max-width: 800px) 18vw, 150px"
-                    className={`object-contain p-0.5 transition-transform duration-500 sm:p-1 ${
-                      on ? "scale-[1.04]" : "scale-100"
-                    }`}
-                  />
-                </span>
-                <span
-                  className={`hidden min-h-[2.6em] px-1.5 pb-2 text-center text-[11px] leading-tight font-semibold md:block md:px-2 ${
-                    on ? "text-[#f3efe8]" : "text-[#f3efe8]/75"
-                  }`}
-                >
-                  {state.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="relative mt-4 h-2" aria-hidden>
-          <div className="absolute top-1/2 right-[10%] left-[10%] h-px -translate-y-1/2 bg-[#f3efe8]/15" />
-          <div
-            className="absolute top-1/2 left-[10%] h-px -translate-y-1/2 bg-[#f1621a] transition-[width] duration-500"
-            style={{
-              width: `${(index / (FIRE_STATES.length - 1)) * 80}%`,
-            }}
-          />
-          <div className="absolute inset-0 flex">
-            {FIRE_STATES.map((state, i) => (
-              <span key={state.title} className="flex flex-1 items-center justify-center">
-                <span
-                  className={`size-2 rounded-full transition-colors duration-500 ${
-                    i <= index ? "bg-[#f1621a]" : "bg-[#f3efe8]/25"
-                  }`}
-                />
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-6 grid">
-          {FIRE_STATES.map((state, i) => {
-            const on = i === index;
-            return (
-              <article
-                key={state.title}
-                aria-hidden={!on}
-                className={`col-start-1 row-start-1 transition-all duration-500 ${
-                  on ? "relative z-10" : "pointer-events-none"
-                }`}
-                style={{
-                  opacity: on ? 1 : 0,
-                  transform: on ? "translateY(0)" : "translateY(10px)",
-                }}
-              >
-                <p className="text-[11px] font-semibold tracking-[0.18em] text-[#f1621a] uppercase">
-                  {String(i + 1).padStart(2, "0")} /{" "}
-                  {String(FIRE_STATES.length).padStart(2, "0")}
-                </p>
-                <h4 className="mt-2 font-sans text-lg font-bold md:text-2xl">
-                  {state.title}
-                </h4>
-                <p className="mt-2 text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
-                  {state.body}
-                </p>
-              </article>
+              />
             );
           })}
         </div>
@@ -221,16 +294,15 @@ export function FireStates() {
         <p className="sr-only" aria-live="polite">
           {live}
         </p>
-        <p className="mt-8 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-8 pb-12 text-base leading-relaxed text-foreground/90 md:text-lg">
           Algunos incendios grandes, aunque sean dados por controlados, pueden
           no declararse extinguidos durante mucho tiempo.
         </p>
+        <div className="border-t border-t-white/31 pb-4"></div>
+
         <h2 className="type-h3 mt-10">El contexto del fuego</h2>
-        <p className="mt-6 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          ¿Qué condiciones hacen que un bosque sea más vulnerable al fuego
-          incluso antes de que aparezca la primera llama? El riesgo puede
-          ordenarse en tres niveles: causas directas, factores de propagación y
-          condiciones estructurales.
+        <p className="mt-2 text-base leading-relaxed text-foreground/90 md:text-2xl">
+          El riesgo puede ordenarse en tres niveles: <b>causas directas, factores de propagación y condiciones estructurales</b>.
         </p>
       </div>
     </div>

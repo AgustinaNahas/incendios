@@ -175,7 +175,7 @@ export function BurnedMap({ monthIndex, className = "" }: Props) {
 
   if (error) {
     return (
-      <div className={`flex items-center justify-center bg-[#C9C6C1] text-[#1A1A1A] ${className}`}>
+      <div className={`flex items-center justify-center bg-atlas-water text-ink ${className}`}>
         <p className="text-sm opacity-80">No se pudo cargar el mapa ({error}).</p>
       </div>
     );
@@ -183,7 +183,7 @@ export function BurnedMap({ monthIndex, className = "" }: Props) {
 
   if (!data || !land || !neighborLand || !argentinaLand || instance === 0) {
     return (
-      <div className={`flex items-center justify-center bg-[#C9C6C1] text-[#1A1A1A] ${className}`}>
+      <div className={`flex items-center justify-center bg-atlas-water text-ink ${className}`}>
         <p className="text-sm opacity-70" aria-live="polite">
           Cargando hectáreas quemadas…
         </p>
@@ -197,7 +197,7 @@ export function BurnedMap({ monthIndex, className = "" }: Props) {
         key={`burned-map-${instance}`}
         center={[-42.5, -66]}
         zoom={4}
-        className="h-full w-full [&_.leaflet-control-attribution]:text-[10px] [&_.leaflet-control-attribution]:text-[#1A1A1A]"
+        className="h-full w-full [&_.leaflet-control-attribution]:text-[10px] [&_.leaflet-control-attribution]:text-ink"
         scrollWheelZoom={false}
         dragging={false}
         doubleClickZoom={false}

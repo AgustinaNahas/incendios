@@ -18,8 +18,8 @@ function TreeIcon({
   if (kind === "sources") {
     return (
       <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
-        <rect x="6" y="6" width="16" height="22" rx="1.5" fill="#f3efe8" opacity="0.9" />
-        <path d="M9 12 H19 M9 16 H17 M9 20 H18" stroke="#1A1A1A" strokeWidth="1.4" />
+        <rect x="6" y="6" width="16" height="22" rx="1.5" fill="var(--foreground)" opacity="0.9" />
+        <path d="M9 12 H19 M9 16 H17 M9 20 H18" stroke="var(--ink)" strokeWidth="1.4" />
         <rect x="8" y="24" width="5" height="2" fill="#E0B25A" />
       </svg>
     );
@@ -32,7 +32,7 @@ function TreeIcon({
         <path
           d="M8 8 C12 4 18 6 20 11"
           fill="none"
-          stroke="#F46B15"
+          stroke="var(--ember)"
           strokeWidth="1.6"
           strokeLinecap="round"
         />
@@ -50,7 +50,7 @@ function TreeIcon({
   if (kind === "fire") {
     return (
       <svg width="28" height="36" viewBox="0 0 28 36" aria-hidden style={{ opacity }}>
-        <path d="M14 4 C18 10 22 12 20 18 C24 16 24 22 18 28 C16 32 12 34 10 28 C6 30 4 22 8 18 C6 12 10 8 14 4 Z" fill="#ff6b2d" />
+        <path d="M14 4 C18 10 22 12 20 18 C24 16 24 22 18 28 C16 32 12 34 10 28 C6 30 4 22 8 18 C6 12 10 8 14 4 Z" fill="var(--heat)" />
         <path d="M14 14 C16 16 17 18 15 22 C17 21 17 24 14 27 C12 24 11 21 14 14 Z" fill="#ffd166" />
       </svg>
     );
@@ -91,7 +91,7 @@ export function TimelineRail({ active, progress }: Props) {
       aria-label="Línea de tiempo narrativa"
       className="fixed right-2 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 md:flex lg:right-5"
     >
-      <div className="relative flex flex-col items-center gap-2 rounded-md bg-black/55 px-1.5 py-2 text-[#f3efe8] shadow-lg backdrop-blur-sm">
+      <div className="relative flex flex-col items-center gap-2 rounded-md bg-black/55 px-1.5 py-2 text-foreground shadow-lg backdrop-blur-sm">
         <div
           className="absolute top-3 bottom-3 left-1/2 w-px -translate-x-1/2 bg-current/30"
           aria-hidden
@@ -110,7 +110,7 @@ export function TimelineRail({ active, progress }: Props) {
               <TreeIcon kind={chapter.tree} active={isActive} />
               <span
                 className={`text-[10px] font-medium tracking-wide uppercase ${
-                  isActive ? "text-[#f3efe8]" : "text-[#f3efe8]/90"
+                  isActive ? "text-foreground" : "text-foreground/90"
                 }`}
               >
                 {chapter.short}
@@ -125,7 +125,7 @@ export function TimelineRail({ active, progress }: Props) {
         aria-hidden
       >
         <div
-          className="w-full rounded-full bg-[#f3efe8] transition-[height] duration-150"
+          className="w-full rounded-full bg-foreground transition-[height] duration-150"
           style={{ height: `${Math.round(progress * 100)}%` }}
         />
       </div>
@@ -144,7 +144,7 @@ export function MobileChapterChips({
       className="fixed bottom-3 left-1/2 z-40 w-[min(100vw-1rem,28rem)] -translate-x-1/2 md:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      <div className="flex gap-0.5 overflow-x-auto overscroll-x-contain rounded-full bg-black/85 px-1.5 py-1 text-[#f3efe8] shadow-lg backdrop-blur-md [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex gap-0.5 overflow-x-auto overscroll-x-contain rounded-full bg-black/85 px-1.5 py-1 text-foreground shadow-lg backdrop-blur-md [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {CHAPTERS.map((c) => (
           <a
             key={c.id}
@@ -152,8 +152,8 @@ export function MobileChapterChips({
             aria-current={c.id === active ? "true" : undefined}
             className={`flex min-h-10 shrink-0 items-center rounded-full px-3 py-2 text-[11px] leading-none whitespace-nowrap ${
               c.id === active
-                ? "bg-[#f3efe8]/20 font-semibold text-[#f3efe8]"
-                : "text-[#f3efe8]/90"
+                ? "bg-foreground/20 font-semibold text-foreground"
+                : "text-foreground/90"
             }`}
           >
             {c.short}

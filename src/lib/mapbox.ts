@@ -5,8 +5,8 @@ export const MAPBOX_TOKEN =
 
 export const MAPBOX_STYLE = "mapbox://styles/mapbox/dark-v11";
 
-/** Gris del sitio y del agua. La tierra del basemap no usa este color. */
-export const SITE_BG = "#2B2B2B";
+/** Igual que --background. Mapbox no resuelve var(), así que el hex vive una sola vez acá. */
+export const SITE_BG = "#2b2b2b";
 export const MAP_WATER_COLOR = SITE_BG;
 export const MAP_ARGENTINA_COLOR = "#666666";
 export const MAP_NEIGHBOR_COLOR = "#000000";

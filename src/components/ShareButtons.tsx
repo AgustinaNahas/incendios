@@ -38,7 +38,7 @@ function shareHref(network: Network, url: string) {
 function Icon({ id }: { id: Network }) {
   const common = {
     viewBox: "0 0 24 24",
-    className: "size-[17px]",
+    className: "size-[17px] translate-y-[2px]",
     "aria-hidden": true as const,
   };
 
@@ -136,7 +136,7 @@ export function ShareButtons() {
               }
               window.open(next, "_blank", "noopener,noreferrer");
             }}
-            className="inline-flex size-10 items-center justify-center rounded-full border-[1.5px] border-[#f3efe8] text-[#f3efe8] transition-colors hover:bg-[#f3efe8] hover:text-[#2b2b2b]"
+            className="inline-flex size-10 items-center justify-center rounded-full border-[1.5px] border-foreground text-foreground transition-colors hover:bg-foreground hover:text-background"
           >
             <Icon id={network.id} />
           </a>

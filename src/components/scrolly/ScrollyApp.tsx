@@ -11,7 +11,7 @@ import { LeadSection } from "@/sections/LeadSection";
 
 export function ScrollyApp() {
   return (
-    <div className="relative min-h-screen overflow-x-clip text-[#f3efe8]">
+    <div className="relative min-h-screen overflow-x-clip text-foreground">
       <FireHeader />
       <LeadSection />
       <OtbnSection />

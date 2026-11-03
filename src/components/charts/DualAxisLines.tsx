@@ -99,24 +99,24 @@ export function DualAxisLines({ data, title, annotation }: Props) {
           <path
             d={lineHa(data) ?? ""}
             fill="none"
-            stroke="#ff6b2d"
+            stroke="var(--heat)"
             strokeWidth={2.5}
           />
           <path
             d={lineBudget(data) ?? ""}
             fill="none"
-            stroke="#f0c674"
+            stroke="var(--trend)"
             strokeWidth={2.5}
             strokeDasharray="5 4"
           />
           {data.map((d) => (
             <g key={d.year}>
-              <circle cx={x(d.year)} cy={yHa(d.hectares)} r={3} fill="#ff6b2d" />
+              <circle cx={x(d.year)} cy={yHa(d.hectares)} r={3} fill="var(--heat)" />
               <circle
                 cx={x(d.year)}
                 cy={yBudget(d.budgetReal)}
                 r={3}
-                fill="#f0c674"
+                fill="var(--trend)"
               />
             </g>
           ))}
@@ -136,10 +136,10 @@ export function DualAxisLines({ data, title, annotation }: Props) {
       </svg>
       <div className="mt-2 flex flex-wrap gap-3 text-[11px] opacity-80">
         <span className="inline-flex items-center gap-1.5">
-          <span className="inline-block h-0.5 w-4 bg-[#ff6b2d]" /> Ha Patagonia
+          <span className="inline-block h-0.5 w-4 bg-heat" /> Ha Patagonia
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span className="inline-block h-0.5 w-4 border-t-2 border-dashed border-[#f0c674]" />{" "}
+          <span className="inline-block h-0.5 w-4 border-t-2 border-dashed border-trend" />{" "}
           Presupuesto real (placeholder)
         </span>
       </div>

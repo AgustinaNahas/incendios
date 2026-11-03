@@ -14,9 +14,9 @@ type Kind = "arbol" | "planta";
 
 /** Misma paleta que las categorías OTBN del mapa (I / II / III). */
 const LEVELS: Record<Level, { label: string; color: string; ink: string }> = {
-  alto: { label: "Alto", color: OTBN_COLORS[1], ink: "#f3efe8" },
-  medio: { label: "Medio", color: OTBN_COLORS[2], ink: "#1A1A1A" },
-  bajo: { label: "Bajo", color: OTBN_COLORS[3], ink: "#f3efe8" },
+  alto: { label: "Alto", color: OTBN_COLORS[1], ink: "var(--foreground)" },
+  medio: { label: "Medio", color: OTBN_COLORS[2], ink: "var(--ink)" },
+  bajo: { label: "Bajo", color: OTBN_COLORS[3], ink: "var(--foreground)" },
 };
 
 const LEVEL_ORDER: Level[] = ["alto", "medio", "bajo"];
@@ -118,30 +118,27 @@ export function InflammabilitySection() {
   return (
     <section
       id="inflamabilidad"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-20 pb-12 md:px-8 md:pt-28">
-        <h2 className="type-h3">Factores de propagación</h2>
+      <div className="mx-auto max-w-[800px] px-5 pt-12 pb-12 md:px-8 md:pt-12">
+      <h3 className="font-sans text-xl font-bold md:text-2xl">
+      Factores de propagación</h3>
 
         <h3 className="mt-10 font-sans text-xl font-bold md:text-2xl">
           Cambios climáticos
         </h3>
-        <p className="mt-4 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-foreground/90 md:text-lg">
           El cambio climático inducido por la actividad humana está modificando
           las condiciones de fondo en la Patagonia: temperaturas más altas,
           menos precipitaciones en amplias zonas y mayor frecuencia de eventos
           extremos. Ese contexto favorece períodos más prolongados de sequedad y
           aumenta la disponibilidad de vegetación capaz de arder.
         </p>
-        <ul className="mt-6 list-disc space-y-3 pl-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <ul className="mt-6 list-disc space-y-3 pl-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           {CLIMATE_BULLETS.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
-        <p className="mt-8 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-          Esa tendencia se puede seguir verano por verano desde 1991.
-        </p>
-        <SummerClimateCharts />
 
         <Quote
           className="mt-10"
@@ -153,7 +150,7 @@ export function InflammabilitySection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Las tres condiciones críticas
         </h3>
-        <p className="mt-4 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-foreground/90 md:text-lg">
           Sobre ese contexto general pueden darse combinaciones meteorológicas
           especialmente peligrosas. La llamada regla del 30/30/30 es un
           indicador empírico utilizado en el combate de incendios forestales:
@@ -167,24 +164,22 @@ export function InflammabilitySection() {
               <p className="font-sans text-base font-bold md:text-lg">
                 {item.title}
               </p>
-              <p className="mt-1 text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
+              <p className="mt-1 text-base leading-relaxed text-foreground/85 md:text-lg">
                 {item.body}
               </p>
             </li>
           ))}
         </ul>
+        <SummerClimateCharts />
 
-        <Quote
-          className="mt-10"
-          quote="“Tuvimos la temporada invernal que no llovió nada. Esto se suma a un estrés hídrico importante de varios años”"
-          name="Abel Nievas"
-          role="secretario de Bosques de Chubut"
-        />
+        <p className="mt-8 text-base leading-relaxed text-foreground/90 md:text-lg">
+        “Tuvimos la temporada invernal que no llovió nada. Esto se suma a un estrés hídrico importante de varios años”. Abel Nievas, secretario de Bosques de Chubut        </p>
+
 
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           La vegetación nativa y exótica
         </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             En el bosque andino patagónico conviven especies nativas con
             plantaciones y ejemplares exóticos introducidos, y esa mezcla
@@ -209,7 +204,7 @@ export function InflammabilitySection() {
       <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
         <div
           ref={stickyRef}
-          className="sticky top-0 z-20 flex flex-col bg-[#2B2B2B]"
+          className="sticky top-0 z-20 flex flex-col bg-background"
         >
           <div
             ref={viewportRef}
@@ -217,7 +212,7 @@ export function InflammabilitySection() {
           >
             <figure className="mb-3 shrink-0 px-5 pt-4 pb-2 md:px-8 md:pt-5">
               <div className="mx-auto w-full max-w-[800px]">
-                <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-[#f3efe8] md:text-base">
+                <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-foreground md:text-base">
                   Nivel de vulnerabilidad frente al fuego
                 </figcaption>
                 <div className="mx-auto flex w-[70%] items-center gap-3 md:gap-4">
@@ -262,7 +257,7 @@ export function InflammabilitySection() {
                   return (
                     <article
                       key={sp.id}
-                      className="flex h-full w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-[#121212]"
+                      className="flex h-full w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-panel"
                     >
                       <div
                         className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
@@ -277,21 +272,21 @@ export function InflammabilitySection() {
                           alt={`${sp.commonName} (${sp.scientificName})`}
                           fill
                           sizes="280px"
-                          className="object-contain object-bottom px-2 py-3"
+                          className="object-contain object-bottom px-2 py-8"
                         />
                       </div>
 
                       <div className="min-h-0 flex-1 overflow-hidden px-[25px] pt-0 pb-[25px]">
-                        <p className="text-[10px] font-normal tracking-[0.16em] text-[#f3efe8] uppercase">
+                        <p className="text-[10px] font-normal tracking-[0.16em] text-foreground uppercase">
                           {kindLabel(kind, origin)}
                         </p>
                         <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide uppercase">
                           {sp.commonName}
                         </h3>
-                        <p className="mt-1 text-xs italic text-[#f3efe8]/70">
+                        <p className="mt-1 text-xs italic text-foreground/70">
                           {sp.scientificName}
                         </p>
-                        <p className="mt-2 text-xs leading-[1.3] text-[#f3efe8]/85 md:text-sm">
+                        <p className="mt-2 text-xs leading-[1.3] text-foreground/85 md:text-sm">
                           {sp.note}
                         </p>
                       </div>
@@ -301,50 +296,29 @@ export function InflammabilitySection() {
               </div>
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#2B2B2B] from-0% via-[#2B2B2B]/80 via-[40%] to-transparent md:w-28"
+                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
                 style={{ opacity: hasOverflow ? clamp(progress / 0.05) : 0 }}
               />
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#2B2B2B] from-0% via-[#2B2B2B]/80 via-[40%] to-transparent md:w-28"
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
                 style={{ opacity: hasOverflow ? clamp((1 - progress) / 0.05) : 0 }}
               />
             </div>
 
             <div className="mt-3 flex shrink-0 items-center gap-3 px-5 pt-2 pb-3 md:px-8">
-              <div className="h-px flex-1 bg-[#f3efe8]/20" aria-hidden>
+              <div className="h-px flex-1 bg-foreground/20" aria-hidden>
                 <div
-                  className="h-px bg-[#f3efe8]/80"
+                  className="h-px bg-foreground/80"
                   style={{ width: `${progress * 100}%` }}
                 />
               </div>
-              <p className="text-[11px] tracking-wide text-[#f3efe8]/70">
+              <p className="text-[11px] tracking-wide text-foreground/70">
                 {Math.min(
                   species.length,
                   Math.max(1, Math.round(progress * (species.length - 1)) + 1),
                 )}{" "}
                 / {species.length}
-              </p>
-            </div>
-          </div>
-          <div className="mx-auto w-full max-w-[800px] px-5 pt-6 pb-2 md:px-8">
-            <h2 className="type-h3">
-              Después del fuego
-            </h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
-              <p>
-                Cuando el último foco se apaga y la atención pública se desplaza,
-                comienza una etapa mucho más larga: la recuperación. Antes, sin
-                embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
-                brigadistas recorren los sectores quemados en busca de troncos
-                calientes, brasas enterradas y focos capaces de reactivarse con un
-                cambio de viento.
-              </p>
-              <p>
-                El incendio también deja marcas que permanecen mucho después de las
-                llamas: pérdida de vegetación, degradación de suelos, afectación de
-                cultivos y animales, contaminación por cenizas y procesos de
-                recuperación que pueden extenderse durante años.
               </p>
             </div>
           </div>

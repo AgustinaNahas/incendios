@@ -16,7 +16,7 @@ export function OtbnExplorer() {
   const [panelOpen, setPanelOpen] = useState(true);
 
   return (
-    <div className="relative h-svh w-full overflow-hidden bg-[#2B2B2B] text-[#f3efe8]">
+    <div className="relative h-svh w-full overflow-hidden bg-background text-foreground">
       <OtbnMapClient
         explorer
         interactive
@@ -27,7 +27,7 @@ export function OtbnExplorer() {
 
       <div className="pointer-events-none absolute inset-0 z-[1000] flex flex-col justify-between p-3 md:p-5">
         <header className="pointer-events-auto flex items-start justify-between gap-3">
-          <div className="max-w-xl border border-[#f3efe8]/15 bg-[#2B2B2B]/78 px-4 py-3 backdrop-blur-md md:px-5 md:py-4">
+          <div className="max-w-xl border border-foreground/15 bg-background/78 px-4 py-3 backdrop-blur-md md:px-5 md:py-4">
             <p className="text-[10px] font-semibold tracking-[0.2em] uppercase opacity-65">
               OTBN · Ley 26.331
             </p>
@@ -41,7 +41,7 @@ export function OtbnExplorer() {
           </div>
           <Link
             href="/#otbn"
-            className="border border-[#f3efe8]/20 bg-[#2B2B2B]/78 px-3 py-2 text-xs font-semibold backdrop-blur-md hover:bg-[#1a0a0a]"
+            className="border border-foreground/20 bg-background/78 px-3 py-2 text-xs font-semibold backdrop-blur-md hover:bg-stain"
           >
             ← Volver al relato
           </Link>
@@ -54,8 +54,8 @@ export function OtbnExplorer() {
               onClick={() => setProvince("all")}
               className={`px-3 py-1.5 text-xs backdrop-blur-md ${
                 province === "all"
-                  ? "bg-[#f3efe8] font-semibold text-[#2B2B2B]"
-                  : "bg-[#2B2B2B]/70 opacity-80 hover:opacity-100"
+                  ? "bg-foreground font-semibold text-background"
+                  : "bg-background/70 opacity-80 hover:opacity-100"
               }`}
             >
               Todas
@@ -67,8 +67,8 @@ export function OtbnExplorer() {
                 onClick={() => setProvince(id)}
                 className={`px-3 py-1.5 text-xs backdrop-blur-md ${
                   province === id
-                    ? "bg-[#f3efe8] font-semibold text-[#2B2B2B]"
-                    : "bg-[#2B2B2B]/70 opacity-80 hover:opacity-100"
+                    ? "bg-foreground font-semibold text-background"
+                    : "bg-background/70 opacity-80 hover:opacity-100"
                 }`}
               >
                 {id}
@@ -79,7 +79,7 @@ export function OtbnExplorer() {
           <button
             type="button"
             onClick={() => setPanelOpen((v) => !v)}
-            className="self-start border border-[#f3efe8]/20 bg-[#2B2B2B]/80 px-3 py-1.5 text-xs backdrop-blur-md md:hidden"
+            className="self-start border border-foreground/20 bg-background/80 px-3 py-1.5 text-xs backdrop-blur-md md:hidden"
           >
             {panelOpen ? "Ocultar categorías" : "Ver categorías"}
           </button>
@@ -93,7 +93,7 @@ export function OtbnExplorer() {
             : "pointer-events-none opacity-0 md:pointer-events-auto md:opacity-100"
         }`}
       >
-        <div className="max-h-[70vh] space-y-2 overflow-y-auto border border-[#f3efe8]/15 bg-[#2B2B2B]/86 p-3 backdrop-blur-md md:p-4">
+        <div className="max-h-[70vh] space-y-2 overflow-y-auto border border-foreground/15 bg-background/86 p-3 backdrop-blur-md md:p-4">
           <p className="px-1 text-[10px] font-semibold tracking-[0.18em] uppercase opacity-60">
             Las tres categorías
           </p>
@@ -111,8 +111,8 @@ export function OtbnExplorer() {
                 onMouseLeave={() => setHighlightZona(null)}
                 className={`w-full border px-3 py-3 text-left transition-colors ${
                   active
-                    ? "border-[#f3efe8]/40 bg-[#f3efe8]/8"
-                    : "border-[#f3efe8]/10 bg-[#f3efe8]/4 hover:bg-[#f3efe8]/8"
+                    ? "border-foreground/40 bg-foreground/8"
+                    : "border-foreground/10 bg-foreground/4 hover:bg-foreground/8"
                 }`}
               >
                 <div className="flex items-center gap-2">

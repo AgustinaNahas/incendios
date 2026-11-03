@@ -7,7 +7,7 @@ const BASE_ACTIVE = 10;
 const MAX_EXTRA = 32;
 
 const SPARK_BG =
-  "radial-gradient(48.04% 42.76% at 50% 50%, #FFC800 0%, #F46B15 26.44%, rgba(148, 15, 17, 0.2) 49.52%, rgba(34, 3, 3, 0) 75.96%)";
+  "radial-gradient(48.04% 42.76% at 50% 50%, var(--spark) 0%, var(--ember) 26.44%, color-mix(in srgb, var(--danger) 20%, transparent) 49.52%, transparent 75.96%)";
 
 type Spark = {
   el: HTMLDivElement;

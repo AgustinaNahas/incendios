@@ -222,18 +222,18 @@ function OrgDetails({ orgs }: { orgs: OrgBlock[] }) {
       {orgs.map((org) => (
         <details
           key={org.name}
-          className="group border border-[#f3efe8]/15 bg-[#2B2B2B]/80 px-4 py-4"
+          className="group border border-foreground/15 bg-background/80 px-4 py-4"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-sans text-base font-bold [&::-webkit-details-marker]:hidden">
             <span>{org.name}</span>
             <span
               aria-hidden
-              className="shrink-0 text-[#f3efe8]/70 transition-transform group-open:rotate-180"
+              className="shrink-0 text-foreground/70 transition-transform group-open:rotate-180"
             >
               ▾
             </span>
           </summary>
-          <ul className="mt-3 space-y-2 text-sm leading-snug text-[#f3efe8]/85">
+          <ul className="mt-3 space-y-2 text-sm leading-snug text-foreground/85">
             {org.lines.map((line) => (
               <li key={`${org.name}-${line.label ?? line.value}`}>
                 {line.label ? (
@@ -264,9 +264,27 @@ export function AfterFireSection() {
   return (
     <section
       id="despues"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-8 pb-20 md:px-8 md:pt-10 md:pb-28">
+      <div className="mx-auto max-w-[800px] px-5 pt-16 pb-20 md:px-8 md:pt-20 md:pb-28">
+        <h2 className="type-h3">Después del fuego</h2>
+        <div className="mt-6 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
+          <p>
+            Cuando el último foco se apaga y la atención pública se desplaza,
+            comienza una etapa mucho más larga: la recuperación. Antes, sin
+            embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
+            brigadistas recorren los sectores quemados en busca de troncos
+            calientes, brasas enterradas y focos capaces de reactivarse con un
+            cambio de viento.
+          </p>
+          <p>
+            El incendio también deja marcas que permanecen mucho después de las
+            llamas: pérdida de vegetación, degradación de suelos, afectación de
+            cultivos y animales, contaminación por cenizas y procesos de
+            recuperación que pueden extenderse durante años.
+          </p>
+        </div>
+
         <Quote
           className="mt-10"
           quote="“Cuando un megaincendio ocurre se dan múltiples consecuencias: generación de gases, pérdida de biomasa y de naturaleza, suelos que van a estar durante muchos años sin su vegetación natural, deforestación, pérdida de cultivos y de animales. Los incendios de grandes proporciones, con gran generación de cenizas, también producen contaminación ambiental, al menos localizada. Son muchas las problemáticas que acarrea un incendio.”"
@@ -274,7 +292,7 @@ export function AfterFireSection() {
           role="meteorólogo del Servicio Meteorológico Nacional"
         />
 
-        <div className="mt-10 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-10 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Pero hay pérdidas que no se miden en hectáreas. Las familias pueden
             perder la casa, los muebles, los animales y sus fuentes de ingreso.
@@ -292,11 +310,11 @@ export function AfterFireSection() {
           </p>
         </div>
 
-        <div className="mt-16 border border-[#f3efe8]/25 bg-[#1a1a1a]/55 px-5 py-8 md:px-8 md:py-10">
+        <div className="mt-16 border border-foreground/25 bg-ink/55 px-5 py-8 md:px-8 md:py-10">
           <h3 className="font-sans text-[24px] font-bold md:text-[28px]">
             Cómo ayudar
           </h3>
-          <div className="mt-5 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+          <div className="mt-5 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
             <p>
               “Cada vez que ha sucedido algo como los incendios en el verano
               cada uno de los cuarteles se autogestionó”, aclaró el Jefe de

@@ -7,7 +7,7 @@ const BurnedMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full w-full items-center justify-center bg-[#C9C6C1] text-sm text-[#1A1A1A]/70">
+      <div className="flex h-full w-full items-center justify-center bg-atlas-water text-sm text-ink/70">
         Cargando mapa…
       </div>
     ),

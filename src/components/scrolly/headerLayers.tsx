@@ -252,7 +252,7 @@ export function CampfireLayer() {
     <svg viewBox="0 0 1440 900" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
       <defs>
         <radialGradient id="pit-glow" cx="50%" cy="45%" r="50%">
-          <stop offset="0%" stopColor="#f46b15" stopOpacity="0.55" />
+          <stop offset="0%" stopColor="var(--ember)" stopOpacity="0.55" />
           <stop offset="55%" stopColor="#7a3a12" stopOpacity="0.2" />
           <stop offset="100%" stopColor="#3a1c12" stopOpacity="0" />
         </radialGradient>
@@ -276,8 +276,8 @@ export function CampfireLayer() {
       <rect x="650" y="640" width="90" height="16" rx="4" transform="rotate(-28 695 648)" fill="#6b4423" />
       <rect x="700" y="635" width="95" height="15" rx="4" transform="rotate(24 748 642)" fill="#5a3820" />
       <rect x="675" y="650" width="80" height="14" rx="4" transform="rotate(-8 715 657)" fill="#7a5030" />
-      <path d="M720 520 C760 560, 780 600, 740 650 C800 630, 810 680, 730 710 C710 690, 700 660, 720 520 Z" fill="#f46b15" />
-      <path d="M720 560 C745 585, 752 615, 728 650 C752 640, 755 670, 722 690 C710 670, 708 640, 720 560 Z" fill="#ffc800" />
+      <path d="M720 520 C760 560, 780 600, 740 650 C800 630, 810 680, 730 710 C710 690, 700 660, 720 520 Z" fill="var(--ember)" />
+      <path d="M720 560 C745 585, 752 615, 728 650 C752 640, 755 670, 722 690 C710 670, 708 640, 720 560 Z" fill="var(--spark)" />
       <path d="M200 820 C280 790, 360 850, 280 880 Z" fill="#2a4630" opacity="0.7" />
       <path d="M1100 800 C1220 760, 1320 840, 1240 880 Z" fill="#1c3322" />
     </svg>
@@ -301,8 +301,8 @@ export function GroundLayer() {
         );
       })}
       <rect x="780" y="560" width="220" height="18" rx="9" transform="rotate(-18 890 569)" fill="#d8c8b0" />
-      <circle cx="760" cy="575" r="8" fill="#f46b15" />
-      <circle cx="760" cy="575" r="3" fill="#ffc800" />
+      <circle cx="760" cy="575" r="8" fill="var(--ember)" />
+      <circle cx="760" cy="575" r="3" fill="var(--spark)" />
     </svg>
   );
 }
@@ -328,15 +328,15 @@ export function WildfireLayer() {
     <svg viewBox="0 0 1440 900" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
       <defs>
         <linearGradient id="fire-mtn" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="#f46b15" />
+          <stop offset="0%" stopColor="var(--ember)" />
           <stop offset="45%" stopColor="#c45c2a" />
           <stop offset="100%" stopColor="#6a3a28" />
         </linearGradient>
       </defs>
       <path d="M180 820 L360 420 L520 620 L700 280 L900 580 L1080 320 L1320 700 L1440 560 V900 H0 Z" fill="#5a5048" opacity="0.7" />
       <path d="M360 420 L430 560 L700 280 L760 430 L900 580 L1080 320 L980 500 L860 430 Z" fill="url(#fire-mtn)" />
-      <path d="M520 620 L610 500 L700 280 L640 480 Z" fill="#ffc800" opacity="0.55" />
-      <path d="M980 500 L1080 320 L1180 480 L1100 560 Z" fill="#f46b15" opacity="0.8" />
+      <path d="M520 620 L610 500 L700 280 L640 480 Z" fill="var(--spark)" opacity="0.55" />
+      <path d="M980 500 L1080 320 L1180 480 L1100 560 Z" fill="var(--ember)" opacity="0.8" />
       <path d="M640 200 C700 80, 780 40, 820 160 C900 20, 980 80, 940 220 C1040 120, 1120 180, 1060 320" fill="#6e6860" opacity="0.45" />
       <path d="M860 160 C940 20, 1060 -20, 1120 140 C1220 0, 1320 80, 1260 260" fill="#8a8078" opacity="0.35" />
     </svg>

@@ -10,6 +10,9 @@ export const ATLAS_COLORS = {
   ecoregion: "#6F7358",
   barTrack: "#6F7358",
   provinceFill: "#9A9A92",
+  line: "#CFCBC3",
+  label: "#D8D4CC",
+  fallback: "#888888",
 } as const;
 
 export const OTBN_COLORS = {
@@ -27,5 +30,5 @@ export const OTBN_ZONA_LABELS: Record<OtbnZona, string> = {
 };
 
 export function otbnColor(zona: number): string {
-  return OTBN_COLORS[zona as OtbnZona] ?? "#888888";
+  return OTBN_COLORS[zona as OtbnZona] ?? ATLAS_COLORS.fallback;
 }

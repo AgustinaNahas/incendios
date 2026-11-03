@@ -70,15 +70,15 @@ export function BurnedSection() {
       className="relative h-[560vh] scroll-mt-8"
     >
       <div className="sticky top-0 z-20 flex h-dvh flex-col">
-        <div className="relative min-h-0 flex-1 bg-[#C9C6C1]">
+        <div className="relative min-h-0 flex-1 bg-atlas-water">
           <BurnedMapClient monthIndex={monthIndex} className="h-full w-full" />
         </div>
 
-        <div className="shrink-0 border-t border-[#1A1A1A]/20 bg-[#C9C6C1] px-4 py-3 pb-[max(0.75rem,calc(0.5rem+env(safe-area-inset-bottom)))] text-[#1A1A1A] md:px-8 md:pb-3">
+        <div className="shrink-0 border-t border-ink/20 bg-atlas-water px-4 py-3 pb-[max(0.75rem,calc(0.5rem+env(safe-area-inset-bottom)))] text-ink md:px-8 md:pb-3">
           <div className="mx-auto flex max-w-6xl flex-col gap-2">
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
-                <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#1A1A1A]/80">
+                <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-ink/80">
                   Hectáreas quemadas · CONAE
                 </p>
                 <p
@@ -89,7 +89,7 @@ export function BurnedSection() {
                 </p>
               </div>
               <div
-                className="flex items-center gap-2 text-[11px] text-[#1A1A1A]/85"
+                className="flex items-center gap-2 text-[11px] text-ink/85"
                 aria-hidden
               >
                 <span>0 ha</span>
@@ -97,8 +97,8 @@ export function BurnedSection() {
                   className="h-2 w-28 rounded-sm md:w-40"
                   style={{
                     background:
-                      "linear-gradient(90deg, #FFFFFF 0%, #FFC800 34%, #F46B15 67%, #940F11 100%)",
-                    border: "1px solid #1A1A1A",
+                      "linear-gradient(90deg, white 0%, var(--spark) 34%, var(--ember) 67%, var(--danger) 100%)",
+                    border: "1px solid var(--ink)",
                   }}
                 />
                 <span>más ha</span>
@@ -106,7 +106,7 @@ export function BurnedSection() {
             </div>
 
             <div
-              className="relative mt-1 h-2.5 rounded-full bg-[#1A1A1A]/20"
+              className="relative mt-1 h-2.5 rounded-full bg-ink/20"
               role="progressbar"
               aria-valuemin={0}
               aria-valuemax={MONTHS.length - 1}
@@ -130,16 +130,16 @@ export function BurnedSection() {
                 />
               </div>
               <div
-                className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#1A1A1A] shadow-sm"
+                className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink shadow-sm"
                 style={{ left: `${progressPct}%`, backgroundColor: thumbColor }}
               />
             </div>
-            <p className="text-[11px] leading-snug tracking-wide text-[#1A1A1A]/80">
+            <p className="text-[11px] leading-snug tracking-wide text-ink/80">
               Color de la barra: media histórica de hectáreas por mes calendario
               (CONAE, Patagonia 2022–2026) · verano más intenso, invierno más
               claro
             </p>
-            <div className="relative h-4 overflow-hidden text-[11px] tracking-wide uppercase text-[#1A1A1A]/80">
+            <div className="relative h-4 overflow-hidden text-[11px] tracking-wide uppercase text-ink/80">
               {YEAR_TICKS.map((tick, i) => {
                 const idx = MONTHS.indexOf(tick.iso);
                 const left = idx < 0 ? 0 : (idx / (MONTHS.length - 1)) * 100;

@@ -7,7 +7,7 @@ type Props = {
   title?: string;
 };
 
-const COLORS = ["#ff6b2d", "#ff9f43", "#f0c674", "#7dcea0", "#85929e"];
+const COLORS = ["var(--heat)", "var(--heat-mid)", "var(--trend)", "var(--sage-bright)", "var(--slate)"];
 
 export function StackedShareBars({ data, title }: Props) {
   const total = data.reduce((a, b) => a + b.share, 0) || 1;

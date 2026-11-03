@@ -71,7 +71,7 @@ export function IntensityScatter({ data, title }: Props) {
                 cx={x(d.fires)}
                 cy={y(d.hectares)}
                 r={7}
-                fill="#ff6b2d"
+                fill="var(--heat)"
                 fillOpacity={0.85}
               />
               <text

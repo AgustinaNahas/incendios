@@ -35,12 +35,16 @@ const STEPS: BudgetStep[] = [
 const ALL_POINTS = budget.execution as BudgetExecPoint[];
 
 export function BudgetSection() {
-  const [stepId, setStepId] = useState(STEPS[0].id);
+  const [progress, setProgress] = useState(0);
   const [chartActive, setChartActive] = useState(false);
-  const panelRefs = useRef<Record<string, HTMLElement | null>>({});
   const chartWrapRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
 
-  const activeStep = STEPS.find((step) => step.id === stepId) ?? STEPS[0];
+  const stepIndex = Math.min(
+    STEPS.length - 1,
+    Math.max(0, Math.round(progress)),
+  );
+  const activeStep = STEPS[stepIndex] ?? STEPS[0];
 
   const chartData = useMemo(
     () => ALL_POINTS.filter((d) => d.year <= activeStep.yearsThrough),
@@ -64,25 +68,13 @@ export function BudgetSection() {
 
   useEffect(() => {
     const syncFromScroll = () => {
-      const mid = window.innerHeight * 0.55;
-      let best = STEPS[0];
-      let bestDist = Infinity;
-      for (const step of STEPS) {
-        const el = document.getElementById(`budget-panel-${step.id}`);
-        if (!el) continue;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= mid && rect.bottom >= mid) {
-          setStepId(step.id);
-          return;
-        }
-        const center = rect.top + rect.height / 2;
-        const dist = Math.abs(center - mid);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = step;
-        }
-      }
-      setStepId(best.id);
+      const el = trackRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const total = el.offsetHeight - window.innerHeight;
+      const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 0));
+      const next = total <= 0 ? 0 : (scrolled / total) * (STEPS.length - 1);
+      setProgress(next);
     };
 
     let raf = 0;
@@ -104,7 +96,7 @@ export function BudgetSection() {
   return (
     <section
       id="presupuesto"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 pt-20 pb-10 md:px-8 md:pt-28">
         <h2 className="type-h3">La actuación del Estado</h2>
@@ -112,9 +104,9 @@ export function BudgetSection() {
         <h3 className="mt-12 font-sans text-xl font-bold md:text-2xl">
           Paraguas normativo
         </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
-            <strong className="font-bold text-[#f3efe8]">
+            <strong className="font-bold text-foreground">
               Ley de Manejo del Fuego (Ley 26.815):
             </strong>{" "}
             fija los presupuestos mínimos de protección ambiental para la
@@ -140,7 +132,7 @@ export function BudgetSection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Sistema Federal de Manejo del Fuego
         </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             La Ley 26.815 creó el Sistema Federal de Manejo del Fuego (SFMF),
             integrado por el Servicio Nacional de Manejo del Fuego, la
@@ -163,7 +155,7 @@ export function BudgetSection() {
         <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
           Presupuesto nacional
         </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Durante sus dos primeros años de gestión, el gobierno de Javier
             Milei no tuvo una Ley de Presupuesto aprobada por el Congreso. En
@@ -193,13 +185,13 @@ export function BudgetSection() {
           </p>
         </div>
 
-        <div className="mt-10 border border-[#f1621a] bg-[#383838] p-6 text-lg leading-snug font-bold md:p-8 md:text-xl">
+        <div className="mt-10 border border-accent bg-raised p-6 text-lg leading-snug font-bold md:p-8 md:text-xl">
           El año 2024 registró la menor ejecución presupuestaria del Servicio
           Nacional de Manejo del Fuego desde 2017, alcanzando apenas el 22% de
           los fondos disponibles.
         </div>
 
-        <p className="mt-8 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-8 text-base leading-relaxed text-foreground/90 md:text-lg">
           Los fondos destinados al Servicio Nacional de Manejo del Fuego (SNMF)
           en el Presupuesto 2027 son $38.815 millones: un aumento real del 60,1%
           con respecto a 2026, pero una caída del 55,8% con respecto a 2023.
@@ -207,66 +199,56 @@ export function BudgetSection() {
           fuego, sino también de prevención.
         </p>
 
-        <p className="mt-10 text-sm leading-relaxed text-[#f3efe8]/80 md:text-base">
+        <p className="mt-10 text-sm leading-relaxed text-foreground/80 md:text-base">
           Expresado en valores reales, ajustado por inflación promedio
           interanual, a precios de 2026.
         </p>
       </div>
 
-      <div className="relative">
-        <div className="sticky top-0 z-10 flex h-svh w-full flex-col justify-center">
-          <div className="mx-auto w-full max-w-[800px] px-5 md:px-8">
-            <div
-              ref={chartWrapRef}
-              className="flex w-full flex-1 flex-col justify-center"
-            >
-              <BudgetExecutionChart
-                data={chartData}
-                active={chartActive}
-                title="Ejecución presupuestaria del Servicio Nacional de Manejo del Fuego"
-              />
-            </div>
-
-            <div className="pointer-events-none mt-4 w-full">
-              <div className="border border-[#f3efe8]/25 bg-[#4a4a4a]/55 px-5 py-4 md:px-6 md:py-5">
-                <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#f3efe8]/65">
-                  {activeStep.id}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#f3efe8]/90 md:text-base">
-                  {activeStep.body}
-                </p>
-              </div>
-            </div>
+      <div ref={trackRef} className="relative">
+        <div className="sticky top-0 z-10 flex h-svh w-full items-center">
+          <div
+            ref={chartWrapRef}
+            className="mx-auto w-full max-w-[800px] px-5 md:px-8"
+          >
+            <BudgetExecutionChart
+              data={chartData}
+              active={chartActive}
+              source={budget.source}
+              title="Ejecución presupuestaria del Servicio Nacional de Manejo del Fuego"
+            />
           </div>
         </div>
 
-        <div className="pointer-events-none relative z-20 -mt-[100svh]">
-          {STEPS.map((step) => {
-            const isActive = step.id === stepId;
+        <div className="relative z-20 -mt-[100svh]">
+          {STEPS.map((step, index) => {
+            const isActive = index === stepIndex;
             return (
               <article
                 key={step.id}
                 id={`budget-panel-${step.id}`}
-                ref={(node) => {
-                  panelRefs.current[step.id] = node;
-                }}
-                className="relative min-h-[120vh] px-4 md:px-8"
+                className="pointer-events-none flex h-[100svh] items-center px-5 md:px-8"
                 aria-current={isActive ? "step" : undefined}
-              />
+              >
+                <div className="pointer-events-auto mx-auto w-full max-w-[800px] border border-foreground/25 bg-background/95 px-5 py-5 shadow-[0_16px_40px_rgba(0,0,0,0.45)] md:px-6 md:py-6">
+                  <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/65 uppercase">
+                    {step.id}
+                  </p>
+                  <p className="mt-2 text-base leading-relaxed text-foreground md:text-lg">
+                    {step.body}
+                  </p>
+                </div>
+              </article>
             );
           })}
         </div>
       </div>
 
       <div className="mx-auto max-w-[800px] px-5 pt-6 pb-20 md:px-8 md:pb-28">
-        <p className="text-xs leading-relaxed text-[#f3efe8]/65 md:text-sm">
-          Fuente: {budget.source}
-        </p>
-
         <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
           Prevención
         </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             La Ley Nacional de Manejo del Fuego obliga a planificar la
             protección contra incendios mediante Planes de Manejo del Fuego a
@@ -327,7 +309,7 @@ export function BudgetSection() {
           role="jefe de Bomberos de Epuyén"
         />
 
-        <div className="mt-10 space-y-5 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <div className="mt-10 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Hay un componente en los incendios casi teatral, sensacional o
             gigantesco. Propio de los efectos de cine que también, mencionan los
@@ -337,7 +319,7 @@ export function BudgetSection() {
           </p>
         </div>
 
-        <p className="mt-10 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-10 text-base leading-relaxed text-foreground/90 md:text-lg">
           “El enfoque reactivo sobre los incendios puede identificarse también en la publicidad de estos eventos, en la sensacionalidad de un avión hidrante lanzando 10.000 litros con precisión por sobre el barrido rutinario de material seco. Vende, ‘garpa’ hacer propaganda durante una catástrofe, cuando está toda la atención puesta ahí y aparecer con millones de dólares para combatir incendios. Lamentablemente no tendría el mismo impacto social o quizás eso creen quienes toman decisiones el trabajar en prevención”. Daniel Díaz, jefe de Bomberos de Epuyén.
         </p>
       </div>

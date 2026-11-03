@@ -44,7 +44,7 @@ export function TreeSilhouette({ stage, className = "" }: Props) {
         />
         <path
           d="M100 20 C120 40 140 50 130 80 C150 70 155 100 125 125 C115 145 90 150 85 130 C70 140 55 110 75 90 C65 60 80 40 100 20 Z"
-          fill="#ff6b2d"
+          fill="var(--heat)"
         />
         <path
           d="M100 50 C110 60 115 70 108 90 C118 85 120 100 105 115 C98 105 95 90 100 50 Z"

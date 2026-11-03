@@ -45,7 +45,7 @@ export function ProjectionBands({
           y={y(baseHi)}
           width={120}
           height={Math.max(4, y(baseLo) - y(baseHi))}
-          fill="#ff6b2d"
+          fill="var(--heat)"
           opacity={0.25}
           rx={4}
         />
@@ -54,7 +54,7 @@ export function ProjectionBands({
           y={y(baseline) - 4}
           width={120}
           height={8}
-          fill="#ff6b2d"
+          fill="var(--heat)"
           rx={2}
         />
         <text x={120} y={height - 14} textAnchor="middle" className="fill-current text-[10px]" opacity={0.75}>
@@ -70,7 +70,7 @@ export function ProjectionBands({
           y={y(prevHi)}
           width={120}
           height={Math.max(4, y(prevLo) - y(prevHi))}
-          fill="#3d6b55"
+          fill="var(--sage)"
           opacity={0.25}
           rx={4}
         />
@@ -79,7 +79,7 @@ export function ProjectionBands({
           y={y(withPrevention) - 4}
           width={120}
           height={8}
-          fill="#3d6b55"
+          fill="var(--sage)"
           rx={2}
         />
         <text x={300} y={height - 14} textAnchor="middle" className="fill-current text-[10px]" opacity={0.75}>

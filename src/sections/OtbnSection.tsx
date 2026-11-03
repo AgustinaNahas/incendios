@@ -47,8 +47,8 @@ function AtlasDots({
             aria-selected={selected}
             aria-label={`${index + 1}. ${panel.label}`}
             onClick={() => onSelect(panel.id)}
-            className={`h-2 w-2 rounded-full border border-[#f3efe8]/50 transition-colors ${
-              selected ? "bg-[#f3efe8]" : "bg-transparent hover:bg-[#f3efe8]/40"
+            className={`h-2 w-2 rounded-full border border-accent transition-colors ${
+              selected ? "bg-accent" : "bg-transparent hover:bg-accent/40"
             }`}
           />
         );
@@ -138,16 +138,20 @@ export function OtbnSection() {
   return (
     <section
       id="otbn"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
           <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6 ">
             <h2 className="type-h3 mx-auto w-full max-w-[800px] px-6 pb-4">
+              <div className="border-t border-t-white/31 pb-12"></div>
               El mapa del riesgo
             </h2>
+            <p className=" mx-auto w-full max-w-[800px] px-6 pb-12 mt-0 text-base leading-relaxed text-foreground/90 md:text-lg">
+              Una bajada para el mapa
+            </p>
           </div>
       <div className="relative">
         <div className="sticky top-0 z-10 h-svh w-full">
-          <div className="relative h-full overflow-hidden bg-[#2B2B2B]">
+          <div className="relative h-full overflow-hidden bg-background">
             <OtbnMapClient
               step={step}
               highlightZona={barInteractive ? highlightZona : null}
@@ -163,7 +167,7 @@ export function OtbnSection() {
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-[19svh] bg-gradient-to-b from-[#2B2B2B] from-10% via-[#2B2B2B]/75 via-55% to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-[19svh] bg-gradient-to-b from-background from-10% via-background/75 via-55% to-transparent"
         />
 
         <div className="pointer-events-none relative z-30 -mt-[100svh]">
@@ -206,8 +210,8 @@ export function OtbnSection() {
                     <div
                       className={`pointer-events-auto px-5 py-5 transition-colors md:px-6 md:py-6 ${
                         isActive
-                          ? "bg-[#141414]"
-                          : "bg-[#141414]/80"
+                          ? "bg-panel-soft"
+                          : "bg-panel-soft/80"
                       }`}
                       style={{
                         width: "min(450px, calc(100vw - 2rem))",
@@ -235,7 +239,7 @@ export function OtbnSection() {
                               key={chart.id}
                               className={
                                 index > 0
-                                  ? "border-t border-[#f3efe8]/35 pt-4"
+                                  ? "border-t border-foreground/35 pt-4"
                                   : undefined
                               }
                             >

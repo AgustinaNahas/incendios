@@ -106,7 +106,7 @@ const bosquesStep: AtlasStep = {
         total: ECOREGION_HA,
         value: OTBN_TOTAL_HA.total,
         percentLabel: `${Math.round(otbnShareOfEcoregion() * 100)}%`,
-        caption: `${formatHa(OTBN_TOTAL_HA.total)} ha. de ${formatHa(ECOREGION_HA)} ha.`,
+        caption: `${formatHa(OTBN_TOTAL_HA.total)} ha. de bosques nativos.`,
       },
     },
   ],
@@ -153,16 +153,16 @@ function regionStep(
   };
 }
 
-const norPatagoniaStep = regionStep("nor-patagonia", "Norte", [
+const norPatagoniaStep = regionStep("nor-patagonia", "Patagonia: Norte", [
   "Neuquén",
   "Río Negro",
 ]);
 
-const patagoniaCentroStep = regionStep("patagonia-centro", "Centro", [
+const patagoniaCentroStep = regionStep("patagonia-centro", "Patagonia: Centro", [
   "Chubut",
 ]);
 
-const patagoniaSurStep = regionStep("patagonia-sur", "Sur", [
+const patagoniaSurStep = regionStep("patagonia-sur", "Patagonia: Sur", [
   "Santa Cruz",
   "Tierra del Fuego",
 ]);

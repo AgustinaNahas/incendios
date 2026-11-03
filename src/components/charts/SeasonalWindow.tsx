@@ -86,7 +86,7 @@ export function SeasonalWindow({ data, year = 2024, title }: Props) {
                 y={-18}
                 width={x1 - x0}
                 height={height - margin.top - margin.bottom + 18}
-                fill="#3d6b55"
+                fill="var(--sage)"
                 opacity={0.18}
                 rx={3}
               />
@@ -108,7 +108,7 @@ export function SeasonalWindow({ data, year = 2024, title }: Props) {
               y={y(d.value)}
               width={x.bandwidth()}
               height={Math.max(0, height - margin.top - margin.bottom - y(d.value))}
-              fill={PREVENTION_WINDOW.has(d.month) ? "#3d6b55" : "#ff6b2d"}
+              fill={PREVENTION_WINDOW.has(d.month) ? "var(--sage)" : "var(--heat)"}
               opacity={0.85}
             />
           ))}

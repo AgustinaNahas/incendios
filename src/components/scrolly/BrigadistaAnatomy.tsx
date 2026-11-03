@@ -124,7 +124,7 @@ export function BrigadistaAnatomy() {
 
   return (
     <div className="relative mt-10">
-      <div className="sticky top-0 z-10 h-svh overflow-hidden bg-[#2B2B2B]">
+      <div className="sticky top-0 z-10 h-svh overflow-hidden bg-background">
         <div className="pointer-events-none absolute inset-0">
           <div
             className="absolute top-1/2 left-1/2 h-svh will-change-transform transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none md:left-[calc(50%+10rem)]"
@@ -167,7 +167,7 @@ export function BrigadistaAnatomy() {
               return (
                 <article
                   key={step.id}
-                  className="absolute inset-x-0 top-1/2 -translate-y-1/2 border border-[#f3efe8]/20 bg-[#121212]/90 px-5 py-5 transition-all duration-500 md:px-6 md:py-6"
+                  className="absolute inset-x-0 top-1/2 -translate-y-1/2 border border-foreground/20 bg-panel/90 px-5 py-5 transition-all duration-500 md:px-6 md:py-6"
                   style={{
                     opacity: active ? 1 : 0,
                     transform: `translateY(calc(-50% + ${(index - activeIndex) * 12}px))`,
@@ -175,19 +175,19 @@ export function BrigadistaAnatomy() {
                   }}
                   aria-hidden={!active}
                 >
-                  <p className="text-[11px] font-semibold tracking-[0.18em] text-[#f1621a] uppercase">
+                  <p className="text-[11px] font-semibold tracking-[0.18em] text-accent uppercase">
                     {String(index + 1).padStart(2, "0")} /{" "}
                     {String(STEPS.length).padStart(2, "0")}
                   </p>
                   <h4 className="mt-3 font-sans text-xl font-bold md:text-2xl">
                     {step.title}
                   </h4>
-                  <p className="mt-3 text-sm leading-relaxed text-[#f3efe8]/85 md:text-base">
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/85 md:text-base">
                     {step.body}
                   </p>
-                  <ul className="mt-4 space-y-2 text-sm leading-snug text-[#f3efe8]/80">
+                  <ul className="mt-4 space-y-2 text-sm leading-snug text-foreground/80">
                     {step.items.map((item) => (
-                      <li key={item} className="border-l border-[#f1621a]/70 pl-3">
+                      <li key={item} className="border-l border-accent/70 pl-3">
                         {item}
                       </li>
                     ))}
@@ -211,13 +211,13 @@ export function BrigadistaAnatomy() {
 
         {/* Mobile card under figure */}
         <div className="pointer-events-none absolute inset-x-0 bottom-4 z-20 px-5 md:hidden">
-          <article className="border border-[#f3efe8]/20 bg-[#121212]/92 px-4 py-4 backdrop-blur-sm">
-            <p className="text-[10px] font-semibold tracking-[0.18em] text-[#f1621a] uppercase">
+          <article className="border border-foreground/20 bg-panel/92 px-4 py-4 backdrop-blur-sm">
+            <p className="text-[10px] font-semibold tracking-[0.18em] text-accent uppercase">
               {String(activeIndex + 1).padStart(2, "0")} /{" "}
               {String(STEPS.length).padStart(2, "0")}
             </p>
             <h4 className="mt-2 font-sans text-lg font-bold">{activeStep.title}</h4>
-            <p className="mt-2 text-sm leading-relaxed text-[#f3efe8]/85">
+            <p className="mt-2 text-sm leading-relaxed text-foreground/85">
               {activeStep.body}
             </p>
           </article>

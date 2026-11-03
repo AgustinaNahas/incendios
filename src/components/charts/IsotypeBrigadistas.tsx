@@ -10,10 +10,10 @@ type Props = {
 function PersonIcon({ filled }: { filled: boolean }) {
   return (
     <svg width="18" height="22" viewBox="0 0 18 22" aria-hidden>
-      <circle cx="9" cy="5" r="3.5" fill={filled ? "#ff8a4c" : "currentColor"} opacity={filled ? 1 : 0.25} />
+      <circle cx="9" cy="5" r="3.5" fill={filled ? "var(--heat-soft)" : "currentColor"} opacity={filled ? 1 : 0.25} />
       <path
         d="M3 20 C3 14 6 12 9 12 C12 12 15 14 15 20 Z"
-        fill={filled ? "#ff8a4c" : "currentColor"}
+        fill={filled ? "var(--heat-soft)" : "currentColor"}
         opacity={filled ? 1 : 0.25}
       />
     </svg>

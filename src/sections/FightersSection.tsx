@@ -51,35 +51,37 @@ export function FightersSection() {
   return (
     <section
       id="combatientes"
-      className="relative scroll-mt-8 bg-[#2B2B2B] text-[#f3efe8]"
+      className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 pt-20 pb-6 md:px-8 md:pt-28">
         <h2 className="type-h3">Quiénes combaten el fuego</h2>
 
-        <p className="mt-8 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+
+        <p className="mt-4 text-base leading-relaxed text-foreground/90 md:text-2xl">
+                    Los distintos cuerpos de combate
+          </p>
+          
+        <p className="mt-8 text-base leading-relaxed text-foreground/90 md:text-lg">
           En los incendios forestales de la Patagonia intervienen distintos
           cuerpos, cada uno con una formación y una función específica. En los
           operativos de mayor escala, trabajan de manera coordinada y, muchas
           veces, dentro de estructuras de comando conjunto.
         </p>
 
-        <h3 className="mt-12 font-sans text-xl font-bold md:text-2xl">
-          Los distintos cuerpos de combate
-        </h3>
-        <ul className="mt-6 space-y-8">
+        <ul className="mt-6 space-y-4">
           {BODIES.map((item) => (
             <li key={item.title} className="ml-6 list-disc pl-1 ">
               <p className="font-sans text-base font-bold md:text-lg">
                 {item.title}
               </p>
-              <p className="text-base leading-relaxed text-[#f3efe8]/85 md:text-lg">
+              <p className="text-base leading-relaxed text-foreground/85 md:text-lg">
                 {item.body}
               </p>
             </li>
           ))}
         </ul>
 
-        <p className="mt-10 text-base leading-relaxed text-[#f3efe8]/90 md:text-lg">
+        <p className="mt-10 text-base leading-relaxed text-foreground/90 md:text-lg">
           En el terreno, esas diferencias institucionales se vuelven menos
           visibles. Brigadistas, bomberos, guardaparques, pilotos y vecinos
           comparten un mismo objetivo: ganar tiempo, abrir líneas de defensa,
@@ -90,13 +92,17 @@ export function FightersSection() {
         </p>
 
         <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
-          Anatomía de un brigadista forestal de Parques Nacionales
+          Anatomía de un brigadista
         </h3>
+
+        <p className="mt-2 text-base leading-relaxed text-foreground/90 md:text-lg">
+          Cómo se ve un brigadista forestal de Parques Nacionales según la información recibida por los pedidos de acceso a la información.
+        </p>
       </div>
 
       <BrigadistaAnatomy />
 
-      <div className="mx-auto max-w-[800px] px-5 pb-20 md:px-8 md:pb-28">
+      <div className="mx-auto max-w-[800px] px-5 pb-12 md:px-8 md:pb-4">
         
 
         <Quote

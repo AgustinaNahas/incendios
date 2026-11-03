@@ -8,7 +8,7 @@ type QuoteProps = {
 export function Quote({ quote, name, role, className = "" }: QuoteProps) {
   return (
     <blockquote
-      className={`border border-[#f1621a] bg-[#383838] p-8 text-left text-xl font-bold leading-tight md:p-12 md:text-2xl ${className}`}
+      className={`border border-accent bg-raised p-8 text-left text-xl font-bold leading-tight md:p-12 md:text-2xl ${className}`}
     >
       <span>{quote}</span>
       <footer className="mt-6 md:mt-8">
