@@ -55,13 +55,13 @@ export function FireSeasonHeatmap({
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full font-sans"
         role="img"
         aria-label="Heatmap de incendios por mes de temporada"
       >
@@ -92,8 +92,9 @@ export function FireSeasonHeatmap({
               x={(x(String(year)) ?? 0) + x.bandwidth() / 2}
               y={height - margin.top - margin.bottom + 16}
               textAnchor="middle"
-              className="fill-current text-[9px]"
-              opacity={0.7}
+              fill="currentColor"
+              fillOpacity={0.75}
+              fontSize={12}
             >
               {String(year).slice(2)}
             </text>
@@ -105,15 +106,16 @@ export function FireSeasonHeatmap({
               y={(y(month) ?? 0) + y.bandwidth() / 2}
               textAnchor="end"
               dominantBaseline="middle"
-              className="fill-current text-[10px]"
-              opacity={0.8}
+              fill="currentColor"
+              fillOpacity={0.8}
+              fontSize={12}
             >
               {month.slice(0, 3)}
             </text>
           ))}
         </g>
       </svg>
-      <p className="mt-1 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Cantidad de incendios · temporada dic–mar · total país (RII)
       </p>
     </div>

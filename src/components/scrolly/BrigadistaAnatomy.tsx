@@ -160,6 +160,16 @@ export function BrigadistaAnatomy() {
           </div>
         </div>
 
+        {/* Fade superior e inferior (mismo lenguaje que el scrolly inicial). */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 z-[5] h-20 bg-gradient-to-b from-background from-0% via-background/55 via-[45%] to-transparent to-[85%]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-20 bg-gradient-to-t from-background from-0% via-background/55 via-[45%] to-transparent to-[85%]"
+        />
+
         <div className="relative z-10 mx-auto flex h-full w-full max-w-[1100px] items-center px-5 md:px-8">
           <div className="relative hidden w-[min(42%,380px)] shrink-0 md:block">
             {STEPS.map((step, index) => {
@@ -167,9 +177,9 @@ export function BrigadistaAnatomy() {
               return (
                 <article
                   key={step.id}
-                  className="absolute inset-x-0 top-1/2 -translate-y-1/2 border border-foreground/20 bg-panel/90 px-5 py-5 transition-all duration-500 md:px-6 md:py-6"
+                  className="ui-panel ui-panel--accent absolute inset-x-0 top-1/2 -translate-y-1/2 px-5 py-5 transition-all duration-500 md:px-6 md:py-6"
                   style={{
-                    opacity: active ? 1 : 0,
+                    opacity: active ? 0.75 : 0,
                     transform: `translateY(calc(-50% + ${(index - activeIndex) * 12}px))`,
                     pointerEvents: active ? "auto" : "none",
                   }}
@@ -210,16 +220,25 @@ export function BrigadistaAnatomy() {
         </div>
 
         {/* Mobile card under figure */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 z-20 px-5 md:hidden">
-          <article className="border border-foreground/20 bg-panel/92 px-4 py-4 backdrop-blur-sm">
+        <div className="pointer-events-none absolute inset-x-0 bottom-3 z-20 px-4 md:hidden">
+          <article className="ui-panel ui-panel--accent max-h-[42svh] overflow-y-auto overscroll-contain px-4 py-3.5">
             <p className="text-[10px] font-semibold tracking-[0.18em] text-accent uppercase">
               {String(activeIndex + 1).padStart(2, "0")} /{" "}
               {String(STEPS.length).padStart(2, "0")}
             </p>
-            <h4 className="mt-2 font-sans text-lg font-bold">{activeStep.title}</h4>
-            <p className="mt-2 text-sm leading-relaxed text-foreground/85">
+            <h4 className="mt-1.5 font-sans text-base font-bold">
+              {activeStep.title}
+            </h4>
+            <p className="mt-1.5 text-sm leading-relaxed text-foreground/85">
               {activeStep.body}
             </p>
+            <ul className="mt-3 space-y-1.5 text-xs leading-snug text-foreground/80">
+              {activeStep.items.map((item) => (
+                <li key={item} className="border-l border-accent/70 pl-2.5">
+                  {item}
+                </li>
+              ))}
+            </ul>
           </article>
         </div>
       </div>

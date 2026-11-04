@@ -28,11 +28,11 @@ export function ConsequencesScrolly() {
       <div className="relative z-10">
         <div className="mx-auto flex max-w-xl flex-col items-center px-4 md:px-8">
           <article className="flex min-h-[85vh] w-full items-center">
-            <div className="w-full bg-blush px-5 py-7 text-center md:px-10 md:py-9">
-              <p className="text-[11px] font-semibold tracking-[0.22em] text-danger-ink uppercase">
+            <div className="ui-panel ui-panel--accent w-full px-5 py-7 text-center md:px-10 md:py-9">
+              <p className="text-[11px] font-semibold tracking-[0.22em] text-accent uppercase">
                 Consecuencias
               </p>
-              <p className="mt-4 font-[family-name:var(--font-display)] text-xl leading-snug text-danger md:text-2xl">
+              <p className="mt-4 font-[family-name:var(--font-display)] text-xl leading-snug text-foreground md:text-2xl">
                 {CONSEQUENCES_COPY}
               </p>
             </div>
@@ -43,7 +43,7 @@ export function ConsequencesScrolly() {
               key={testimony.id}
               className="flex min-h-[85vh] w-full items-center"
             >
-              <blockquote className="w-full bg-black/85 px-5 py-8 text-center text-foreground md:px-10 md:py-10">
+              <blockquote className="ui-panel ui-panel--accent w-full px-5 py-8 text-center text-foreground md:px-10 md:py-10">
                 <p className="font-[family-name:var(--font-display)] text-2xl leading-snug md:text-3xl">
                   “{testimony.quote}”
                 </p>

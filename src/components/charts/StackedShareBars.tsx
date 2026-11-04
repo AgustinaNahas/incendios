@@ -15,9 +15,9 @@ export function StackedShareBars({ data, title }: Props) {
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <div
         className="flex h-8 w-full overflow-hidden rounded-sm"
@@ -51,7 +51,7 @@ export function StackedShareBars({ data, title }: Props) {
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Desglose ilustrativo 2025 · placeholder hasta datos SNMF.
       </p>
     </div>

@@ -47,13 +47,13 @@ export function IntensityScatter({ data, title }: Props) {
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full font-sans"
         role="img"
         aria-label="Incendios vs hectáreas en Patagonia"
       >
@@ -78,8 +78,9 @@ export function IntensityScatter({ data, title }: Props) {
                 x={x(d.fires)}
                 y={y(d.hectares) - 10}
                 textAnchor="middle"
-                className="fill-current text-[9px]"
-                opacity={0.85}
+                fill="currentColor"
+                fillOpacity={0.85}
+                fontSize={12}
               >
                 {d.year}
               </text>
@@ -89,22 +90,24 @@ export function IntensityScatter({ data, title }: Props) {
             x={(width - margin.left - margin.right) / 2}
             y={height - margin.top - margin.bottom + 28}
             textAnchor="middle"
-            className="fill-current text-[10px]"
-            opacity={0.65}
+            fill="currentColor"
+            fillOpacity={0.75}
+            fontSize={13}
           >
             Cantidad de incendios
           </text>
           <text
             transform={`translate(-34,${(height - margin.top - margin.bottom) / 2}) rotate(-90)`}
             textAnchor="middle"
-            className="fill-current text-[10px]"
-            opacity={0.65}
+            fill="currentColor"
+            fillOpacity={0.75}
+            fontSize={13}
           >
             Hectáreas ({formatCompact(d3.max(data, (d) => d.hectares) ?? 0)} máx)
           </text>
         </g>
       </svg>
-      <p className="mt-1 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Años con pocos focos pueden concentrar mucha superficie.
       </p>
     </div>

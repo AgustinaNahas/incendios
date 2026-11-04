@@ -159,16 +159,19 @@ export function OtbnSection() {
               interactive={false}
               className="h-full w-full"
             />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-20 bg-gradient-to-b from-background from-0% via-background/55 via-[45%] to-transparent to-[85%]"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-[15] h-20 bg-gradient-to-t from-background from-0% via-background/55 via-[45%] to-transparent to-[85%]"
+            />
             <div className="pointer-events-auto absolute inset-x-0 bottom-3 z-20">
               <AtlasDots activePanel={activePanel.id} onSelect={scrollToPanel} />
             </div>
           </div>
         </div>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-[19svh] bg-gradient-to-b from-background from-10% via-background/75 via-55% to-transparent"
-        />
 
         <div className="pointer-events-none relative z-30 -mt-[100svh]">
 
@@ -208,11 +211,7 @@ export function OtbnSection() {
                 >
                   <div className="w-full">
                     <div
-                      className={`pointer-events-auto px-5 py-5 transition-colors md:px-6 md:py-6 ${
-                        isActive
-                          ? "bg-panel-soft"
-                          : "bg-panel-soft/80"
-                      }`}
+                      className="ui-panel ui-panel--accent pointer-events-auto max-h-[min(72svh,calc(100svh-5.5rem))] overflow-y-auto overscroll-contain px-5 py-5 md:max-h-none md:overflow-visible md:px-6 md:py-6"
                       style={{
                         width: "min(450px, calc(100vw - 2rem))",
                         marginLeft:

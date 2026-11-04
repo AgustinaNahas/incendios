@@ -36,6 +36,14 @@ export function FireContextSection() {
       className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 pb-20 md:px-8 md:pt-6 md:pb-28">
+        <h2 className="type-h3 md:hidden">El contexto del fuego</h2>
+        <p className="mt-2 mb-10 text-base leading-relaxed text-foreground/90 md:hidden">
+          El riesgo puede ordenarse en tres niveles:{" "}
+          <b>
+            causas directas, factores de propagación y condiciones estructurales
+          </b>
+          .
+        </p>
         <h3 className="font-sans text-xl font-bold md:text-2xl">
           Causas directas
         </h3>

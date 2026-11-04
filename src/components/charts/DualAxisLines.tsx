@@ -63,13 +63,13 @@ export function DualAxisLines({ data, title, annotation }: Props) {
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full font-sans"
         role="img"
         aria-label="Presupuesto real vs hectáreas quemadas"
       >
@@ -89,8 +89,9 @@ export function DualAxisLines({ data, title, annotation }: Props) {
                 y={yHa(t)}
                 textAnchor="end"
                 dominantBaseline="middle"
-                className="fill-current text-[9px]"
-                opacity={0.55}
+                fill="currentColor"
+                fillOpacity={0.65}
+                fontSize={12}
               >
                 {formatCompact(t)}
               </text>
@@ -126,25 +127,28 @@ export function DualAxisLines({ data, title, annotation }: Props) {
               x={x(year)}
               y={height - margin.top - margin.bottom + 18}
               textAnchor="middle"
-              className="fill-current text-[9px]"
-              opacity={0.7}
+              fill="currentColor"
+              fillOpacity={0.75}
+              fontSize={12}
             >
               {year}
             </text>
           ))}
         </g>
       </svg>
-      <div className="mt-2 flex flex-wrap gap-3 text-[11px] opacity-80">
-        <span className="inline-flex items-center gap-1.5">
+      <div className="mt-3 mb-1 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-foreground/85">
+        <span className="inline-flex items-center gap-2">
           <span className="inline-block h-0.5 w-4 bg-heat" /> Ha Patagonia
         </span>
-        <span className="inline-flex items-center gap-1.5">
+        <span className="inline-flex items-center gap-2">
           <span className="inline-block h-0.5 w-4 border-t-2 border-dashed border-trend" />{" "}
           Presupuesto real (placeholder)
         </span>
       </div>
       {annotation ? (
-        <p className="mt-2 text-[11px] leading-snug opacity-65">{annotation}</p>
+        <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
+          {annotation}
+        </p>
       ) : null}
     </div>
   );

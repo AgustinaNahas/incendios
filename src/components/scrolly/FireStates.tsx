@@ -173,14 +173,14 @@ export function FireStates() {
 
   return (
     <div ref={rootRef} className="relative mt-10">
-      <div ref={stickyRef} className="sticky top-[8vh] z-20 bg-background pb-2">
+      <div ref={stickyRef} className="sticky top-3 z-20 bg-background pb-2 md:top-[8vh]">
         <h3 className="font-sans text-xl font-bold md:text-2xl">
           Estados de un incendio
         </h3>
 
         <div className="relative left-1/2 mt-6 w-screen -translate-x-1/2">
           <div className="relative mx-auto max-w-[960px]">
-            <div ref={viewportRef} className="overflow-hidden py-6">
+            <div ref={viewportRef} className="overflow-hidden py-2 md:py-6">
               <div
                 className={`flex items-stretch ${ready ? `transition-transform ${EASE}` : ""}`}
                 style={{
@@ -199,7 +199,7 @@ export function FireStates() {
                       aria-label={state.title}
                       aria-current={on ? "step" : undefined}
                       onClick={() => goTo(i)}
-                      className={`grid h-[19rem] shrink-0 cursor-pointer overflow-hidden border text-left sm:h-80 ${
+                      className={`grid h-[13rem] shrink-0 cursor-pointer overflow-hidden border text-left sm:h-[19rem] md:h-80 ${
                         ready ? `transition-[width,grid-template-columns,border-color,background-color,opacity,box-shadow] ${EASE}` : ""
                       } ${
                         on
@@ -259,11 +259,11 @@ export function FireStates() {
             </div>
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
+              className="pointer-events-none absolute inset-y-0 -left-1 z-10 w-20 bg-gradient-to-r from-background from-0% via-background/80 via-[40%] to-transparent"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
+              className="pointer-events-none absolute inset-y-0 -right-1 z-10 w-20 bg-gradient-to-l from-background from-0% via-background/80 via-[40%] to-transparent"
             />
           </div>
         </div>
@@ -294,15 +294,19 @@ export function FireStates() {
         <p className="sr-only" aria-live="polite">
           {live}
         </p>
-        <p className="mt-8 pb-12 text-base leading-relaxed text-foreground/90 md:text-lg">
+        <p className="mt-3 pb-3 text-base leading-relaxed text-foreground/90 md:mt-8 md:pb-12 md:text-lg">
           Algunos incendios grandes, aunque sean dados por controlados, pueden
           no declararse extinguidos durante mucho tiempo.
         </p>
-        <div className="border-t border-t-white/31 pb-4"></div>
+        <div className="border-t border-t-white/31 pb-3 md:pb-4"></div>
 
-        <h2 className="type-h3 mt-10">El contexto del fuego</h2>
-        <p className="mt-2 text-base leading-relaxed text-foreground/90 md:text-2xl">
-          El riesgo puede ordenarse en tres niveles: <b>causas directas, factores de propagación y condiciones estructurales</b>.
+        <h2 className="type-h3 mt-4 md:mt-10">El contexto del fuego</h2>
+        <p className="mt-2 line-clamp-3 text-base leading-relaxed text-foreground/90 md:line-clamp-none md:text-2xl">
+          El riesgo puede ordenarse en tres niveles:{" "}
+          <b>
+            causas directas, factores de propagación y condiciones estructurales
+          </b>
+          .
         </p>
       </div>
     </div>

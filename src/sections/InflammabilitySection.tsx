@@ -42,6 +42,10 @@ const CLIMATE_BULLETS = [
   "Vientos extremos: aunque los promedios cambian poco, en febrero se registran aumentos de más del 10–15% en los vientos máximos de amplias zonas cordilleranas.",
 ] as const;
 
+/** Peek debajo del carrusel (mismo patrón que FireStates → contexto). */
+const AFTER_FIRE_LEDE =
+  "Cuando el último foco se apaga y la atención pública se desplaza, comienza una etapa mucho más larga: la recuperación. Antes, sin embargo, quedan las llamadas “guardias de ceniza”. Durante días, los brigadistas recorren los sectores quemados en busca de troncos calientes, brasas enterradas y focos capaces de reactivarse con un cambio de viento.";
+
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
@@ -61,6 +65,8 @@ export function InflammabilitySection() {
   const [trackX, setTrackX] = useState(0);
   const [progress, setProgress] = useState(0);
   const [hasOverflow, setHasOverflow] = useState(false);
+
+  const activeIndex = Math.round(progress * Math.max(species.length - 1, 1));
 
   useEffect(() => {
     const pin = pinRef.current;
@@ -114,6 +120,18 @@ export function InflammabilitySection() {
       window.removeEventListener("resize", onResize);
     };
   }, []);
+
+  const goTo = (index: number) => {
+    const pin = pinRef.current;
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!pin || !viewport || !track) return;
+    const shift = Math.max(0, track.scrollWidth - viewport.clientWidth);
+    if (shift <= 0 || species.length <= 1) return;
+    const target = (clamp(index, 0, species.length - 1) / (species.length - 1)) * shift;
+    const pinDoc = pin.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: pinDoc + target, behavior: "smooth" });
+  };
 
   return (
     <section
@@ -204,11 +222,11 @@ export function InflammabilitySection() {
       <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
         <div
           ref={stickyRef}
-          className="sticky top-0 z-20 flex flex-col bg-background"
+          className="sticky top-3 z-20 flex flex-col bg-background pb-2 md:top-[8vh]"
         >
           <div
             ref={viewportRef}
-            className="relative mx-auto flex h-full w-full max-w-[1200px] flex-col overflow-hidden"
+            className="relative mx-auto flex w-full max-w-[1200px] flex-col overflow-hidden"
           >
             <figure className="mb-3 shrink-0 px-5 pt-4 pb-2 md:px-8 md:pt-5">
               <div className="mx-auto w-full max-w-[800px]">
@@ -239,7 +257,7 @@ export function InflammabilitySection() {
               </div>
             </figure>
 
-            <div className="relative h-[min(520px,calc(100svh-22rem))]">
+            <div className="relative h-[min(360px,calc(100svh-30rem))] md:h-[min(500px,calc(100svh-26rem))]">
               <div
                 ref={trackRef}
                 className="absolute inset-0 flex w-max items-stretch gap-4 px-5 md:gap-5 md:px-8"
@@ -257,7 +275,7 @@ export function InflammabilitySection() {
                   return (
                     <article
                       key={sp.id}
-                      className="flex h-full w-[min(78vw,280px)] shrink-0 flex-col overflow-hidden bg-panel"
+                      className="flex h-full w-[min(78vw,280px)] shrink-0 flex-col bg-panel"
                     >
                       <div
                         className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
@@ -266,21 +284,21 @@ export function InflammabilitySection() {
                         {tone.label}
                       </div>
 
-                      <div className="relative h-[min(230px,26vh)] w-full shrink-0">
+                      <div className="relative h-[min(160px,20vh)] w-full shrink-0 md:h-[min(250px,25vh)]">
                         <Image
                           src={withBasePath(sp.image)}
                           alt={`${sp.commonName} (${sp.scientificName})`}
                           fill
                           sizes="280px"
-                          className="object-contain object-bottom px-2 py-8"
+                          className="object-contain object-bottom px-2 py-4 md:py-8"
                         />
                       </div>
 
-                      <div className="min-h-0 flex-1 overflow-hidden px-[25px] pt-0 pb-[25px]">
+                      <div className="min-h-0 flex-1 overflow-y-auto px-4 pt-0 pb-4 md:px-[25px] md:pb-[25px]">
                         <p className="text-[10px] font-normal tracking-[0.16em] text-foreground uppercase">
                           {kindLabel(kind, origin)}
                         </p>
-                        <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-xl leading-none font-black tracking-wide uppercase">
+                        <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-lg leading-none font-black tracking-wide uppercase md:text-xl">
                           {sp.commonName}
                         </h3>
                         <p className="mt-1 text-xs italic text-foreground/70">
@@ -296,31 +314,46 @@ export function InflammabilitySection() {
               </div>
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
+                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-background from-0% via-background/80 via-[40%] to-transparent"
                 style={{ opacity: hasOverflow ? clamp(progress / 0.05) : 0 }}
               />
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background from-0% via-background/80 via-[40%] to-transparent md:w-28"
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-background from-0% via-background/80 via-[40%] to-transparent"
                 style={{ opacity: hasOverflow ? clamp((1 - progress) / 0.05) : 0 }}
               />
             </div>
 
-            <div className="mt-3 flex shrink-0 items-center gap-3 px-5 pt-2 pb-3 md:px-8">
-              <div className="h-px flex-1 bg-foreground/20" aria-hidden>
-                <div
-                  className="h-px bg-foreground/80"
-                  style={{ width: `${progress * 100}%` }}
-                />
-              </div>
-              <p className="text-[11px] tracking-wide text-foreground/70">
-                {Math.min(
-                  species.length,
-                  Math.max(1, Math.round(progress * (species.length - 1)) + 1),
-                )}{" "}
-                / {species.length}
-              </p>
+            <div
+              className="mt-3 flex shrink-0 items-center justify-center gap-1.5 px-5 pt-2 pb-3 md:px-8"
+              role="tablist"
+              aria-label="Especies"
+            >
+              {species.map((sp, i) => {
+                const selected = i === activeIndex;
+                return (
+                  <button
+                    key={sp.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    aria-label={`${i + 1}. ${sp.commonName}`}
+                    onClick={() => goTo(i)}
+                    className={`h-2 w-2 rounded-full border border-accent transition-colors ${
+                      selected ? "bg-accent" : "bg-transparent hover:bg-accent/40"
+                    }`}
+                  />
+                );
+              })}
             </div>
+          </div>
+
+          <div className="mx-auto w-full max-w-[800px] px-5 pt-4 md:px-8 md:pt-6">
+            <div className="border-t border-t-white/31 pb-4" />
+            <h2 className="type-h3 mt-4 md:mt-6">Después del fuego</h2>
+            <p className="mt-2 line-clamp-4 text-base leading-relaxed text-foreground/90 md:line-clamp-none md:text-2xl">
+              {AFTER_FIRE_LEDE}
+            </p>
           </div>
         </div>
       </div>

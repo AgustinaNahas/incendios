@@ -60,13 +60,13 @@ export function SeasonalWindow({ data, year = 2024, title }: Props) {
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full font-sans"
         role="img"
         aria-label="Ventana de prevención vs pico de incendios"
       >
@@ -96,8 +96,9 @@ export function SeasonalWindow({ data, year = 2024, title }: Props) {
             x={(x("Junio") ?? 0) + x.bandwidth() / 2}
             y={-8}
             textAnchor="middle"
-            className="fill-current text-[9px]"
-            opacity={0.75}
+            fill="currentColor"
+            fillOpacity={0.75}
+            fontSize={12}
           >
             Ventana de prevención
           </text>
@@ -119,8 +120,9 @@ export function SeasonalWindow({ data, year = 2024, title }: Props) {
                 x={(x(m) ?? 0) + x.bandwidth() / 2}
                 y={height - margin.top - margin.bottom + 14}
                 textAnchor="middle"
-                className="fill-current text-[8px]"
-                opacity={0.65}
+                fill="currentColor"
+                fillOpacity={0.75}
+                fontSize={12}
               >
                 {m.slice(0, 3)}
               </text>
@@ -128,7 +130,7 @@ export function SeasonalWindow({ data, year = 2024, title }: Props) {
           )}
         </g>
       </svg>
-      <p className="mt-1 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Incendios mensuales {year} (país) · RII · franja = meses para actuar antes del pico
       </p>
     </div>

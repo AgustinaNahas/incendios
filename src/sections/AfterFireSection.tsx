@@ -266,17 +266,16 @@ export function AfterFireSection() {
       id="despues"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-16 pb-20 md:px-8 md:pt-20 md:pb-28">
-        <h2 className="type-h3">Después del fuego</h2>
-        <div className="mt-6 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            Cuando el último foco se apaga y la atención pública se desplaza,
-            comienza una etapa mucho más larga: la recuperación. Antes, sin
-            embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
-            brigadistas recorren los sectores quemados en busca de troncos
-            calientes, brasas enterradas y focos capaces de reactivarse con un
-            cambio de viento.
-          </p>
+      <div className="mx-auto max-w-[800px] px-5 pt-6 pb-20 md:px-8 md:pt-8 md:pb-28">
+        <p className="mb-8 text-base leading-relaxed text-foreground/90 md:hidden">
+          Cuando el último foco se apaga y la atención pública se desplaza,
+          comienza una etapa mucho más larga: la recuperación. Antes, sin
+          embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
+          brigadistas recorren los sectores quemados en busca de troncos
+          calientes, brasas enterradas y focos capaces de reactivarse con un
+          cambio de viento.
+        </p>
+        <div className="space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             El incendio también deja marcas que permanecen mucho después de las
             llamas: pérdida de vegetación, degradación de suelos, afectación de

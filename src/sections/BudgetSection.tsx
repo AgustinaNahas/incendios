@@ -34,16 +34,28 @@ const STEPS: BudgetStep[] = [
 
 const ALL_POINTS = budget.execution as BudgetExecPoint[];
 
+const PREVENTION_LEDE =
+  "La Ley Nacional de Manejo del Fuego obliga a planificar la protección contra incendios mediante Planes de Manejo del Fuego a nivel provincial, regional y nacional. Estas acciones se complementan con evaluaciones de carga de combustible y con el monitoreo del índice meteorológico de peligro (FWI), una herramienta basada en el Sistema Canadiense de Evaluación de Peligro de Incendios Forestales, que Argentina adoptó en el año 2000. El índice se calcula a partir de datos meteorológicos y permite estimar la probabilidad de inicio de un incendio y predecir su comportamiento.";
+
+/** Resalta años (2016, 2025–2026, etc.) en el cuerpo de las cards. */
+function highlightYears(text: string) {
+  const parts = text.split(/(\b20\d{2}(?:\s*[–-]\s*20\d{2})?\b)/g);
+  return parts.map((part, i) =>
+    /^20\d{2}/.test(part) ? (
+      <span key={i} className="font-semibold text-accent">
+        {part}
+      </span>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  );
+}
+
 export function BudgetSection() {
-  const [progress, setProgress] = useState(0);
+  const [stepIndex, setStepIndex] = useState(0);
   const [chartActive, setChartActive] = useState(false);
   const chartWrapRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
 
-  const stepIndex = Math.min(
-    STEPS.length - 1,
-    Math.max(0, Math.round(progress)),
-  );
   const activeStep = STEPS[stepIndex] ?? STEPS[0];
 
   const chartData = useMemo(
@@ -68,13 +80,21 @@ export function BudgetSection() {
 
   useEffect(() => {
     const syncFromScroll = () => {
-      const el = trackRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = el.offsetHeight - window.innerHeight;
-      const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 0));
-      const next = total <= 0 ? 0 : (scrolled / total) * (STEPS.length - 1);
-      setProgress(next);
+      // El gráfico cambia cuando la card llega a la zona de lectura (abajo),
+      // no cuando entra el article vacío de arriba.
+      // Cards apoyan cerca del borde inferior del sticky (75svh).
+      const restY = window.innerHeight * 0.62;
+      let active = 0;
+      for (let i = 0; i < STEPS.length; i++) {
+        const card = document.querySelector<HTMLElement>(
+          `#budget-panel-${STEPS[i].id} [data-budget-card]`,
+        );
+        if (!card) continue;
+        const rect = card.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        if (center <= restY) active = i;
+      }
+      setStepIndex(active);
     };
 
     let raf = 0;
@@ -205,61 +225,69 @@ export function BudgetSection() {
         </p>
       </div>
 
-      <div ref={trackRef} className="relative">
-        <div className="sticky top-0 z-10 flex h-svh w-full items-center">
-          <div
-            ref={chartWrapRef}
-            className="mx-auto w-full max-w-[800px] px-5 md:px-8"
-          >
-            <BudgetExecutionChart
-              data={chartData}
-              active={chartActive}
-              source={budget.source}
-              title="Ejecución presupuestaria del Servicio Nacional de Manejo del Fuego"
-            />
+      {/* Sticky: gráfico + título Prevención asomando abajo (como FireStates). */}
+      <div className="relative">
+        <div className="sticky top-0 z-10 bg-background">
+          <div className="flex h-[min(52svh,380px)] w-full items-center md:h-[75svh]">
+            <div
+              ref={chartWrapRef}
+              className="mx-auto w-full max-w-[800px] px-5 md:px-8"
+            >
+              <BudgetExecutionChart
+                data={chartData}
+                active={chartActive}
+                source={budget.source}
+                title="Ejecución presupuestaria del Servicio Nacional de Manejo del Fuego"
+              />
+            </div>
+          </div>
+          <div className="mx-auto max-w-[800px] px-5 pt-5 pb-3 md:px-8 md:pt-8 md:pb-4">
+            <h3 className="font-sans text-xl font-bold md:text-2xl">
+              Prevención
+            </h3>
+            <p className="mt-3 line-clamp-3 text-base leading-relaxed text-foreground/90 md:mt-4 md:line-clamp-none md:text-lg">
+              {PREVENTION_LEDE}
+            </p>
           </div>
         </div>
 
-        <div className="relative z-20 -mt-[100svh]">
+        <div className="pointer-events-none relative z-20 -mt-[min(52svh,380px)] md:-mt-[75svh]">
+          {/* Intro: gráfico solo antes de que entre la 1ª card. */}
+          <div className="h-[100svh]" aria-hidden />
           {STEPS.map((step, index) => {
             const isActive = index === stepIndex;
             return (
               <article
                 key={step.id}
                 id={`budget-panel-${step.id}`}
-                className="pointer-events-none flex h-[100svh] items-center px-5 md:px-8"
+                className="pointer-events-none flex h-[100svh] items-end px-5 pb-[22vh] md:px-8 md:pb-[28vh]"
                 aria-current={isActive ? "step" : undefined}
               >
-                <div className="pointer-events-auto mx-auto w-full max-w-[800px] border border-foreground/25 bg-background/95 px-5 py-5 shadow-[0_16px_40px_rgba(0,0,0,0.45)] md:px-6 md:py-6">
-                  <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground/65 uppercase">
+                <div
+                  data-budget-card
+                  className="ui-panel ui-panel--accent pointer-events-auto mx-auto w-full max-w-[450px] px-5 py-5 md:px-6 md:py-6"
+                >
+                  <p className="text-[11px] font-semibold tracking-[0.18em] text-accent uppercase">
                     {step.id}
                   </p>
-                  <p className="mt-2 text-base leading-relaxed text-foreground md:text-lg">
-                    {step.body}
+                  <p className="mt-2 text-base leading-relaxed text-white md:text-lg">
+                    {highlightYears(step.body)}
                   </p>
                 </div>
               </article>
             );
           })}
+          {/* Compensa el -mt del overlay + deja que la última card salga por arriba
+              antes de que el sticky suelte hacia Prevención. */}
+          <div className="h-[160svh]" aria-hidden />
         </div>
       </div>
 
-      <div className="mx-auto max-w-[800px] px-5 pt-6 pb-20 md:px-8 md:pb-28">
-        <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
-          Prevención
-        </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            La Ley Nacional de Manejo del Fuego obliga a planificar la
-            protección contra incendios mediante Planes de Manejo del Fuego a
-            nivel provincial, regional y nacional. Estas acciones se
-            complementan con evaluaciones de carga de combustible y con el
-            monitoreo del índice meteorológico de peligro (FWI), una herramienta
-            basada en el Sistema Canadiense de Evaluación de Peligro de
-            Incendios Forestales, que Argentina adoptó en el año 2000. El índice
-            se calcula a partir de datos meteorológicos y permite estimar la
-            probabilidad de inicio de un incendio y predecir su comportamiento.
-          </p>
+      <div className="mx-auto max-w-[800px] px-5 pt-2 pb-20 md:px-8 md:pb-28">
+        <p className="mb-8 text-base leading-relaxed text-foreground/90 md:hidden">
+          {PREVENTION_LEDE}
+        </p>
+        <div className="space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
           <p>
             Abel Nievas, secretario de Bosques de Chubut, trabajó casi 30 años
             en el Servicio Provincial de Manejo del Fuego. Explica que el FWI se
@@ -320,7 +348,15 @@ export function BudgetSection() {
         </div>
 
         <p className="mt-10 text-base leading-relaxed text-foreground/90 md:text-lg">
-          “El enfoque reactivo sobre los incendios puede identificarse también en la publicidad de estos eventos, en la sensacionalidad de un avión hidrante lanzando 10.000 litros con precisión por sobre el barrido rutinario de material seco. Vende, ‘garpa’ hacer propaganda durante una catástrofe, cuando está toda la atención puesta ahí y aparecer con millones de dólares para combatir incendios. Lamentablemente no tendría el mismo impacto social o quizás eso creen quienes toman decisiones el trabajar en prevención”. Daniel Díaz, jefe de Bomberos de Epuyén.
+          “El enfoque reactivo sobre los incendios puede identificarse también en
+          la publicidad de estos eventos, en la sensacionalidad de un avión
+          hidrante lanzando 10.000 litros con precisión por sobre el barrido
+          rutinario de material seco. Vende, ‘garpa’ hacer propaganda durante una
+          catástrofe, cuando está toda la atención puesta ahí y aparecer con
+          millones de dólares para combatir incendios. Lamentablemente no
+          tendría el mismo impacto social o quizás eso creen quienes toman
+          decisiones el trabajar en prevención”. Daniel Díaz, jefe de Bomberos
+          de Epuyén.
         </p>
       </div>
     </section>

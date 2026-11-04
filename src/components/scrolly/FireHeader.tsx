@@ -31,7 +31,6 @@ const LAST_EXIT_UNITS = 1.6;
 const HOLD_UNITS = 0.55;
 const STORY_UNITS = INTRO_UNITS + BETWEEN_UNITS + LAST_EXIT_UNITS + HOLD_UNITS;
 
-const CARD_OPACITY = 0.75;
 /**
  * Crossfade largo (fracción de viewport): la imagen siguiente
  * se funde encima de forma bien marcada mientras la card sube.
@@ -166,7 +165,7 @@ export function FireHeader() {
         {/* Degradé inferior siempre presente (mitad del alto anterior). */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[21] h-[29%] bg-gradient-to-b from-transparent from-0% via-background/45 via-[40%] to-background to-[82%]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[21] h-20 bg-gradient-to-b from-transparent from-0% via-background/45 via-[40%] to-background to-[82%]"
         />
 
         {/* Cada card entra por el borde inferior y sale por el superior. */}
@@ -184,9 +183,8 @@ export function FireHeader() {
                     cardRefs.current[i] = el;
                   }}
                   className="flex h-dvh w-full items-end justify-center px-5 pb-8 md:pb-12"
-                  style={{ opacity: CARD_OPACITY }}
                 >
-                  <p className="w-[min(90vw,480px)] bg-black/90 px-5 py-5 font-sans text-lg leading-snug text-foreground md:px-6 md:py-6 md:text-xl">
+                  <p className="ui-panel ui-panel--accent w-[min(90vw,480px)] px-5 py-5 font-sans text-lg leading-snug text-foreground md:px-6 md:py-6 md:text-xl">
                     {text}
                   </p>
                 </article>

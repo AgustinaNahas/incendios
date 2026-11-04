@@ -38,13 +38,13 @@ export function HorizontalBars({ data, title }: Props) {
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full max-w-[800px]"
+        className="h-auto w-full max-w-[800px] font-sans"
         role="img"
         aria-label={title ?? "Barras de hectáreas por provincia"}
       >
@@ -52,16 +52,18 @@ export function HorizontalBars({ data, title }: Props) {
           x={margin.left + (width - margin.left - margin.right) / 2}
           y={height - 6}
           textAnchor="middle"
-          className="fill-current text-[11px]"
-          opacity={0.7}
+          fill="currentColor"
+          fillOpacity={0.75}
+          fontSize={13}
         >
           Hectáreas
         </text>
         <text
           transform={`translate(14, ${margin.top + (height - margin.top - margin.bottom) / 2}) rotate(-90)`}
           textAnchor="middle"
-          className="fill-current text-[11px]"
-          opacity={0.7}
+          fill="currentColor"
+          fillOpacity={0.75}
+          fontSize={13}
         >
           Provincia
         </text>
@@ -75,8 +77,9 @@ export function HorizontalBars({ data, title }: Props) {
                 y={barY + (y.bandwidth() ?? 0) / 2}
                 textAnchor="end"
                 dominantBaseline="middle"
-                className="fill-current text-[11px]"
-                opacity={0.85}
+                fill="currentColor"
+                fillOpacity={0.85}
+                fontSize={12}
               >
                 {d.province}
               </text>
@@ -92,8 +95,9 @@ export function HorizontalBars({ data, title }: Props) {
                 x={barW + 6}
                 y={barY + (y.bandwidth() ?? 0) / 2}
                 dominantBaseline="middle"
-                className="fill-current text-[10px]"
-                opacity={0.8}
+                fill="currentColor"
+                fillOpacity={0.8}
+                fontSize={12}
               >
                 {formatCompact(d.value)}
               </text>
@@ -101,7 +105,7 @@ export function HorizontalBars({ data, title }: Props) {
           );
         })}
       </svg>
-      <p className="mt-1 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Hectáreas acumuladas 2017–2025 · Fuente: RII
       </p>
       <p className="sr-only">

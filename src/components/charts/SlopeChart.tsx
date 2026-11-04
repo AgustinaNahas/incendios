@@ -61,13 +61,13 @@ export function SlopeChart({
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full font-sans"
         role="img"
         aria-label="Slope chart de hectáreas por provincia"
       >
@@ -112,8 +112,8 @@ export function SlopeChart({
                   y={y(first.value)}
                   textAnchor="end"
                   dominantBaseline="middle"
-                  className="text-[9px]"
                   fill={color}
+                  fontSize={12}
                 >
                   {province}
                 </text>
@@ -122,8 +122,8 @@ export function SlopeChart({
                   y={y(last.value)}
                   textAnchor="start"
                   dominantBaseline="middle"
-                  className="text-[9px]"
                   fill={color}
+                  fontSize={12}
                 >
                   {province}
                 </text>
@@ -136,15 +136,16 @@ export function SlopeChart({
               x={x(String(year))}
               y={height - margin.top - margin.bottom + 16}
               textAnchor="middle"
-              className="fill-current text-[10px]"
-              opacity={0.7}
+              fill="currentColor"
+              fillOpacity={0.75}
+              fontSize={12}
             >
               {year}
             </text>
           ))}
         </g>
       </svg>
-      <p className="mt-1 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Hectáreas quemadas · años ancla {years.join(" / ")} · RII
       </p>
       <p className="sr-only">Comparación {COMPLETE_YEARS[0]}–{COMPLETE_YEARS.at(-1)}</p>

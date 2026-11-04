@@ -130,6 +130,17 @@ li::marker {
   color: var(--accent);
 }
 
+/* Identidad compartida: tooltips + cards de scrolly */
+.ui-panel {
+  background-color: var(--panel-soft);
+  border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent);
+  opacity: 0.85;
+}
+
+.ui-panel--accent {
+  border-top: 2px solid var(--accent);
+}
+
 :focus-visible {
   outline: 2px solid var(--ember);
   outline-offset: 3px;
@@ -236,10 +247,6 @@ li::marker {
 
 .otbn-mapbox .mapboxgl-ctrl-attrib a {
   color: color-mix(in srgb, var(--foreground) 55%, transparent);
-}
-
-.otbn-mapbox .mapboxgl-ctrl-logo {
-  opacity: 0.4;
 }
 
 .otbn-mapbox .mapboxgl-ctrl-group {
@@ -416,4 +423,8 @@ li::marker {
     color-mix(in srgb, var(--danger) 20%, transparent) 49.52%,
     transparent 75.96%
   );
+}
+
+.mapboxgl-ctrl-attrib, .mapboxgl-ctrl-logo {
+  opacity: 0;
 }

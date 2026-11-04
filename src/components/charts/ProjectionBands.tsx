@@ -29,13 +29,13 @@ export function ProjectionBands({
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
+        className="h-auto w-full font-sans"
         role="img"
         aria-label="Proyección ilustrativa de hectáreas"
       >
@@ -57,10 +57,23 @@ export function ProjectionBands({
           fill="var(--heat)"
           rx={2}
         />
-        <text x={120} y={height - 14} textAnchor="middle" className="fill-current text-[10px]" opacity={0.75}>
+        <text
+          x={120}
+          y={height - 14}
+          textAnchor="middle"
+          fill="currentColor"
+          fillOpacity={0.75}
+          fontSize={12}
+        >
           Sin cambio
         </text>
-        <text x={120} y={y(baseline) - 10} textAnchor="middle" className="fill-current text-[11px]">
+        <text
+          x={120}
+          y={y(baseline) - 10}
+          textAnchor="middle"
+          fill="currentColor"
+          fontSize={12}
+        >
           {Math.round(baseline).toLocaleString("es-AR")} ha
         </text>
 
@@ -82,14 +95,31 @@ export function ProjectionBands({
           fill="var(--sage)"
           rx={2}
         />
-        <text x={300} y={height - 14} textAnchor="middle" className="fill-current text-[10px]" opacity={0.75}>
+        <text
+          x={300}
+          y={height - 14}
+          textAnchor="middle"
+          fill="currentColor"
+          fillOpacity={0.75}
+          fontSize={12}
+        >
           Con prevención
         </text>
-        <text x={300} y={y(withPrevention) - 10} textAnchor="middle" className="fill-current text-[11px]">
+        <text
+          x={300}
+          y={y(withPrevention) - 10}
+          textAnchor="middle"
+          fill="currentColor"
+          fontSize={12}
+        >
           {Math.round(withPrevention).toLocaleString("es-AR")} ha
         </text>
       </svg>
-      {note ? <p className="mt-1 text-[11px] opacity-60">{note}</p> : null}
+      {note ? (
+        <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
+          {note}
+        </p>
+      ) : null}
     </div>
   );
 }

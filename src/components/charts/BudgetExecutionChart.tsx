@@ -87,10 +87,10 @@ function BudgetTooltip({
     <div
       id={`budget-tip-${point.year}`}
       role="tooltip"
-      className="pointer-events-none absolute z-10 w-max max-w-[240px] border border-foreground/20 bg-tooltip px-3 py-2.5"
+      className="ui-panel ui-panel--accent pointer-events-none absolute z-10 w-max max-w-[240px] px-3 py-2.5"
       style={{ left: `${left}%`, top: `${top}%`, transform }}
     >
-      <p className="text-[11px] font-semibold tracking-[0.16em] text-accent uppercase">
+      <p className="font-sans text-sm font-bold leading-none text-accent">
         {point.year}
       </p>
       <dl className="mt-1.5 space-y-0.5 text-sm leading-snug text-foreground">
@@ -315,10 +315,10 @@ export function BudgetExecutionChart({
       <h3 className="font-sans text-lg font-bold text-foreground md:text-xl">
         {title}
       </h3>
-      <p className="mt-1 text-base leading-snug text-foreground/90">
+      <p className="mt-2 text-base leading-relaxed text-foreground/85 md:text-lg">
         {VALUE_NOTE}
       </p>
-      <div className="mt-3 mb-4 flex flex-wrap items-center gap-5 text-sm text-foreground/85">
+      <div className="mt-3 mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-foreground/85">
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-3 w-3 bg-accent" />
           Ejecutado
@@ -338,7 +338,7 @@ export function BudgetExecutionChart({
         <svg
           ref={svgRef}
           viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-          className="mx-auto h-auto max-h-[48vh] w-full font-sans outline-none"
+          className="mx-auto h-auto max-h-[32vh] w-full font-sans outline-none md:max-h-[48vh]"
           role="group"
           tabIndex={0}
           aria-label={`${title}. ${VALUE_NOTE}. Con las flechas se recorre cada año.`}
@@ -375,11 +375,11 @@ export function BudgetExecutionChart({
               <text
                 key={d.year}
                 x={(x(d.year) ?? 0) + x.bandwidth() / 2}
-                y={INNER_H + 20}
+                y={INNER_H + 22}
                 textAnchor="middle"
                 fill="var(--foreground)"
                 fillOpacity={0.75}
-                fontSize={13}
+                fontSize={12}
               >
                 {d.year}
               </text>
@@ -434,7 +434,7 @@ export function BudgetExecutionChart({
           />
         ) : null}
       </div>
-      <p className="mt-3 text-[20px] leading-snug text-foreground">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Fuente: {source}
       </p>
     </div>

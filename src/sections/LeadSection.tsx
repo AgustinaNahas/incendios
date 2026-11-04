@@ -10,7 +10,7 @@ export function LeadSection() {
   return (
     <section
       id="intro"
-      className="relative z-10 -mt-[20svh] text-foreground"
+      className="relative z-10 -mt-[10svh] text-foreground"
     >
       <div className="mx-auto max-w-[1000px] px-5 pb-6 pt-[16svh] text-center md:px-8">
         <Image
@@ -24,7 +24,7 @@ export function LeadSection() {
         <h1 className="type-h1 uppercase text-accent">
           Bosques Patagónicos
         </h1>
-        <p className="mt-[12px] max-w-[800px] mx-auto font-display text-[33px] leading-[1.27] font-semibold text-foreground">
+        <p className="mx-auto mt-[12px] max-w-[800px] font-display text-[22px] leading-snug font-semibold text-foreground md:text-[33px] md:leading-[1.27]">
           {BAJADA}
         </p>
         <p className="mt-[48px] font-sans text-[16px] text-foreground">

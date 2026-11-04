@@ -32,16 +32,16 @@ export function IsotypeBrigadistas({
   return (
     <div>
       {title ? (
-        <p className="mb-2 text-xs font-semibold tracking-wide uppercase opacity-70">
+        <h3 className="mb-2 font-sans text-lg font-bold text-foreground md:text-xl">
           {title}
-        </p>
+        </h3>
       ) : null}
-      <p className="mb-3 text-sm opacity-80">
+      <p className="mb-3 text-sm text-foreground/85">
         1 ícono ≈ {iconRepresents} brigadistas
       </p>
       <div className="space-y-3">
         <div>
-          <p className="mb-1 text-[11px] uppercase tracking-wide opacity-65">
+          <p className="mb-1 text-sm text-foreground/85">
             Dotación actual (est.)
           </p>
           <div className="flex flex-wrap gap-1">
@@ -52,7 +52,7 @@ export function IsotypeBrigadistas({
           <p className="mt-1 text-sm font-medium">{current}</p>
         </div>
         <div>
-          <p className="mb-1 text-[11px] uppercase tracking-wide opacity-65">
+          <p className="mb-1 text-sm text-foreground/85">
             Necesidad estimada
           </p>
           <div className="flex flex-wrap gap-1">
@@ -63,7 +63,7 @@ export function IsotypeBrigadistas({
           <p className="mt-1 text-sm font-medium">{needed}</p>
         </div>
       </div>
-      <p className="mt-3 text-[11px] opacity-60">
+      <p className="mt-3 text-xs leading-relaxed text-foreground/65 md:text-sm">
         Placeholder hasta validar cifras oficiales de personal.
       </p>
     </div>

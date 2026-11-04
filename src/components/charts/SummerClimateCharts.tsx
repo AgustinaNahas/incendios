@@ -195,13 +195,13 @@ function ChartTooltip({
   return (
     <div
       role="tooltip"
-      className="pointer-events-none absolute z-10 w-max max-w-[240px] border border-foreground/20 bg-tooltip px-3 py-2.5"
+      className="ui-panel ui-panel--accent pointer-events-none absolute z-10 w-max max-w-[240px] px-3 py-2.5"
       style={{ left: `${left}%`, top: `${top}%`, transform }}
     >
-      <p className="text-[11px] font-semibold tracking-[0.16em] text-accent uppercase">
+      <p className="font-sans text-sm font-bold leading-none text-accent">
         {kicker}
       </p>
-      <p className="mt-1 text-sm leading-snug text-foreground">{body}</p>
+      <p className="mt-1.5 text-sm leading-snug text-foreground">{body}</p>
     </div>
   );
 }
@@ -214,35 +214,27 @@ function markerPercent(viewW: number, viewH: number, xPx: number, yPx: number) {
 }
 
 function hotTooltip(row: Summer) {
-  let note = `${daysLabel(row.hotDays)} con más de 30 °C.`;
-  if (row.year === HOT_PEAK?.year) {
-    note += " Es el máximo de la serie.";
-  } else if (row.year === FIRST_YEAR) {
-    note += " Es el primer verano de la serie.";
-  } else if (row.hotDays === 0) {
-    note = "Ese verano la temperatura no llegó a 30 °C.";
-  }
-  return { kicker: String(row.year), body: note };
+  return {
+    kicker: String(row.year),
+    body:
+      row.hotDays === 0
+        ? "Ningún día con temperaturas extremas"
+        : `${daysLabel(row.hotDays)} con temperaturas extremas`,
+  };
 }
 
 function rainTooltip(row: Summer) {
-  const average = formatHa(EARLY_RAIN_AVG, 1);
-  let note = `${formatHa(row.precipMm, 1)} mm de lluvia acumulada.`;
-  if (row.year >= RECENT_FROM && !isRecentDry(row)) {
-    note += ` Excepción reciente: quedó por encima del promedio de 1991–2010 (${average} mm).`;
-  } else if (row.precipMm < EARLY_RAIN_AVG) {
-    note += ` Por debajo del promedio de 1991–2010 (${average} mm).`;
-  } else {
-    note += ` Por encima del promedio de 1991–2010 (${average} mm).`;
-  }
-  return { kicker: String(row.year), body: note };
+  return {
+    kicker: String(row.year),
+    body: `${formatHa(row.precipMm, 1)} mm de precipitación acumulada`,
+  };
 }
 
 function windTooltip(row: Summer) {
-  const note = isWindReview(row.year)
-    ? `${daysLabel(row.windDays)} con viento medio por encima de 30 km/h. Es uno de los cuatro veranos finales: el valor nos resulta poco confiable.`
-    : `${daysLabel(row.windDays)} con viento medio por encima de 30 km/h. Hasta 2022, casi todos los días del verano superaban ese umbral.`;
-  return { kicker: String(row.year), body: note };
+  return {
+    kicker: String(row.year),
+    body: `${daysLabel(row.windDays)} con ráfagas de viento de más de 30 km/h`,
+  };
 }
 
 function AxisFrame({
@@ -301,27 +293,18 @@ function AxisFrame({
         strokeOpacity={0.35}
       />
       {yTicks.map((tick) => (
-        <g key={tick}>
-          <line
-            x1={0}
-            x2={innerW}
-            y1={y(tick)}
-            y2={y(tick)}
-            stroke={INK}
-            strokeOpacity={0.08}
-          />
-          <text
-            x={-8}
-            y={y(tick)}
-            textAnchor="end"
-            dominantBaseline="middle"
-            fill={INK}
-            fillOpacity={0.65}
-            fontSize={12}
-          >
-            {tick}
-          </text>
-        </g>
+        <text
+          key={tick}
+          x={-8}
+          y={y(tick)}
+          textAnchor="end"
+          dominantBaseline="middle"
+          fill={INK}
+          fillOpacity={0.65}
+          fontSize={12}
+        >
+          {tick}
+        </text>
       ))}
       {ticks.map((year) => (
         <text
@@ -390,6 +373,15 @@ function HotDaysChart() {
       <Legend
         items={[
           {
+            label: "1 día",
+            swatch: (
+              <span
+                className="inline-block size-2.5"
+                style={{ background: ACCENT }}
+              />
+            ),
+          },
+          {
             label: "Tendencia",
             swatch: (
               <span
@@ -406,7 +398,7 @@ function HotDaysChart() {
         className="h-auto w-full font-sans outline-none"
         role="group"
         tabIndex={0}
-        aria-label="Días con más de 30 grados por verano, de 1991 a 2026. En 1991 hubo 2 días y el máximo es 2024, con 12. La línea punteada marca una tendencia ascendente. Con las flechas se recorre cada año."
+        aria-label="Días con más de 30 grados por verano, de 1991 a 2026. Cada cuadrado es un día. En 1991 hubo 2 días y el máximo es 2024, con 12. La línea punteada marca una tendencia ascendente. Con las flechas se recorre cada año."
         onKeyDown={focus.onKeyDown}
         onPointerLeave={focus.onPointerLeave}
       >
@@ -421,21 +413,48 @@ function HotDaysChart() {
         />
         <g className="plot" transform={`translate(${margin.left},${margin.top})`}>
           {SUMMERS.map((row) => {
-            const fullH = Math.max(0, innerH - y(row.hotDays));
-            const barH = row.hotDays === 0 ? 2 : fullH;
             const hovered = focus.year === row.year;
             const dim = focus.year != null && !hovered;
+            const colX = x(row.year) ?? 0;
+            const band = x.bandwidth();
+            const cx = colX + band / 2;
+            if (row.hotDays === 0) {
+              return (
+                <rect
+                  key={row.year}
+                  x={cx - band * 0.35}
+                  y={innerH - 2}
+                  width={band * 0.7}
+                  height={2}
+                  fill={ACCENT}
+                  opacity={dim ? 0.2 : 0.4}
+                  pointerEvents="none"
+                />
+              );
+            }
             return (
-              <rect
+              <g
                 key={row.year}
-                x={x(row.year)}
-                y={innerH - barH}
-                width={x.bandwidth()}
-                height={barH}
-                fill={ACCENT}
-                opacity={dim ? 0.35 : row.hotDays === 0 ? 0.45 : 1}
+                opacity={dim ? 0.35 : 1}
                 pointerEvents="none"
-              />
+              >
+                {Array.from({ length: row.hotDays }, (_, i) => {
+                  const day = i + 1;
+                  const slotTop = y(day);
+                  const slotH = y(i) - slotTop;
+                  const size = Math.min(band, Math.max(2, slotH - 1.25));
+                  return (
+                    <rect
+                      key={i}
+                      x={cx - size / 2}
+                      y={slotTop + (slotH - size) / 2}
+                      width={size}
+                      height={size}
+                      fill={ACCENT}
+                    />
+                  );
+                })}
+              </g>
             );
           })}
           <path
@@ -456,7 +475,8 @@ function HotDaysChart() {
               x={(x(HOT_PEAK.year) ?? 0) + x.bandwidth() / 2}
               y={y(HOT_PEAK.hotDays)}
               value={String(HOT_PEAK.hotDays)}
-              year={HOT_PEAK.year}
+              // Evita solapar el tick de 2026 en mobile.
+              year={LAST_YEAR - HOT_PEAK.year <= 2 ? undefined : HOT_PEAK.year}
             />
           ) : null}
           {SUMMERS.map((row) => {
@@ -534,10 +554,13 @@ function YearCallout({
 function SummerRainChart() {
   const focus = useYearFocus();
   const clipPrefix = useId().replace(/:/g, "");
-  const margin = { top: 28, right: 8, bottom: 44, left: 8 };
+  const margin = { top: 28, right: 12, bottom: 48, left: 56 };
   const innerW = VIEW_W - margin.left - margin.right;
-  const innerH = (PRECIP_MAX / PRECIP_UNIT) * PRECIP_SLOT;
+  const yMax = Math.ceil(PRECIP_MAX / 50) * 50;
+  const innerH = (yMax / PRECIP_UNIT) * PRECIP_SLOT;
   const height = margin.top + innerH + margin.bottom;
+  const yTicks = d3.range(0, yMax + 1, 50);
+  const y = (value: number) => innerH - (value / PRECIP_UNIT) * PRECIP_SLOT;
 
   const x = useMemo(
     () =>
@@ -580,7 +603,7 @@ function SummerRainChart() {
         <g transform={`translate(${margin.left},${margin.top})`}>
           <text
             x={innerW / 2}
-            y={innerH + margin.bottom - 6}
+            y={innerH + margin.bottom - 8}
             textAnchor="middle"
             fill={INK}
             fillOpacity={0.75}
@@ -588,6 +611,45 @@ function SummerRainChart() {
           >
             Año
           </text>
+          <text
+            transform={`translate(${-margin.left + 16}, ${innerH / 2}) rotate(-90)`}
+            textAnchor="middle"
+            fill={INK}
+            fillOpacity={0.75}
+            fontSize={13}
+          >
+            Precipitaciones en mm
+          </text>
+          <line
+            x1={0}
+            x2={0}
+            y1={0}
+            y2={innerH}
+            stroke={INK}
+            strokeOpacity={0.35}
+          />
+          <line
+            x1={0}
+            x2={innerW}
+            y1={innerH}
+            y2={innerH}
+            stroke={INK}
+            strokeOpacity={0.35}
+          />
+          {yTicks.map((tick) => (
+            <text
+              key={tick}
+              x={-8}
+              y={y(tick)}
+              textAnchor="end"
+              dominantBaseline="middle"
+              fill={INK}
+              fillOpacity={0.65}
+              fontSize={12}
+            >
+              {tick}
+            </text>
+          ))}
           <rect
             x={recentStart}
             y={0}
@@ -607,19 +669,11 @@ function SummerRainChart() {
           >
             tendencia decreciente
           </text>
-          <line
-            x1={0}
-            x2={innerW}
-            y1={innerH}
-            y2={innerH}
-            stroke={INK}
-            strokeOpacity={0.35}
-          />
           {yearTicks(YEARS).map((year) => (
             <text
               key={year}
               x={(x(year) ?? 0) + x.bandwidth() / 2}
-              y={innerH + 20}
+              y={innerH + 22}
               textAnchor="middle"
               fill={INK}
               fillOpacity={0.75}
@@ -786,7 +840,7 @@ function WindDaysChart() {
         className="h-auto w-full font-sans outline-none"
         role="group"
         tabIndex={0}
-        aria-label="Días con viento medio mayor a 30 kilómetros por hora, por verano. Hasta 2022 casi todos los días superan ese umbral. De 2023 a 2026 los valores caen a menos de la mitad y están en revisión porque el cálculo resultó llamativo. Con las flechas se recorre cada año."
+        aria-label="Días con ráfagas de viento mayores a 30 kilómetros por hora, por verano. Hasta 2022 casi todos los días superan ese umbral. De 2023 a 2026 los valores caen a menos de la mitad y están en revisión por posibles cambios en la medición. Con las flechas se recorre cada año."
         onKeyDown={focus.onKeyDown}
         onPointerLeave={focus.onPointerLeave}
       >
@@ -895,10 +949,10 @@ function WindDaysChart() {
       ) : null}
       </div>
       <div className="mt-3 text-sm leading-relaxed text-foreground/90  md:text-base">
-        Los últimos cuatro veranos —2023, 2024, 2025 y 2026— caen de golpe a
-        menos de la mitad de los días. Las cuentas nos dieron rarísimas y
-        creemos que puede haber un error. Los dejamos a la vista, con la curva
-        punteada, hasta poder revisarlos.
+        A partir de 2023 los valores caen a menos de la mitad. Hay dudas
+        metodológicas: sospechamos que cambió la forma de medir el viento y que,
+        por eso, las ráfagas no se están detectando correctamente. Los mostramos
+        con la curva punteada hasta poder revisarlos.
       </div>
     </figure>
   );
@@ -906,23 +960,22 @@ function WindDaysChart() {
 
 export function SummerClimateCharts() {
   return (
-    <div className="mt-12">
-      <div className="space-y-16">
+    <div className="mt-10 md:mt-12">
+      <div className="space-y-12 md:space-y-16">
         <HotDaysChart />
         <p className="-mt-4 text-xs leading-relaxed text-foreground/65 md:text-sm">
-        Fuente: {climate.source}
-      </p>
+          Fuente: {climate.source}
+        </p>
 
         <SummerRainChart />
         <p className="-mt-4 text-xs leading-relaxed text-foreground/65 md:text-sm">
-        Fuente: {climate.source}
-      </p>
+          Fuente: {climate.source}
+        </p>
 
         <WindDaysChart />
         <p className="-mt-4 text-xs leading-relaxed text-foreground/65 md:text-sm">
-        Fuente: {climate.source}
-      </p>
-
+          Fuente: {climate.source}
+        </p>
       </div>
     </div>
   );
