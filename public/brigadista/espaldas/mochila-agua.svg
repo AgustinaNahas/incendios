@@ -1,0 +1,14 @@
+<svg width="1322" height="943" viewBox="0 0 1322 943" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Mochila de agua">
+<rect id="mochila de agua 1" width="840" height="943" fill="url(#pattern0_724_374)"/>
+<text id="Mochila de agua_2" fill="white" style="white-space: pre" xml:space="preserve" font-family="Noto Serif Tamil" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="870.367" y="389.921">Mochila de agua</tspan></text>
+<text id="Utilizada por los brigadistas de ataque, carga una mochila forestal con aproximadamente 20 litros de agua y utiliza una lanza para aplicarla. Su funci&#195;&#179;n es enfriar puntos calientes y combatir focos de fuego en zonas donde las mangueras no llegan." fill="white" style="white-space: pre" xml:space="preserve" font-family="Noto Serif Tamil" font-size="20" letter-spacing="0em"><tspan x="870.367" y="439.055">Utilizada por los brigadistas de ataque, carga </tspan><tspan x="870.367" y="470.055">una mochila forestal con aproximadamente </tspan><tspan x="870.367" y="501.055">20 litros de agua y utiliza una lanza para </tspan><tspan x="870.367" y="532.055">aplicarla. Su funci&#xf3;n es enfriar puntos </tspan><tspan x="870.367" y="563.055">calientes y combatir focos de fuego en zonas </tspan><tspan x="870.367" y="594.055">donde las mangueras no llegan.</tspan></text>
+<path id="Vector 195" d="M846.246 383.428H580.893" stroke="white"/>
+</g>
+<defs>
+<pattern id="pattern0_724_374" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_724_374" transform="scale(0.00119332 0.00106298)"/>
+</pattern>
+<image id="image0_724_374" data-name="mochila de agua.png" width="838" height="941" preserveAspectRatio="none" xlink:href="mochila-agua.png" href="mochila-agua.png"/>
+</defs>
+</svg>

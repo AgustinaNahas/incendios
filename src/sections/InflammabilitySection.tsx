@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import species from "@/data/species-inflammability.json";
 import { SummerClimateCharts } from "@/components/charts/SummerClimateCharts";
 import { Quote } from "@/components/Quote";
@@ -50,6 +50,18 @@ function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
+const CARD_MAX = 300;
+
+/** Tope 300px; en móvil se achica para ~1 card + peek. */
+function cardWidthFor(viewport: number) {
+  const pad = viewport >= 768 ? 32 : 20;
+  const available = Math.max(0, viewport - pad * 2);
+  if (viewport < 640) {
+    return Math.min(CARD_MAX, Math.max(160, available / 1.15));
+  }
+  return Math.min(CARD_MAX, available);
+}
+
 function kindLabel(kind: Kind, origin: Origin) {
   if (kind === "planta") {
     return origin === "exotica" ? "Planta exótica" : "Planta nativa";
@@ -65,8 +77,20 @@ export function InflammabilitySection() {
   const [trackX, setTrackX] = useState(0);
   const [progress, setProgress] = useState(0);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [cardWidth, setCardWidth] = useState(280);
+  const [levelFilter, setLevelFilter] = useState<Level | null>(null);
 
-  const activeIndex = Math.round(progress * Math.max(species.length - 1, 1));
+  const visibleSpecies = useMemo(
+    () =>
+      levelFilter
+        ? species.filter((sp) => sp.level === levelFilter)
+        : species,
+    [levelFilter],
+  );
+
+  const activeIndex = Math.round(
+    progress * Math.max(visibleSpecies.length - 1, 1),
+  );
 
   useEffect(() => {
     const pin = pinRef.current;
@@ -78,6 +102,8 @@ export function InflammabilitySection() {
       Math.max(0, track.scrollWidth - viewport.clientWidth);
 
     const measure = () => {
+      const width = viewport.clientWidth;
+      if (width > 0) setCardWidth(cardWidthFor(width));
       const shift = shiftOf();
       const stickyH = stickyRef.current?.offsetHeight ?? 0;
       pin.style.height = `${stickyH + shift}px`;
@@ -93,8 +119,19 @@ export function InflammabilitySection() {
       setProgress(raw);
     };
 
+    // Al filtrar, volver al inicio del recorrido horizontal.
+    setTrackX(0);
+    setProgress(0);
+    const pinDoc = pin.getBoundingClientRect().top + window.scrollY;
+    if (Math.abs(window.scrollY - pinDoc) < pin.offsetHeight) {
+      window.scrollTo({ top: pinDoc });
+    }
+
     measure();
-    update();
+    requestAnimationFrame(() => {
+      measure();
+      update();
+    });
 
     let raf = 0;
     const onScroll = () => {
@@ -103,7 +140,10 @@ export function InflammabilitySection() {
     };
     const onResize = () => {
       measure();
-      update();
+      requestAnimationFrame(() => {
+        measure();
+        update();
+      });
     };
 
     const ro = new ResizeObserver(onResize);
@@ -119,7 +159,11 @@ export function InflammabilitySection() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [visibleSpecies]);
+
+  const toggleLevelFilter = (level: Level) => {
+    setLevelFilter((prev) => (prev === level ? null : level));
+  };
 
   const goTo = (index: number) => {
     const pin = pinRef.current;
@@ -127,8 +171,11 @@ export function InflammabilitySection() {
     const track = trackRef.current;
     if (!pin || !viewport || !track) return;
     const shift = Math.max(0, track.scrollWidth - viewport.clientWidth);
-    if (shift <= 0 || species.length <= 1) return;
-    const target = (clamp(index, 0, species.length - 1) / (species.length - 1)) * shift;
+    if (shift <= 0 || visibleSpecies.length <= 1) return;
+    const target =
+      (clamp(index, 0, visibleSpecies.length - 1) /
+        (visibleSpecies.length - 1)) *
+      shift;
     const pinDoc = pin.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: pinDoc + target, behavior: "smooth" });
   };
@@ -174,13 +221,13 @@ export function InflammabilitySection() {
           ))}
         </ul>
 
-        <Quote
+        {/* <Quote
           quote="“La desesperación de brigadistas, de bomberos, llorando porque venían trabajando con algo que estaban a punto de contener. Empezó a soplar con tanta fuerza. La pavesa que vuela y está quemando inicia un incendio más grande. Intentás frenarlo pero de repente te pasó por arriba”"
           name="Rubén Oliva"
           role="jefe de la Federación de Bomberos Voluntarios en Chubut"
-        />
+        /> */}
 
-        <p className="type-body">
+        <p className="type-body mt-12">
           Sobre ese contexto general pueden darse combinaciones meteorológicas
           especialmente peligrosas. La llamada{" "}
           <TextLink href="https://www.publico.es/sociedad/m-ambiente/regla-30-30-30-incendios-forestales.html">
@@ -191,7 +238,7 @@ export function InflammabilitySection() {
           cuando coinciden más de 30 °C de temperatura, menos del 30% de humedad
           relativa, y ráfagas de vientos superiores a 30 km/h.
         </p>
-        <ul className="mt-6 space-y-4">
+        <ul className="mt-6 list-disc space-y-3 pl-5">
           {CRITICAL_CONDITIONS.map((item) => (
             <li key={item.title}>
               <p className="type-body font-bold">{item.title}</p>
@@ -199,13 +246,18 @@ export function InflammabilitySection() {
             </li>
           ))}
         </ul>
-        <SummerClimateCharts />
+      </div>
 
-        <Quote
+      <div className="mx-auto w-full max-w-[1100px] px-5 md:px-8">
+        <SummerClimateCharts />
+      </div>
+
+      <div className="mx-auto max-w-[800px] px-5 md:px-8">
+        {/* <Quote
           quote="“Tuvimos la temporada invernal que no llovió nada. Esto se suma a un estrés hídrico importante de varios años”."
           name="Abel Nievas"
           role="secretario de Bosques de Chubut"
-        />
+        /> */}
 
         <h4 className="type-h4">Vegetación arbórea nativa y exótica</h4>
         <p className="type-body mt-4">
@@ -243,16 +295,35 @@ export function InflammabilitySection() {
                   </span>
                   <div
                     className="flex h-[10px] flex-1 gap-1 md:h-[14px]"
-                    role="img"
-                    aria-label="Escala de vulnerabilidad frente al fuego"
+                    role="group"
+                    aria-label="Filtrar por vulnerabilidad frente al fuego"
                   >
-                    {LEVEL_ORDER.map((level) => (
-                      <div
-                        key={level}
-                        className="h-full flex-1"
-                        style={{ background: LEVELS[level].color }}
-                      />
-                    ))}
+                    {LEVEL_ORDER.map((level) => {
+                      const active = levelFilter === level;
+                      const dimmed = levelFilter !== null && !active;
+                      return (
+                        <button
+                          key={level}
+                          type="button"
+                          aria-pressed={active}
+                          aria-label={
+                            active
+                              ? `Quitar filtro ${LEVELS[level].label}`
+                              : `Filtrar riesgo ${LEVELS[level].label}`
+                          }
+                          title={
+                            active
+                              ? `Mostrar todas (${LEVELS[level].label})`
+                              : `Solo ${LEVELS[level].label}`
+                          }
+                          onClick={() => toggleLevelFilter(level)}
+                          className={`h-full flex-1 cursor-pointer transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                            dimmed ? "opacity-30" : "opacity-100"
+                          }`}
+                          style={{ background: LEVELS[level].color }}
+                        />
+                      );
+                    })}
                   </div>
                   <span className="shrink-0 text-base font-medium md:text-lg">
                     Bajo
@@ -270,7 +341,7 @@ export function InflammabilitySection() {
                   willChange: "transform",
                 }}
               >
-                {species.map((sp) => {
+                {visibleSpecies.map((sp) => {
                   const level = sp.level as Level;
                   const tone = LEVELS[level];
                   const origin = sp.origin as Origin;
@@ -279,21 +350,21 @@ export function InflammabilitySection() {
                   return (
                     <article
                       key={sp.id}
-                      className="flex h-full w-[min(78vw,280px)] shrink-0 flex-col bg-panel"
+                      className="flex h-full shrink-0 flex-col bg-panel"
+                      style={{ width: cardWidth }}
                     >
                       <div
-                        className="shrink-0 px-3 py-2 text-center text-xs font-bold tracking-[0.22em] uppercase"
-                        style={{ background: tone.color, color: tone.ink }}
-                      >
-                        {tone.label}
-                      </div>
+                        className="h-1.5 w-full shrink-0"
+                        style={{ background: tone.color }}
+                        aria-hidden
+                      />
 
                       <div className="relative h-[min(160px,20vh)] w-full shrink-0 md:h-[min(250px,25vh)]">
                         <Image
                           src={withBasePath(sp.image)}
                           alt={`${sp.commonName} (${sp.scientificName})`}
                           fill
-                          sizes="280px"
+                          sizes={`${Math.round(cardWidth)}px`}
                           className="object-contain object-bottom px-2 py-4 md:py-8"
                         />
                       </div>
@@ -333,7 +404,7 @@ export function InflammabilitySection() {
               role="tablist"
               aria-label="Especies"
             >
-              {species.map((sp, i) => {
+              {visibleSpecies.map((sp, i) => {
                 const selected = i === activeIndex;
                 return (
                   <button

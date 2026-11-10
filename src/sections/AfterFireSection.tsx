@@ -1,4 +1,5 @@
 import { Quote } from "@/components/Quote";
+import { TextLink } from "@/components/TextLink";
 
 type OrgBlock = {
   name: string;
@@ -323,12 +324,6 @@ export function AfterFireSection() {
             calientes, brasas enterradas y materiales combustibles capaces de
             reactivarse con un cambio de viento.
           </p>
-          <p className="type-body">
-            El incendio también deja marcas que permanecen mucho después de las
-            llamas: pérdida de vegetación, degradación de suelos, afectación de
-            cultivos y animales, contaminación por cenizas y procesos de
-            recuperación que pueden extenderse durante años.
-          </p>
         </div>
 
         <Quote
@@ -411,6 +406,21 @@ export function AfterFireSection() {
             patagónicos
           </h4>
           <OrgDetails orgs={OTHER_ORGS} group="otras" />
+        </div>
+
+        <div className="mt-10 border border-foreground/25 bg-ink/55 px-5 py-8 md:px-8 md:py-10">
+          <h3 className="type-h4 is-flush">Anexo · Acceso a la información</h3>
+          <p className="type-body mt-4">
+            Esta investigación se hizo en el marco del FOCO Bootcamp de FTA y
+            FOPEA. En ese espacio, los pedidos de acceso a la información
+            pública no son un trámite más: son método. El anexo reúne la
+            cronología de las solicitudes presentadas a organismos nacionales y
+            provinciales, las respuestas recibidas —y las que nunca llegaron— y
+            el detalle de lo que se pudo documentar.
+          </p>
+          <p className="type-body mt-4">
+            <TextLink href="/anexo">Leer el anexo descriptivo</TextLink>
+          </p>
         </div>
       </div>
     </section>

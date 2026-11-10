@@ -744,7 +744,7 @@ export function AtlasMap({
       if (width === lastWidth) return;
       lastWidth = width;
       const loaded = dataRef.current;
-      if (loaded && map.getSource(SRC.provincias)) {
+      if (loaded && map.isStyleLoaded() && map.getSource(SRC.provincias)) {
         applyCamera(map, loaded, { ...viewRef.current, animate: false });
       }
     };
@@ -772,7 +772,9 @@ export function AtlasMap({
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !map.getStyle() || !map.getLayer(LYR.otbn)) return;
+    // getStyle()/getLayer() tiran si el estilo aún no terminó de cargar
+    // (p. ej. al volver del anexo antes del evento "load").
+    if (!map || !map.isStyleLoaded() || !map.getLayer(LYR.otbn)) return;
     syncPaint(map);
     return () => window.clearTimeout(revealTimer.current);
     // syncPaint lee viewRef, que ya tiene el frame actual.
@@ -785,7 +787,7 @@ export function AtlasMap({
     if (!map || !data) return;
     let cancelled = false;
     const run = () => {
-      if (cancelled || !map.getStyle() || !map.getSource(SRC.provincias)) return;
+      if (cancelled || !map.isStyleLoaded() || !map.getSource(SRC.provincias)) return;
       applyCamera(map, data, { provinces, fit, offsetLeft });
     };
     if (map.isStyleLoaded() && map.getSource(SRC.provincias)) {

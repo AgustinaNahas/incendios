@@ -1,0 +1,21 @@
+<svg width="1341" height="889" viewBox="0 0 1341 889" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Moto bomba">
+<g id="motobomba">
+<mask id="mask0_724_367" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="891" height="889">
+<path id="Vector 154" d="M217.632 131.648L160.309 101.043L82.0977 122.418L47.6069 82.0977L143.792 40.3202H232.205L370.654 101.043L416.804 57.8084L530.477 0L751.509 82.0977L890.93 365.31L854.982 780.656L705.846 888.501L346.365 855.467L263.295 843.809L172.454 799.116L38.8628 746.166L0 656.781L82.0977 444.493L185.57 476.069L232.205 216.66L248.236 145.735L217.632 131.648Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_724_367)">
+<rect id="motobomba mochila 1" x="-43.2344" y="-75.2969" width="873.441" height="1042.49" fill="url(#pattern0_724_367)"/>
+</g>
+</g>
+<text id="Mochila de la motobomba" fill="white" style="white-space: pre" xml:space="preserve" font-family="Noto Serif Tamil" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="888.895" y="424.726">Mochila de la motobomba</tspan></text>
+<text id="Utilizada por el brigadista bobero, transporta exclusivamente la motobomba de alta presi&#195;&#179;n. Su funci&#195;&#179;n es proveer el bombeo de agua principal durante la extinci&#195;&#179;n, siendo una tarea de gran exigencia f&#195;&#173;sica que exime al brigadista de cargar otras herramientas." fill="white" style="white-space: pre" xml:space="preserve" font-family="Noto Serif Tamil" font-size="20" letter-spacing="0em"><tspan x="888.895" y="473.86">Utilizada por el brigadista bobero, transporta </tspan><tspan x="888.895" y="504.86">exclusivamente la motobomba de alta </tspan><tspan x="888.895" y="535.86">presi&#xf3;n. Su funci&#xf3;n es proveer el bombeo de </tspan><tspan x="888.895" y="566.86">agua principal durante la extinci&#xf3;n, siendo </tspan><tspan x="888.895" y="597.86">una tarea de gran exigencia f&#xed;sica que exime </tspan><tspan x="888.895" y="628.86">al brigadista de cargar otras herramientas.</tspan></text>
+<path id="Vector 195" d="M864.771 418.232H599.418" stroke="white"/>
+</g>
+<defs>
+<pattern id="pattern0_724_367" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_724_367" transform="scale(0.00111235 0.000931966)"/>
+</pattern>
+<image id="image0_724_367" data-name="motobomba mochila.png" width="899" height="1073" preserveAspectRatio="none" xlink:href="mochila-motobomba.png" href="mochila-motobomba.png"/>
+</defs>
+</svg>

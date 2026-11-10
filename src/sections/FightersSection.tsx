@@ -123,11 +123,11 @@ export function FightersSection() {
           </p>
         </div>
 
-        <Quote
+        {/* <Quote
           quote="“La solidaridad no puede ser una política pública, porque cuando hablamos de emergencias, hablamos de una responsabilidad.”"
           name="Natalia Dobranski"
           role="jefa de la Brigada Forestal de Mallín Ahogado, una organización comunitaria de Río Negro"
-        />
+        /> */}
 
         <FireStates />
       </div>
