@@ -30,7 +30,12 @@ export const CHAPTERS = [
   { id: "otbn", label: "El mapa del riesgo", short: "Mapa", tree: "otbn" },
   { id: "presupuesto", label: "Presupuesto", short: "Presupuesto", tree: "fire" },
   { id: "combatientes", label: "Quiénes combaten", short: "Combate", tree: "otbn" },
-  { id: "contexto", label: "El contexto del fuego", short: "Contexto", tree: "species" },
+  {
+    id: "contexto",
+    label: "El riesgo que nadie previene",
+    short: "Riesgo",
+    tree: "species",
+  },
   {
     id: "inflamabilidad",
     label: "Factores de propagación",

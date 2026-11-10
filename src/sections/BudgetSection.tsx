@@ -1,363 +1,338 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
 import budget from "@/data/budget.json";
 import {
   BudgetExecutionChart,
   type BudgetExecPoint,
 } from "@/components/charts/BudgetExecutionChart";
 import { Quote } from "@/components/Quote";
-
-type BudgetStep = {
-  id: string;
-  yearsThrough: number;
-  body: string;
-};
-
-const STEPS: BudgetStep[] = [
-  {
-    id: "2016-2020",
-    yearsThrough: 2020,
-    body: "Entre 2016 y 2020 el presupuesto vigente del SNMF oscila con fuerza en términos reales. La ejecución acompaña, pero sin consolidar una inversión estable en prevención.",
-  },
-  {
-    id: "2021-2023",
-    yearsThrough: 2023,
-    body: "En 2022 aparece un pico excepcional de fondos vigentes y ejecutados. En 2023 la serie vuelve a comprimir el margen, aunque la ejecución sigue alta.",
-  },
-  {
-    id: "2024-2026",
-    yearsThrough: 2026,
-    body: "2024 marca la menor ejecución desde 2017: apenas el 22% de los fondos disponibles. En 2025–2026 la ejecución mejora, pero el debate sigue siendo cuánto llega realmente a prevención.",
-  },
-];
+import { TextLink } from "@/components/TextLink";
 
 const ALL_POINTS = budget.execution as BudgetExecPoint[];
+const FOREST_POINTS = budget.forestFund.series as BudgetExecPoint[];
 
-const PREVENTION_LEDE =
-  "La Ley Nacional de Manejo del Fuego obliga a planificar la protección contra incendios mediante Planes de Manejo del Fuego a nivel provincial, regional y nacional. Estas acciones se complementan con evaluaciones de carga de combustible y con el monitoreo del índice meteorológico de peligro (FWI), una herramienta basada en el Sistema Canadiense de Evaluación de Peligro de Incendios Forestales, que Argentina adoptó en el año 2000. El índice se calcula a partir de datos meteorológicos y permite estimar la probabilidad de inicio de un incendio y predecir su comportamiento.";
-
-/** Resalta años (2016, 2025–2026, etc.) en el cuerpo de las cards. */
-function highlightYears(text: string) {
-  const parts = text.split(/(\b20\d{2}(?:\s*[–-]\s*20\d{2})?\b)/g);
-  return parts.map((part, i) =>
-    /^20\d{2}/.test(part) ? (
-      <span key={i} className="font-semibold text-accent">
-        {part}
-      </span>
-    ) : (
-      <span key={i}>{part}</span>
-    ),
-  );
-}
+const LEVELS = [
+  "Primero interviene la autoridad jurisdiccional, ya sea la provincia involucrada en el evento o el Parque Nacional.",
+  "Si hacen falta refuerzos, se solicita apoyo regional a través del Coordinador Regional del Sistema Nacional del Manejo del Fuego.",
+  "Y si la situación supera la capacidad de respuesta disponible, se pide la intervención extrarregional del Servicio Nacional.",
+] as const;
 
 export function BudgetSection() {
-  const [stepIndex, setStepIndex] = useState(0);
-  const [chartActive, setChartActive] = useState(false);
-  const chartWrapRef = useRef<HTMLDivElement | null>(null);
-
-  const activeStep = STEPS[stepIndex] ?? STEPS[0];
-
-  const chartData = useMemo(
-    () => ALL_POINTS.filter((d) => d.year <= activeStep.yearsThrough),
-    [activeStep.yearsThrough],
-  );
-
-  useEffect(() => {
-    const el = chartWrapRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry && entry.intersectionRatio >= 0.99) {
-          setChartActive(true);
-        }
-      },
-      { threshold: [0.99, 1] },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const syncFromScroll = () => {
-      // El gráfico cambia cuando la card llega a la zona de lectura (abajo),
-      // no cuando entra el article vacío de arriba.
-      // Cards apoyan cerca del borde inferior del sticky (75svh).
-      const restY = window.innerHeight * 0.62;
-      let active = 0;
-      for (let i = 0; i < STEPS.length; i++) {
-        const card = document.querySelector<HTMLElement>(
-          `#budget-panel-${STEPS[i].id} [data-budget-card]`,
-        );
-        if (!card) continue;
-        const rect = card.getBoundingClientRect();
-        const center = rect.top + rect.height / 2;
-        if (center <= restY) active = i;
-      }
-      setStepIndex(active);
-    };
-
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(syncFromScroll);
-    };
-
-    syncFromScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
   return (
     <section
       id="presupuesto"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 pt-20 pb-10 md:px-8 md:pt-28">
-        <h2 className="type-h3">La actuación del Estado</h2>
-
-        <h3 className="mt-12 font-sans text-xl font-bold md:text-2xl">
-          Paraguas normativo
-        </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            <strong className="font-bold text-foreground">
-              Ley de Manejo del Fuego (Ley 26.815):
-            </strong>{" "}
-            fija los presupuestos mínimos de protección ambiental para la
-            prevención y combate de incendios forestales y rurales a nivel
-            nacional. Crea el Sistema Federal de Manejo del Fuego y exige la
-            elaboración de planes de planificación según diferentes niveles de
-            alcance.
-          </p>
-          <p>
-            La Ley de Presupuestos Mínimos de Protección Ambiental de los
-            Bosques Nativos (N.º 26.331) establece un régimen de ordenamiento
-            territorial obligatorio para que cada provincia clasifique sus masas
-            boscosas según su valor de conservación, prohibiendo o restringiendo
-            el desmonte.
-          </p>
-          <p>
-            Salvo Santa Cruz, las demás provincias patagónicas cuentan con
-            legislaciones propias para la prevención, presupresión y combate de
-            incendios forestales.
-          </p>
-        </div>
-
-        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
-          Sistema Federal de Manejo del Fuego
-        </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            La Ley 26.815 creó el Sistema Federal de Manejo del Fuego (SFMF),
-            integrado por el Servicio Nacional de Manejo del Fuego, la
-            Administración de Parques Nacionales, las provincias y la Ciudad
-            Autónoma de Buenos Aires. Sin embargo, el Decreto 1136/2024
-            traspasó esta política nacional del área ambiental al Ministerio de
-            Seguridad, que pasó a ser la Autoridad Nacional de Aplicación de la
-            ley.
-          </p>
-          <p>
-            La respuesta a un incendio se organiza en tres niveles. Primero
-            interviene la autoridad jurisdiccional, ya sea la provincia o el
-            Parque Nacional. Si necesita refuerzos, solicita apoyo regional a
-            través del Coordinador Regional del SNMF. Y si la situación supera
-            la capacidad de respuesta disponible, pide la intervención
-            extrarregional del Servicio Nacional.
-          </p>
-        </div>
-
-        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
-          Presupuesto nacional
-        </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            Durante sus dos primeros años de gestión, el gobierno de Javier
-            Milei no tuvo una Ley de Presupuesto aprobada por el Congreso. En
-            2024 y 2025 se usó el presupuesto prorrogado de 2023, lo que le dio
-            al Poder Ejecutivo un amplio margen para modificar las partidas
-            según su criterio. Recién en 2026 el Gobierno cuenta con una Ley de
-            Presupuesto.
-          </p>
-          <p>
-            Este proceso vino acompañado de un debilitamiento institucional del
-            Ministerio de Ambiente y Desarrollo Sostenible, que pasó a ser una
-            subsecretaría, y del cierre de programas y herramientas de ejecución
-            de políticas ambientales. Entre ellas se destaca la disolución de
-            los fondos fiduciarios de Manejo del Fuego y de Protección Ambiental
-            de los Bosques Nativos, ambos vinculados con el Servicio Nacional de
-            Manejo del Fuego.
-          </p>
-          <p>
-            Los fideicomisos agilizaban las transferencias a las provincias,
-            permitían controlar mejor el uso de los fondos y facilitaban
-            planificar políticas de conservación a mediano y largo plazo.
-          </p>
-          <p>
-            A este panorama se suma la reducción presupuestaria en el Servicio
-            Meteorológico Nacional y la Administración Nacional de Parques
-            Nacionales.
-          </p>
-        </div>
-
-        <div className="mt-10 border border-accent bg-raised p-6 text-lg leading-snug font-bold md:p-8 md:text-xl">
-          El año 2024 registró la menor ejecución presupuestaria del Servicio
-          Nacional de Manejo del Fuego desde 2017, alcanzando apenas el 22% de
-          los fondos disponibles.
-        </div>
-
-        <p className="mt-8 text-base leading-relaxed text-foreground/90 md:text-lg">
-          Los fondos destinados al Servicio Nacional de Manejo del Fuego (SNMF)
-          en el Presupuesto 2027 son $38.815 millones: un aumento real del 60,1%
-          con respecto a 2026, pero una caída del 55,8% con respecto a 2023.
-          Estos recursos no solo deben emplearse en tareas de combate del
-          fuego, sino también de prevención.
+        <h2 className="type-h2">El rol del Estado</h2>
+        <p className="type-bajada">
+          Nueve pedidos de acceso a la información, una decena de correos y una
+          conclusión incómoda.
         </p>
 
-        <p className="mt-10 text-sm leading-relaxed text-foreground/80 md:text-base">
-          Expresado en valores reales, ajustado por inflación promedio
-          interanual, a precios de 2026.
-        </p>
-      </div>
-
-      {/* Sticky: gráfico + título Prevención asomando abajo (como FireStates). */}
-      <div className="relative">
-        <div className="sticky top-0 z-10 bg-background">
-          <div className="flex h-[min(52svh,380px)] w-full items-center md:h-[75svh]">
-            <div
-              ref={chartWrapRef}
-              className="mx-auto w-full max-w-[800px] px-5 md:px-8"
-            >
-              <BudgetExecutionChart
-                data={chartData}
-                active={chartActive}
-                source={budget.source}
-                title="Ejecución presupuestaria del Servicio Nacional de Manejo del Fuego"
-              />
-            </div>
-          </div>
-          <div className="mx-auto max-w-[800px] px-5 pt-5 pb-3 md:px-8 md:pt-8 md:pb-4">
-            <h3 className="font-sans text-xl font-bold md:text-2xl">
-              Prevención
-            </h3>
-            <p className="mt-3 line-clamp-3 text-base leading-relaxed text-foreground/90 md:mt-4 md:line-clamp-none md:text-lg">
-              {PREVENTION_LEDE}
-            </p>
-          </div>
+        <div className="type-stack">
+          <p className="type-body">
+            Si bien la normativa obliga a prevenir los incendios, esta
+            investigación no pudo acceder a evidencia acerca de la existencia de
+            una política pública preventiva clara y coordinada entre las
+            distintas provincias de la Patagonia y las entidades nacionales. Si
+            estos datos existen, la Ley de Acceso a la Información Pública (AIP)
+            no funcionó para conseguirlos: las nueve solicitudes presentadas
+            recibieron respuestas incompletas o directamente no consiguieron
+            respuestas (
+            <TextLink href="/anexo">ver anexo descriptivo</TextLink>
+            ). Los organismos del Estado guardan silencio o hacen derivaciones a
+            otros organismos. En algunos casos, las informaciones recibidas
+            describen acciones generales no comprobables o carencias de
+            equipamiento.
+          </p>
+          <p className="type-body">
+            Para este estudio se solicitaron datos a la Agencia Federal de
+            Emergencias (AFE); organismo dependiente del Ministerio de Seguridad
+            Nacional, a la Dirección Nacional de Bosques perteneciente a la
+            Subsecretaría de Ambiente de la Nación en consultas específicas
+            sobre las provincias de Santa Cruz y Tierra del Fuego, Antártida e
+            Islas del Atlántico Sur; a la Administración de Parques Nacionales,
+            organismo autárquico y con enfoque en las jurisdicciones de Santa
+            Cruz (solicitud de información por los parques nacionales Los
+            Glaciares, Perito Moreno y Parque Nacional Patagonia) y Tierra del
+            Fuego (consulta por el Parque Nacional Tierra del Fuego), al
+            Servicio Meteorológico Nacional, en la esfera del Ministerio de
+            Defensa; a la Secretaría de Emergencias y Gestión de Riesgos,
+            perteneciente al Ministerio de Seguridad de Neuquén; a la Secretaría
+            de Bosques de Chubut encargada del Servicio Provincial del Manejo
+            del Fuego y la gestión del Ordenamiento Territorial de Bosques
+            Nativos (OTBN) y al Servicio de Prevención y Lucha contra los
+            Incendios Forestales (SPLIF) en la esfera del Ministerio de
+            Desarrollo Económico y Productivo de Río Negro.
+          </p>
+          <p className="type-body">
+            Tampoco se pudo concertar entrevistas con la mayoría de los
+            responsables locales de la prevención a quienes se les mandó, en
+            total, una decena de correos electrónicos. El equipo de FOCO
+            Bootcamp contactó en Neuquén, a Luna Luciana Ortíz, secretaria de
+            Emergencias y Gestión de Riesgos; en Río Negro, a Orlando Isaías
+            Báez, coordinador del Servicio de Prevención y Lucha contra los
+            Incendios Forestales (SPLIF); en Chubut, a Abel Nievas, secretario
+            de Bosques; en Santa Cruz, a Ayelén Alberti, funcionaria a cargo de
+            la Dirección Provincial de Bosques y Parques, y en Tierra del Fuego,
+            a Rodrigo Cía, subsecretario de Manejo del Fuego. De todos estos
+            funcionarios, el único que efectivamente permitió un diálogo fue
+            Nievas, aunque en la conversación dijo que carecía de datos sobre
+            recursos aplicados a la labor preventiva en Chubut.
+          </p>
         </div>
 
-        <div className="pointer-events-none relative z-20 -mt-[min(52svh,380px)] md:-mt-[75svh]">
-          {/* Intro: gráfico solo antes de que entre la 1ª card. */}
-          <div className="h-[100svh]" aria-hidden />
-          {STEPS.map((step, index) => {
-            const isActive = index === stepIndex;
-            return (
-              <article
-                key={step.id}
-                id={`budget-panel-${step.id}`}
-                className="pointer-events-none flex h-[100svh] items-end px-5 pb-[22vh] md:px-8 md:pb-[28vh]"
-                aria-current={isActive ? "step" : undefined}
-              >
-                <div
-                  data-budget-card
-                  className="ui-panel ui-panel--accent pointer-events-auto mx-auto w-full max-w-[450px] px-5 py-5 md:px-6 md:py-6"
-                >
-                  <p className="text-[11px] font-semibold tracking-[0.18em] text-accent uppercase">
-                    {step.id}
-                  </p>
-                  <p className="mt-2 text-base leading-relaxed text-white md:text-lg">
-                    {highlightYears(step.body)}
-                  </p>
-                </div>
-              </article>
-            );
-          })}
-          {/* Compensa el -mt del overlay + deja que la última card salga por arriba
-              antes de que el sticky suelte hacia Prevención. */}
-          <div className="h-[160svh]" aria-hidden />
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-[800px] px-5 pt-2 pb-20 md:px-8 md:pb-28">
-        <p className="mb-8 text-base leading-relaxed text-foreground/90 md:hidden">
-          {PREVENTION_LEDE}
-        </p>
-        <div className="space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
+        <h3 className="type-h3">Las leyes que no se traducen en política</h3>
+        <div className="type-stack mt-4">
+          <p className="type-body">
+            La Ley Nacional de Manejo del Fuego (
+            <TextLink href="https://www.argentina.gob.ar/normativa/nacional/ley-26815-207401/texto">
+              26.815
+            </TextLink>
+            ) fija los presupuestos mínimos para la prevención y el combate,
+            crea el Sistema Federal de Manejo del Fuego y exige{" "}
+            <TextLink href="https://www.argentina.gob.ar/parquesnacionales/direccion-de-lucha-contra-incendios-forestales-y-emergencias-dlife/manejo-0">
+              planificaciones
+            </TextLink>{" "}
+            provinciales, regionales y nacionales; la Ley de Bosques Nativos (
+            <TextLink href="https://www.argentina.gob.ar/normativa/nacional/ley-26331-136125/texto">
+              26.331
+            </TextLink>
+            ) obliga a las provincias a ordenar territorialmente sus masas
+            boscosas según su valor de conservación. Salvo Santa Cruz, las
+            provincias patagónicas cuentan además con legislación específica.
+            Estas acciones se complementan con evaluaciones de carga de
+            combustible vegetal (toda biomasa que potencialmente puede arder al
+            ser expuesta a una fuente de calor) y con el monitoreo del índice
+            meteorológico de peligro (FWI), una herramienta basada en el{" "}
+            <TextLink href="https://www.argentina.gob.ar/parquesnacionales/direccion-de-lucha-contra-incendios-forestales-y-emergencias-dlife/manejo-1">
+              Sistema Canadiense de Evaluación de Peligro de Incendios
+              Forestales
+            </TextLink>
+            , que la Argentina adoptó en el año 2000.
+          </p>
+          <p className="type-body">
+            El índice se calcula a partir de datos meteorológicos, y permite
+            estimar la probabilidad de inicio de un incendio y predecir su
+            comportamiento. El Servicio Meteorológico Nacional (SMN) tiene 5
+            estaciones meteorológicas en la ecorregión Andina Patagónica:
+            Chapelco (San Martín de los Andes), Bariloche, El Bolsón, Esquel y
+            Lago Argentino.
+          </p>
+          <p className="type-body">
             Abel Nievas, secretario de Bosques de Chubut, trabajó casi 30 años
-            en el Servicio Provincial de Manejo del Fuego. Explica que el FWI se
-            utiliza para monitorear el riesgo y planificar las acciones de
-            control: “Por ejemplo, con un nivel de bajo a moderado, la brigada
-            puede estar a más de 15 o 20 minutos de la base haciendo quemas o
-            tareas de prevención. A medida que el nivel aumenta a muy alto y
-            extremo, tienen que estar con los equipos cargados en la camioneta
-            para dar una respuesta inmediata ante un llamado de incendio”.
+            en el Servicio Provincial de Manejo del Fuego. En un diálogo con
+            este equipo de FOCO Bootcamp, explica que el FWI se utiliza para
+            monitorear el riesgo y planificar las acciones de control. Por
+            ejemplo, con un nivel de bajo a moderado, la brigada puede estar a
+            más de 15 o 20 minutos de la base haciendo quemas o tareas de
+            prevención. A medida que el nivel aumenta a muy alto y extremo,
+            tienen que estar con los equipos cargados en la camioneta para dar
+            una respuesta inmediata ante una alerta de incendio, agrega Nievas.
           </p>
-          <p>
-            En cuanto al manejo de combustibles de origen vegetal, Nievas señaló
+          <p className="type-body">
+            Sobre el manejo de combustibles de origen vegetal, Nievas comenta
             que los planes invernales que se realizan cada año incluyen trabajos
-            de silvicultura y quemas preventivas.
-          </p>
-          <p>
-            La prevención también depende de la coordinación entre
-            jurisdicciones. “Después del incendio de 2001, en el que se quemaron
-            500 casas, reanalizamos las campañas de prevención y se conformó una
-            mesa comarcal junto con Parques Nacionales, con el SPLIF de Río
-            Negro y con el Servicio Nacional de Manejo del Fuego”, recordó
-            Nievas.
-          </p>
-          <p>
-            A nivel nacional, desde el Servicio Nacional de Manejo del Fuego
-            informaron que la Regional Patagonia cuenta con un equipo
-            interdisciplinario de aproximadamente 30 personas. Los equipos
-            varían según las actividades previstas, como charlas en
-            instituciones educativas, conversatorios abiertos a la comunidad o
-            participación en eventos de concientización, entre otras. Estas
-            tareas se realizan con el personal designado por las provincias y
-            por Parques Nacionales.
-          </p>
-          <p>
-            Sin embargo, más allá de lo que establece el marco normativo, queda
-            una pregunta: ¿cuánto se invierte realmente en prevención? A pesar
-            de haber presentado pedidos de acceso a la información pública a
-            autoridades nacionales y provinciales, no pudimos obtener datos
-            precisos sobre los presupuestos destinados a estas estrategias.
+            de silvicultura y quemas preventivas. Cuanto mayor sea la
+            acumulación de combustibles en una zona, mayor cantidad de calor
+            podrá desprenderse y el incendio podría ser más intenso.
           </p>
         </div>
 
         <Quote
-          className="mt-10"
-          quote="“En algún momento creí que era una cuestión presupuestaria, pero cuando los fondos aparecen durante la emergencia se demuestra que, si se quieren, están”"
-          name="Daniel Díaz"
-          role="jefe de Bomberos de Epuyén"
+          quote={
+            <>
+              “Después del{" "}
+              <TextLink href="https://www.rionegro.com.ar/sociedad/heridas-abiertas-a-3-anos-de-los-incendios-mas-destructivos-de-la-cordillera-3456843/">
+                incendio de 2021
+              </TextLink>
+              , donde se quemaron 500 casas, reanalizamos las campañas de
+              prevención, y se conformó una mesa comarcal junto con Parques
+              Nacionales, con el Servicio de Prevención y Lucha contra los
+              Incendios Forestales (SPLIF) de Río Negro y con el Servicio
+              Nacional de Manejo del Fuego. En general, se advierte que la
+              respuesta coordinada está más bien dirigida a reaccionar a un
+              incendio, no a evitarlo.”
+            </>
+          }
+          name="Abel Nievas"
+          role="Secretario de Bosques de Chubut"
         />
 
-        <div className="mt-10 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            Hay un componente en los incendios casi teatral, sensacional o
-            gigantesco. Propio de los efectos de cine que también, mencionan los
-            especialistas, condiciona los presupuestos y hacia dónde va la
-            atención de quienes gestionan los recursos. Muchas veces se prioriza
-            el espectáculo por sobre las acciones más “invisibles”.
+        <div className="type-stack">
+          <p className="type-body">
+            Esa coordinación de organismos está pensada para reaccionar, no para
+            prevenir. El Sistema Federal de Manejo del Fuego, creado por la Ley
+            26.815, está integrado por el Servicio Nacional de Manejo del Fuego,
+            la Administración de Parques Nacionales, las provincias y la Ciudad
+            Autónoma de Buenos Aires. Sin embargo, el Decreto 1.136/2024
+            dictado durante la administración del presidente Javier Milei derivó
+            esta política ambiental al Ministerio de Seguridad, que pasó a ser
+            la Autoridad Nacional de Aplicación de la Ley 26.815.
+          </p>
+          <div>
+            <p className="type-body font-bold">
+              La respuesta a un incendio se organiza en tres niveles:
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5">
+              {LEVELS.map((item) => (
+                <li key={item} className="type-body">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <h3 className="type-h3">Esfuerzos aislados</h3>
+        <div className="type-stack mt-4">
+          <p className="type-body">
+            Las acciones preventivas detectadas se presentan como esfuerzos
+            aislados. La investigación identificó, por ejemplo, que en Chubut se
+            desarrolla una campaña educativa anual contra los incendios dirigida
+            a las escuelas primarias y capacitaciones destinadas al personal
+            docente.
+          </p>
+          <p className="type-body">
+            El Servicio Nacional de Manejo del Fuego precisó que la Regional
+            Patagonia dispone de un equipo interdisciplinario de aproximadamente
+            30 personas. Este staff está a cargo, entre otras actividades de
+            concientización, de brindar charlas en instituciones educativas y
+            organizar conversatorios abiertos a la comunidad. Estas tareas se
+            realizan con el personal designado por las provincias y por Parques
+            Nacionales.
+          </p>
+          <p className="type-body">
+            Más allá de lo que establece la normativa, queda en el aire una
+            pregunta: ¿cuánto se invierte realmente en prevención? Pese a haber
+            presentado 9 pedidos de acceso a la información pública a
+            autoridades nacionales y provinciales, no fue posible obtener datos
+            precisos sobre los presupuestos destinados a las estrategias
+            destinadas a evitar los incendios.
           </p>
         </div>
 
-        <p className="mt-10 text-base leading-relaxed text-foreground/90 md:text-lg">
-          “El enfoque reactivo sobre los incendios puede identificarse también en
-          la publicidad de estos eventos, en la sensacionalidad de un avión
-          hidrante lanzando 10.000 litros con precisión por sobre el barrido
-          rutinario de material seco. Vende, ‘garpa’ hacer propaganda durante una
-          catástrofe, cuando está toda la atención puesta ahí y aparecer con
-          millones de dólares para combatir incendios. Lamentablemente no
-          tendría el mismo impacto social o quizás eso creen quienes toman
-          decisiones el trabajar en prevención”. Daniel Díaz, jefe de Bomberos
-          de Epuyén.
-        </p>
+        <Quote
+          quote="“En algún momento creí que era una cuestión presupuestaria, pero, cuando los fondos aparecen durante la emergencia queda demostrado que, cuando se quiere, están”."
+          name="Daniel Díaz"
+          role="Jefe de Bomberos de Epuyén"
+        />
+
+        <div className="type-stack">
+          <p className="type-body">
+            Los incendios exhiben escenas dramáticas. Especialistas consultados
+            para esta investigación dicen que la espectacularidad del fuego
+            condiciona los presupuestos y hacia dónde va la atención de quienes
+            gestionan los recursos. Muchas veces se priorizan las escenas
+            cinematográficas por sobre las acciones “invisibles” de prevención.
+          </p>
+          <p className="type-body">
+            “El enfoque reactivo sobre los incendios puede identificarse también
+            en la publicidad que reciben estos eventos y en el sensacionalismo
+            de un avión hidrante que lanza 10.000 litros con precisión en
+            contraste con la exposición que tiene el barrido rutinario de
+            material seco. Vende, ‘garpa’, hacer propaganda durante una
+            catástrofe, cuando está toda la atención puesta ahí y aparecer con
+            millones de dólares para combatir incendios. Lamentablemente no
+            tendría el mismo impacto social o quizás eso creen quienes toman
+            decisiones el trabajar en prevención”, reflexiona Díaz, jefe de
+            Bomberos de Epuyén.
+          </p>
+        </div>
+
+        <h3 className="type-h3">Presupuesto nacional</h3>
+        <div className="type-stack mt-4">
+          <p className="type-body">
+            Durante sus dos primeros años de gestión, el Gobierno de Javier
+            Milei no tuvo una Ley de Presupuesto aprobada por el Congreso. En
+            2024 y 2025 se usó el presupuesto prorrogado de 2023, lo que dio al
+            Poder Ejecutivo un margen amplio para modificar las partidas. Recién
+            en 2026 el Gobierno cuenta con una Ley de Presupuesto.
+          </p>
+          <p className="type-body">
+            Este proceso vino acompañado de un debilitamiento institucional del
+            ex Ministerio de Ambiente y Desarrollo Sostenible, que pasó a ser
+            una Subsecretaría, y del cierre de programas y herramientas para la
+            ejecución de políticas ambientales. Entre ellas se destaca la
+            disolución de los fondos fiduciarios de{" "}
+            <TextLink href="https://www.boletinoficial.gob.ar/detalleAviso/primera/328018/20250708">
+              Manejo del Fuego
+            </TextLink>{" "}
+            y de{" "}
+            <TextLink href="https://www.boletinoficial.gob.ar/detalleAviso/primera/315308/20241008">
+              Protección Ambiental de los Bosques Nativos
+            </TextLink>
+            , ambos vinculados con el Servicio Nacional de Manejo del Fuego.
+          </p>
+          <p className="type-body">
+            Según el{" "}
+            <TextLink href="https://farn.org.ar/wp-content/uploads/2026/04/Presupuesto-ambiental-en-Argentina-la-consolidacion-de-un-ajuste.pdf">
+              Monitor Ambiental de Presupuesto
+            </TextLink>{" "}
+            de la Fundación Ambiente y Recursos Naturales (FARN), los
+            fideicomisos agilizaban las transferencias a las provincias,
+            permitían controlar mejor el uso de los fondos, y facilitaban
+            planificar políticas de conservación a mediano y largo plazo.
+          </p>
+          <p className="type-body">
+            A este panorama se suma la{" "}
+            <TextLink href="https://farn.org.ar/wp-content/uploads/2026/09/Monitor-Ambiental-Presupuesto-Hacia-una-nueva-normalidad-ajuste-y-desfinanciamiento-de-la-politica-ambiental.pdf">
+              caída real presupuestaria
+            </TextLink>{" "}
+            en el Servicio Meteorológico Nacional y la Administración Nacional
+            de Parques Nacionales.
+          </p>
+          <p className="type-body">
+            En el año 2024 se registró la menor ejecución presupuestaria del
+            Servicio Nacional de Manejo del Fuego desde 2017: el gasto en esta
+            área alcanzó el 22% de los recursos disponibles.
+          </p>
+          <p className="type-body">
+            De acuerdo con el{" "}
+            <TextLink href="https://farn.org.ar/presupuesto-2027-ajuste-ambiente/">
+              análisis
+            </TextLink>{" "}
+            de FARN, los fondos destinados al Servicio Nacional de Manejo del
+            Fuego (SNMF) en el proyecto de Presupuesto 2027 ascienden a $38.815
+            millones, esto implica un aumento real del 60,1% respecto de 2026,
+            pero a una caída del 55,8% en relación con la misma partida de 2023.
+            Estos recursos no sólo deben emplearse en tareas de combate del
+            fuego, sino también de prevención.
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[800px] space-y-16 px-5 pb-12 md:px-8 md:pb-12">
+        <BudgetExecutionChart
+          data={ALL_POINTS}
+          title="Ejecución presupuestaria del Servicio Nacional del Manejo del Fuego"
+          note={
+            <>
+              En millones de pesos,{" "}
+              <TextLink href="https://monitorpresupuestario.acij.org.ar/explorar/descargarInflacion">
+                ajustado por inflación promedio interanual
+              </TextLink>
+              , a precios de 2026.
+            </>
+          }
+          source={
+            <>
+              <TextLink href="https://monitorpresupuestario.acij.org.ar/explorar/monitor">
+                Monitor Presupuestario
+              </TextLink>{" "}
+              de la Asociación Civil por la Igualdad y la Justicia (ACIJ) con
+              base en Presupuesto Abierto.
+            </>
+          }
+        />
+        {/* <BudgetExecutionChart
+          data={FOREST_POINTS}
+          title="Ejecución presupuestaria del Fondo de Bosques"
+          note="En millones de pesos."
+          missingLabel="Sin dato"
+          source={budget.forestFund.source}
+        /> */}
       </div>
     </section>
   );

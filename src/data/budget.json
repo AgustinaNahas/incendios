@@ -1,18 +1,29 @@
 {
-  "note": "Valores en miles de millones de pesos constantes a precios de 2026. Total = altura de la barra. 2026 en curso, sin apertura de ejecución.",
+  "note": "En millones de pesos, ajustado por inflación promedio interanual, a precios de 2026. Vigente = altura de la barra. Devengado = tramo ejecutado.",
   "currency": "ARS",
-  "unit": "miles de millones constantes 2026",
+  "unit": "millones de pesos constantes 2026",
   "execution": [
-    { "year": 2017, "budgeted": 40, "executed": 30 },
-    { "year": 2018, "budgeted": 22, "executed": 17 },
-    { "year": 2019, "budgeted": 11, "executed": 9 },
-    { "year": 2020, "budgeted": 21, "executed": 13 },
-    { "year": 2021, "budgeted": 60, "executed": 55 },
-    { "year": 2022, "budgeted": 181, "executed": 181 },
-    { "year": 2023, "budgeted": 66, "executed": 66 },
-    { "year": 2024, "budgeted": 56, "executed": 12 },
-    { "year": 2025, "budgeted": 96, "executed": 71 },
-    { "year": 2026, "budgeted": 20, "executed": null }
+    { "year": 2016, "budgeted": 58918.74, "executed": 40441.94 },
+    { "year": 2017, "budgeted": 38152.4, "executed": 32755.89 },
+    { "year": 2018, "budgeted": 24518.86, "executed": 19283.93 },
+    { "year": 2019, "budgeted": 12477.02, "executed": 9945.27 },
+    { "year": 2020, "budgeted": 23568.63, "executed": 15514.11 },
+    { "year": 2021, "budgeted": 65192.42, "executed": 60007.51 },
+    { "year": 2022, "budgeted": 199717.19, "executed": 199249.15 },
+    { "year": 2023, "budgeted": 72731.94, "executed": 72718.42 },
+    { "year": 2024, "budgeted": 62683.81, "executed": 13796.85 },
+    { "year": 2025, "budgeted": 21381.13, "executed": 21353.8 },
+    { "year": 2026, "budgeted": 47437.86, "executed": 33337.22 }
   ],
-  "source": "Monitor Presupuestario de la Asociación Civil por la Igualdad y la Justicia (ACIJ) con base en Presupuesto Abierto"
+  "source": "Monitor Presupuestario de la Asociación Civil por la Igualdad y la Justicia (ACIJ) con base en Presupuesto Abierto",
+  "forestFund": {
+    "note": "En millones de pesos.",
+    "source": "Fundación Ambiente y Recursos Naturales. Con base en datos del Presupuesto Abierto, INDEC y de Ley de Presupuesto 2026.",
+    "series": [
+      { "year": 2023, "budgeted": 114076, "executed": 10000 },
+      { "year": 2024, "budgeted": 268961, "executed": null },
+      { "year": 2025, "budgeted": 368633, "executed": 2383 },
+      { "year": 2026, "budgeted": 444208, "executed": 17468 }
+    ]
+  }
 }

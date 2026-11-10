@@ -5,7 +5,7 @@ import { FireStates } from "@/components/scrolly/FireStates";
 const BODIES = [
   {
     title: "Brigadistas de Parques Nacionales",
-    body: "Combatientes especializados en incendios forestales, rurales y de interfase dentro de áreas protegidas nacionales.",
+    body: "Combatientes especializados en incendios forestales, rurales y de interfase dentro de las áreas protegidas nacionales.",
   },
   {
     title: "Brigadistas del Sistema Nacional de Manejo del Fuego",
@@ -29,7 +29,7 @@ const BODIES = [
   },
   {
     title: "Pilotos y tripulaciones aéreas",
-    body: "Realizan reconocimiento, traslados y descargas de agua o retardantes.",
+    body: "Realizan reconocimiento, traslados, y descargas de agua o retardantes.",
   },
   {
     title: "Otros apoyos especializados",
@@ -54,49 +54,39 @@ export function FightersSection() {
       className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 pt-20 pb-6 md:px-8 md:pt-28">
-        <h2 className="type-h3">Quiénes combaten el fuego</h2>
-
-
-        <p className="mt-4 text-base leading-relaxed text-foreground/90 md:text-2xl">
-                    Los distintos cuerpos de combate
-          </p>
-          
-        <p className="mt-8 text-base leading-relaxed text-foreground/90 md:text-lg">
-          En los incendios forestales de la Patagonia intervienen distintos
-          cuerpos, cada uno con una formación y una función específica. En los
-          operativos de mayor escala, trabajan de manera coordinada y, muchas
-          veces, dentro de estructuras de comando conjunto.
+        <h2 className="type-h2">Quiénes combaten el fuego</h2>
+        <p className="type-bajada">
+          Brigadistas, bomberos voluntarios y comunidades sostienen la primera
+          línea de una emergencia que la prevención no evita.
         </p>
 
-        <ul className="mt-6 space-y-4">
+        <p className="type-body">
+          En los incendios forestales de la Patagonia intervienen distintos
+          cuerpos: brigadistas, bomberos, guardaparques, pilotos y vecinos, con
+          formaciones y funciones específicas, que en los operativos de mayor
+          escala actúan de manera coordinada y, muchas veces, bajo estructuras
+          de comando conjunto. En el terreno, las diferencias institucionales se
+          vuelven menos visibles porque todos comparten un mismo objetivo: ganar
+          tiempo, abrir líneas de defensa, proteger viviendas o evitar que un
+          foco vuelva a encenderse. Sin embargo, hay incendios en los que ni la
+          cantidad de personas ni los recursos alcanzan: el viento cambia, las
+          llamas se aceleran y la prioridad pasa a ser no exponer vidas.
+        </p>
+
+        <p className="type-body mt-6 font-bold">Los distintos cuerpos de combate:</p>
+        <ul className="mt-4 space-y-4">
           {BODIES.map((item) => (
-            <li key={item.title} className="ml-6 list-disc pl-1 ">
-              <p className="font-sans text-base font-bold md:text-lg">
-                {item.title}
-              </p>
-              <p className="text-base leading-relaxed text-foreground/85 md:text-lg">
-                {item.body}
-              </p>
+            <li key={item.title} className="ml-6 list-disc pl-1">
+              <p className="type-body font-bold">{item.title}</p>
+              <p className="type-body">{item.body}</p>
             </li>
           ))}
         </ul>
 
-        <p className="mt-10 text-base leading-relaxed text-foreground/90 md:text-lg">
-          En el terreno, esas diferencias institucionales se vuelven menos
-          visibles. Brigadistas, bomberos, guardaparques, pilotos y vecinos
-          comparten un mismo objetivo: ganar tiempo, abrir líneas de defensa,
-          proteger viviendas o evitar que un foco vuelva a encenderse. Pero hay
-          incendios en los que ni la cantidad de personas ni los recursos
-          alcanzan: el viento cambia, el fuego acelera y la prioridad pasa a ser
-          no exponer vidas.
-        </p>
-
-        <h3 className="mt-16 font-sans text-xl font-bold md:text-2xl">
-          Anatomía de un brigadista
-        </h3>
-
-        <p className="mt-2 text-base leading-relaxed text-foreground/90 md:text-lg">
-          Cómo se ve un brigadista forestal de Parques Nacionales según la información recibida por los pedidos de acceso a la información.
+        <h3 className="type-h3">Anatomía de un brigadista forestal</h3>
+        <p className="type-bajada">
+          El equipo con el que combaten el fuego en Parques Nacionales, según la
+          información obtenida a través de pedidos de acceso a la información.
         </p>
       </div>
 
@@ -105,8 +95,35 @@ export function FightersSection() {
       <div className="mx-auto max-w-[800px] px-5 pb-12 md:px-8 md:pb-4">
         
 
+        <div className="type-stack mt-10">
+          <p className="type-body">
+            El Servicio Provincial del Manejo del Fuego de Chubut dispone de 13
+            bases de brigada a lo largo de la Cordillera, dos anexos, una
+            Central de Coordinación y Despacho, y una Subcentral de Incendios
+            Forestales. El personal cumple diferentes roles, como combatientes,
+            radioperadores o jefe de cuadrilla.
+          </p>
+          <p className="type-body">
+            Para los cuerpos de bomberos voluntarios, el combate tiene además un
+            costo personal. Muchos de sus integrantes son cuentapropistas:
+            comerciantes, albañiles, plomeros o electricistas. Cada jornada
+            destinada al incendio es también una jornada en la que dejan de
+            trabajar y de generar ingresos. En las ciudades más grandes, algunos
+            cuarteles cuentan con personal rentado para funciones específicas,
+            pero buena parte de la estructura sigue sostenida por voluntarios
+            que interrumpen su vida cotidiana para responder a la emergencia.
+          </p>
+          <p className="type-body">
+            No todos los que llegan a la primera línea del fuego forman parte de
+            estructuras oficiales. En zonas rurales, de interfase o de difícil
+            acceso, las brigadas comunitarias pueden convertirse en una primera
+            respuesta clave gracias a su conocimiento directo del territorio,
+            aunque no siempre cuentan con el mismo reconocimiento institucional
+            que los cuerpos oficiales.
+          </p>
+        </div>
+
         <Quote
-          className="mt-10"
           quote="“La solidaridad no puede ser una política pública, porque cuando hablamos de emergencias, hablamos de una responsabilidad.”"
           name="Natalia Dobranski"
           role="jefa de la Brigada Forestal de Mallín Ahogado, una organización comunitaria de Río Negro"

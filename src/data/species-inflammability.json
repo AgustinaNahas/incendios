@@ -17,11 +17,11 @@
     "kind": "arbol",
     "level": "alto",
     "image": "/images/species/pino-murrayana.webp",
-    "note": "Corteza fina y copa compacta; si muere, no rebrota y vuelve únicamente a partir de semillas."
+    "note": "Corteza fina y copa compacta; si muere, no rebrota y vuelve a resurgir únicamente a partir de semillas."
   },
   {
     "id": "austrocedrus-chilensis",
-    "commonName": "Ciprés de la cordillera",
+    "commonName": "Ciprés de la Cordillera",
     "scientificName": "Austrocedrus chilensis",
     "origin": "nativa",
     "kind": "arbol",
@@ -47,7 +47,7 @@
     "kind": "arbol",
     "level": "alto",
     "image": "/images/species/lenga.webp",
-    "note": "Resiste poco los incendios fuertes y casi no rebrota; si muere el bosque adulto, debe formarse una nueva generación desde semillas."
+    "note": "Resiste poco los incendios fuertes y casi no rebrota; si muere el bosque adulto, debe formarse una nueva generación desde las semillas."
   },
   {
     "id": "nothofagus-antarctica",
@@ -61,13 +61,13 @@
   },
   {
     "id": "pseudotsuga-menziesii",
-    "commonName": "Pino oregón",
+    "commonName": "Pino Oregón",
     "scientificName": "Pseudotsuga menziesii",
     "origin": "exotica",
     "kind": "arbol",
     "level": "medio",
     "image": "/images/species/pino-oregon.webp",
-    "note": "Es la especie exótica con mayor potencial invasor; desplaza a las especies nativas alterando la luminosidad y homogeneizando el ambiente. Los adultos pueden sobrevivir gracias a su corteza gruesa; si mueren, la regeneración se da por semillas."
+    "note": "Es la especie exótica con mayor potencial invasor, desplaza a las nativas y altera la luminosidad. Su corteza gruesa permite que los adultos sobrevivan a incendios moderados."
   },
   {
     "id": "fitzroya-cupressoides",
@@ -77,7 +77,7 @@
     "kind": "arbol",
     "level": "medio",
     "image": "/images/species/alerce.webp",
-    "note": "Puede vivir más de 2.000 años y formar bosques milenarios; aunque algunos ejemplares sobrevivan, reconstruir un bosque antiguo después del fuego puede llevar siglos."
+    "note": "Puede vivir más de 2000 años y formar bosques milenarios; aunque algunos ejemplares sobreviven, reconstruir un bosque antiguo después del fuego puede llevar siglos."
   },
   {
     "id": "pinus-ponderosa",
@@ -87,11 +87,11 @@
     "kind": "arbol",
     "level": "bajo",
     "image": "/images/species/pino-ponderosa.webp",
-    "note": "Su corteza gruesa y copa elevada permiten que muchos adultos sobrevivan; luego puede regenerarse bien si quedan árboles semilleros."
+    "note": "Su corteza gruesa y copa elevada permiten que muchos adultos sobrevivan. Luego puede regenerarse si quedan árboles semilleros."
   },
   {
     "id": "araucaria-araucana",
-    "commonName": "Araucaria",
+    "commonName": "Araucaria / pehuén",
     "scientificName": "Araucaria araucana",
     "origin": "nativa",
     "kind": "arbol",

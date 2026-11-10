@@ -63,6 +63,13 @@ export type AtlasStep = {
   otbnPaint: AtlasOtbnPaint;
   showLabels: boolean;
   charts: AtlasChart[];
+  /** Texto bajo las barras; `linkLabel` se renderiza como enlace. */
+  note?: {
+    before: string;
+    linkLabel: string;
+    href: string;
+    after: string;
+  };
 };
 
 function stackedBar(province: OtbnProvinceFilter): AtlasBarConfig {
@@ -81,7 +88,7 @@ function provinceChart(province: AtlasProvince): AtlasChart {
   return {
     id: OTBN_PROVINCE_SLUG[province],
     label: province,
-    hectaresLabel: `${formatHa(ha.total)} ha.`,
+    hectaresLabel: `${formatHa(ha.total)} ha`,
     bar: stackedBar(province),
   };
 }
@@ -89,7 +96,7 @@ function provinceChart(province: AtlasProvince): AtlasChart {
 const bosquesStep: AtlasStep = {
   id: "bosques",
   title: "Ecorregión Andino Patagónica",
-  body: "Se extiende a lo largo de 5 provincias argentinas: Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Su extensión total es de 6.452.891 hectáreas. Bosques, estepa, mallines, lagos y glaciares forman un territorio continuo a lo largo de la cordillera.",
+  body: "Se extiende a lo largo de 5 provincias argentinas: Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego. Su extensión total es de 6.452.891 ha, de las cuales casi el 50% corresponde a bosques nativos. ",
   showCategoryLegend: false,
   fit: "patagonia",
   provinces: "all",
@@ -106,7 +113,7 @@ const bosquesStep: AtlasStep = {
         total: ECOREGION_HA,
         value: OTBN_TOTAL_HA.total,
         percentLabel: `${Math.round(otbnShareOfEcoregion() * 100)}%`,
-        caption: `${formatHa(OTBN_TOTAL_HA.total)} ha. de bosques nativos.`,
+        caption: `${formatHa(OTBN_TOTAL_HA.total)} ha de bosques nativos.`,
       },
     },
   ],
@@ -114,8 +121,8 @@ const bosquesStep: AtlasStep = {
 
 const categoriasStep: AtlasStep = {
   id: "categorias",
-  title: "Los bosques nativos y cómo se protegen",
-  body: "Sobre esta ecorregión se distribuyen millones de hectáreas de bosque nativo. La Ley 26.331 los ordena en tres categorías según su valor de conservación:",
+  title: "El bosque nativo y cómo se protege",
+  body: "La cobertura forestal nativa está protegida por la Ley 26.331, que la clasifica en tres categorías según su valor de conservación:",
   showCategoryLegend: true,
   fit: "patagonia",
   provinces: "all",
@@ -153,19 +160,27 @@ function regionStep(
   };
 }
 
-const norPatagoniaStep = regionStep("nor-patagonia", "Patagonia: Norte", [
+const norPatagoniaStep = regionStep("nor-patagonia", "Patagonia norte", [
   "Neuquén",
   "Río Negro",
 ]);
 
-const patagoniaCentroStep = regionStep("patagonia-centro", "Patagonia: Centro", [
+const patagoniaCentroStep = regionStep("patagonia-centro", "Patagonia centro", [
   "Chubut",
 ]);
 
-const patagoniaSurStep = regionStep("patagonia-sur", "Patagonia: Sur", [
-  "Santa Cruz",
-  "Tierra del Fuego",
-]);
+const patagoniaSurStep: AtlasStep = {
+  ...regionStep("patagonia-sur", "Patagonia sur", [
+    "Santa Cruz",
+    "Tierra del Fuego",
+  ]),
+  note: {
+    before: "Ver ",
+    linkLabel: "investigación",
+    href: "https://restauracionbosquesnativos.fopea.org/",
+    after: " sobre Restauración de FOCO Bootcamp.",
+  },
+};
 
 export const ATLAS_STEPS: AtlasStep[] = [
   bosquesStep,
@@ -234,6 +249,6 @@ export const OTBN_CATEGORY_BULLETS: {
     zona: 3,
     color: OTBN_COLORS[3],
     code: "III",
-    text: "Áreas que pueden transformarse, pero solo con evaluación de impacto ambiental y bajo condiciones estrictas.",
+    text: "Áreas que pueden transformarse, pero sólo con evaluación de impacto ambiental y bajo condiciones estrictas.",
   },
 ];

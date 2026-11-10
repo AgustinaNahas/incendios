@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import species from "@/data/species-inflammability.json";
 import { SummerClimateCharts } from "@/components/charts/SummerClimateCharts";
 import { Quote } from "@/components/Quote";
+import { TextLink } from "@/components/TextLink";
 import { OTBN_COLORS } from "@/lib/otbnColors";
 import { withBasePath } from "@/lib/paths";
 
@@ -23,28 +24,27 @@ const LEVEL_ORDER: Level[] = ["alto", "medio", "bajo"];
 
 const CRITICAL_CONDITIONS = [
   {
-    title: "Temperatura (>30 °C)",
-    body: "Favorece el calentamiento y secado de hojas, ramas y pastizales.",
+    title: "Temperatura (+30°C)",
+    body: "Favorece el calentamiento, y el secado de hojas, ramas y pastizales.",
   },
   {
-    title: "Humedad relativa (<30%)",
+    title: "Humedad relativa (-30%)",
     body: "El aire seco hace que la vegetación pierda humedad y se encienda con mayor facilidad.",
   },
   {
-    title: "Viento (>30 km/h)",
+    title: "Viento (+30 km/h)",
     body: "Acelera el avance del fuego y puede transportar brasas que generan nuevos focos.",
   },
 ] as const;
 
 const CLIMATE_BULLETS = [
-  "Clima más seco y cálido: en gran parte de la región las precipitaciones disminuyeron más del 20% y la temperatura media anual aumentó entre 0,2 y 0,7 °C.",
-  "Más olas de calor: aumentan su frecuencia, duración y cantidad de días, especialmente en la cordillera de Neuquén y Río Negro.",
+  "Clima más seco y cálido: en gran parte de la región, las precipitaciones disminuyeron más del 20%, y la temperatura media anual aumentó entre 0,2 y 0,7 °C.",
+  "Más olas de calor: aumentan su frecuencia, duración y cantidad de días, especialmente en la Cordillera a la altura de Neuquén y de Río Negro.",
   "Vientos extremos: aunque los promedios cambian poco, en febrero se registran aumentos de más del 10–15% en los vientos máximos de amplias zonas cordilleranas.",
 ] as const;
 
-/** Peek debajo del carrusel (mismo patrón que FireStates → contexto). */
-const AFTER_FIRE_LEDE =
-  "Cuando el último foco se apaga y la atención pública se desplaza, comienza una etapa mucho más larga: la recuperación. Antes, sin embargo, quedan las llamadas “guardias de ceniza”. Durante días, los brigadistas recorren los sectores quemados en busca de troncos calientes, brasas enterradas y focos capaces de reactivarse con un cambio de viento.";
+const WUI_STUDY =
+  "https://silvis.forest.wisc.edu/wp-content/uploads/2018/12/Godoy_etal_IJWF_ArgentinaWUI_2019.pdf";
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -139,84 +139,88 @@ export function InflammabilitySection() {
       className="relative scroll-mt-8 bg-background text-foreground"
     >
       <div className="mx-auto max-w-[800px] px-5 pt-12 pb-12 md:px-8 md:pt-12">
-      <h3 className="font-sans text-xl font-bold md:text-2xl">
-      Factores de propagación</h3>
-
-        <h3 className="mt-10 font-sans text-xl font-bold md:text-2xl">
-          Cambios climáticos
-        </h3>
-        <p className="mt-4 text-base leading-relaxed text-foreground/90 md:text-lg">
-          El cambio climático inducido por la actividad humana está modificando
-          las condiciones de fondo en la Patagonia: temperaturas más altas,
-          menos precipitaciones en amplias zonas y mayor frecuencia de eventos
-          extremos. Ese contexto favorece períodos más prolongados de sequedad y
-          aumenta la disponibilidad de vegetación capaz de arder.
-        </p>
-        <ul className="mt-6 list-disc space-y-3 pl-5 text-base leading-relaxed text-foreground/90 md:text-lg">
+        <h3 className="type-h3 is-flush">Factores de propagación</h3>
+        <h4 className="type-h4">Cambios climáticos</h4>
+        <div className="type-stack mt-4">
+          <p className="type-body">
+            <TextLink href="https://cenpat.conicet.gov.ar/incendios-en-la-patagonia-el-cambio-climatico-detras-del-fuego-de-2026/">
+              El cambio climático inducido por la actividad humana
+            </TextLink>{" "}
+            está modificando las condiciones de fondo en la Patagonia:
+            temperaturas más altas, menos precipitaciones en amplias zonas y
+            mayor frecuencia de eventos extremos. Ese contexto favorece períodos
+            más prolongados de sequedad y aumenta la disponibilidad de
+            vegetación susceptible de arder.
+          </p>
+          <p className="type-body">
+            El fenómeno de El Niño en desarrollo durante 2026 anticipa un final
+            de verano y un comienzo del otoño riesgosos. Un{" "}
+            <TextLink href="https://drive.google.com/file/d/1IfmASfcYaRVuqZK8macseOEunbro5KZT/view">
+              informe reciente
+            </TextLink>{" "}
+            del Conicet y la Fundación Bariloche advierte que un invierno y una
+            primavera húmedos genera un exceso de biomasa y continuidad de
+            combustible fino que, al secarse en un verano cálido y seco, desata
+            las temporadas de incendios más severas (acumulación seguida de
+            desecación). A esta situación se exponen las reservas naturales
+            patagónicas durante 2027.
+          </p>
+        </div>
+        <ul className="mt-6 list-disc space-y-3 pl-5">
           {CLIMATE_BULLETS.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item} className="type-body">
+              {item}
+            </li>
           ))}
         </ul>
 
         <Quote
-          className="mt-10"
           quote="“La desesperación de brigadistas, de bomberos, llorando porque venían trabajando con algo que estaban a punto de contener. Empezó a soplar con tanta fuerza. La pavesa que vuela y está quemando inicia un incendio más grande. Intentás frenarlo pero de repente te pasó por arriba”"
           name="Rubén Oliva"
           role="jefe de la Federación de Bomberos Voluntarios en Chubut"
         />
 
-        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
-          Las tres condiciones críticas
-        </h3>
-        <p className="mt-4 text-base leading-relaxed text-foreground/90 md:text-lg">
+        <p className="type-body">
           Sobre ese contexto general pueden darse combinaciones meteorológicas
-          especialmente peligrosas. La llamada regla del 30/30/30 es un
-          indicador empírico utilizado en el combate de incendios forestales:
-          señala condiciones favorables a una propagación rápida cuando
-          coinciden más de 30 °C de temperatura, menos del 30% de humedad
-          relativa y vientos o rachas superiores a 30 km/h.
+          especialmente peligrosas. La llamada{" "}
+          <TextLink href="https://www.publico.es/sociedad/m-ambiente/regla-30-30-30-incendios-forestales.html">
+            regla del 30/30/30
+          </TextLink>{" "}
+          es un indicador empírico utilizado en el combate de incendios
+          forestales: señala condiciones favorables a una propagación rápida
+          cuando coinciden más de 30 °C de temperatura, menos del 30% de humedad
+          relativa, y ráfagas de vientos superiores a 30 km/h.
         </p>
         <ul className="mt-6 space-y-4">
           {CRITICAL_CONDITIONS.map((item) => (
             <li key={item.title}>
-              <p className="font-sans text-base font-bold md:text-lg">
-                {item.title}
-              </p>
-              <p className="mt-1 text-base leading-relaxed text-foreground/85 md:text-lg">
-                {item.body}
-              </p>
+              <p className="type-body font-bold">{item.title}</p>
+              <p className="type-body mt-1">{item.body}</p>
             </li>
           ))}
         </ul>
         <SummerClimateCharts />
 
-        <p className="mt-8 text-base leading-relaxed text-foreground/90 md:text-lg">
-        “Tuvimos la temporada invernal que no llovió nada. Esto se suma a un estrés hídrico importante de varios años”. Abel Nievas, secretario de Bosques de Chubut        </p>
+        <Quote
+          quote="“Tuvimos la temporada invernal que no llovió nada. Esto se suma a un estrés hídrico importante de varios años”."
+          name="Abel Nievas"
+          role="secretario de Bosques de Chubut"
+        />
 
-
-        <h3 className="mt-14 font-sans text-xl font-bold md:text-2xl">
-          La vegetación nativa y exótica
-        </h3>
-        <div className="mt-4 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
-            En el bosque andino patagónico conviven especies nativas con
-            plantaciones y ejemplares exóticos introducidos, y esa mezcla
-            modifica la forma en que el fuego puede avanzar. Los árboles nativos
-            no responden todos igual: algunos toleran mejor incendios de baja
-            intensidad, otros son muy sensibles y dependen de semillas para
-            recuperarse. Las coníferas exóticas, en cambio, suelen aportar
-            abundante follaje fino, resinas y una estructura de copa que puede
-            aumentar la continuidad del combustible cuando forman masas densas.
-            Por eso, el riesgo no depende solo de si un árbol es nativo o
-            exótico, sino también de su especie, edad, estado de humedad,
-            disposición en el bosque y de cuánto material vegetal se acumula
-            alrededor.
-          </p>
-          <p>
-            Ante condiciones comparables, ¿qué árboles tienden a ser más
-            vulnerables y cuáles ofrecen mayor resistencia?
-          </p>
-        </div>
+        <h4 className="type-h4">Vegetación arbórea nativa y exótica</h4>
+        <p className="type-body mt-4">
+          En el bosque andino patagónico conviven especies nativas con
+          plantaciones y ejemplares exóticos introducidos, y esa mezcla modifica
+          la forma en la que el fuego puede avanzar. Los árboles nativos no
+          responden todos igual: algunos toleran mejor los incendios de baja
+          intensidad, otros son muy sensibles y dependen de semillas para
+          recuperarse. Las coníferas exóticas, en cambio, suelen aportar
+          abundante follaje fino, resinas y una estructura de copa que puede
+          aumentar la continuidad del combustible cuando forman masas densas. Por
+          eso, el riesgo no depende sólo de si un árbol es nativo o exótico,
+          sino también de su especie, edad, estado de humedad, disposición en el
+          bosque y de cuánto material vegetal se acumula alrededor.
+        </p>
       </div>
 
       <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
@@ -231,7 +235,7 @@ export function InflammabilitySection() {
             <figure className="mb-3 shrink-0 px-5 pt-4 pb-2 md:px-8 md:pt-5">
               <div className="mx-auto w-full max-w-[800px]">
                 <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-foreground md:text-base">
-                  Nivel de vulnerabilidad frente al fuego
+                  Vulnerabilidad de las especies al fuego
                 </figcaption>
                 <div className="mx-auto flex w-[70%] items-center gap-3 md:gap-4">
                   <span className="shrink-0 text-base font-medium md:text-lg">
@@ -348,13 +352,55 @@ export function InflammabilitySection() {
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-[800px] px-5 pt-4 md:px-8 md:pt-6">
-            <div className="border-t border-t-white/31 pb-4" />
-            <h2 className="type-h3 mt-4 md:mt-6">Después del fuego</h2>
-            <p className="mt-2 line-clamp-4 text-base leading-relaxed text-foreground/90 md:line-clamp-none md:text-2xl">
-              {AFTER_FIRE_LEDE}
-            </p>
-          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[800px] px-5 pt-16 pb-8 md:px-8">
+        <h3 className="type-h3 is-flush">Condiciones estructurales</h3>
+        <div className="type-stack mt-4">
+          <p className="type-body">
+            El riesgo no depende sólo de cómo empieza un incendio ni de las
+            condiciones climáticas que lo alimentan. También influye cómo se
+            ocupa y se gestiona el territorio. En las últimas décadas crecieron
+            las viviendas y los asentamientos en zonas de interfase entre bosque
+            y áreas habitadas, muchas veces sin planificación suficiente, con
+            vegetación y otros combustibles muy próximos a las casas, y, como se
+            dijo antes, escasas medidas de prevención.
+          </p>
+          <p className="type-body">
+            A eso se suman desigualdades en la capacidad de prepararse y
+            recuperarse; falta de mantenimiento del entorno; turismo creciente
+            poco o nada concientizado y una educación ambiental todavía
+            insuficiente.
+          </p>
+        </div>
+        <Quote
+          quote="“El problema principal para mí está relacionado con la gestión territorial. En los últimos 25 años acá, la Comarca creció de manera exponencial”."
+          name="Hernán Andrade"
+          role="ex vecino de Las Golondrinas, Comarca Andina - Chubut"
+        />
+        <div className="type-stack">
+          <p className="type-body">
+            El último censo del Indec registró en el departamento de Cushamen,
+            donde se encuentra la localidad de Las Golondrinas, un crecimiento
+            relativo del 34% en los últimos 12 años. Para 2010 la cantidad de
+            habitantes era de 20.919 mientras que para 2022 era de 28.209.
+          </p>
+          <p className="type-body">
+            En las últimas décadas, el crecimiento residencial avanzó sobre
+            áreas de vegetación natural.{" "}
+            <TextLink href={WUI_STUDY}>Un estudio</TextLink> de científicos del
+            Conicet y de otras instituciones publicado en 2019 sobre la Comarca
+            Andina, que incluye El Bolsón, Lago Puelo, El Hoyo y Epuyén, reveló
+            que, entre 1981-82 y 2016, la superficie de interfase urbano-forestal
+            creció el 76%: pasó de unas 12.100 a más de 21.300 hectáreas. Allí
+            las viviendas se mezclan directamente con el bosque, el matorral o
+            la estepa, o quedan muy próximas a grandes superficies naturales.
+            Para 2016, esas zonas concentraban el 96,6% de las construcciones
+            del área analizada. El crecimiento fue especialmente marcado
+            alrededor de Mallín Ahogado, El Foyel, y sectores próximos a El
+            Bolsón y El Hoyo.
+          </p>
         </div>
       </div>
     </section>

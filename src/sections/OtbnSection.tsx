@@ -141,12 +141,12 @@ export function OtbnSection() {
       className="relative scroll-mt-8 bg-background text-foreground"
     >
           <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6 ">
-            <h2 className="type-h3 mx-auto w-full max-w-[800px] px-6 pb-4">
+            <h2 className="type-h2 mx-auto w-full max-w-[800px] px-6">
               <div className="border-t border-t-white/31 pb-12"></div>
               El mapa del riesgo
             </h2>
-            <p className=" mx-auto w-full max-w-[800px] px-6 pb-12 mt-0 text-base leading-relaxed text-foreground/90 md:text-lg">
-              Una bajada para el mapa
+            <p className="type-bajada mx-auto w-full max-w-[800px] px-6">
+              La ecorregión que merece ser mirada con más atención.
             </p>
           </div>
       <div className="relative">
@@ -263,6 +263,19 @@ export function OtbnSection() {
                             </div>
                           ))}
                         </div>
+                      ) : null}
+                      {displayed.note ? (
+                        <p className="mt-5 text-base leading-relaxed text-white">
+                          {displayed.note.before}
+                          <a
+                            href={displayed.note.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {displayed.note.linkLabel}
+                          </a>
+                          {displayed.note.after}
+                        </p>
                       ) : null}
                       {displayed.showCategoryLegend ? (
                         <ul className="mt-4 space-y-4 text-sm leading-relaxed text-white/85">

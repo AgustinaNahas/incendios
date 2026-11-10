@@ -18,7 +18,7 @@ const FIRE_STATES = [
   {
     title: "Circunscripto",
     image: "/estados/3-circunscripto.png",
-    body: "Los trabajos de contención abarcan todo el perímetro pero no están definitivamente terminados.",
+    body: "Los trabajos de contención abarcan todo el perímetro, pero no están definitivamente terminados.",
   },
   {
     title: "Controlado",
@@ -174,9 +174,7 @@ export function FireStates() {
   return (
     <div ref={rootRef} className="relative mt-10">
       <div ref={stickyRef} className="sticky top-3 z-20 bg-background pb-2 md:top-[8vh]">
-        <h3 className="font-sans text-xl font-bold md:text-2xl">
-          Estados de un incendio
-        </h3>
+        <h3 className="type-h4 is-flush">Los cinco estados de un incendio</h3>
 
         <div className="relative left-1/2 mt-6 w-screen -translate-x-1/2">
           <div className="relative mx-auto max-w-[960px]">
@@ -294,19 +292,17 @@ export function FireStates() {
         <p className="sr-only" aria-live="polite">
           {live}
         </p>
-        <p className="mt-3 pb-3 text-base leading-relaxed text-foreground/90 md:mt-8 md:pb-12 md:text-lg">
+        <p className="type-body mt-8 pb-12">
           Algunos incendios grandes, aunque sean dados por controlados, pueden
           no declararse extinguidos durante mucho tiempo.
         </p>
-        <div className="border-t border-t-white/31 pb-3 md:pb-4"></div>
+        <div className="border-t border-t-white/31 pb-4" />
 
-        <h2 className="type-h3 mt-4 md:mt-10">El contexto del fuego</h2>
-        <p className="mt-2 line-clamp-3 text-base leading-relaxed text-foreground/90 md:line-clamp-none md:text-2xl">
-          El riesgo puede ordenarse en tres niveles:{" "}
-          <b>
-            causas directas, factores de propagación y condiciones estructurales
-          </b>
-          .
+        <h2 className="type-h2 mt-10">El riesgo que nadie previene</h2>
+        <p className="type-bajada">
+          Factores de ignición, de propagación y condiciones estructurales: las
+          variables que una política preventiva debería gestionar antes de la
+          primera llama.
         </p>
       </div>
     </div>

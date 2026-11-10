@@ -47,11 +47,6 @@ const BOMBEROS: OrgBlock[] = [
         value: "guardiaepuyen@gmail.com",
         href: "mailto:guardiaepuyen@gmail.com",
       },
-      {
-        label: "Donar",
-        value: "Cuotas societarias / enlace directo",
-        href: "https://dnr.onl/9qqFSPgm",
-      },
     ],
   },
   {
@@ -150,7 +145,7 @@ const BOMBEROS: OrgBlock[] = [
   },
 ];
 
-const ORGS: OrgBlock[] = [
+const LOCAL_ORGS: OrgBlock[] = [
   {
     name: "Fundación Cooperar",
     lines: [
@@ -192,9 +187,17 @@ const ORGS: OrgBlock[] = [
       { label: "Razón social", value: "ASOCIACION CIVIL ACERCAR" },
     ],
   },
+];
+
+const CAMPAIGNS: OrgBlock[] = [
   {
     name: "Asociación Amigos de la Patagonia",
     lines: [
+      {
+        label: "Correo",
+        value: "info@aapatagonia.org.ar",
+        href: "mailto:info@aapatagonia.org.ar",
+      },
       { label: "Alias", value: "AMIGOSDELAPATAGONIA" },
       {
         label: "PayPal",
@@ -216,12 +219,51 @@ const ORGS: OrgBlock[] = [
   },
 ];
 
-function OrgDetails({ orgs }: { orgs: OrgBlock[] }) {
+const OTHER_ORGS: OrgBlock[] = [
+  {
+    name: "Fundación Ambiente y Recursos Naturales (FARN)",
+    lines: [
+      {
+        label: "Correo",
+        value: "info@farn.org.ar",
+        href: "mailto:info@farn.org.ar",
+      },
+      {
+        label: "Web",
+        value: "farn.org.ar",
+        href: "https://farn.org.ar/",
+      },
+    ],
+  },
+  {
+    name: "The Nature Conservancy",
+    lines: [
+      {
+        label: "Dirección",
+        value:
+          "Avenida Presidente Roque Sáenz Peña 1.164, Piso 9, Ciudad de Buenos Aires, Argentina",
+      },
+      {
+        label: "Correo",
+        value: "argentina@tnc.org",
+        href: "mailto:argentina@tnc.org",
+      },
+      {
+        label: "Web",
+        value: "nature.org/es-us",
+        href: "https://www.nature.org/es-us/",
+      },
+    ],
+  },
+];
+
+function OrgDetails({ orgs, group }: { orgs: OrgBlock[]; group: string }) {
   return (
-    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+    <div className="mt-6 grid items-start gap-4 sm:grid-cols-2">
       {orgs.map((org) => (
         <details
           key={org.name}
+          name={group}
           className="group border border-foreground/15 bg-background/80 px-4 py-4"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-sans text-base font-bold [&::-webkit-details-marker]:hidden">
@@ -266,17 +308,22 @@ export function AfterFireSection() {
       id="despues"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-6 pb-20 md:px-8 md:pt-8 md:pb-28">
-        <p className="mb-8 text-base leading-relaxed text-foreground/90 md:hidden">
-          Cuando el último foco se apaga y la atención pública se desplaza,
-          comienza una etapa mucho más larga: la recuperación. Antes, sin
-          embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
-          brigadistas recorren los sectores quemados en busca de troncos
-          calientes, brasas enterradas y focos capaces de reactivarse con un
-          cambio de viento.
+      <div className="mx-auto max-w-[800px] px-5 pt-16 pb-20 md:px-8 md:pt-20 md:pb-28">
+        <h2 className="type-h2">Después del fuego</h2>
+        <p className="type-bajada">
+          Apagar el último foco no cierra la emergencia, el territorio que queda
+          ya no es el mismo.
         </p>
-        <div className="space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
+        <div className="type-stack">
+          <p className="type-body">
+            Cuando el último foco se apaga y la atención pública se desplaza,
+            comienza una etapa mucho más larga: la recuperación. Antes, sin
+            embargo, quedan las llamadas “guardias de ceniza”. Durante días, los
+            brigadistas recorren los sectores quemados en busca de troncos
+            calientes, brasas enterradas y materiales combustibles capaces de
+            reactivarse con un cambio de viento.
+          </p>
+          <p className="type-body">
             El incendio también deja marcas que permanecen mucho después de las
             llamas: pérdida de vegetación, degradación de suelos, afectación de
             cultivos y animales, contaminación por cenizas y procesos de
@@ -285,75 +332,85 @@ export function AfterFireSection() {
         </div>
 
         <Quote
-          className="mt-10"
-          quote="“Cuando un megaincendio ocurre se dan múltiples consecuencias: generación de gases, pérdida de biomasa y de naturaleza, suelos que van a estar durante muchos años sin su vegetación natural, deforestación, pérdida de cultivos y de animales. Los incendios de grandes proporciones, con gran generación de cenizas, también producen contaminación ambiental, al menos localizada. Son muchas las problemáticas que acarrea un incendio.”"
+          quote="“Cuando un megaincendio ocurre se dan múltiples consecuencias: generación de gases; pérdida de biomasa y de naturaleza; suelos que van a estar durante muchos años sin su vegetación natural; deforestación, pérdida de cultivos y de animales. Los incendios de grandes proporciones, con gran generación de cenizas, también producen contaminación ambiental, al menos localizada. Son muchas las problemáticas que acarrea un incendio.”"
           name="Lucas Berengua"
-          role="meteorólogo del Servicio Meteorológico Nacional"
+          role="Meteorólogo del Servicio Meteorológico Nacional"
         />
 
-        <div className="mt-10 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-          <p>
+        <div className="type-stack">
+          <p className="type-body">
             Pero hay pérdidas que no se miden en hectáreas. Las familias pueden
             perder la casa, los muebles, los animales y sus fuentes de ingreso.
             Después llegan los meses de trámites, subsidios, reconstrucción y
-            decisiones difíciles: volver, empezar de nuevo o irse. Quienes
-            regresan lo hacen a un territorio que ya no es el mismo.
+            decisiones difíciles: empezar de nuevo o irse. Quienes regresan lo
+            hacen a un territorio que ya no es el mismo.
           </p>
-          <p>
-            El fuego deja así una última pregunta: qué ocurre antes, durante y
+          <p className="type-body">
+            El fuego deja así una última pregunta: ¿qué ocurre antes, durante y
             después de cada incendio para que el mismo escenario vuelva a
-            repetirse. Conocer las causas, reconocer las condiciones que lo
-            favorecen y aprender de sus consecuencias no evita por sí solo la
-            próxima emergencia, pero sí define cuánto puede hacerse para que la
-            próxima vez el daño sea menor.
+            repetirse? Conocer las causas, identificar las condiciones propicias
+            y aprender de sus consecuencias no evita por sí solo la próxima
+            emergencia, pero sí ayuda a diseñar acciones para que la próxima vez
+            el daño sea menor.
           </p>
         </div>
 
         <div className="mt-16 border border-foreground/25 bg-ink/55 px-5 py-8 md:px-8 md:py-10">
-          <h3 className="font-sans text-[24px] font-bold md:text-[28px]">
-            Cómo ayudar
-          </h3>
-          <div className="mt-5 space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
-            <p>
-              “Cada vez que ha sucedido algo como los incendios en el verano
-              cada uno de los cuarteles se autogestionó”, aclaró el Jefe de
-              Bomberos de Chubut.
-            </p>
-            <p>
-              Cada destacamento de la región cuenta con sus canales oficiales
-              donde solicitan ayuda. Esta se requiere generalmente de manera
-              temporal, de acuerdo con las necesidades de la coyuntura, y se
-              hace principalmente a través de redes sociales.
-            </p>
-            <p>
-              Las cuotas societarias de Bomberos Voluntarios de Epuyén financian
-              insumos operativos básicos: desde viandas y equipamiento de
-              limpieza hasta logística administrativa y respuestas ante
-              imprevistos.
-            </p>
-            <p>
-              Durante las emergencias de 2025-2026 en Río Negro y Chubut, la
-              Fundación Cooperar y la Asociación Civil Acercar articularon la
-              reconstrucción de viviendas y la gestión de comedores para
-              brigadistas, evacuados y voluntarios.
-            </p>
-            <p>
-              Entidades nacionales y regionales mantienen abiertas sus vías de
-              recaudación durante todo el año para financiar herramientas de
-              trabajo, reconstrucción de viviendas y equipamiento contra
-              incendios.
-            </p>
-          </div>
+          <h3 className="type-h4 is-flush">Cómo ayudar</h3>
+          <p className="type-body mt-4">
+            Información sobre cómo ayudar, cómo donar, dónde hacer voluntariado
+            y cuáles son las ONG a las que puede recurrirse en esta materia.
+          </p>
 
-          <h4 className="mt-10 font-sans text-[18px] font-bold md:text-[20px]">
-            Contacto de cuarteles de Bomberos de la Comarca Andina
+          <h4 className="type-h4">
+            Contacto de Cuarteles de Bomberos de la Comarca Andina
           </h4>
-          <OrgDetails orgs={BOMBEROS} />
+          <OrgDetails orgs={BOMBEROS} group="bomberos" />
 
-          <h4 className="mt-10 font-sans text-[18px] font-bold md:text-[20px]">
-            Organizaciones locales y campañas permanentes
+          <h4 className="type-h4">
+            Donación directa — Bomberos Voluntarios de Epuyén
           </h4>
-          <OrgDetails orgs={ORGS} />
+          <p className="type-body mt-4">
+            Las cuotas societarias financian insumos operativos básicos: desde
+            viandas y equipamiento de limpieza hasta logística administrativa y
+            respuestas ante alertas.
+          </p>
+          <p className="type-body mt-3">
+            Enlace directo:{" "}
+            <a
+              href="https://dnr.onl/9qqFSPgm?s=w"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              dnr.onl/9qqFSPgm
+            </a>
+          </p>
+
+          <h4 className="type-h4">
+            Organizaciones locales coordinadas para reconstruir y abastecer
+          </h4>
+          <p className="type-body mt-4">
+            Durante las emergencias de 2025-2026 en Río Negro y Chubut, la
+            Fundación Cooperar y la Asociación Civil Acercar articularon la
+            reconstrucción de viviendas y la gestión de comedores para
+            brigadistas, personas evacuadas y voluntarios.
+          </p>
+          <OrgDetails orgs={LOCAL_ORGS} group="locales" />
+
+          <h4 className="type-h4">Campañas permanentes para la Patagonia</h4>
+          <p className="type-body mt-4">
+            Entidades nacionales y regionales mantienen abiertas sus vías de
+            recaudación durante todo el año para financiar herramientas de
+            trabajo, reconstrucción de viviendas y equipamiento contra
+            incendios.
+          </p>
+          <OrgDetails orgs={CAMPAIGNS} group="campanas" />
+
+          <h4 className="type-h4">
+            Otras organizaciones impulsoras de la prevención de incendios
+            patagónicos
+          </h4>
+          <OrgDetails orgs={OTHER_ORGS} group="otras" />
         </div>
       </div>
     </section>

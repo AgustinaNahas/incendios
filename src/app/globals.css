@@ -86,17 +86,132 @@
 .type-h1 {
   font-family: var(--font-display), serif;
   font-weight: 900;
-  font-size: clamp(56px, 6vw, 110px);
+  font-size: clamp(56px, 6vw, 80px);
   line-height: 1.25;
   letter-spacing: -0.02em;
+  color: var(--accent);
 }
 
-.type-h3 {
+/* Volanta bajo el título de la pieza */
+.type-deck {
+  margin-top: 12px;
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.27;
+  color: var(--foreground);
+}
+
+/* Título de sección */
+.type-h2 {
   font-family: var(--font-display), serif;
   font-weight: 900;
   font-size: clamp(32px, 4vw, 48px);
   line-height: 1.05;
   color: var(--accent);
+}
+
+/* Subtítulo de bloque */
+.type-h3 {
+  margin-top: 3.5rem;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+
+.type-h3.is-flush {
+  margin-top: 0;
+}
+
+/* Subtítulo menor */
+.type-h4 {
+  margin-top: 2rem;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--foreground);
+}
+
+.type-h4.is-flush {
+  margin-top: 0;
+}
+
+/* Título de gráfico */
+.type-h5 {
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: var(--foreground);
+}
+
+/* Bajada debajo de cada título de sección */
+.type-bajada {
+  margin-top: 18px;
+  padding-bottom: 3rem;
+  font-size: 1rem;
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--foreground) 90%, transparent);
+}
+
+.type-body {
+  font-size: 1rem;
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--foreground) 90%, transparent);
+}
+
+.type-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.type-stack > .type-quote {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.type-quote {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--accent);
+  background-color: var(--raised);
+  padding: 2rem;
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+  .type-deck {
+    font-size: 33px;
+  }
+
+  .type-h3 {
+    font-size: 1.5rem;
+  }
+
+  .type-h4 {
+    font-size: 1.125rem;
+  }
+
+  .type-h5 {
+    font-size: 1.25rem;
+  }
+
+  .type-bajada,
+  .type-body {
+    font-size: 1.125rem;
+  }
+
+  .type-quote {
+    padding: 3rem;
+    font-size: 1.5rem;
+  }
 }
 
 html {
@@ -130,44 +245,30 @@ li::marker {
   color: var(--accent);
 }
 
+/* Enlaces dentro del texto corrido */
+p a,
+.text-link {
+  color: var(--accent);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  text-underline-offset: 2px;
+}
+
+p a:hover,
+.text-link:hover {
+  text-decoration-color: var(--accent);
+}
+
 /* Identidad compartida: tooltips + cards de scrolly */
 .ui-panel {
   background-color: var(--panel-soft);
-  border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent);
+  /* border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent); */
   opacity: 0.85;
-}
-
-.ui-panel--accent {
-  border-top: 2px solid var(--accent);
 }
 
 :focus-visible {
   outline: 2px solid var(--ember);
   outline-offset: 3px;
-}
-
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  z-index: 100;
-  transform: translateY(-160%);
-  border-radius: 2px;
-  background: var(--foreground);
-  color: var(--ink);
-  padding: 0.65rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: transform 0.15s ease;
-}
-
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-.skip-link:focus-visible {
-  outline-color: var(--danger);
 }
 
 @media (prefers-reduced-motion: reduce) {

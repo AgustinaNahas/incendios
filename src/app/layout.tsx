@@ -46,9 +46,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="min-h-full overflow-x-clip font-sans">
-        <a href="#intro" className="skip-link">
-          Saltar al contenido
-        </a>
         {children}
       </body>
     </html>
