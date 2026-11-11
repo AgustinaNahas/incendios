@@ -454,17 +454,6 @@ function SummerRainChart() {
             className="plot"
             transform={`translate(${margin.left},${margin.top})`}
           >
-            <text
-              x={innerW}
-              y={-6}
-              textAnchor="end"
-              fill={ACCENT}
-              fontSize={10}
-              fontWeight={700}
-              pointerEvents="none"
-            >
-              tendencia decreciente
-            </text>
             {SUMMERS.map((row) => {
               const hovered = focus.year === row.year;
               const dim = focus.year != null && !hovered;
