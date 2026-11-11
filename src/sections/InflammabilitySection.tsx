@@ -254,8 +254,8 @@ export function InflammabilitySection() {
           ))}
         </ul>
 
-        <h4 className="type-h4">
-          Indicadores meteorológicos de la estación Aero Esquel durante el
+        <h4 className="type-h4 !mt-[4rem] !mb-[3rem]">
+          Indicadores meteorológicos de la estación Aero Esquel en
           verano.
         </h4>
       </div>
@@ -301,7 +301,7 @@ export function InflammabilitySection() {
                 <figcaption className="mb-3 mt-[50px]  text-center text-sm font-semibold tracking-wide text-foreground">
                   Vulnerabilidad de las especies al fuego
                 </figcaption>
-                <div className="mx-auto mt-12 flex w-[70%] items-center gap-3 md:gap-4">
+                <div className="mx-auto mt-3 flex w-[70%] items-center gap-3 md:gap-4">
                   <span className="shrink-0 text-sm font-medium">
                     Alta
                   </span>

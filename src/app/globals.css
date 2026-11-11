@@ -297,6 +297,27 @@ p a:hover,
   }
 }
 
+@keyframes header-scroll-chevron {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.55;
+  }
+}
+
+.header-scroll-hint {
+  will-change: opacity, transform;
+  transition: none;
+}
+
+.header-scroll-hint__chevron {
+  animation: header-scroll-chevron 1.6s ease-in-out infinite;
+}
+
 .header-smoke-puff {
   animation: header-smoke 8s ease-in-out infinite alternate;
   transform-origin: 60% 80%;

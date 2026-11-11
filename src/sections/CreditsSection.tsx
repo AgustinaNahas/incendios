@@ -1,12 +1,12 @@
 const LEFT = [
   {
     role: "Investigación periodística",
-    names: "Luisina Acosta · Raquel Ahumada ·  Sofía Martínez Mariotti",
+    names: "Raquel Ahumada · Luisina Acosta · Sofía Martínez Mariotti",
   },
   {
     role: "Colaboración con AIP",
     names:
-      "Fátima Morales · Nahuel Toledo · Gabriel Ramonet · Alicia Miller · Érika Alfonso · Mariana Olmedo",
+      "XXX",
   },
   { role: "Desarrollo web", names: "María Agustina Nahas" },
   { role: "Diseño", names: "Candelaria Victorica" },

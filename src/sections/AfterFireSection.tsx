@@ -397,27 +397,8 @@ export function AfterFireSection() {
             y cuáles son las ONG a las que puede recurrirse en esta materia.
           </p>
 
-          <h4 className="type-h4">
-            Contacto de Cuarteles de Bomberos de la Comarca Andina
-          </h4>
-          <OrgDetails orgs={BOMBEROS} />
+          <OrgDetails orgs={[...BOMBEROS, ...DIRECT_DONATION, ...LOCAL_ORGS, ...CAMPAIGNS, ...OTHER_ORGS]} />
 
-          <h4 className="type-h4">Donación directa</h4>
-          <OrgDetails orgs={DIRECT_DONATION} />
-
-          <h4 className="type-h4">
-            Organizaciones locales coordinadas para reconstruir y abastecer
-          </h4>
-          <OrgDetails orgs={LOCAL_ORGS} />
-
-          <h4 className="type-h4">Campañas permanentes para la Patagonia</h4>
-          <OrgDetails orgs={CAMPAIGNS} />
-
-          <h4 className="type-h4">
-            Otras organizaciones impulsoras de la prevención de incendios
-            patagónicos
-          </h4>
-          <OrgDetails orgs={OTHER_ORGS} />
         </div>
 
         <div className="mt-10 border border-foreground/25 bg-ink/55 px-5 py-8 md:px-8 md:py-10">

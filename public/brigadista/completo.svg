@@ -105,6 +105,76 @@
 </g>
 </g>
 </g>
+<g id="Numeros Casco" opacity="0">
+<g id="num-1">
+<circle cx="3939.2" cy="597.925" r="16.168" fill="#1A1A1A" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle" dominant-baseline="central"><tspan x="3939.2" y="597.925">1</tspan></text>
+</g>
+<g id="num-2">
+<circle cx="4180.06" cy="1155.05" r="16.168" fill="#1A1A1A" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle" dominant-baseline="central"><tspan x="4180.06" y="1155.05">2</tspan></text>
+</g>
+<g id="num-3">
+<circle cx="3557.06" cy="895.684" r="16.168" fill="#1A1A1A" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle" dominant-baseline="central"><tspan x="3557.06" y="895.684">3</tspan></text>
+</g>
+</g>
+<g id="Numeros campera" opacity="0">
+<g id="num-4">
+<circle cx="4175.06" cy="1648" r="39.1304" fill="#1A1A1A" stroke-width="2.42024" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="48.4049" text-anchor="middle" dominant-baseline="central"><tspan x="4175.06" y="1648">4</tspan></text>
+</g>
+<g id="num-6">
+<circle cx="4397.35" cy="3054.75" r="39.1304" fill="#1A1A1A" stroke-width="2.42024" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="48.4049" text-anchor="middle" dominant-baseline="central"><tspan x="4397.35" y="3054.75">6</tspan></text>
+</g>
+<g id="num-5">
+<circle cx="4545.09" cy="2268.03" r="39.1304" fill="#1A1A1A" stroke-width="2.42024" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="48.4049" text-anchor="middle" dominant-baseline="central"><tspan x="4545.09" y="2268.03">5</tspan></text>
+</g>
+</g>
+<g id="Numeros Guante" opacity="0">
+<g id="num-7">
+<circle cx="4488.97" cy="3006.28" r="15.3119" fill="#1A1A1A" stroke-width="0.947049" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="18.941" text-anchor="middle" dominant-baseline="central"><tspan x="4488.97" y="3006.28">7</tspan></text>
+</g>
+<g id="num-8">
+<circle cx="4392.27" cy="3395.7" r="15.3119" fill="#1A1A1A" stroke-width="0.947049" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="18.941" text-anchor="middle" dominant-baseline="central"><tspan x="4392.27" y="3395.7">8</tspan></text>
+</g>
+</g>
+<g id="Numeros pantalon" opacity="0">
+<g id="num-9">
+<circle cx="4191.63" cy="3809.93" r="40.3242" fill="#1A1A1A" stroke-width="2.49408" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="49.8816" text-anchor="middle" dominant-baseline="central"><tspan x="4191.63" y="3809.93">9</tspan></text>
+</g>
+<g id="num-11">
+<circle cx="3721.57" cy="5237.84" r="40.3242" fill="#1A1A1A" stroke-width="2.49408" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="49.8816" text-anchor="middle" dominant-baseline="central"><tspan x="3721.57" y="5237.84">11</tspan></text>
+</g>
+<g id="num-10">
+<circle cx="4218.23" cy="4351.99" r="40.3242" fill="#1A1A1A" stroke-width="2.49408" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="49.8816" text-anchor="middle" dominant-baseline="central"><tspan x="4218.23" y="4351.99">10</tspan></text>
+</g>
+</g>
+<g id="Numeros BOTAS" opacity="0">
+<g id="num-12">
+<circle cx="4304.39" cy="4958.25" r="17.1383" fill="#1A1A1A" stroke-width="1.06001" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="21.2003" text-anchor="middle" dominant-baseline="central"><tspan x="4304.39" y="4958.25">12</tspan></text>
+</g>
+<g id="num-14">
+<circle cx="4007.78" cy="5571.38" r="17.1383" fill="#1A1A1A" stroke-width="1.06001" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="21.2003" text-anchor="middle" dominant-baseline="central"><tspan x="4007.78" y="5571.38">14</tspan></text>
+</g>
+<g id="num-15">
+<circle cx="4234.75" cy="5615.11" r="17.1383" fill="#1A1A1A" stroke-width="1.06001" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="21.2003" text-anchor="middle" dominant-baseline="central"><tspan x="4234.75" y="5615.11">15</tspan></text>
+</g>
+<g id="num-13">
+<circle cx="4315.69" cy="5188.64" r="17.1383" fill="#1A1A1A" stroke-width="1.06001" stroke="#FFFDFD"/>
+<text fill="white" font-family="system-ui,sans-serif" font-size="21.2003" text-anchor="middle" dominant-baseline="central"><tspan x="4315.69" y="5188.64">13</tspan></text>
+</g>
+</g>
 <g id="Textos sobre primer brigadista">
 <text id="Antorcha de goteo" fill="white" style="white-space: pre" xml:space="preserve" font-family="Noto Serif Tamil" font-size="127.241" font-weight="bold" letter-spacing="0em"><tspan x="1635" y="4234.22">Antorcha de goteo</tspan></text>
 <text id="Mochila t&#195;&#161;ctica" fill="white" style="white-space: pre" xml:space="preserve" font-family="Noto Serif Tamil" font-size="127.241" font-weight="bold" letter-spacing="0em"><tspan x="5134.13" y="1228.16">Mochila t&#xe1;ctica</tspan></text>

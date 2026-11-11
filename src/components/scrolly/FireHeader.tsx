@@ -52,6 +52,7 @@ export function FireHeader() {
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const cardsTrackRef = useRef<HTMLDivElement>(null);
   const cardSlotRef = useRef<HTMLDivElement>(null);
+  const scrollHintRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -76,6 +77,17 @@ export function FireHeader() {
         const travel = clamp(cardProgress, -INTRO_UNITS, maxTravel);
         const y = -travel * slotH;
         cardsTrackRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
+      }
+
+      // Se desvanece al entrar el primer paso (intro: card 1 sube).
+      if (scrollHintRef.current) {
+        const introIn = clamp((cardProgress + INTRO_UNITS) / 0.42);
+        const hintOpacity = reduced ? 0 : 1 - smoothstep(introIn);
+        const hintY = reduced ? 0 : introIn * 12;
+        scrollHintRef.current.style.opacity = String(hintOpacity);
+        scrollHintRef.current.style.transform = `translate3d(-50%, ${hintY}px, 0)`;
+        scrollHintRef.current.style.visibility =
+          hintOpacity < 0.02 ? "hidden" : "visible";
       }
 
       const vh = window.innerHeight;
@@ -167,6 +179,30 @@ export function FireHeader() {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 z-[21] h-20 bg-gradient-to-b from-transparent from-0% via-background/45 via-[40%] to-background to-[82%]"
         />
+
+        <div
+          ref={scrollHintRef}
+          aria-hidden
+          className="header-scroll-hint pointer-events-none absolute bottom-6 left-1/2 z-[23] flex -translate-x-1/2 flex-col items-center gap-1.5 text-white md:bottom-8"
+        >
+          <span className="font-sans text-[11px] font-medium uppercase tracking-[0.35em]">
+            Scroll
+          </span>
+          <svg
+            className="header-scroll-hint__chevron h-4 w-4"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M3 5.5 8 10.5 13 5.5"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
 
         {/* Cada card entra por el borde inferior y sale por el superior. */}
         <div className="pointer-events-none absolute inset-0 z-[22] overflow-hidden">
