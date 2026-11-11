@@ -9,7 +9,7 @@ const LEFT = [
       "Fátima Morales · Nahuel Toledo · Gabriel Ramonet · Alicia Miller · Érika Alfonso · Mariana Olmedo",
   },
   { role: "Desarrollo web", names: "María Agustina Nahas" },
-  { role: "Diseño", names: "María Agustina Nahas" },
+  { role: "Diseño", names: "Candelaria Victorica" },
   { role: "Mentoría general del proyecto", names: "Mariana Trigo Viera" },
 ] as const;
 
