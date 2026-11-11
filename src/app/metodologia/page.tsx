@@ -323,15 +323,13 @@ export default function MetodologiaPage() {
             <ul className="list-disc space-y-2 pl-5">
               <li className="type-body">
                 <TextLink href="https://www.argentina.gob.ar/normativa/nacional/ley-26815-207401/texto">
-                  Ley 26.815 de Manejo del Fuego
+                  Ley 26.815 de Manejo del Fuego.
                 </TextLink>
-                .
               </li>
               <li className="type-body">
                 <TextLink href="https://www.argentina.gob.ar/normativa/nacional/ley-26331-136125/texto">
-                  Ley 26.331 de Bosques Nativos
+                  Ley 26.331 de Bosques Nativos.
                 </TextLink>
-                .
               </li>
               <li className="type-body">
                 Ley 27.275 de Acceso a la Información Pública y leyes
@@ -351,16 +349,14 @@ export default function MetodologiaPage() {
               <li className="type-body">
                 <TextLink href="https://monitorpresupuestario.acij.org.ar/explorar/monitor">
                   Monitor Presupuestario de la Asociación Civil por la Igualdad
-                  y la Justicia (ACIJ)
+                  y la Justicia (ACIJ).
                 </TextLink>
-                .
               </li>
               <li className="type-body">
                 Datos presupuestarios procesados por la{" "}
                 <TextLink href="https://farn.org.ar/">
-                  Fundación Ambiente y Recursos Naturales (FARN)
+                  Fundación Ambiente y Recursos Naturales (FARN).
                 </TextLink>
-                .
               </li>
               <li className="type-body">
                 Información del Servicio Meteorológico Nacional.
@@ -380,13 +376,10 @@ export default function MetodologiaPage() {
                 <TextLink href="https://www.greenpeace.org/static/planet4-argentina-stateless/2026/05/a3a80031-reporte-incendios-gp-2025-26.pdf">
                   Reporte de incendios 2025-2026 de Greenpeace
                 </TextLink>
-                ; publicaciones del CENPAT-CONICET y de CONICET–Fundación
-                Bariloche; estudio sobre interfase urbano-forestal en la
-                Comarca Andina (
-                <TextLink href="https://silvis.forest.wisc.edu/wp-content/uploads/2018/12/Godoy_etal_IJWF_ArgentinaWUI_2019.pdf">
-                  Godoy et al., 2019
-                </TextLink>
-                ).
+                {
+                  "; publicaciones del CENPAT-CONICET y de CONICET–Fundación Bariloche; estudio sobre interfase urbano-forestal en la Comarca Andina ("
+                }
+                <TextLink href="https://silvis.forest.wisc.edu/wp-content/uploads/2018/12/Godoy_etal_IJWF_ArgentinaWUI_2019.pdf">Godoy et al., 2019</TextLink>{")."}
               </li>
             </ul>
           </Question>
@@ -460,20 +453,42 @@ export default function MetodologiaPage() {
               pública. Una de ellas debió presentarse dos veces por derivaciones
               entre organismos. La cronología completa está en el anexo.
             </p>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[56rem] border-collapse text-left text-sm">
+            <ul className="space-y-6 md:hidden">
+              {AIP_REQUESTS.map((row) => (
+                <li
+                  key={row.organ}
+                  className="space-y-3 border-b border-foreground/15 pb-6"
+                >
+                  <p className="type-body font-bold">{row.organ}</p>
+                  <p className="type-body">
+                    <span className="font-bold">Fecha. </span>
+                    {row.date}
+                  </p>
+                  <p className="type-body">
+                    <span className="font-bold">Solicitud realizada. </span>
+                    {row.request}
+                  </p>
+                  <p className="type-body">
+                    <span className="font-bold">Respuesta recibida. </span>
+                    {row.response}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden overflow-x-auto md:block">
+              <table className="w-full table-fixed border-collapse text-left text-sm">
                 <thead>
                   <tr>
-                    <th className="border-b border-foreground/30 px-3 py-2 font-bold">
+                    <th className="w-[24%] border-b border-foreground/30 px-3 py-2 font-bold break-words">
                       Órgano responsable de proporcionar la información
                     </th>
-                    <th className="border-b border-foreground/30 px-3 py-2 font-bold">
+                    <th className="w-[18%] border-b border-foreground/30 px-3 py-2 font-bold break-words">
                       Fecha
                     </th>
-                    <th className="border-b border-foreground/30 px-3 py-2 font-bold">
+                    <th className="w-[32%] border-b border-foreground/30 px-3 py-2 font-bold break-words">
                       Solicitud realizada
                     </th>
-                    <th className="border-b border-foreground/30 px-3 py-2 font-bold">
+                    <th className="w-[26%] border-b border-foreground/30 px-3 py-2 font-bold break-words">
                       Respuesta recibida
                     </th>
                   </tr>
@@ -481,16 +496,16 @@ export default function MetodologiaPage() {
                 <tbody>
                   {AIP_REQUESTS.map((row) => (
                     <tr key={row.organ}>
-                      <td className="border-b border-foreground/15 px-3 py-2 align-top">
+                      <td className="border-b border-foreground/15 px-3 py-2 align-top break-words">
                         {row.organ}
                       </td>
-                      <td className="border-b border-foreground/15 px-3 py-2 align-top">
+                      <td className="border-b border-foreground/15 px-3 py-2 align-top break-words">
                         {row.date}
                       </td>
-                      <td className="border-b border-foreground/15 px-3 py-2 align-top">
+                      <td className="border-b border-foreground/15 px-3 py-2 align-top break-words">
                         {row.request}
                       </td>
-                      <td className="border-b border-foreground/15 px-3 py-2 align-top">
+                      <td className="border-b border-foreground/15 px-3 py-2 align-top break-words">
                         {row.response}
                       </td>
                     </tr>
