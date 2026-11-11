@@ -29,20 +29,9 @@ type Summer = {
 const SUMMERS = climate.summers as Summer[];
 const YEARS = SUMMERS.map((d) => d.year);
 const LAST_YEAR = YEARS[YEARS.length - 1] ?? 2026;
-const RECENT_FROM = 2021;
 const WIND_REVIEW_FROM = 2023;
 
-const EARLY_RAIN_AVG =
-  d3.mean(
-    SUMMERS.filter((d) => d.year <= 2010),
-    (d) => d.precipMm,
-  ) ?? 0;
-
 const PRECIP_MAX = d3.max(SUMMERS, (d) => d.precipMm) ?? 0;
-
-function isRecentDry(row: Summer) {
-  return row.year >= RECENT_FROM && row.precipMm < EARLY_RAIN_AVG;
-}
 
 function isWindReview(year: number) {
   return year >= WIND_REVIEW_FROM;
@@ -155,6 +144,35 @@ function markerPercent(viewW: number, viewH: number, xPx: number, yPx: number) {
     left: (xPx / viewW) * 100,
     top: (yPx / viewH) * 100,
   };
+}
+
+function LastBarValue({
+  x,
+  year,
+  yTop,
+  label,
+  dim,
+}: {
+  x: d3.ScaleBand<number>;
+  year: number;
+  yTop: number;
+  label: string;
+  dim: boolean;
+}) {
+  return (
+    <text
+      x={(x(year) ?? 0) + x.bandwidth() / 2}
+      y={yTop - 5}
+      textAnchor="middle"
+      fill={ACCENT}
+      fontSize={11}
+      fontWeight={700}
+      opacity={dim ? 0.3 : 1}
+      pointerEvents="none"
+    >
+      {label}
+    </text>
+  );
 }
 
 function columnX(
@@ -343,6 +361,13 @@ function HotDaysChart() {
               strokeDasharray="4 3"
               pointerEvents="none"
             />
+            <LastBarValue
+              x={x}
+              year={LAST_YEAR}
+              yTop={y(SUMMERS.at(-1)?.hotDays ?? 0)}
+              label={String(SUMMERS.at(-1)?.hotDays ?? "")}
+              dim={focus.year != null && focus.year !== LAST_YEAR}
+            />
             {SUMMERS.map((row) => {
               const hit = columnX(x, row.year);
               return (
@@ -368,7 +393,7 @@ function HotDaysChart() {
               margin.left + (x(active.year) ?? 0) + x.bandwidth() / 2,
               margin.top + y(active.hotDays),
             )}
-            kicker={String(active.year)}
+            kicker={`Año ${active.year}`}
             body={
               active.hotDays === 0
                 ? "Ningún día con temperaturas extremas"
@@ -444,7 +469,7 @@ function SummerRainChart() {
               const hovered = focus.year === row.year;
               const dim = focus.year != null && !hovered;
               const barH = Math.max(0, innerH - y(row.precipMm));
-              const highlight = row.year === LAST_YEAR || isRecentDry(row);
+              const highlight = row.year === LAST_YEAR;
               return (
                 <rect
                   key={row.year}
@@ -458,6 +483,13 @@ function SummerRainChart() {
                 />
               );
             })}
+            <LastBarValue
+              x={x}
+              year={LAST_YEAR}
+              yTop={y(SUMMERS.at(-1)?.precipMm ?? 0)}
+              label={formatHa(SUMMERS.at(-1)?.precipMm ?? 0, 1)}
+              dim={focus.year != null && focus.year !== LAST_YEAR}
+            />
             {SUMMERS.map((row) => {
               const hit = columnX(x, row.year);
               return (
@@ -483,7 +515,7 @@ function SummerRainChart() {
               margin.left + (x(active.year) ?? 0) + x.bandwidth() / 2,
               margin.top + y(active.precipMm),
             )}
-            kicker={String(active.year)}
+            kicker={`Año ${active.year}`}
             body={`${formatHa(active.precipMm, 1)} mm de precipitación acumulada`}
           />
         ) : null}
@@ -601,7 +633,7 @@ function WindDaysChart() {
               margin.left + (x(active.year) ?? 0) + x.bandwidth() / 2,
               margin.top + y(active.windDays),
             )}
-            kicker={String(active.year)}
+            kicker={`Año ${active.year}`}
             body={`${daysLabel(active.windDays)} con ráfagas de viento de más de 30 km/h`}
           />
         ) : null}
@@ -612,13 +644,13 @@ function WindDaysChart() {
 
 export function SummerClimateCharts() {
   return (
-    <div className="@container mt-10 md:mt-12">
+    <div className="@container">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-x-10 md:gap-y-0">
         <HotDaysChart />
         <SummerRainChart />
         <WindDaysChart />
       </div>
-      <p className="mt-[10px] text-[11px] leading-[1.3] text-foreground/65 @min-[1050px]:whitespace-nowrap">
+      <p className="mt-[10px] text-[11px] leading-[1.3] text-foreground/65 @min-[1050px]:whitespace-nowrap mb-12">
         Fuente: {climate.source} *El gráfico muestra una baja aparente de los
         vientos registrados, que no necesariamente implica una caída real ya que
         puede deberse a cambios de instrumental.

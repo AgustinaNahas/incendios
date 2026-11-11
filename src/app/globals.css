@@ -106,9 +106,21 @@
 .type-h2 {
   font-family: var(--font-display), serif;
   font-weight: 900;
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: 40px;
   line-height: 1.05;
   color: var(--accent);
+}
+
+/* Línea previa al título: 68px arriba y abajo */
+.section-rule {
+  padding-top: 68px;
+}
+
+.section-rule::before {
+  content: "";
+  display: block;
+  border-top: 1px solid rgb(255 255 255 / 0.31);
+  margin-bottom: 68px;
 }
 
 /* Subtítulo de bloque */
@@ -190,14 +202,14 @@
     font-size: 1.25rem;
   }
 
-  .type-bajada,
   .type-body {
     font-size: 1.125rem;
   }
 
   .type-quote {
     padding: 3rem;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+    line-height: 1.4;
   }
 }
 

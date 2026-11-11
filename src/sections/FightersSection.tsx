@@ -53,9 +53,7 @@ export function FightersSection() {
       id="combatientes"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 mt-4 mb-6 md:px-8">
-      <div className="border-t border-t-white/31 pb-12"></div>
-
+      <div className="section-rule mx-auto max-w-[800px] px-5 mb-6 md:px-8">
         <h2 className="type-h2">Quiénes combaten el fuego</h2>
         <p className="type-bajada">
           Brigadistas, bomberos voluntarios y comunidades sostienen la primera
@@ -94,7 +92,7 @@ export function FightersSection() {
 
       <BrigadistaAnatomy />
 
-      <div className="mx-auto max-w-[800px] px-5 pb-12 md:px-8 md:pb-4">
+      <div className="mx-auto max-w-[800px] px-5 md:px-8">
         
 
         <div className="type-stack mt-10">

@@ -80,7 +80,7 @@ export function FireSeasonHeatmap({
                   rx={2}
                 >
                   <title>
-                    {month} {year}: {v} incendios
+                    {month} año {year}: {v} incendios
                   </title>
                 </rect>
               );

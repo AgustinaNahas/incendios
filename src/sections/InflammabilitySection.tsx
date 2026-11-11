@@ -15,9 +15,9 @@ type Kind = "arbol" | "planta";
 
 /** Misma paleta que las categorías OTBN del mapa (I / II / III). */
 const LEVELS: Record<Level, { label: string; color: string; ink: string }> = {
-  alto: { label: "Alto", color: OTBN_COLORS[1], ink: "var(--foreground)" },
-  medio: { label: "Medio", color: OTBN_COLORS[2], ink: "var(--ink)" },
-  bajo: { label: "Bajo", color: OTBN_COLORS[3], ink: "var(--foreground)" },
+  alto: { label: "Alta", color: OTBN_COLORS[1], ink: "var(--foreground)" },
+  medio: { label: "Media", color: OTBN_COLORS[2], ink: "var(--ink)" },
+  bajo: { label: "Baja", color: OTBN_COLORS[3], ink: "var(--foreground)" },
 };
 
 const LEVEL_ORDER: Level[] = ["alto", "medio", "bajo"];
@@ -72,9 +72,6 @@ function cardWidthFor(viewport: number) {
 }
 
 function kindLabel(kind: Kind, origin: Origin) {
-  if (kind === "planta") {
-    return origin === "exotica" ? "Planta exótica" : "Planta nativa";
-  }
   return origin === "exotica" ? "Árbol exótico" : "Árbol nativo";
 }
 
@@ -195,7 +192,7 @@ export function InflammabilitySection() {
       id="inflamabilidad"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-12 pb-12 md:px-8 md:pt-12">
+      <div className="mx-auto max-w-[800px] px-5 pt-12 md:px-8 md:pt-12">
         <h3 className="type-h3 is-flush">Factores de propagación</h3>
         <h4 className="type-h4">Cambios climáticos</h4>
         <div className="type-stack mt-4">
@@ -256,9 +253,14 @@ export function InflammabilitySection() {
             </li>
           ))}
         </ul>
+
+        <h4 className="type-h4">
+          Indicadores meteorológicos de la estación Aero Esquel durante el
+          verano.
+        </h4>
       </div>
 
-      <div className="mx-auto w-full max-w-[1200px] px-5 md:px-8">
+      <div className="mx-auto mt-4 w-full max-w-[1200px] px-5 md:px-8">
         <SummerClimateCharts />
       </div>
 
@@ -288,7 +290,7 @@ export function InflammabilitySection() {
       <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
         <div
           ref={stickyRef}
-          className="sticky top-3 z-20 flex flex-col bg-background pb-2"
+          className="sticky top-3 z-20 flex flex-col bg-background"
         >
           <div
             ref={viewportRef}
@@ -296,15 +298,15 @@ export function InflammabilitySection() {
           >
             <figure className="mb-3 shrink-0 px-5 pt-4 pb-2 md:px-8 md:pt-5">
               <div className="mx-auto w-full max-w-[800px]">
-                <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-foreground md:text-base">
+                <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-foreground">
                   Vulnerabilidad de las especies al fuego
                 </figcaption>
-                <div className="mx-auto flex w-[70%] items-center gap-3 md:gap-4">
-                  <span className="shrink-0 text-base font-medium md:text-lg">
-                    Alto
+                <div className="mx-auto mt-[50px] flex w-[70%] items-center gap-3 md:gap-4">
+                  <span className="shrink-0 text-sm font-medium">
+                    Alta
                   </span>
                   <div
-                    className="flex h-[10px] flex-1 gap-1 md:h-[14px]"
+                    className="flex h-2 flex-1 gap-1"
                     role="group"
                     aria-label="Filtrar por vulnerabilidad frente al fuego"
                   >
@@ -335,8 +337,8 @@ export function InflammabilitySection() {
                       );
                     })}
                   </div>
-                  <span className="shrink-0 text-base font-medium md:text-lg">
-                    Bajo
+                  <span className="shrink-0 text-sm font-medium">
+                    Baja
                   </span>
                 </div>
               </div>
@@ -364,12 +366,12 @@ export function InflammabilitySection() {
                       style={{ width: cardWidth }}
                     >
                       <div
-                        className="h-1.5 w-full shrink-0"
+                        className="h-2 w-full shrink-0"
                         style={{ background: tone.color }}
                         aria-hidden
                       />
 
-                      <div className="relative h-[120px] w-full shrink-0 md:h-[150px]">
+                      <div className="relative h-[250px] w-full shrink-0">
                         <Image
                           src={withBasePath(sp.image)}
                           alt={`${sp.commonName} (${sp.scientificName})`}
@@ -383,7 +385,7 @@ export function InflammabilitySection() {
                         <p className="text-[10px] font-normal tracking-[0.16em] text-foreground uppercase">
                           {kindLabel(kind, origin)}
                         </p>
-                        <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-lg leading-none font-black tracking-wide uppercase md:text-xl">
+                        <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-[18px] leading-none font-black tracking-wide uppercase">
                           {sp.commonName}
                         </h3>
                         <p className="mt-1 text-xs italic text-foreground/70">
@@ -433,7 +435,7 @@ export function InflammabilitySection() {
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-[800px] px-5 pt-2 pb-4 md:px-8">
+          <div className="mx-auto w-full max-w-[800px] px-5 mt-12 pt-2 md:px-8">
               <h3 className="type-h3 is-flush">Condiciones estructurales</h3>
               <div className="type-stack mt-3">
                 <p className="type-body">
@@ -456,7 +458,7 @@ export function InflammabilitySection() {
           </div>
         </div>
 
-      <div className="mx-auto max-w-[800px] px-5 pt-8 pb-8 md:px-8">
+      <div className="mx-auto max-w-[800px] px-5 md:px-8">
         <Quote
           quote="“El problema principal para mí está relacionado con la gestión territorial. En los últimos 25 años acá, la Comarca creció de manera exponencial”."
           name="Hernán Andrade"

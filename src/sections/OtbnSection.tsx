@@ -140,14 +140,13 @@ export function OtbnSection() {
       id="otbn"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-          <div className="pointer-events-none px-4 pt-8 md:px-8 lg:px-12 lg:pr-6 ">
-            <h2 className="type-h2 mx-auto w-full max-w-[800px] px-6">
-              <div className="border-t border-t-white/31 pb-12"></div>
-              El mapa del riesgo
-            </h2>
-            <p className="type-bajada mx-auto w-full max-w-[800px] px-6">
-              La ecorregión que merece ser mirada con más atención
-            </p>
+          <div className="pointer-events-none px-4 md:px-8 lg:px-12 lg:pr-6">
+            <div className="section-rule mx-auto w-full max-w-[800px] px-6">
+              <h2 className="type-h2">El mapa del riesgo</h2>
+              <p className="type-bajada">
+                La ecorregión que merece ser mirada con más atención
+              </p>
+            </div>
           </div>
       <div className="relative">
         <div className="sticky top-0 z-10 h-svh w-full">
@@ -265,7 +264,7 @@ export function OtbnSection() {
                         </div>
                       ) : null}
                       {displayed.note ? (
-                        <p className="mt-5 text-base leading-relaxed text-white">
+                        <p className="mt-5 leading-relaxed text-[14px] text-foreground/65 ">
                           {displayed.note.before}
                           <a
                             href={displayed.note.href}

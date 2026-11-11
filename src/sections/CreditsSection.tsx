@@ -1,15 +1,19 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 const LEFT = [
   {
     role: "Investigación periodística",
-    names: "Fabricio Bovier · Juan Manuel Artero · Valentina Fonseca",
+    names: "Luisina Acosta · Raquel Ahumada ·  Sofía Martínez Mariotti",
   },
   {
     role: "Colaboración con AIP",
     names:
       "Fátima Morales · Nahuel Toledo · Gabriel Ramonet · Alicia Miller · Érika Alfonso · Mariana Olmedo",
   },
-  { role: "Desarrollo web", names: "Cristian Federico Córdoba" },
-  { role: "Diseño", names: "Micaela Estefanía López" },
+  { role: "Desarrollo web", names: "María Agustina Nahas" },
+  { role: "Diseño", names: "María Agustina Nahas" },
   { role: "Mentoría general del proyecto", names: "Mariana Trigo Viera" },
 ] as const;
 
@@ -74,13 +78,53 @@ function CreditColumn({
   );
 }
 
+/** Línea a ancho de ventana (incluye gutter del scrollbar). */
+function FullBleedRule() {
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [top, setTop] = useState(0);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const anchor = anchorRef.current;
+    if (!anchor) return;
+
+    const update = () => {
+      const y = anchor.getBoundingClientRect().top;
+      setTop(y);
+      setShown(y < window.innerHeight && y > -2);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  return (
+    <>
+      <div ref={anchorRef} aria-hidden className="h-0" />
+      <div
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-30 h-px bg-white/31"
+        style={{
+          transform: `translate3d(0, ${top}px, 0)`,
+          width: "100vw",
+          opacity: shown ? 1 : 0,
+        }}
+      />
+    </>
+  );
+}
+
 export function CreditsSection() {
   return (
     <footer className="bg-background text-foreground">
-      <div className="mx-auto max-w-[800px] px-5 pt-4 pb-20 md:px-8 md:pb-28">
-        <div className="border-t border-t-white/31" />
-
-        <p className="type-body mt-10">
+      <FullBleedRule />
+      <div className="pt-4 pb-20 md:pb-28">
+        <p className="type-body mt-10 mx-auto max-w-[800px] px-6">
           Esta investigación fue elaborada durante 2026 en el ámbito de FOCO.
           Bootcamp de Periodismo, Acceso a la Información Pública y
           Visualización de Datos de la{" "}
@@ -104,7 +148,7 @@ export function CreditsSection() {
           (Comunidad Informada).
         </p>
 
-        <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+        <div className="mx-auto mt-10 flex max-w-[800px] flex-col gap-8 px-6 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="text-xs font-semibold tracking-[0.16em] text-foreground/70 uppercase">
               Contacto
@@ -161,8 +205,9 @@ export function CreditsSection() {
           </a>
         </div>
 
-        <div className="mt-10 border-t border-foreground/20 pt-8">
-          <p className="text-xs font-semibold tracking-[0.16em] text-foreground/70 uppercase">
+        <div className="mx-auto mt-10 max-w-[800px] px-6 pt-8">
+          <div className="mb-20 border-t border-t-white/31" />
+          <p className="mx-auto max-w-[800px] text-xs font-semibold tracking-[0.16em] text-foreground/70 uppercase">
             Créditos
           </p>
           <div className="mt-6 grid gap-x-12 md:grid-cols-2">
@@ -170,8 +215,6 @@ export function CreditsSection() {
             <CreditColumn items={RIGHT} />
           </div>
         </div>
-
-        
       </div>
     </footer>
   );

@@ -12,7 +12,7 @@ export function LeadSection() {
       id="intro"
       className="relative z-10 -mt-[10svh] text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pb-6 pt-[16svh] text-center md:px-8">
+      <div className="mx-auto max-w-[900px] px-5 pb-6 pt-[16svh] text-center md:px-8">
         <Image
           src={withBasePath("/header/foco-bootcamp.png")}
           alt="FOCO Bootcamp"
@@ -34,7 +34,7 @@ export function LeadSection() {
       </div>
 
       <div className="bg-background">
-        <div className="mx-auto max-w-[800px] px-5 pb-12 md:px-8 md:pb-10">
+        <div className="mx-auto max-w-[800px] px-5 md:px-8">
           <p className="mt-12 mb-6 text-left text-[16px] font-bold leading-relaxed text-foreground">
             Argentina, 18 de noviembre de 2026
           </p>

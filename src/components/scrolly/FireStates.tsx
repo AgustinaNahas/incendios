@@ -160,7 +160,7 @@ export function FireStates() {
         <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
           <div
             ref={stickyRef}
-            className="sticky top-3 z-20 flex flex-col bg-background pb-2"
+            className="sticky top-3 z-20 flex flex-col bg-background"
           >
             <div
               ref={viewportRef}
@@ -192,7 +192,7 @@ export function FireStates() {
                       </div>
 
                       <div className="px-4 pt-1 pb-4 md:px-[25px] md:pb-[25px]">
-                        <h4 className="font-[family-name:var(--font-display)] text-lg leading-none font-black tracking-wide md:text-xl">
+                        <h4 className="font-[family-name:var(--font-display)] text-lg leading-none uppercase font-black tracking-wide md:text-[16px] mt-[10px]">
                           {state.title}
                         </h4>
                         <div
@@ -250,17 +250,17 @@ export function FireStates() {
 
             <div
               id="contexto"
-              className="mx-auto w-full max-w-[800px] scroll-mt-8 px-5 pt-2 pb-4 md:px-8"
+              className="section-rule mx-auto w-full max-w-[800px] scroll-mt-8 px-5 md:px-8"
             >
-              <h2 className="type-h2 mt-2">El riesgo que nadie previene</h2>
-              <p className="type-bajada !mt-2 !pb-0">
+              <h2 className="type-h2">El riesgo que nadie previene</h2>
+              <p className="type-bajada !pb-0">
                 Factores de ignición, de propagación y condiciones estructurales:
                 las variables que una política preventiva debería gestionar antes
                 de la primera llama
               </p>
 
-              <h3 className="type-h3 !mt-5">Factores de ignición</h3>
-              <h4 className="type-h4 !mt-3">Origen natural</h4>
+              <h3 className="type-h3 ">Factores de ignición</h3>
+              <h4 className="type-h4 ">Origen natural</h4>
               <p className="type-body mt-2">
                 Los rayos pueden iniciar incendios que permanecen latentes durante
                 días y luego se expanden bajo condiciones favorables, como ocurrió

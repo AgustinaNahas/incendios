@@ -119,7 +119,7 @@ function BudgetTooltip({
       style={{ left: `${left}%`, top: `${top}%`, transform }}
     >
       <p className="font-sans text-sm font-bold leading-none text-accent">
-        {point.year}
+        Año {point.year}
       </p>
       <dl className="mt-1.5 space-y-0.5 text-sm leading-snug text-foreground">
         {rows.map(([label, value]) => (

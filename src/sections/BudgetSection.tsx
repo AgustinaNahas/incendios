@@ -23,9 +23,7 @@ export function BudgetSection() {
       id="presupuesto"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pb-10 md:px-8 md:pt-12">
-              <div className="border-t border-t-white/31 pb-12"></div>
-
+      <div className="section-rule mx-auto max-w-[800px] px-5 pb-10 md:px-8">
         <h2 className="type-h2">El rol del Estado</h2>
         <p className="type-bajada">
           Nueve pedidos de acceso a la información, una decena de correos y una
@@ -292,7 +290,7 @@ export function BudgetSection() {
           </p>
         </div>
       </div>
-      <div className="mx-auto max-w-[800px] space-y-16 px-5 pb-12 md:px-8 md:pb-12">
+      <div className="mx-auto max-w-[800px] space-y-16 px-5 md:px-8">
         <BudgetExecutionChart
           data={ALL_POINTS}
           title="Ejecución presupuestaria del Servicio Nacional del Manejo del Fuego"

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Quote } from "@/components/Quote";
 import { TextLink } from "@/components/TextLink";
 
@@ -190,6 +193,19 @@ const LOCAL_ORGS: OrgBlock[] = [
   },
 ];
 
+const DIRECT_DONATION: OrgBlock[] = [
+  {
+    name: "Bomberos Voluntarios de Epuyén",
+    lines: [
+      {
+        label: "Enlace directo",
+        value: "dnr.onl/9qqFSPgm",
+        href: "https://dnr.onl/9qqFSPgm?s=w",
+      },
+    ],
+  },
+];
+
 const CAMPAIGNS: OrgBlock[] = [
   {
     name: "Asociación Amigos de la Patagonia",
@@ -258,47 +274,71 @@ const OTHER_ORGS: OrgBlock[] = [
   },
 ];
 
-function OrgDetails({ orgs, group }: { orgs: OrgBlock[]; group: string }) {
+function OrgDetails({ orgs }: { orgs: OrgBlock[] }) {
+  const [openPairs, setOpenPairs] = useState<ReadonlySet<number>>(
+    () => new Set(),
+  );
+
+  const togglePair = (pairIndex: number) => {
+    setOpenPairs((prev) => {
+      const next = new Set(prev);
+      if (next.has(pairIndex)) next.delete(pairIndex);
+      else next.add(pairIndex);
+      return next;
+    });
+  };
+
   return (
     <div className="mt-6 grid items-start gap-4 sm:grid-cols-2">
-      {orgs.map((org) => (
-        <details
-          key={org.name}
-          name={group}
-          className="group border border-foreground/15 bg-background/80 px-4 py-4"
-        >
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-sans text-base font-bold [&::-webkit-details-marker]:hidden">
-            <span>{org.name}</span>
-            <span
-              aria-hidden
-              className="shrink-0 text-foreground/70 transition-transform group-open:rotate-180"
+      {orgs.map((org, i) => {
+        const pairIndex = Math.floor(i / 2);
+        const isOpen = openPairs.has(pairIndex);
+
+        return (
+          <details
+            key={org.name}
+            open={isOpen}
+            className="group border border-foreground/15 bg-background/80 px-4 py-4"
+          >
+            <summary
+              className="flex cursor-pointer list-none items-center justify-between gap-3 font-sans text-base font-bold [&::-webkit-details-marker]:hidden"
+              onClick={(e) => {
+                e.preventDefault();
+                togglePair(pairIndex);
+              }}
             >
-              ▾
-            </span>
-          </summary>
-          <ul className="mt-3 space-y-2 text-sm leading-snug text-foreground/85">
-            {org.lines.map((line) => (
-              <li key={`${org.name}-${line.label ?? line.value}`}>
-                {line.label ? (
-                  <span className="opacity-65">{line.label}: </span>
-                ) : null}
-                {line.href ? (
-                  <a
-                    href={line.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-2 hover:text-white"
-                  >
-                    {line.value}
-                  </a>
-                ) : (
-                  line.value
-                )}
-              </li>
-            ))}
-          </ul>
-        </details>
-      ))}
+              <span>{org.name}</span>
+              <span
+                aria-hidden
+                className="shrink-0 text-foreground/70 transition-transform group-open:rotate-180"
+              >
+                ▾
+              </span>
+            </summary>
+            <ul className="mt-3 space-y-2 text-sm leading-snug text-foreground/85">
+              {org.lines.map((line) => (
+                <li key={`${org.name}-${line.label ?? line.value}`}>
+                  {line.label ? (
+                    <span className="opacity-65">{line.label}: </span>
+                  ) : null}
+                  {line.href ? (
+                    <a
+                      href={line.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 hover:text-white"
+                    >
+                      {line.value}
+                    </a>
+                  ) : (
+                    line.value
+                  )}
+                </li>
+              ))}
+            </ul>
+          </details>
+        );
+      })}
     </div>
   );
 }
@@ -309,9 +349,7 @@ export function AfterFireSection() {
       id="despues"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-6 pb-20 md:px-8 md:pb-28">
-      <div className="border-t border-t-white/31 pb-12" />
-
+      <div className="section-rule mx-auto max-w-[800px] px-5 pb-12 md:px-8 ">
         <h2 className="type-h2">Después del fuego</h2>
         <p className="type-bajada">
           Apagar el último foco no cierra la emergencia, el territorio que queda
@@ -362,52 +400,24 @@ export function AfterFireSection() {
           <h4 className="type-h4">
             Contacto de Cuarteles de Bomberos de la Comarca Andina
           </h4>
-          <OrgDetails orgs={BOMBEROS} group="bomberos" />
+          <OrgDetails orgs={BOMBEROS} />
 
-          <h4 className="type-h4">
-            Donación directa — Bomberos Voluntarios de Epuyén
-          </h4>
-          <p className="type-body mt-4">
-            Las cuotas societarias financian insumos operativos básicos: desde
-            viandas y equipamiento de limpieza hasta logística administrativa y
-            respuestas ante alertas.
-          </p>
-          <p className="type-body mt-3">
-            Enlace directo:{" "}
-            <a
-              href="https://dnr.onl/9qqFSPgm?s=w"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              dnr.onl/9qqFSPgm
-            </a>
-          </p>
+          <h4 className="type-h4">Donación directa</h4>
+          <OrgDetails orgs={DIRECT_DONATION} />
 
           <h4 className="type-h4">
             Organizaciones locales coordinadas para reconstruir y abastecer
           </h4>
-          <p className="type-body mt-4">
-            Durante las emergencias de 2025-2026 en Río Negro y Chubut, la
-            Fundación Cooperar y la Asociación Civil Acercar articularon la
-            reconstrucción de viviendas y la gestión de comedores para
-            brigadistas, personas evacuadas y voluntarios.
-          </p>
-          <OrgDetails orgs={LOCAL_ORGS} group="locales" />
+          <OrgDetails orgs={LOCAL_ORGS} />
 
           <h4 className="type-h4">Campañas permanentes para la Patagonia</h4>
-          <p className="type-body mt-4">
-            Entidades nacionales y regionales mantienen abiertas sus vías de
-            recaudación durante todo el año para financiar herramientas de
-            trabajo, reconstrucción de viviendas y equipamiento contra
-            incendios.
-          </p>
-          <OrgDetails orgs={CAMPAIGNS} group="campanas" />
+          <OrgDetails orgs={CAMPAIGNS} />
 
           <h4 className="type-h4">
             Otras organizaciones impulsoras de la prevención de incendios
             patagónicos
           </h4>
-          <OrgDetails orgs={OTHER_ORGS} group="otras" />
+          <OrgDetails orgs={OTHER_ORGS} />
         </div>
 
         <div className="mt-10 border border-foreground/25 bg-ink/55 px-5 py-8 md:px-8 md:py-10">
