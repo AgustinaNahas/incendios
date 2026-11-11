@@ -6,6 +6,7 @@ import { FightersSection } from "@/sections/FightersSection";
 import { FireContextSection } from "@/sections/FireContextSection";
 import { InflammabilitySection } from "@/sections/InflammabilitySection";
 import { AfterFireSection } from "@/sections/AfterFireSection";
+import { CreditsSection } from "@/sections/CreditsSection";
 import { FireHeader } from "@/components/scrolly/FireHeader";
 import { LeadSection } from "@/sections/LeadSection";
 
@@ -20,6 +21,7 @@ export function ScrollyApp() {
       <FireContextSection />
       <InflammabilitySection />
       <AfterFireSection />
+      <CreditsSection />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { TextLink } from "@/components/TextLink";
 import { withBasePath } from "@/lib/paths";
 
-const BAJADA = "A falta de una prevención coordinada, la emergencia es el único plan.";
+const BAJADA = "A falta de una prevención coordinada, la emergencia es el único plan";
 
 export function LeadSection() {
   return (
@@ -36,7 +36,7 @@ export function LeadSection() {
       <div className="bg-background">
         <div className="mx-auto max-w-[800px] px-5 pb-12 md:px-8 md:pb-10">
           <p className="mt-12 mb-6 text-left text-[16px] font-bold leading-relaxed text-foreground">
-            Argentina, 17 de noviembre de 2026
+            Argentina, 18 de noviembre de 2026
           </p>
           <div className="type-stack">
             <p className="type-body">

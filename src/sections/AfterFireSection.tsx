@@ -309,11 +309,13 @@ export function AfterFireSection() {
       id="despues"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-16 pb-20 md:px-8 md:pt-20 md:pb-28">
+      <div className="mx-auto max-w-[800px] px-5 pt-6 pb-20 md:px-8 md:pb-28">
+      <div className="border-t border-t-white/31 pb-12" />
+
         <h2 className="type-h2">Después del fuego</h2>
         <p className="type-bajada">
           Apagar el último foco no cierra la emergencia, el territorio que queda
-          ya no es el mismo.
+          ya no es el mismo
         </p>
         <div className="type-stack">
           <p className="type-body">
@@ -409,16 +411,20 @@ export function AfterFireSection() {
         </div>
 
         <div className="mt-10 border border-foreground/25 bg-ink/55 px-5 py-8 md:px-8 md:py-10">
-          <h3 className="type-h4 is-flush">Anexo · Acceso a la información</h3>
+          <p className="text-xs font-semibold tracking-[0.2em] text-foreground/70 uppercase">
+            Cómo se hizo
+          </p>
+          <h3 className="type-h4">Metodología y anexo</h3>
           <p className="type-body mt-4">
             Esta investigación se hizo en el marco del FOCO Bootcamp de FTA y
-            FOPEA. En ese espacio, los pedidos de acceso a la información
-            pública no son un trámite más: son método. El anexo reúne la
-            cronología de las solicitudes presentadas a organismos nacionales y
-            provinciales, las respuestas recibidas —y las que nunca llegaron— y
-            el detalle de lo que se pudo documentar.
+            FOPEA. La metodología explica el marco del programa, cómo se
+            investigó y qué fuentes se consultaron. El anexo reúne la
+            cronología de los pedidos de acceso a la información pública: las
+            solicitudes, las respuestas —y las que nunca llegaron— y el detalle
+            de lo que se pudo documentar.
           </p>
-          <p className="type-body mt-4">
+          <p className="type-body mt-4 flex flex-col gap-3 sm:flex-row sm:gap-8">
+            <TextLink href="/metodologia">Leer la metodología</TextLink>
             <TextLink href="/anexo">Leer el anexo descriptivo</TextLink>
           </p>
         </div>

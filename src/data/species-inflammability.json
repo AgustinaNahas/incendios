@@ -6,7 +6,7 @@
     "origin": "nativa",
     "kind": "planta",
     "level": "alto",
-    "image": "/images/species/colihue.webp",
+    "image": "/images/species/colihue.png",
     "note": "Tras la floración las cañas se secan juntas y forman un combustible fino que arde con mucha intensidad y ayuda a que el fuego trepe a las copas."
   },
   {
@@ -16,7 +16,7 @@
     "origin": "exotica",
     "kind": "arbol",
     "level": "alto",
-    "image": "/images/species/pino-murrayana.webp",
+    "image": "/images/species/pino-murrayana.png",
     "note": "Corteza fina y copa compacta; si muere, no rebrota y vuelve a resurgir únicamente a partir de semillas."
   },
   {
@@ -26,7 +26,7 @@
     "origin": "nativa",
     "kind": "arbol",
     "level": "alto",
-    "image": "/images/species/cipres.webp",
+    "image": "/images/species/cipres.png",
     "note": "Sensible al fuego intenso; si los adultos mueren, la recuperación del bosque es lenta y depende principalmente de nuevas plantas."
   },
   {
@@ -46,7 +46,7 @@
     "origin": "nativa",
     "kind": "arbol",
     "level": "alto",
-    "image": "/images/species/lenga.webp",
+    "image": "/images/species/lenga.png",
     "note": "Resiste poco los incendios fuertes y casi no rebrota; si muere el bosque adulto, debe formarse una nueva generación desde las semillas."
   },
   {
@@ -56,7 +56,7 @@
     "origin": "nativa",
     "kind": "arbol",
     "level": "medio",
-    "image": "/images/species/nire.webp",
+    "image": "/images/species/nire.png",
     "note": "Es el árbol nativo con mayor resiliencia y adaptación al fuego de la región. Posee estructuras subterráneas que le permiten rebrotar rápidamente."
   },
   {
@@ -66,7 +66,7 @@
     "origin": "exotica",
     "kind": "arbol",
     "level": "medio",
-    "image": "/images/species/pino-oregon.webp",
+    "image": "/images/species/pino-oregon.png",
     "note": "Es la especie exótica con mayor potencial invasor, desplaza a las nativas y altera la luminosidad. Su corteza gruesa permite que los adultos sobrevivan a incendios moderados."
   },
   {
@@ -76,7 +76,7 @@
     "origin": "nativa",
     "kind": "arbol",
     "level": "medio",
-    "image": "/images/species/alerce.webp",
+    "image": "/images/species/alerce.png",
     "note": "Puede vivir más de 2000 años y formar bosques milenarios; aunque algunos ejemplares sobreviven, reconstruir un bosque antiguo después del fuego puede llevar siglos."
   },
   {
@@ -86,7 +86,7 @@
     "origin": "exotica",
     "kind": "arbol",
     "level": "bajo",
-    "image": "/images/species/pino-ponderosa.webp",
+    "image": "/images/species/pino-ponderosa.png",
     "note": "Su corteza gruesa y copa elevada permiten que muchos adultos sobrevivan. Luego puede regenerarse si quedan árboles semilleros."
   },
   {
@@ -96,7 +96,7 @@
     "origin": "nativa",
     "kind": "arbol",
     "level": "bajo",
-    "image": "/images/species/araucaria.webp",
+    "image": "/images/species/araucaria.png",
     "note": "Los adultos soportan mejor incendios moderados y pueden recuperarse tanto por semillas como por nuevos brotes."
   }
 ]

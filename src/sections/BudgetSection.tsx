@@ -23,11 +23,13 @@ export function BudgetSection() {
       id="presupuesto"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-20 pb-10 md:px-8 md:pt-28">
+      <div className="mx-auto max-w-[800px] px-5 pb-10 md:px-8 md:pt-12">
+              <div className="border-t border-t-white/31 pb-12"></div>
+
         <h2 className="type-h2">El rol del Estado</h2>
         <p className="type-bajada">
           Nueve pedidos de acceso a la información, una decena de correos y una
-          conclusión incómoda.
+          conclusión incómoda
         </p>
 
         <div className="type-stack">
@@ -288,32 +290,15 @@ export function BudgetSection() {
             Servicio Nacional de Manejo del Fuego desde 2017: el gasto en esta
             área alcanzó el 22% de los recursos disponibles.
           </p>
-          <p className="type-body">
-            De acuerdo con el{" "}
-            <TextLink href="https://farn.org.ar/presupuesto-2027-ajuste-ambiente/">
-              análisis
-            </TextLink>{" "}
-            de FARN, los fondos destinados al Servicio Nacional de Manejo del
-            Fuego (SNMF) en el proyecto de Presupuesto 2027 ascienden a $38.815
-            millones, esto implica un aumento real del 60,1% respecto de 2026,
-            pero a una caída del 55,8% en relación con la misma partida de 2023.
-            Estos recursos no sólo deben emplearse en tareas de combate del
-            fuego, sino también de prevención.
-          </p>
         </div>
       </div>
-
       <div className="mx-auto max-w-[800px] space-y-16 px-5 pb-12 md:px-8 md:pb-12">
         <BudgetExecutionChart
           data={ALL_POINTS}
           title="Ejecución presupuestaria del Servicio Nacional del Manejo del Fuego"
           note={
             <>
-              En millones de pesos,{" "}
-              <TextLink href="https://monitorpresupuestario.acij.org.ar/explorar/descargarInflacion">
-                ajustado por inflación promedio interanual
-              </TextLink>
-              , a precios de 2026.
+              En millones de pesos
             </>
           }
           source={
@@ -326,6 +311,19 @@ export function BudgetSection() {
             </>
           }
         />
+
+        <p className="type-body">
+            De acuerdo con el{" "}
+            <TextLink href="https://farn.org.ar/presupuesto-2027-ajuste-ambiente/">
+              análisis
+            </TextLink>{" "}
+            de FARN, los fondos destinados al Servicio Nacional de Manejo del
+            Fuego (SNMF) en el proyecto de Presupuesto 2027 ascienden a $38.815
+            millones, esto implica un aumento real del 60,1% respecto de 2026,
+            pero a una caída del 55,8% en relación con la misma partida de 2023.
+            Estos recursos no sólo deben emplearse en tareas de combate del
+            fuego, sino también de prevención.
+          </p>
         {/* <BudgetExecutionChart
           data={FOREST_POINTS}
           title="Ejecución presupuestaria del Fondo de Bosques"
@@ -334,6 +332,7 @@ export function BudgetSection() {
           source={budget.forestFund.source}
         /> */}
       </div>
+
     </section>
   );
 }

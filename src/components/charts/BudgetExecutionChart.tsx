@@ -30,7 +30,7 @@ type Props = {
 
 const VIEW_W = 720;
 const VIEW_H = 360;
-const MARGIN = { top: 8, right: 8, bottom: 32, left: 68 };
+const MARGIN = { top: 8, right: 8, bottom: 32, left: 52 };
 const INNER_W = VIEW_W - MARGIN.left - MARGIN.right;
 const INNER_H = VIEW_H - MARGIN.top - MARGIN.bottom;
 const DURATION = 900;
@@ -41,7 +41,7 @@ const EMPTY_STROKE = "var(--rule)";
 const UNKNOWN_FILL = "var(--slate)";
 
 const VALUE_NOTE =
-  "En millones de pesos, ajustado por inflación promedio interanual, a precios de 2026.";
+  "En millones de pesos";
 
 function axisStep(peak: number) {
   if (peak <= 50) return 10;
@@ -66,7 +66,7 @@ type BarDatum = BudgetExecPoint & {
 function formatBudget(value: number | null, missing = "Sin dato") {
   if (value == null) return missing;
   const digits = Number.isInteger(value) ? 0 : 2;
-  return `${formatHa(value, 0)} M ARS`;
+  return `$${formatHa(value, 0)} M`;
 }
 
 function columnHit(x: d3.ScaleBand<number>, year: number) {
@@ -386,7 +386,7 @@ export function BudgetExecutionChart({
   return (
     <div ref={rootRef} className="w-full">
       <h3 className="type-h5">{title}</h3>
-      <p className="type-body mt-2">{note}</p>
+      <p className="type-body mt-2 text-[1rem] " style={{ fontSize: "1rem" }}>{note}</p>
       <div className="mt-3 mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-foreground/85">
         <span className="inline-flex items-center gap-2">
           <span className="inline-block h-3 w-3 bg-accent" />
@@ -467,6 +467,16 @@ export function BudgetExecutionChart({
             className="plot"
             transform={`translate(${MARGIN.left},${MARGIN.top})`}
           />
+          <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
+            <line
+              x1={0}
+              x2={INNER_W}
+              y1={INNER_H}
+              y2={INNER_H}
+              stroke="var(--foreground)"
+              strokeOpacity={0.35}
+            />
+          </g>
           <g transform={`translate(${MARGIN.left},${MARGIN.top})`}>
             {data.map((d) => {
               const hit = columnHit(x, d.year);

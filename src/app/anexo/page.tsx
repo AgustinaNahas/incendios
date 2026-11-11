@@ -32,8 +32,9 @@ export default function AnexoPage() {
   return (
     <main className="bg-background text-foreground">
       <article className="mx-auto max-w-[800px] px-5 py-16 md:px-8 md:py-24">
-        <p className="mb-10">
+        <p className="mb-10 flex flex-wrap gap-x-6 gap-y-2">
           <Link href="/">Volver a la investigación</Link>
+          <Link href="/metodologia">Metodología</Link>
         </p>
         {blocks.map((block, index) => {
           if (block.type === "h2") {

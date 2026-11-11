@@ -17,6 +17,7 @@ const ACCENT = "var(--accent)";
 const TREND = "var(--trend)";
 const VIEW_W = 420;
 const VIEW_H = 260;
+const CHART_MARGIN = { top: 22, right: 8, bottom: 28, left: 32 };
 
 type Summer = {
   year: number;
@@ -233,26 +234,34 @@ function CompactAxes({
 function ChartShell({
   title,
   dek,
+  divider = false,
   children,
 }: {
   title: string;
   dek: string;
+  divider?: boolean;
   children: ReactNode;
 }) {
   return (
-    <figure className="min-w-0">
+    <figure className="relative min-w-0 md:row-span-3 md:grid md:grid-rows-subgrid">
       <h3 className="font-sans text-base font-bold text-foreground md:text-lg">
         {title}
       </h3>
-      <p className="mt-1 text-sm leading-snug text-foreground/80">{dek}</p>
+      <p className="mt-0 text-[13px] leading-snug text-foreground/80">{dek}</p>
       {children}
+      {divider ? (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-0 -right-5 hidden h-full w-px bg-foreground/20 md:block"
+        />
+      ) : null}
     </figure>
   );
 }
 
 function HotDaysChart() {
   const focus = useYearFocus();
-  const margin = { top: 16, right: 8, bottom: 28, left: 28 };
+  const margin = CHART_MARGIN;
   const innerW = VIEW_W - margin.left - margin.right;
   const innerH = VIEW_H - margin.top - margin.bottom;
 
@@ -284,6 +293,7 @@ function HotDaysChart() {
     <ChartShell
       title="Temperatura"
       dek="Cantidad de días con más de 30 °C."
+      divider
     >
       <div className="relative mt-3">
         <svg
@@ -373,7 +383,7 @@ function HotDaysChart() {
 
 function SummerRainChart() {
   const focus = useYearFocus();
-  const margin = { top: 22, right: 8, bottom: 28, left: 32 };
+  const margin = CHART_MARGIN;
   const innerW = VIEW_W - margin.left - margin.right;
   const innerH = VIEW_H - margin.top - margin.bottom;
   const yMax = Math.max(200, Math.ceil(PRECIP_MAX / 50) * 50);
@@ -390,13 +400,12 @@ function SummerRainChart() {
   );
 
   const active = SUMMERS.find((d) => d.year === focus.year) ?? null;
-  const recentStart = x(RECENT_FROM) ?? innerW;
-  const recentEnd = (x(LAST_YEAR) ?? innerW) + x.bandwidth();
 
   return (
     <ChartShell
       title="Precipitaciones"
       dek="Milímetros acumulados en los meses de verano."
+      divider
     >
       <div className="relative mt-3">
         <svg
@@ -421,9 +430,9 @@ function SummerRainChart() {
             transform={`translate(${margin.left},${margin.top})`}
           >
             <text
-              x={(recentStart + recentEnd) / 2}
+              x={innerW}
               y={-6}
-              textAnchor="middle"
+              textAnchor="end"
               fill={ACCENT}
               fontSize={10}
               fontWeight={700}
@@ -485,7 +494,7 @@ function SummerRainChart() {
 
 function WindDaysChart() {
   const focus = useYearFocus();
-  const margin = { top: 22, right: 8, bottom: 28, left: 28 };
+  const margin = CHART_MARGIN;
   const innerW = VIEW_W - margin.left - margin.right;
   const innerH = VIEW_H - margin.top - margin.bottom;
 
@@ -603,25 +612,16 @@ function WindDaysChart() {
 
 export function SummerClimateCharts() {
   return (
-    <div className="mt-10 md:mt-12">
-      <div className="grid grid-cols-1 gap-8 border-foreground/15 md:grid-cols-3 md:gap-0 md:divide-x md:divide-foreground/20">
-        <div className="md:pr-5">
-          <HotDaysChart />
-        </div>
-        <div className="md:px-5">
-          <SummerRainChart />
-        </div>
-        <div className="md:pl-5">
-          <WindDaysChart />
-        </div>
+    <div className="@container mt-10 md:mt-12">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-x-10 md:gap-y-0">
+        <HotDaysChart />
+        <SummerRainChart />
+        <WindDaysChart />
       </div>
-      <p className="mt-5 text-xs leading-relaxed text-foreground/65 md:text-sm">
-        Fuente: {climate.source}
-      </p>
-      <p className="mt-2 text-xs leading-relaxed text-foreground/65 md:text-sm">
-        *El gráfico muestra una baja aparente de los vientos registrados, que no
-        necesariamente implica una caída real ya que puede deberse a cambios de
-        instrumental. Fuente: Servicio Meteorológico Nacional.
+      <p className="mt-[10px] text-[11px] leading-[1.3] text-foreground/65 @min-[1050px]:whitespace-nowrap">
+        Fuente: {climate.source} *El gráfico muestra una baja aparente de los
+        vientos registrados, que no necesariamente implica una caída real ya que
+        puede deberse a cambios de instrumental.
       </p>
     </div>
   );

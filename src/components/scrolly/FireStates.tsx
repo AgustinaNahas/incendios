@@ -2,43 +2,39 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { OTBN_COLORS } from "@/lib/otbnColors";
+import { TextLink } from "@/components/TextLink";
 import { withBasePath } from "@/lib/paths";
+
+const MENENDEZ =
+  "http://lanacion.com.ar/sociedad/tras-cuatro-meses-de-fuego-extinguen-el-incendio-en-los-alerces-epicentro-de-las-peores-temporadas-nid14042026/";
 
 const FIRE_STATES = [
   {
     title: "Fuera de control",
     image: "/estados/1-fuera-de-control.png",
-    body: "El fuego se propaga libremente. Fuegos que aún no han sido atacados, o que no han podido ser contenidos.",
+    body: "El fuego avanza libremente y los medios no logran frenar su propagación; es la etapa más crítica y cambiante.",
   },
   {
     title: "Contenido",
     image: "/estados/2-detenido.png",
-    body: "Por cualquier circunstancia natural, ambiental, o a raíz de los trabajos de combate, la propagación se ha detenido en uno o más sectores del incendio.",
+    body: "Se frena el frente principal, pero el fuego sigue activo, y puede reactivarse con viento fuerte o pendientes.",
   },
   {
-    title: "Circunscripto",
+    title: "Circunscrito",
     image: "/estados/3-circunscripto.png",
-    body: "Los trabajos de contención abarcan todo el perímetro, pero no están definitivamente terminados.",
+    body: "El fuego queda rodeado en todo su perímetro pero faltan asegurar líneas y enfriar bordes para evitar escapes.",
   },
   {
     title: "Controlado",
     image: "/estados/4-controlado.png",
-    body: "La línea de control ha quedado establecida definitivamente, anclada y asegurada. El incendio puede mostrar actividad y humo en su interior, pero los trabajos se han completado en todo el perímetro.",
+    body: "Existe línea de control segura en todo el perímetro y el fuego ya no puede superarla; no retrocede de estado.",
   },
   {
     title: "Extinguido",
     image: "/estados/5-extinguido.png",
-    body: "El incendio no muestra signos de actividad en ninguna de sus partes.",
+    body: "No quedan llamas ni focos calientes activos tras la liquidación y la guardia de cenizas, el incendio terminó.",
   },
 ] as const;
-
-/** 1–2 crítico, 3–4 en contención, 5 resuelto. Misma paleta OTBN que inflamabilidad. */
-function stageColor(index: number) {
-  if (index <= 1) return OTBN_COLORS[1];
-  if (index <= 3) return OTBN_COLORS[2];
-  return OTBN_COLORS[3];
-}
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -103,7 +99,7 @@ export function FireStates() {
       const inView = rect.bottom > 0 && rect.top < window.innerHeight;
       if (inView) {
         const state = FIRE_STATES[next];
-        setLive(`Etapa ${next + 1}. ${state.title}. ${state.body}`);
+        setLive(`${state.title}. ${state.body}`);
       }
     };
 
@@ -130,6 +126,7 @@ export function FireStates() {
     const ro = new ResizeObserver(onResize);
     ro.observe(track);
     ro.observe(viewport);
+    if (stickyRef.current) ro.observe(stickyRef.current);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
@@ -157,74 +154,57 @@ export function FireStates() {
   };
 
   return (
-    <div className="relative mt-10">
+    <div className="relative">
+      <h3 className="type-h3">Los cinco estados operativos de un incendio forestal</h3>
       <div className="relative left-1/2 mt-6 w-screen -translate-x-1/2">
         <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
           <div
             ref={stickyRef}
-            className="sticky top-3 z-20 flex flex-col bg-background pb-2 md:top-[8vh]"
+            className="sticky top-3 z-20 flex flex-col bg-background pb-2"
           >
             <div
               ref={viewportRef}
-              className="relative mx-auto flex w-full max-w-[1200px] flex-col overflow-hidden"
+              className="relative mx-auto flex w-full min-w-0 max-w-[1200px] flex-col overflow-hidden"
             >
-              <h3 className="type-h4 is-flush mb-4 mx-auto w-full max-w-[800px] px-5 pt-2 md:px-8">
-                Los cinco estados de un incendio
-              </h3>
-              <div className="relative mt-4 h-[min(360px,calc(100svh-30rem))] md:h-[min(480px,calc(100svh-26rem))]">
+              <div className="relative min-w-0 overflow-hidden">
                 <div
                   ref={trackRef}
-                  className="absolute inset-0 flex w-max items-stretch gap-4 px-5 md:gap-5 md:px-8"
+                  className="flex w-max items-stretch gap-4 px-5 md:gap-5 md:px-8"
                   style={{
                     transform: `translate3d(${trackX}px, 0, 0)`,
                     willChange: "transform",
                   }}
                 >
-                  {FIRE_STATES.map((state, i) => {
-                    const color = stageColor(i);
-                    return (
-                      <article
-                        key={state.title}
-                        className="flex h-full shrink-0 flex-col bg-panel"
-                        style={{ width: cardWidth }}
-                      >
+                  {FIRE_STATES.map((state) => (
+                    <article
+                      key={state.title}
+                      className="flex shrink-0 flex-col bg-panel"
+                      style={{ width: cardWidth }}
+                    >
+                      <div className="relative mx-auto h-[min(110px,16vh)] w-full max-w-[160px] shrink-0 md:h-[min(140px,18vh)]">
+                        <Image
+                          src={withBasePath(state.image)}
+                          alt=""
+                          fill
+                          sizes="160px"
+                          className="object-contain object-bottom px-2 py-3"
+                        />
+                      </div>
+
+                      <div className="px-4 pt-1 pb-4 md:px-[25px] md:pb-[25px]">
+                        <h4 className="font-[family-name:var(--font-display)] text-lg leading-none font-black tracking-wide md:text-xl">
+                          {state.title}
+                        </h4>
                         <div
-                          className="h-1.5 w-full shrink-0"
-                          style={{ background: color }}
+                          className="my-3 border-t border-foreground/20"
                           aria-hidden
                         />
-
-                        <div className="relative mx-auto h-[min(110px,16vh)] w-full max-w-[160px] shrink-0 md:h-[min(140px,18vh)]">
-                          <Image
-                            src={withBasePath(state.image)}
-                            alt=""
-                            fill
-                            sizes="160px"
-                            className="object-contain object-bottom px-2 py-3"
-                          />
-                        </div>
-
-                        <div className="min-h-0 flex-1 overflow-y-auto px-4 pt-1 pb-4 md:px-[25px] md:pb-[25px]">
-                          <p
-                            className="text-[10px] font-bold tracking-[0.18em] uppercase"
-                            style={{ color }}
-                          >
-                            Etapa {i + 1}
-                          </p>
-                          <h4 className="mt-1.5 font-[family-name:var(--font-display)] text-lg leading-none font-black tracking-wide md:text-xl">
-                            {state.title}
-                          </h4>
-                          <div
-                            className="my-3 border-t border-foreground/20"
-                            aria-hidden
-                          />
-                          <p className="text-xs leading-[1.3] text-foreground/85 md:text-sm">
-                            {state.body}
-                          </p>
-                        </div>
-                      </article>
-                    );
-                  })}
+                        <p className="text-xs leading-[1.3] text-foreground/85 md:text-sm">
+                          {state.body}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
                 </div>
                 <div
                   aria-hidden
@@ -255,17 +235,49 @@ export function FireStates() {
                       type="button"
                       role="tab"
                       aria-selected={selected}
-                      aria-label={`Etapa ${i + 1}. ${state.title}`}
+                      aria-label={state.title}
                       onClick={() => goTo(i)}
-                      className={`h-2 w-2 rounded-full border border-accent transition-colors ${
+                      className={`h-2 w-2 rounded-full border border-white transition-colors ${
                         selected
-                          ? "bg-accent"
-                          : "bg-transparent hover:bg-accent/40"
+                          ? "bg-white"
+                          : "bg-transparent hover:bg-white/40"
                       }`}
                     />
                   );
                 })}
               </div>
+            </div>
+
+            <div
+              id="contexto"
+              className="mx-auto w-full max-w-[800px] scroll-mt-8 px-5 pt-2 pb-4 md:px-8"
+            >
+              <h2 className="type-h2 mt-2">El riesgo que nadie previene</h2>
+              <p className="type-bajada !mt-2 !pb-0">
+                Factores de ignición, de propagación y condiciones estructurales:
+                las variables que una política preventiva debería gestionar antes
+                de la primera llama
+              </p>
+
+              <h3 className="type-h3 !mt-5">Factores de ignición</h3>
+              <h4 className="type-h4 !mt-3">Origen natural</h4>
+              <p className="type-body mt-2">
+                Los rayos pueden iniciar incendios que permanecen latentes durante
+                días y luego se expanden bajo condiciones favorables, como ocurrió
+                en diciembre de 2025 en el{" "}
+                <TextLink href={MENENDEZ}>lago Menéndez</TextLink>. La actividad
+                volcánica también puede encender vegetación cercana, aunque es una
+                causa poco frecuente en la región.
+              </p>
+
+              <h4 className="type-h4 !mt-4">Origen humano</h4>
+              <p className="type-body mt-2">
+                La mayoría de los incendios tiene origen antrópico o humano. Según
+                el Servicio Nacional de Manejo del Fuego, cerca del 95% está
+                vinculado a acciones de personas, ya sea por negligencia, fallas
+                en la infraestructura de distribución eléctrica o hechos
+                intencionales.
+              </p>
             </div>
 
             <p className="sr-only" aria-live="polite">
@@ -274,19 +286,6 @@ export function FireStates() {
           </div>
         </div>
       </div>
-
-      {/* <p className="type-body mt-8 pb-12">
-        Algunos incendios grandes, aunque sean dados por controlados, pueden no
-        declararse extinguidos durante mucho tiempo.
-      </p> */}
-      <div className="border-t border-t-white/31 pb-4" />
-
-      <h2 className="type-h2 mt-10">El riesgo que nadie previene</h2>
-      <p className="type-bajada">
-        Factores de ignición, de propagación y condiciones estructurales: las
-        variables que una política preventiva debería gestionar antes de la
-        primera llama.
-      </p>
     </div>
   );
 }

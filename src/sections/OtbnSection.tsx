@@ -47,8 +47,8 @@ function AtlasDots({
             aria-selected={selected}
             aria-label={`${index + 1}. ${panel.label}`}
             onClick={() => onSelect(panel.id)}
-            className={`h-2 w-2 rounded-full border border-accent transition-colors ${
-              selected ? "bg-accent" : "bg-transparent hover:bg-accent/40"
+            className={`h-2 w-2 rounded-full border border-white transition-colors ${
+              selected ? "bg-white" : "bg-transparent hover:bg-white/40"
             }`}
           />
         );
@@ -146,7 +146,7 @@ export function OtbnSection() {
               El mapa del riesgo
             </h2>
             <p className="type-bajada mx-auto w-full max-w-[800px] px-6">
-              La ecorregión que merece ser mirada con más atención.
+              La ecorregión que merece ser mirada con más atención
             </p>
           </div>
       <div className="relative">

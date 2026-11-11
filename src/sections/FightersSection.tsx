@@ -53,11 +53,13 @@ export function FightersSection() {
       id="combatientes"
       className="relative scroll-mt-8 bg-background text-foreground"
     >
-      <div className="mx-auto max-w-[800px] px-5 pt-20 pb-6 md:px-8 md:pt-28">
+      <div className="mx-auto max-w-[800px] px-5 mt-4 mb-6 md:px-8">
+      <div className="border-t border-t-white/31 pb-12"></div>
+
         <h2 className="type-h2">Quiénes combaten el fuego</h2>
         <p className="type-bajada">
           Brigadistas, bomberos voluntarios y comunidades sostienen la primera
-          línea de una emergencia que la prevención no evita.
+          línea de una emergencia que la prevención no evita
         </p>
 
         <p className="type-body">
@@ -86,7 +88,7 @@ export function FightersSection() {
         <h3 className="type-h3">Anatomía de un brigadista forestal</h3>
         <p className="type-bajada">
           El equipo con el que combaten el fuego en Parques Nacionales, según la
-          información obtenida a través de pedidos de acceso a la información.
+          información obtenida a través de pedidos de acceso a la información
         </p>
       </div>
 

@@ -38,9 +38,18 @@ const CRITICAL_CONDITIONS = [
 ] as const;
 
 const CLIMATE_BULLETS = [
-  "Clima más seco y cálido: en gran parte de la región, las precipitaciones disminuyeron más del 20%, y la temperatura media anual aumentó entre 0,2 y 0,7 °C.",
-  "Más olas de calor: aumentan su frecuencia, duración y cantidad de días, especialmente en la Cordillera a la altura de Neuquén y de Río Negro.",
-  "Vientos extremos: aunque los promedios cambian poco, en febrero se registran aumentos de más del 10–15% en los vientos máximos de amplias zonas cordilleranas.",
+  {
+    lead: "Clima más seco y cálido:",
+    body: "en gran parte de la región, las precipitaciones disminuyeron más del 20%, y la temperatura media anual aumentó entre 0,2 y 0,7 °C.",
+  },
+  {
+    lead: "Más olas de calor:",
+    body: "aumentan su frecuencia, duración y cantidad de días, especialmente en la Cordillera a la altura de Neuquén y de Río Negro.",
+  },
+  {
+    lead: "Vientos extremos:",
+    body: "aunque los promedios cambian poco, en febrero se registran aumentos de más del 10–15% en los vientos máximos de amplias zonas cordilleranas.",
+  },
 ] as const;
 
 const WUI_STUDY =
@@ -149,6 +158,7 @@ export function InflammabilitySection() {
     const ro = new ResizeObserver(onResize);
     ro.observe(track);
     ro.observe(viewport);
+    if (stickyRef.current) ro.observe(stickyRef.current);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
@@ -215,8 +225,8 @@ export function InflammabilitySection() {
         </div>
         <ul className="mt-6 list-disc space-y-3 pl-5">
           {CLIMATE_BULLETS.map((item) => (
-            <li key={item} className="type-body">
-              {item}
+            <li key={item.lead} className="type-body">
+              <b>{item.lead}</b> {item.body}
             </li>
           ))}
         </ul>
@@ -248,7 +258,7 @@ export function InflammabilitySection() {
         </ul>
       </div>
 
-      <div className="mx-auto w-full max-w-[1100px] px-5 md:px-8">
+      <div className="mx-auto w-full max-w-[1200px] px-5 md:px-8">
         <SummerClimateCharts />
       </div>
 
@@ -278,7 +288,7 @@ export function InflammabilitySection() {
       <div ref={pinRef} className="relative" style={{ height: "70vh" }}>
         <div
           ref={stickyRef}
-          className="sticky top-3 z-20 flex flex-col bg-background pb-2 md:top-[8vh]"
+          className="sticky top-3 z-20 flex flex-col bg-background pb-2"
         >
           <div
             ref={viewportRef}
@@ -332,10 +342,10 @@ export function InflammabilitySection() {
               </div>
             </figure>
 
-            <div className="relative h-[min(360px,calc(100svh-30rem))] md:h-[min(500px,calc(100svh-26rem))]">
+            <div className="relative">
               <div
                 ref={trackRef}
-                className="absolute inset-0 flex w-max items-stretch gap-4 px-5 md:gap-5 md:px-8"
+                className="flex w-max items-stretch gap-4 px-5 md:gap-5 md:px-8"
                 style={{
                   transform: `translate3d(${trackX}px, 0, 0)`,
                   willChange: "transform",
@@ -350,7 +360,7 @@ export function InflammabilitySection() {
                   return (
                     <article
                       key={sp.id}
-                      className="flex h-full shrink-0 flex-col bg-panel"
+                      className="flex shrink-0 flex-col bg-panel"
                       style={{ width: cardWidth }}
                     >
                       <div
@@ -359,17 +369,17 @@ export function InflammabilitySection() {
                         aria-hidden
                       />
 
-                      <div className="relative h-[min(160px,20vh)] w-full shrink-0 md:h-[min(250px,25vh)]">
+                      <div className="relative h-[120px] w-full shrink-0 md:h-[150px]">
                         <Image
                           src={withBasePath(sp.image)}
                           alt={`${sp.commonName} (${sp.scientificName})`}
                           fill
                           sizes={`${Math.round(cardWidth)}px`}
-                          className="object-contain object-bottom px-2 py-4 md:py-8"
+                          className="object-contain object-bottom px-2 py-3 md:py-4"
                         />
                       </div>
 
-                      <div className="min-h-0 flex-1 overflow-y-auto px-4 pt-0 pb-4 md:px-[25px] md:pb-[25px]">
+                      <div className="px-4 pt-0 pb-4 md:px-[25px] md:pb-5">
                         <p className="text-[10px] font-normal tracking-[0.16em] text-foreground uppercase">
                           {kindLabel(kind, origin)}
                         </p>
@@ -414,8 +424,8 @@ export function InflammabilitySection() {
                     aria-selected={selected}
                     aria-label={`${i + 1}. ${sp.commonName}`}
                     onClick={() => goTo(i)}
-                    className={`h-2 w-2 rounded-full border border-accent transition-colors ${
-                      selected ? "bg-accent" : "bg-transparent hover:bg-accent/40"
+                    className={`h-2 w-2 rounded-full border border-white transition-colors ${
+                      selected ? "bg-white" : "bg-transparent hover:bg-white/40"
                     }`}
                   />
                 );
@@ -423,28 +433,30 @@ export function InflammabilitySection() {
             </div>
           </div>
 
+          <div className="mx-auto w-full max-w-[800px] px-5 pt-2 pb-4 md:px-8">
+              <h3 className="type-h3 is-flush">Condiciones estructurales</h3>
+              <div className="type-stack mt-3">
+                <p className="type-body">
+                  El riesgo no depende sólo de cómo empieza un incendio ni de las
+                  condiciones climáticas que lo alimentan. También influye cómo se
+                  ocupa y se gestiona el territorio. En las últimas décadas
+                  crecieron las viviendas y los asentamientos en zonas de interfase
+                  entre bosque y áreas habitadas, muchas veces sin planificación
+                  suficiente, con vegetación y otros combustibles muy próximos a
+                  las casas, y, como se dijo antes, escasas medidas de prevención.
+                </p>
+                <p className="type-body">
+                  A eso se suman desigualdades en la capacidad de prepararse y
+                  recuperarse; falta de mantenimiento del entorno; turismo
+                  creciente poco o nada concientizado y una educación ambiental
+                  todavía insuficiente.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="mx-auto max-w-[800px] px-5 pt-16 pb-8 md:px-8">
-        <h3 className="type-h3 is-flush">Condiciones estructurales</h3>
-        <div className="type-stack mt-4">
-          <p className="type-body">
-            El riesgo no depende sólo de cómo empieza un incendio ni de las
-            condiciones climáticas que lo alimentan. También influye cómo se
-            ocupa y se gestiona el territorio. En las últimas décadas crecieron
-            las viviendas y los asentamientos en zonas de interfase entre bosque
-            y áreas habitadas, muchas veces sin planificación suficiente, con
-            vegetación y otros combustibles muy próximos a las casas, y, como se
-            dijo antes, escasas medidas de prevención.
-          </p>
-          <p className="type-body">
-            A eso se suman desigualdades en la capacidad de prepararse y
-            recuperarse; falta de mantenimiento del entorno; turismo creciente
-            poco o nada concientizado y una educación ambiental todavía
-            insuficiente.
-          </p>
-        </div>
+      <div className="mx-auto max-w-[800px] px-5 pt-8 pb-8 md:px-8">
         <Quote
           quote="“El problema principal para mí está relacionado con la gestión territorial. En los últimos 25 años acá, la Comarca creció de manera exponencial”."
           name="Hernán Andrade"

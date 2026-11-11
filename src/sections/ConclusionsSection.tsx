@@ -9,7 +9,7 @@ export function ConclusionsSection() {
       <div className="mx-auto max-w-[800px] px-5 py-20 md:px-8 md:py-28">
         <h2 className="type-h2">Conclusiones sobre el camino del fuego</h2>
         <p className="type-bajada">
-          Qué queda cuando el fuego se apaga y la atención se va.
+          Qué queda cuando el fuego se apaga y la atención se va
         </p>
 
         <div className="space-y-5 text-base leading-relaxed text-foreground/90 md:text-lg">
