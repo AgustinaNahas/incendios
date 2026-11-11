@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
 const LEFT = [
   {
     role: "Investigación periodística",
@@ -78,53 +74,11 @@ function CreditColumn({
   );
 }
 
-/** Línea a ancho de ventana (incluye gutter del scrollbar). */
-function FullBleedRule() {
-  const anchorRef = useRef<HTMLDivElement>(null);
-  const [top, setTop] = useState(0);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const anchor = anchorRef.current;
-    if (!anchor) return;
-
-    const update = () => {
-      const y = anchor.getBoundingClientRect().top;
-      setTop(y);
-      setShown(y < window.innerHeight && y > -2);
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  return (
-    <>
-      <div ref={anchorRef} aria-hidden className="h-0" />
-      <div
-        aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-30 h-px bg-white/31"
-        style={{
-          transform: `translate3d(0, ${top}px, 0)`,
-          width: "100vw",
-          opacity: shown ? 1 : 0,
-        }}
-      />
-    </>
-  );
-}
-
 export function CreditsSection() {
   return (
-    <footer className="bg-background text-foreground">
-      <FullBleedRule />
+    <footer className="border-t border-white/31 bg-background text-foreground">
       <div className="pt-4 pb-20 md:pb-28">
-        <p className="type-body mt-10 mx-auto max-w-[800px] px-6">
+        <p className="type-body mx-auto mt-10 max-w-[800px] px-6">
           Esta investigación fue elaborada durante 2026 en el ámbito de FOCO.
           Bootcamp de Periodismo, Acceso a la Información Pública y
           Visualización de Datos de la{" "}
