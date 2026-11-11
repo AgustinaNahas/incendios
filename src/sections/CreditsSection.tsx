@@ -76,7 +76,7 @@ function CreditColumn({
 
 export function CreditsSection() {
   return (
-    <footer className="border-t border-white/31 bg-background text-foreground">
+    <footer className="border-t border-white/31 bg-ink/55 text-foreground">
       <div className="pt-4 pb-20 md:pb-28">
         <p className="type-body mx-auto mt-10 max-w-[800px] px-6">
           Esta investigación fue elaborada durante 2026 en el ámbito de FOCO.
