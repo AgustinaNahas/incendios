@@ -298,10 +298,10 @@ export function InflammabilitySection() {
           >
             <figure className="mb-3 shrink-0 px-5 pt-4 pb-2 md:px-8 md:pt-5">
               <div className="mx-auto w-full max-w-[800px]">
-                <figcaption className="mb-3 text-center text-sm font-semibold tracking-wide text-foreground">
+                <figcaption className="mb-3 mt-[50px]  text-center text-sm font-semibold tracking-wide text-foreground">
                   Vulnerabilidad de las especies al fuego
                 </figcaption>
-                <div className="mx-auto mt-[50px] flex w-[70%] items-center gap-3 md:gap-4">
+                <div className="mx-auto mt-12 flex w-[70%] items-center gap-3 md:gap-4">
                   <span className="shrink-0 text-sm font-medium">
                     Alta
                   </span>
