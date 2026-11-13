@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import testimonies from "@/data/testimonies.json";
 import { withBasePath } from "@/lib/paths";
 
 const CONSEQUENCES_COPY =
@@ -37,26 +36,6 @@ export function ConsequencesScrolly() {
               </p>
             </div>
           </article>
-
-          {testimonies.map((testimony) => (
-            <article
-              key={testimony.id}
-              className="flex min-h-[85vh] w-full items-center"
-            >
-              <blockquote className="ui-panel ui-panel--accent w-full px-5 py-8 text-center text-foreground md:px-10 md:py-10">
-                <p className="font-[family-name:var(--font-display)] text-2xl leading-snug md:text-3xl">
-                  “{testimony.quote}”
-                </p>
-                <footer className="mt-5 text-sm text-foreground/85">
-                  <cite className="not-italic font-medium text-foreground">
-                    {testimony.name}
-                  </cite>
-                  {" · "}
-                  {testimony.role}, {testimony.province} ({testimony.year})
-                </footer>
-              </blockquote>
-            </article>
-          ))}
 
           <div className="h-[28vh]" aria-hidden />
         </div>

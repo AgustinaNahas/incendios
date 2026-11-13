@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Noto_Serif_KR } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SITE_URL } from "@/lib/paths";
 import "./globals.css";
+
+const GA_ID = "G-F63NMHWKDY";
 
 const display = Noto_Serif_KR({
   variable: "--font-noto-kr",
@@ -22,13 +26,13 @@ const DESCRIPTION =
   "Incendios sin prevención ni presupuesto claro y la emergencia como único plan. Más de 45 mil hectáreas ardieron en la Patagonia argentina en los primeros meses de 2026.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://agustinanahas.github.io/incendios"),
+  metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: "https://agustinanahas.github.io/incendios/",
+    url: `${SITE_URL}/`,
     type: "article",
     locale: "es_AR",
   },
@@ -48,6 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full overflow-x-clip font-sans">
         {children}
       </body>
+      <GoogleAnalytics gaId={GA_ID} />
     </html>
   );
 }

@@ -103,24 +103,6 @@ export function FightersSection() {
             Forestales. El personal cumple diferentes roles, como combatientes,
             radioperadores o jefe de cuadrilla.
           </p>
-          <p className="type-body">
-            Para los cuerpos de bomberos voluntarios, el combate tiene además un
-            costo personal. Muchos de sus integrantes son cuentapropistas:
-            comerciantes, albañiles, plomeros o electricistas. Cada jornada
-            destinada al incendio es también una jornada en la que dejan de
-            trabajar y de generar ingresos. En las ciudades más grandes, algunos
-            cuarteles cuentan con personal rentado para funciones específicas,
-            pero buena parte de la estructura sigue sostenida por voluntarios
-            que interrumpen su vida cotidiana para responder a la emergencia.
-          </p>
-          <p className="type-body">
-            No todos los que llegan a la primera línea del fuego forman parte de
-            estructuras oficiales. En zonas rurales, de interfase o de difícil
-            acceso, las brigadas comunitarias pueden convertirse en una primera
-            respuesta clave gracias a su conocimiento directo del territorio,
-            aunque no siempre cuentan con el mismo reconocimiento institucional
-            que los cuerpos oficiales.
-          </p>
         </div>
 
         {/* <Quote

@@ -106,9 +106,9 @@
 .type-h2 {
   font-family: var(--font-display), serif;
   font-weight: 900;
-  font-size: 40px;
-  line-height: 1.05;
-  color: var(--accent);
+  font-size: 38px;
+  line-height: 1.2;
+  color: var(--foreground);
 }
 
 /* Línea previa al título: 68px arriba y abajo */
@@ -170,7 +170,7 @@
 }
 
 .type-body {
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.625;
   color: color-mix(in srgb, var(--foreground) 90%, transparent);
 }
@@ -200,10 +200,6 @@
 
   .type-h5 {
     font-size: 1.25rem;
-  }
-
-  .type-body {
-    font-size: 1.125rem;
   }
 
   .type-quote {
@@ -244,8 +240,9 @@ li::marker {
   color: var(--accent);
 }
 
-/* Enlaces dentro del texto corrido */
+/* Enlaces dentro del texto corrido y de las citas */
 p a,
+.type-quote a,
 .text-link {
   text-decoration-line: underline;
   text-decoration-color: var(--accent);
@@ -253,6 +250,7 @@ p a,
 }
 
 p a:hover,
+.type-quote a:hover,
 .text-link:hover {
   color: var(--accent);
   text-decoration-color: var(--accent);
@@ -263,6 +261,12 @@ p a:hover,
   background-color: var(--panel-soft);
   /* border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent); */
   opacity: 0.85;
+}
+
+/* Card fija del mapa en mobile: opaca para no recomponer el canvas en cada frame. */
+.ui-panel--dock {
+  opacity: 1;
+  background-color: var(--panel-soft);
 }
 
 :focus-visible {
@@ -381,6 +385,17 @@ p a:hover,
 
 .otbn-mapbox .mapboxgl-ctrl button {
   filter: invert(1);
+}
+
+@media (max-width: 767px) {
+  .otbn-mapbox:not(.otbn-mapbox--interactive) .mapboxgl-canvas,
+  .otbn-mapbox:not(.otbn-mapbox--interactive) .mapboxgl-canvas-container {
+    touch-action: pan-y !important;
+  }
+
+  .atlas-map .leaflet-container {
+    touch-action: pan-y !important;
+  }
 }
 
 .atlas-map .leaflet-container {

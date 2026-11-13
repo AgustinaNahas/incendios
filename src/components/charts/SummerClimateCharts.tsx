@@ -429,7 +429,7 @@ function SummerRainChart() {
   return (
     <ChartShell
       title="Precipitaciones"
-      dek="Milímetros acumulados en los meses de verano."
+      dek="Milímetros acumulados por año."
       divider
     >
       <div className="relative mt-3">

@@ -1,0 +1,34 @@
+<svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1872 1081" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g clip-path="url(#clip0_819_72)">
+<rect id="espalda" style="pointer-events:none" x="-75.7246" y="2.33203" width="975" height="1080" fill="url(#pattern0_819_72)"/>
+<rect id="mochila-tactica" opacity="0" style="pointer-events:none" x="168.4" y="108.332" width="749" height="974" fill="url(#pattern1_819_72)"/>
+<rect id="mochila-agua" opacity="0" style="pointer-events:none" x="170" y="136" width="840" height="943" fill="url(#pattern2_819_72)"/>
+<mask id="mask0_819_72" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="151" y="91" width="892" height="889">
+<path d="M369.259 222.843L311.936 192.239L233.725 213.613L199.234 173.293L295.419 131.515H383.832L522.281 192.239L568.43 149.004L682.104 91.1953L903.136 173.293L1042.56 456.506L1006.61 871.852L857.473 979.696L497.992 946.663L414.922 935.004L324.081 890.312L190.49 837.361L151.627 747.977L233.725 535.689L337.197 567.265L383.832 307.855L399.863 236.931L369.259 222.843Z" fill="white"/>
+</mask>
+<g id="mochila-motobomba" opacity="0" style="pointer-events:none" mask="url(#mask0_819_72)">
+<rect x="108.393" y="15.8984" width="873.441" height="1042.49" fill="url(#pattern3_819_72)"/>
+</g>
+</g>
+<defs>
+<pattern id="pattern0_819_72" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_819_72" transform="scale(0.00102564 0.000925926)"/>
+</pattern>
+<pattern id="pattern1_819_72" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image1_819_72" transform="scale(0.00133511 0.00102669)"/>
+</pattern>
+<pattern id="pattern2_819_72" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image2_819_72" transform="scale(0.00119332 0.00106298)"/>
+</pattern>
+<pattern id="pattern3_819_72" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image3_819_72" transform="scale(0.00111235 0.000931966)"/>
+</pattern>
+<clipPath id="clip0_819_72">
+<rect width="1872" height="1081" fill="white"/>
+</clipPath>
+<image id="image0_819_72" width="975" height="1080" preserveAspectRatio="none" href="espaldas/espalda.png" xlink:href="espaldas/espalda.png"/>
+<image id="image1_819_72" width="749" height="974" preserveAspectRatio="none" href="espaldas/mochila-tactica.png" xlink:href="espaldas/mochila-tactica.png"/>
+<image id="image2_819_72" width="838" height="941" preserveAspectRatio="none" href="espaldas/mochila-agua.png" xlink:href="espaldas/mochila-agua.png"/>
+<image id="image3_819_72" width="899" height="1073" preserveAspectRatio="none" href="espaldas/mochila-motobomba.png" xlink:href="espaldas/mochila-motobomba.png"/>
+</defs>
+</svg>

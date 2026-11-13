@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import sources from "@/data/sources.json";
 import { TextLink } from "@/components/TextLink";
+import { SITE_URL } from "@/lib/paths";
 
 type SourceRow = {
   info: string;
@@ -614,8 +615,8 @@ export default function MetodologiaPage() {
               Sí. Las investigaciones están disponibles para quienes deseen
               reproducirlas total o parcialmente, con atribución de fuente.
               Solicitamos que se referencie el micrositio{" "}
-              <TextLink href="https://agustinanahas.github.io/incendios/">
-                agustinanahas.github.io/incendios
+              <TextLink href={`${SITE_URL}/`}>
+                {SITE_URL.replace(/^https?:\/\//, "")}
               </TextLink>
               .
             </p>

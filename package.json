@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:ftp": "BASE_PATH= SITE_URL=https://incendiosforestalespatagonicos.fopea.org next build",
     "start": "next start",
     "lint": "eslint",
     "build:otbn": "python3 scripts/build-otbn-geojson.py",
@@ -12,6 +13,7 @@
     "preview:static": "npx --yes serve out"
   },
   "dependencies": {
+    "@next/third-parties": "^16.3.0",
     "d3": "^7.9.0",
     "framer-motion": "^13.0.0",
     "leaflet": "^1.9.4",

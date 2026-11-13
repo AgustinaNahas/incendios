@@ -1,17 +1,27 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { withBasePath } from "@/lib/paths";
 
 /** Rectángulo de zoom en coords normalizadas del SVG (0–1). */
 type ZoomRect = { x: number; y: number; w: number; h: number };
+
+type FabricFigure = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  /** Pieza apaisada (fuelle): la columna de la imagen es más ancha. */
+  wide?: boolean;
+};
 
 type DetailItem = {
   n: number;
   label: string;
   body?: string;
   subitems?: string[];
+  /** Foto de la tela, al lado de la explicación. */
+  figure?: FabricFigure;
 };
 
 type FrontStep = {
@@ -27,24 +37,19 @@ type FrontStep = {
   panelMinVh: number;
 };
 
-type PackFit = {
-  widthPct: number;
-  leftPct: number;
-  topPct: number;
-};
-
 type BackStep = {
   kind: "back";
   id: string;
   title: string;
   packLabel: string;
   packBody: string;
-  packImage: string;
-  fit: PackFit;
   panelMinVh: number;
 };
 
-const ESPALDA_ASPECT = 975 / 1080;
+const BACK_W = 1872;
+const BACK_H = 1081;
+const BACK_ASPECT = BACK_W / BACK_H;
+const PACK_IDS = ["mochila-tactica", "mochila-agua", "mochila-motobomba"] as const;
 
 type AnatomyStep = FrontStep | BackStep;
 
@@ -183,6 +188,12 @@ const STEPS: AnatomyStep[] = [
       {
         n: 5,
         label: "Capas protectoras",
+        figure: {
+          src: "/brigadista/capas/campera.png",
+          alt: "Cuatro capas de la campera: tejido ignífugo, repelencia al agua, aislamiento térmico y bajo gradiente térmico",
+          width: 1088,
+          height: 1128,
+        },
         subitems: [
           "Tejido ignífugo",
           "Repelencia al agua",
@@ -197,7 +208,7 @@ const STEPS: AnatomyStep[] = [
       },
     ],
     zoom: ZOOM.campera,
-    panelMinVh: 120,
+    panelMinVh: 140,
     layers: baseFigure({
       campera: ON,
       Cabeza: DIM,
@@ -215,6 +226,12 @@ const STEPS: AnatomyStep[] = [
       {
         n: 7,
         label: "Capas protectoras",
+        figure: {
+          src: "/brigadista/capas/guante.png",
+          alt: "Cinco capas del guante, desde el cuero exterior hasta el algodón interior",
+          width: 1152,
+          height: 1196,
+        },
         subitems: [
           "Cuero vacuno",
           "Refuerzo térmico con 40% de fibra de vidrio",
@@ -230,7 +247,7 @@ const STEPS: AnatomyStep[] = [
       },
     ],
     zoom: ZOOM.guantes,
-    panelMinVh: 120,
+    panelMinVh: 140,
     layers: baseFigure({
       Guantes: ON,
       campera: DIM,
@@ -253,8 +270,15 @@ const STEPS: AnatomyStep[] = [
       {
         n: 10,
         label: "Fuelle 3D",
+        figure: {
+          src: "/brigadista/capas/pantalon.png",
+          alt: "Fuelle 3D del pantalón, con el volumen de los pliegues en la rodilla",
+          width: 1144,
+          height: 668,
+          wide: true,
+        },
         body:
-          "Facilitar los movimientos exigentes en el área de las rodillas y evita el descalce. Volumen cóncavo generado por la costura de los pliegues.",
+          "Facilita los movimientos exigentes en el área de las rodillas y evita el descalce. Volumen cóncavo generado por la costura de los pliegues.",
       },
       {
         n: 11,
@@ -264,7 +288,7 @@ const STEPS: AnatomyStep[] = [
       },
     ],
     zoom: ZOOM.pantalon,
-    panelMinVh: 120,
+    panelMinVh: 140,
     layers: baseFigure({
       pantalon: ON,
       Guantes: DIM,
@@ -318,8 +342,6 @@ const STEPS: AnatomyStep[] = [
     packLabel: "Mochila táctica",
     packBody:
       "Utilizada por los brigadistas lineeros, transporta mangueras, acoples y otros elementos necesarios para el funcionamiento de la motobomba. Su función es brindar apoyo logístico y asegurar el suministro de agua en las tareas de extinción.",
-    packImage: "/brigadista/espaldas/mochila-tactica.png",
-    fit: { widthPct: 84, leftPct: 6, topPct: 0 },
     panelMinVh: 120,
   },
   {
@@ -329,8 +351,6 @@ const STEPS: AnatomyStep[] = [
     packLabel: "Mochila de agua",
     packBody:
       "Utilizada por los brigadistas de ataque, carga una mochila forestal con aproximadamente 20 litros de agua y utiliza una lanza para aplicarla. Su función es enfriar puntos calientes y combatir focos de fuego en zonas donde las mangueras no llegan.",
-    packImage: "/brigadista/espaldas/mochila-agua.png",
-    fit: { widthPct: 84, leftPct: 12, topPct: 3.5 },
     panelMinVh: 110,
   },
   {
@@ -340,8 +360,6 @@ const STEPS: AnatomyStep[] = [
     packLabel: "Mochila de la motobomba",
     packBody:
       "Utilizada por el brigadista bobero, transporta exclusivamente la motobomba de alta presión. Su función es proveer el bombeo de agua principal durante la extinción, siendo una tarea de gran exigencia física que exime al brigadista de cargar otras herramientas.",
-    packImage: "/brigadista/espaldas/mochila-motobomba.png",
-    fit: { widthPct: 88, leftPct: 7, topPct: -1 },
     panelMinVh: 110,
   },
 ];
@@ -355,13 +373,14 @@ function containTransform(
   zoom: ZoomRect,
   viewport: { width: number; height: number },
   baseHeight: number,
+  aspect: number,
   panX = 0,
 ) {
   if (viewport.width <= 0 || viewport.height <= 0 || baseHeight <= 0) {
     return "translate(-50%, -50%) scale(1)";
   }
 
-  const baseWidth = baseHeight * SVG_ASPECT;
+  const baseWidth = baseHeight * aspect;
   const scale = Math.min(
     viewport.width / (zoom.w * baseWidth),
     viewport.height / (zoom.h * baseHeight),
@@ -382,73 +401,240 @@ const SCROLLER_CARD_STYLE = {
     "max(1rem, min(calc(100vw - 1rem - min(450px, calc(100vw - 2rem))), calc(66vw - min(225px, calc(50vw - 1rem)))))",
 } as const;
 
+const LAYER_FADE = "opacity 700ms cubic-bezier(0.22, 1, 0.36, 1)";
+
 const SCROLLER_CARD_CLASS =
-  "ui-panel ui-panel--accent pointer-events-auto max-h-[min(72svh,calc(100svh-5.5rem))] overflow-y-auto overscroll-contain px-5 py-5 md:max-h-none md:overflow-visible md:px-6 md:py-6";
+  "ui-panel ui-panel--accent pointer-events-auto overflow-hidden motion-reduce:transition-none";
 
 function rewriteSvgAssetPaths(svgText: string) {
-  return svgText
-    .replaceAll('xlink:href="layers/', `xlink:href="${withBasePath("/brigadista/layers/")}`)
-    .replaceAll('href="layers/', `href="${withBasePath("/brigadista/layers/")}`);
+  return svgText.replace(
+    /(xlink:href|href)="(?!data:|https?:|\/|#)([^"]+)"/g,
+    (_, attr: string, path: string) =>
+      `${attr}="${withBasePath(`/brigadista/${path}`)}"`,
+  );
 }
 
 function applyLayerOpacities(root: Element, layers: Record<string, number>) {
-  for (const id of ALL_LAYER_IDS) {
+  const resolved: Record<string, number> = {
+    ...layers,
+    "Botas detalle": layers["Botas normal"] ?? OFF,
+  };
+  for (const id of [...ALL_LAYER_IDS, "Botas detalle"]) {
     const el = root.querySelector(`[id="${CSS.escape(id)}"]`) as SVGElement | null;
     if (!el) continue;
-    el.style.transition = "opacity 700ms cubic-bezier(0.22, 1, 0.36, 1)";
-    el.style.opacity = String(layers[id] ?? OFF);
+    el.style.transition = LAYER_FADE;
+    el.style.opacity = String(resolved[id] ?? OFF);
     el.style.pointerEvents = "none";
   }
 }
 
-function FrontCard({ step }: { step: FrontStep }) {
+function applyBackOpacities(root: Element, activePackId: string) {
+  for (const id of ["espalda", ...PACK_IDS]) {
+    const el = root.querySelector(`[id="${CSS.escape(id)}"]`) as SVGElement | null;
+    if (!el) continue;
+    el.style.transition = LAYER_FADE;
+    el.style.opacity = id === "espalda" || id === activePackId ? "1" : "0";
+    el.style.pointerEvents = "none";
+  }
+}
+
+function mountSvg(host: HTMLDivElement, text: string, label: string) {
+  host.innerHTML = rewriteSvgAssetPaths(text);
+  const svg = host.querySelector("svg");
+  if (!svg) return null;
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", label);
+  svg.style.display = "block";
+  svg.style.width = "100%";
+  svg.style.height = "100%";
+  return svg;
+}
+
+function SubitemList({ items }: { items: string[] }) {
   return (
-    <article className={SCROLLER_CARD_CLASS} style={SCROLLER_CARD_STYLE}>
-      <h3 className="font-sans text-2xl leading-tight font-bold text-white md:text-3xl">
+    <ul className="space-y-0.5 font-sans text-[11px] leading-[1.45] font-normal text-white md:text-[14px]">
+      {items.map((sub) => (
+        <li key={sub}>{sub}</li>
+      ))}
+    </ul>
+  );
+}
+
+function ItemNumber({ n }: { n: number }) {
+  return (
+    <span className="inline-flex size-[30px] shrink-0 items-center justify-center rounded-full border border-white/60 font-sans text-[11px] leading-none font-bold text-white tabular-nums md:text-[14px]">
+      {n}
+    </span>
+  );
+}
+
+function CardCopy({ step }: { step: AnatomyStep }) {
+  if (step.kind === "back") {
+    return (
+      <>
+        <h3 className="font-sans text-[24px] leading-tight font-bold text-white md:text-[27px]">
+          {step.packLabel}
+        </h3>
+        <p className="mt-3 font-sans text-[11px] leading-[1.45] font-normal text-white md:text-[14px]">
+          {step.packBody}
+        </p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <h3 className="font-sans text-[24px] leading-tight font-bold text-white md:text-[27px]">
         {step.title}
       </h3>
       {step.body ? (
-        <p className="mt-3 text-md leading-relaxed text-white">{step.body}</p>
+        <p className="mt-3 font-sans text-[11px] leading-[1.45] font-normal text-white md:text-[14px]">
+          {step.body}
+        </p>
       ) : null}
       {step.items?.length ? (
         <ul className={step.body ? "mt-5 space-y-4" : "mt-4 space-y-4"}>
           {step.items.map((item) => (
             <li key={item.n}>
-              <p className="font-sans text-lg leading-snug font-bold text-white/90 md:text-xl">
-                <span className="tabular-nums">{item.n}.</span> {item.label}
+              <p className="flex items-center gap-2.5 font-sans text-[14px] leading-snug font-bold tracking-normal text-white uppercase md:text-[17px]">
+                <ItemNumber n={item.n} />
+                {item.label}
               </p>
-              {item.body ? (
-                <p className="mt-1 text-md leading-relaxed text-white">
-                  {item.body}
-                </p>
-              ) : null}
-              {item.subitems?.length ? (
-                <ul className="mt-1.5 space-y-0.5 text-md leading-relaxed text-white">
-                  {item.subitems.map((sub, i) => (
-                    <li key={sub}>
-                      <span className="font-bold">
-                        {String.fromCharCode(97 + i)}.
-                      </span>{" "}
-                      {sub}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+              {item.figure ? (
+                <div
+                  className={
+                    item.figure.wide
+                      ? "mt-[5px] grid grid-cols-[8.75rem_minmax(0,1fr)] items-center gap-3 md:mt-2"
+                      : "mt-[5px] grid grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-3 sm:grid-cols-[7rem_minmax(0,1fr)] md:mt-2"
+                  }
+                >
+                  <img
+                    src={withBasePath(item.figure.src)}
+                    alt={item.figure.alt}
+                    width={item.figure.width}
+                    height={item.figure.height}
+                    className="h-auto w-full"
+                  />
+                  <div>
+                    {item.body ? (
+                      <p className="font-sans text-[11px] leading-[1.45] font-normal text-white md:text-[14px]">
+                        {item.body}
+                      </p>
+                    ) : null}
+                    {item.subitems?.length ? (
+                      <SubitemList items={item.subitems} />
+                    ) : null}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {item.body ? (
+                    <p className="mt-[-2px] ml-[40px] font-sans text-[11px] leading-[1.45] font-normal text-white md:text-[14px]">
+                      {item.body}
+                    </p>
+                  ) : null}
+                  {item.subitems?.length ? (
+                    <div className="mt-[-2px] ml-[40px]">
+                      <SubitemList items={item.subitems} />
+                    </div>
+                  ) : null}
+                </>
+              )}
             </li>
           ))}
         </ul>
       ) : null}
-    </article>
+    </>
   );
 }
 
-function PackCard({ label, body }: { label: string; body: string }) {
+function AnatomyCard({
+  step,
+  onHeight,
+}: {
+  step: AnatomyStep;
+  onHeight?: (height: number) => void;
+}) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const visibleRef = useRef(true);
+  const [shown, setShown] = useState(step);
+  const [visible, setVisible] = useState(true);
+  const [height, setHeight] = useState<number | null>(null);
+  const [armHeight, setArmHeight] = useState(false);
+  visibleRef.current = visible;
+
+  const measure = () => {
+    const el = frameRef.current;
+    if (!el) return;
+    setHeight(el.offsetHeight);
+  };
+
+  useEffect(() => {
+    if (height != null) onHeight?.(height);
+  }, [height, onHeight]);
+
+  useEffect(() => {
+    if (step.id === shown.id) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setShown(step);
+      setVisible(true);
+      return;
+    }
+    setVisible(false);
+    const timeout = window.setTimeout(() => setShown(step), 240);
+    return () => window.clearTimeout(timeout);
+  }, [step, shown.id]);
+
+  useEffect(() => {
+    if (step.id !== shown.id) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      measure();
+      setVisible(true);
+      setArmHeight(true);
+      return;
+    }
+    // Un frame con el alto viejo (texto nuevo todavía invisible) y después
+    // alto y fade arrancan juntos.
+    const id = requestAnimationFrame(() => {
+      measure();
+      setVisible(true);
+      requestAnimationFrame(() => setArmHeight(true));
+    });
+    return () => cancelAnimationFrame(id);
+  }, [shown, step.id]);
+
+  useEffect(() => {
+    const el = frameRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      if (!visibleRef.current) return;
+      setHeight(el.offsetHeight);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [shown]);
+
   return (
-    <article className={SCROLLER_CARD_CLASS} style={SCROLLER_CARD_STYLE}>
-      <h3 className="font-sans text-2xl leading-tight font-bold text-white md:text-3xl">
-        {label}
-      </h3>
-      <p className="mt-3 text-md leading-relaxed text-white">{body}</p>
+    <article
+      className={SCROLLER_CARD_CLASS}
+      style={{
+        ...SCROLLER_CARD_STYLE,
+        height: height ?? undefined,
+        transition: armHeight
+          ? "height 520ms cubic-bezier(0.22, 1, 0.36, 1)"
+          : "none",
+      }}
+      aria-live="polite"
+    >
+      <div
+        ref={frameRef}
+        className="px-5 py-5 transition-opacity duration-300 ease-out motion-reduce:transition-none md:px-6 md:py-6"
+        style={{ opacity: visible ? 1 : 0 }}
+      >
+        <CardCopy step={shown} />
+      </div>
     </article>
   );
 }
@@ -456,25 +642,51 @@ function PackCard({ label, body }: { label: string; body: string }) {
 export function BrigadistaAnatomy() {
   const [stepId, setStepId] = useState(STEPS[0].id);
   const [svgReady, setSvgReady] = useState(false);
+  const [backReady, setBackReady] = useState(false);
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+  const [cardHeight, setCardHeight] = useState(0);
   const hostRef = useRef<HTMLDivElement>(null);
+  const backHostRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const pinnedFrontRef = useRef<FrontStep>(
+    STEPS.find((step): step is FrontStep => step.kind === "front")!,
+  );
   const activeIndex = STEPS.findIndex((step) => step.id === stepId);
   const activeStep = STEPS[activeIndex] ?? STEPS[0];
   const isBack = activeStep.kind === "back";
-  const frontStep = activeStep.kind === "front" ? activeStep : null;
+  if (activeStep.kind === "front") pinnedFrontRef.current = activeStep;
+  const zoomFront = pinnedFrontRef.current;
+
+  const narrow = stageSize.width > 0 && stageSize.width < 768;
+  const onCardHeight = useCallback((next: number) => {
+    setCardHeight((prev) => (prev === next ? prev : next));
+  }, []);
+  const figureBottom =
+    narrow && cardHeight > 0
+      ? Math.min(cardHeight + 20, Math.round(window.innerHeight * 0.58))
+      : 0;
 
   const baseHeight = stageSize.height > 0 ? stageSize.height : 800;
+  const backZoom = useMemo<ZoomRect>(() => {
+    if (stageSize.width > 0 && stageSize.width < 768) {
+      return { x: 0, y: 0, w: 1120 / BACK_W, h: 1 };
+    }
+    return { x: 0, y: 0, w: 1, h: 1 };
+  }, [stageSize.width]);
 
   const frontTransform = useMemo(() => {
-    if (!frontStep) return "translate(-50%, -50%) scale(1)";
     return containTransform(
-      frontStep.zoom,
+      zoomFront.zoom,
       stageSize,
       baseHeight,
-      frontStep.panX ?? 0,
+      SVG_ASPECT,
+      narrow ? 0 : (zoomFront.panX ?? 0),
     );
-  }, [frontStep, stageSize, baseHeight]);
+  }, [zoomFront, stageSize, baseHeight, narrow]);
+
+  const backTransform = useMemo(() => {
+    return containTransform(backZoom, stageSize, baseHeight, BACK_ASPECT, 0);
+  }, [backZoom, stageSize, baseHeight]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -503,18 +715,10 @@ export function BrigadistaAnatomy() {
       })
       .then((text) => {
         if (cancelled || !hostRef.current) return;
-        hostRef.current.innerHTML = rewriteSvgAssetPaths(text);
-        const svg = hostRef.current.querySelector("svg");
-        if (svg) {
-          svg.setAttribute("role", "img");
-          svg.setAttribute("aria-label", "Anatomía del brigadista forestal");
-          svg.style.display = "block";
-          svg.style.width = "100%";
-          svg.style.height = "100%";
-          const first = STEPS.find((s) => s.kind === "front");
-          if (first && first.kind === "front") {
-            applyLayerOpacities(svg, first.layers);
-          }
+        const svg = mountSvg(hostRef.current, text, "Anatomía del brigadista forestal");
+        const first = STEPS.find((s) => s.kind === "front");
+        if (svg && first && first.kind === "front") {
+          applyLayerOpacities(svg, first.layers);
         }
         setSvgReady(true);
       })
@@ -528,11 +732,52 @@ export function BrigadistaAnatomy() {
   }, []);
 
   useEffect(() => {
-    const host = hostRef.current;
-    const svg = host?.querySelector("svg");
-    if (!svg || !svgReady || !frontStep) return;
-    applyLayerOpacities(svg, frontStep.layers);
-  }, [frontStep, svgReady]);
+    const host = backHostRef.current;
+    if (!host) return;
+
+    let cancelled = false;
+    fetch(withBasePath("/brigadista/espaldas.svg"))
+      .then((res) => {
+        if (!res.ok) throw new Error(`SVG ${res.status}`);
+        return res.text();
+      })
+      .then((text) => {
+        if (cancelled || !backHostRef.current) return;
+        const svg = mountSvg(
+          backHostRef.current,
+          text,
+          "Espalda del brigadista y mochilas",
+        );
+        if (svg) applyBackOpacities(svg, "mochila-tactica");
+        setBackReady(true);
+      })
+      .catch(() => {
+        if (!cancelled) setBackReady(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const svg = hostRef.current?.querySelector("svg");
+    if (!svg || !svgReady || activeStep.kind !== "front") return;
+    applyLayerOpacities(svg, activeStep.layers);
+  }, [activeStep, svgReady]);
+
+  useEffect(() => {
+    const svg = backHostRef.current?.querySelector("svg");
+    if (!svg || !backReady) return;
+    const packId =
+      activeStep.kind === "back"
+        ? activeStep.id
+        : activeStep.id === "botas"
+          ? "mochila-tactica"
+          : null;
+    if (!packId) return;
+    applyBackOpacities(svg, packId);
+  }, [activeStep, backReady]);
 
   useEffect(() => {
     const syncFromScroll = () => {
@@ -576,13 +821,15 @@ export function BrigadistaAnatomy() {
 
   return (
     <div className="relative mt-10">
-      <div
-        ref={stageRef}
-        className="sticky top-0 z-10 h-svh overflow-hidden bg-background"
-      >
+      <div className="sticky top-0 z-10 h-svh overflow-hidden bg-background">
+        <div
+          ref={stageRef}
+          className="absolute inset-0"
+          style={figureBottom > 0 ? { bottom: figureBottom } : undefined}
+        >
         {/* Frente: SVG de capas */}
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out motion-reduce:transition-none"
           style={{ opacity: isBack ? 0 : svgReady ? 1 : 0 }}
           aria-hidden={isBack}
         >
@@ -598,54 +845,27 @@ export function BrigadistaAnatomy() {
           </div>
         </div>
 
-        {/* Espaldas: base + mochila */}
+        {/* Espaldas: cuerpo + una mochila por vez, en el mismo SVG */}
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out"
-          style={{ opacity: isBack ? 1 : 0 }}
+          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out motion-reduce:transition-none"
+          style={{ opacity: isBack && backReady ? 1 : 0 }}
           aria-hidden={!isBack}
         >
-          <div className="absolute inset-0 flex items-center justify-center">
-            {/* Figura a pantalla completa; la card flota al 66vw encima. */}
-            <div
-              className="relative h-full max-h-svh overflow-visible"
-              style={{ aspectRatio: `${ESPALDA_ASPECT}` }}
-            >
-              <Image
-                src={withBasePath("/brigadista/espaldas/espalda.png")}
-                alt=""
-                fill
-                sizes="420px"
-                className="object-contain object-center opacity-65"
-                priority
-              />
-              {STEPS.filter((s): s is BackStep => s.kind === "back").map(
-                (step) => {
-                  const active = step.id === activeStep.id;
-                  return (
-                    <div
-                      key={step.id}
-                      className="absolute transition-opacity duration-700 ease-out"
-                      style={{
-                        opacity: active ? 1 : 0,
-                        left: `${step.fit.leftPct}%`,
-                        top: `${step.fit.topPct}%`,
-                        width: `${step.fit.widthPct}%`,
-                      }}
-                    >
-                      <Image
-                        src={withBasePath(step.packImage)}
-                        alt=""
-                        width={900}
-                        height={1100}
-                        sizes="420px"
-                        className="h-auto w-full"
-                      />
-                    </div>
-                  );
-                },
-              )}
-            </div>
+          <div
+            className="absolute top-1/2 left-1/2 will-change-transform transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            style={{
+              height: baseHeight,
+              width: baseHeight * BACK_ASPECT,
+              transform: backTransform,
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%)",
+            }}
+          >
+            <div ref={backHostRef} className="h-full w-full" />
           </div>
+        </div>
         </div>
 
         <div
@@ -654,21 +874,13 @@ export function BrigadistaAnatomy() {
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-20 bg-gradient-to-t from-background from-0% via-background/55 via-[45%] to-transparent to-[85%]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] hidden h-20 bg-gradient-to-t from-background from-0% via-background/55 via-[45%] to-transparent to-[85%] md:block"
         />
 
-        {/* Cards: mismo layout que el mapa, centro al 66vw */}
-        <div className="pointer-events-none absolute inset-0 z-20 flex items-center">
+        {/* Mobile: card fija abajo. Desktop: centrada, igual que antes. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-end pb-[max(0.5rem,env(safe-area-inset-bottom))] md:inset-0 md:items-center md:pb-0">
           <div className="w-full">
-            {frontStep ? (
-              <FrontCard key={frontStep.id} step={frontStep} />
-            ) : activeStep.kind === "back" ? (
-              <PackCard
-                key={activeStep.id}
-                label={activeStep.packLabel}
-                body={activeStep.packBody}
-              />
-            ) : null}
+            <AnatomyCard step={activeStep} onHeight={onCardHeight} />
           </div>
         </div>
       </div>

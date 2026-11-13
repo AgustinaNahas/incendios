@@ -4,10 +4,22 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import { withBasePath } from "@/lib/paths";
 
 const STEPS = [
-  "/header/steps-1.jpg",
-  "/header/steps-2.jpg",
-  "/header/steps-3.jpg",
-  "/header/steps-4.jpg",
+  {
+    desktop: "/header/steps-1.jpg",
+    mobile: "/header/steps-1-mobile.jpg",
+  },
+  {
+    desktop: "/header/steps-2.jpg",
+    mobile: "/header/steps-2-mobile.jpg",
+  },
+  {
+    desktop: "/header/steps-3.jpg",
+    mobile: "/header/steps-3-mobile.jpg",
+  },
+  {
+    desktop: "/header/steps-4.jpg",
+    mobile: "/header/steps-4-mobile.jpg",
+  },
 ] as const;
 
 const STEP_CARDS = [
@@ -85,7 +97,7 @@ export function FireHeader() {
         const hintOpacity = reduced ? 0 : 1 - smoothstep(introIn);
         const hintY = reduced ? 0 : introIn * 12;
         scrollHintRef.current.style.opacity = String(hintOpacity);
-        scrollHintRef.current.style.transform = `translate3d(-50%, ${hintY}px, 0)`;
+        scrollHintRef.current.style.transform = `translate3d(0, ${hintY}px, 0)`;
         scrollHintRef.current.style.visibility =
           hintOpacity < 0.02 ? "hidden" : "visible";
       }
@@ -144,9 +156,9 @@ export function FireHeader() {
       style={{ height: `${sectionVh}vh` }}
     >
       <div className="sticky top-0 isolate h-dvh overflow-hidden bg-background -mb-2">
-        {STEPS.map((src, i) => (
+        {STEPS.map((step, i) => (
           <div
-            key={src}
+            key={step.desktop}
             ref={(el) => {
               layerRefs.current[i] = el;
             }}
@@ -159,13 +171,19 @@ export function FireHeader() {
               } as CSSProperties
             }
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={withBasePath(src)}
-              alt=""
-              className="h-full w-full object-cover object-center"
-              draggable={false}
-            />
+            <picture className="absolute inset-0 block h-full w-full">
+              <source
+                media="(max-width: 767px)"
+                srcSet={withBasePath(step.mobile)}
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={withBasePath(step.desktop)}
+                alt=""
+                className="h-full w-full object-cover object-center"
+                draggable={false}
+              />
+            </picture>
           </div>
         ))}
 
@@ -183,9 +201,9 @@ export function FireHeader() {
         <div
           ref={scrollHintRef}
           aria-hidden
-          className="header-scroll-hint pointer-events-none absolute bottom-6 left-1/2 z-[23] flex -translate-x-1/2 flex-col items-center gap-1.5 text-white md:bottom-8"
+          className="header-scroll-hint pointer-events-none absolute inset-x-0 bottom-6 z-[23] flex flex-col items-center gap-1.5 text-white md:bottom-8"
         >
-          <span className="font-sans text-[11px] font-medium uppercase tracking-[0.35em]">
+          <span className="pl-[0.35em] font-sans text-[11px] font-medium uppercase tracking-[0.35em]">
             Scroll
           </span>
           <svg

@@ -8,14 +8,14 @@ import type { OtbnZona } from "@/lib/otbnColors";
 
 type Props = {
   bar: AtlasBarConfig;
-  active?: boolean;
   highlightZona?: number | null;
   onHighlightZona?: (zona: number | null) => void;
+  /** Barras más bajas, para la card fija de mobile. */
+  compact?: boolean;
 };
 
 const VIEW_W = 640;
 const VIEW_H = 18;
-export const ATLAS_BAR_DURATION = 900;
 
 type Seg = {
   id: string;
@@ -89,9 +89,9 @@ function segmentsFromBar(bar: AtlasBarConfig): Seg[] {
 
 export function AtlasShareBar({
   bar,
-  active = true,
   highlightZona = null,
   onHighlightZona,
+  compact = false,
 }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const hoverRef = useRef(onHighlightZona);
@@ -100,10 +100,8 @@ export function AtlasShareBar({
   useLayoutEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const segs = segmentsFromBar(bar);
     const root = d3.select(svg);
-    const animate = active && !reduce;
 
     const selection = root
       .selectAll<SVGRectElement, Seg>("rect.atlas-bar-seg")
@@ -116,14 +114,12 @@ export function AtlasShareBar({
       .append("rect")
       .attr("class", "atlas-bar-seg")
       .attr("y", 0)
-      .attr("height", VIEW_H)
-      .attr("x", (d) => d.x)
-      .attr("width", 0)
-      .attr("fill", (d) => d.color);
+      .attr("height", VIEW_H);
 
     const merged = enter.merge(selection);
 
     merged
+      .interrupt()
       .style("cursor", (d) => (d.hoverable ? "pointer" : "default"))
       .attr("tabindex", (d) => (d.hoverable ? 0 : null))
       .attr("role", (d) => (d.hoverable ? "button" : null))
@@ -131,6 +127,9 @@ export function AtlasShareBar({
         if (!d.hoverable || d.zona == null) return null;
         return `Categoría ${d.zona === 1 ? "I" : d.zona === 2 ? "II" : "III"}`;
       })
+      .attr("x", (d) => d.x)
+      .attr("width", (d) => Math.max(0, d.width))
+      .attr("fill", (d) => d.color)
       .on("mouseenter", (_event, d) => {
         if (d.hoverable && d.zona != null) hoverRef.current?.(d.zona);
       })
@@ -139,25 +138,7 @@ export function AtlasShareBar({
         if (d.hoverable && d.zona != null) hoverRef.current?.(d.zona);
       })
       .on("blur", () => hoverRef.current?.(null));
-
-    merged.interrupt();
-    if (animate) {
-      merged
-        .attr("x", (d) => d.x)
-        .attr("fill", (d) => d.color)
-        .attr("width", 0)
-        .transition()
-        .delay((_, i) => i * ATLAS_BAR_DURATION)
-        .duration(ATLAS_BAR_DURATION)
-        .ease(d3.easeCubicOut)
-        .attr("width", (d) => Math.max(0, d.width));
-    } else {
-      merged
-        .attr("x", (d) => d.x)
-        .attr("width", (d) => Math.max(0, d.width))
-        .attr("fill", (d) => d.color);
-    }
-  }, [bar, active]);
+  }, [bar]);
 
   useLayoutEffect(() => {
     const svg = svgRef.current;
@@ -179,12 +160,22 @@ export function AtlasShareBar({
         ref={svgRef}
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         preserveAspectRatio="none"
-        className="block h-[18px] max-h-[18px] w-full"
+        className={
+          compact
+            ? "block h-[7px] max-h-[7px] w-full"
+            : "block h-[18px] max-h-[18px] w-full"
+        }
         role="img"
         aria-label={barAriaLabel(bar, percents)}
       />
       {percents.length > 0 ? (
-        <div className="relative mt-1 h-4 text-[11px] text-white/55">
+        <div
+          className={
+            compact
+              ? "relative mt-0.5 h-3 text-[10px] leading-none text-white/55"
+              : "relative mt-1 h-4 text-[11px] text-white/55"
+          }
+        >
           {percents.map((item) => {
             const dimmed =
               highlightZona != null && item.zona != null && highlightZona !== item.zona;
@@ -203,7 +194,11 @@ export function AtlasShareBar({
           })}
         </div>
       ) : null}
-      {caption ? <p className="mt-1 text-sm text-white">{caption}</p> : null}
+      {caption ? (
+        <p className={compact ? "mt-0.5 text-[11px] leading-snug text-white" : "mt-1 text-sm text-white"}>
+          {caption}
+        </p>
+      ) : null}
     </div>
   );
 }

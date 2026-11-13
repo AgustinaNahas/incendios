@@ -367,7 +367,7 @@ export function AfterFireSection() {
         </div>
 
         <Quote
-          quote="“Cuando un megaincendio ocurre se dan múltiples consecuencias: generación de gases; pérdida de biomasa y de naturaleza; suelos que van a estar durante muchos años sin su vegetación natural; deforestación, pérdida de cultivos y de animales. Los incendios de grandes proporciones, con gran generación de cenizas, también producen contaminación ambiental, al menos localizada. Son muchas las problemáticas que acarrea un incendio.”"
+          quote="“Cuando un megaincendio ocurre se dan múltiples consecuencias: generación de gases; pérdida de biomasa y de naturaleza; suelos que van a estar durante muchos años sin su vegetación natural; deforestación, pérdida de cultivos y de animales. Los incendios de grandes proporciones, con gran generación de cenizas, también producen contaminación ambiental, al menos localizada. Son muchas las problemáticas que acarrea un incendio”."
           name="Lucas Berengua"
           role="Meteorólogo del Servicio Meteorológico Nacional"
         />
@@ -407,8 +407,7 @@ export function AfterFireSection() {
           </p>
           <h3 className="type-h4">Metodología y anexo</h3>
           <p className="type-body mt-4">
-            Esta investigación se hizo en el marco del FOCO Bootcamp de FTA y
-            FOPEA. La metodología explica el marco del programa, cómo se
+            La metodología explica el marco del programa, cómo se
             investigó y qué fuentes se consultaron. El anexo reúne la
             cronología de los pedidos de acceso a la información pública: las
             solicitudes, las respuestas —y las que nunca llegaron— y el detalle

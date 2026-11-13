@@ -4,7 +4,7 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { TextLink } from "@/components/TextLink";
 import { withBasePath } from "@/lib/paths";
 
-const BAJADA = "A falta de una prevención coordinada, la emergencia es el único plan";
+const BAJADA = "Ante la falta de prevención coordinada, la respuesta llega con la emergencia";
 
 export function LeadSection() {
   return (
@@ -24,7 +24,7 @@ export function LeadSection() {
         <h1 className="type-h1 text-accent">
           Incendios forestales en la Patagonia
         </h1>
-        <p className="mx-auto mt-[12px] max-w-[800px] font-display text-[22px] leading-snug font-semibold text-foreground md:text-[33px] md:leading-[1.27]">
+        <p className="mx-auto mt-[12px] max-w-[800px] font-display text-[25px] leading-snug font-semibold text-foreground md:text-[33px] md:leading-[1.27]">
           {BAJADA}
         </p>
         <p className="mt-[48px] font-sans text-[16px] text-foreground">

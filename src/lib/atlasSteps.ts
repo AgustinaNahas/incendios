@@ -237,18 +237,18 @@ export const OTBN_CATEGORY_BULLETS: {
     zona: 1,
     color: OTBN_COLORS[1],
     code: "I",
-    text: "Áreas que deben permanecer intactas.",
+    text: " Protección estricta. Área intocables.",
   },
   {
     zona: 2,
     color: OTBN_COLORS[2],
     code: "II",
-    text: "Áreas que pueden aprovecharse de forma sostenible.",
+    text: " Aprovechamiento sostenible.",
   },
   {
     zona: 3,
     color: OTBN_COLORS[3],
     code: "III",
-    text: "Áreas que pueden transformarse, pero sólo con evaluación de impacto ambiental y bajo condiciones estrictas.",
+    text: " Transformación con control ambiental.",
   },
 ];

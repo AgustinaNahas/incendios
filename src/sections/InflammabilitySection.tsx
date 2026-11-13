@@ -94,10 +94,6 @@ export function InflammabilitySection() {
     [levelFilter],
   );
 
-  const activeIndex = Math.round(
-    progress * Math.max(visibleSpecies.length - 1, 1),
-  );
-
   useEffect(() => {
     const pin = pinRef.current;
     const viewport = viewportRef.current;
@@ -170,21 +166,6 @@ export function InflammabilitySection() {
 
   const toggleLevelFilter = (level: Level) => {
     setLevelFilter((prev) => (prev === level ? null : level));
-  };
-
-  const goTo = (index: number) => {
-    const pin = pinRef.current;
-    const viewport = viewportRef.current;
-    const track = trackRef.current;
-    if (!pin || !viewport || !track) return;
-    const shift = Math.max(0, track.scrollWidth - viewport.clientWidth);
-    if (shift <= 0 || visibleSpecies.length <= 1) return;
-    const target =
-      (clamp(index, 0, visibleSpecies.length - 1) /
-        (visibleSpecies.length - 1)) *
-      shift;
-    const pinDoc = pin.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: pinDoc + target, behavior: "smooth" });
   };
 
   return (
@@ -411,28 +392,6 @@ export function InflammabilitySection() {
               />
             </div>
 
-            <div
-              className="mt-3 flex shrink-0 items-center justify-center gap-1.5 px-5 pt-2 pb-3 md:px-8"
-              role="tablist"
-              aria-label="Especies"
-            >
-              {visibleSpecies.map((sp, i) => {
-                const selected = i === activeIndex;
-                return (
-                  <button
-                    key={sp.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={selected}
-                    aria-label={`${i + 1}. ${sp.commonName}`}
-                    onClick={() => goTo(i)}
-                    className={`h-2 w-2 rounded-full border border-white transition-colors ${
-                      selected ? "bg-white" : "bg-transparent hover:bg-white/40"
-                    }`}
-                  />
-                );
-              })}
-            </div>
           </div>
 
           <div className="mx-auto w-full max-w-[800px] px-5 mt-12 pt-2 md:px-8">
@@ -460,7 +419,7 @@ export function InflammabilitySection() {
 
       <div className="mx-auto max-w-[800px] px-5 md:px-8">
         <Quote
-          quote="“El problema principal para mí está relacionado con la gestión territorial. En los últimos 25 años acá, la Comarca creció de manera exponencial”."
+          quote="“El problema principal para mí está relacionado con la gestión territorial. En los últimos 25 años la Comarca creció de manera exponencial”."
           name="Hernán Andrade"
           role="ex vecino de Las Golondrinas, Comarca Andina - Chubut"
         />

@@ -6,18 +6,18 @@ export const OTBN_ZONA_COPY: Record<
 > = {
   1: {
     code: "I",
-    title: "Conservación",
-    body: "Áreas que deben permanecer intactas.",
+    title: "",
+    body: "Protección estricta. Área intocables.",
   },
   2: {
     code: "II",
-    title: "Uso sustentable",
-    body: "Áreas que pueden aprovecharse de forma sostenible.",
+    title: "",
+    body: "Aprovechamiento sostenible.",
   },
   3: {
     code: "III",
-    title: "Cambio de uso",
-    body: "Áreas que pueden transformarse, pero solo con evaluación de impacto ambiental y bajo condiciones estrictas.",
+    title: "",
+    body: "Transformación con control ambiental.",
   },
 };
 
